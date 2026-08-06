@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" style="display:none;">
+
+  <!-- Low-opacity line-art network/workflow graphic, for hero backgrounds -->
+  <symbol id="hero-network" viewBox="0 0 800 600" fill="none">
+    <g stroke="#2563eb" stroke-width="1.4" opacity=".35">
+      <circle cx="120" cy="120" r="6" fill="#2563eb"/>
+      <circle cx="340" cy="80"  r="5" fill="#2563eb"/>
+      <circle cx="560" cy="150" r="7" fill="#f97316"/>
+      <circle cx="700" cy="90"  r="4" fill="#2563eb"/>
+      <circle cx="90"  cy="320" r="5" fill="#2563eb"/>
+      <circle cx="280" cy="380" r="6" fill="#f97316"/>
+      <circle cx="480" cy="340" r="5" fill="#2563eb"/>
+      <circle cx="660" cy="400" r="6" fill="#2563eb"/>
+      <circle cx="380" cy="520" r="5" fill="#2563eb"/>
+      <circle cx="600" cy="540" r="4" fill="#2563eb"/>
+      <path d="M120 120 L340 80 L560 150 L700 90"/>
+      <path d="M120 120 L90 320 L280 380 L480 340 L560 150"/>
+      <path d="M280 380 L660 400 L480 340"/>
+      <path d="M280 380 L380 520 L600 540 L660 400"/>
+      <path d="M340 80 L480 340"/>
+    </g>
+  </symbol>
+
+  <!-- Wave divider between two contrasting section backgrounds -->
+  <symbol id="wave-divider" viewBox="0 0 1440 80" preserveAspectRatio="none">
+    <path d="M0 40 C 240 90, 480 0, 720 30 C 960 60, 1200 10, 1440 40 L1440 80 L0 80 Z" fill="currentColor"/>
+  </symbol>
+
+  <!-- Soft blob shape for corner decoration -->
+  <symbol id="dot-grid-blob" viewBox="0 0 400 400" fill="none">
+    <g fill="#2563eb">
+      <circle cx="20" cy="20" r="3"/><circle cx="60" cy="20" r="3"/><circle cx="100" cy="20" r="3"/><circle cx="140" cy="20" r="3"/>
+      <circle cx="20" cy="60" r="3"/><circle cx="60" cy="60" r="3"/><circle cx="100" cy="60" r="3"/><circle cx="140" cy="60" r="3"/>
+      <circle cx="20" cy="100" r="3"/><circle cx="60" cy="100" r="3"/><circle cx="100" cy="100" r="3"/><circle cx="140" cy="100" r="3"/>
+      <circle cx="20" cy="140" r="3"/><circle cx="60" cy="140" r="3"/><circle cx="100" cy="140" r="3"/><circle cx="140" cy="140" r="3"/>
+    </g>
+  </symbol>
+
+  <!-- Corner swirl accent -->
+  <symbol id="corner-swirl" viewBox="0 0 300 300" fill="none">
+    <g stroke="#f97316" stroke-width="1.6" opacity=".4">
+      <path d="M10 290 C 10 150, 150 150, 150 10"/>
+      <path d="M50 290 C 50 180, 180 180, 180 70"/>
+      <path d="M90 290 C 90 210, 210 210, 210 130"/>
+    </g>
+  </symbol>
+
+</svg>

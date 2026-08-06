@@ -1,0 +1,112 @@
+/* =====================================================================
+   GLOBAL ENTRY STYLESHEET — the only CSS file in the project.
+
+   `theme.css`, `pages/home.css` and `migration.css` are gone: every rule they
+   held is now a Tailwind utility on the element that needs it, a token in
+   `tailwind.config.ts` (colours, breakpoints, keyframes, easings, gradients), or
+   a variant string exported from the component that owns it.
+
+   What is left below is only what genuinely cannot be a utility class:
+
+   1. `@tailwind` directives — the framework's own entry points.
+   2. Document-level element defaults. `<html>` and `<body>` can carry classes
+      (and do, in app/layout.tsx), but `p { font-size: 16px }` cannot be applied
+      per-element without touching hundreds of call sites for no benefit, and
+      Tailwind's preflight resets it to inherit.
+   3. `::-webkit-scrollbar` — a pseudo-element on the scrolling root. Tailwind
+      ships no variant for it, and it cannot be targeted from a class on any
+      element other than the one that scrolls.
+   4. The `:focus-visible` accessibility ring, which must apply to every
+      focusable element including ones rendered by third-party markup.
+
+   Anything added here in future should have a comment saying which of those four
+   reasons applies. If none does, it belongs in a component.
+====================================================================== */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  /*
+   * (2) Document defaults. Preflight already handles box-sizing and margins;
+   * these are the legacy `body` and `p` rules that have no per-element home.
+   * Colour/background/weight live on <body> in app/layout.tsx as utilities.
+   */
+  p {
+    font-size: 16px;
+  }
+
+  /*
+   * (3) Scrollbar. Applies to the scrolling root, which no utility class can
+   * reach as a pseudo-element.
+   */
+  ::-webkit-scrollbar {
+    width: 5px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #f1f5f9;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #94a3b8;
+    border-radius: 3px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #2563eb;
+  }
+
+  /*
+   * (4) ACCESSIBILITY ADDITION — not present in the legacy site.
+   * Scoped to :focus-visible only, so it never renders for mouse or touch
+   * interaction; the default and :hover appearance are untouched.
+   */
+  :focus-visible {
+    outline: 2px solid #2563eb;
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+
+  /* Never let a focus ring be clipped by an overflow-hidden ancestor. */
+  a:focus-visible,
+  button:focus-visible,
+  input:focus-visible,
+  textarea:focus-visible,
+  select:focus-visible,
+  [tabindex]:focus-visible {
+    position: relative;
+    z-index: 1;
+  }
+
+  /*
+   * (2)+(4) REDUCED MOTION — a `*` selector, so it cannot be a utility class.
+   *
+   * Ported from the legacy stylesheet, which killed every transition globally for
+   * visitors who ask for reduced motion. Tailwind's `motion-reduce:` variant only
+   * covers elements that opt in one by one, and this has to hold for every element
+   * on the page — including ones rendered by Font Awesome or future third-party
+   * markup. `.01ms` rather than `0s` so transitionend handlers still fire.
+   *
+   * Component-level animations are separately guarded with `motion-reduce:` /
+   * `motion-safe:`; this is the backstop.
+   */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      transition-duration: 0.01ms !important;
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+@layer utilities {
+  /* Skip-to-content link: invisible until focused by keyboard. */
+  .skip-link {
+    @apply absolute left-1/2 top-[-100px] z-[2000] -translate-x-1/2 rounded-b-xl bg-brand-600 px-6 py-3 text-[14px] font-600 text-white no-underline transition-[top] duration-200;
+  }
+  .skip-link:focus-visible {
+    @apply top-0;
+  }
+}

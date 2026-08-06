@@ -1,0 +1,80 @@
+import { reveal, revealAttrs } from '@/lib/reveal';
+import { Chip } from '@/components/ui/Chip';
+import { GradientText } from '@/components/ui/Typography';
+import { Icon } from '@/components/ui/Icon';
+import { CtaGroup } from '@/components/common/CTA';
+import {
+  PULSE_AI_CAPABILITIES,
+  PULSE_AI_CONTENT,
+  PULSE_AI_CTAS,
+} from '@/constants/home';
+import { PulseSphere } from './PulseSphere';
+
+/**
+ * Section 1.5 — the Pulse AI spotlight, as Tailwind utilities.
+ *
+ * `scroll-mt-[250px]` replaces the legacy `#pulse-ai-spotlight
+ * { scroll-margin-top: 250px }`, which existed so the hero's scroll cue lands
+ * below the fixed header rather than under it.
+ *
+ * Below 768px the section becomes a column and the sphere moves *after* the copy
+ * (`order-2` / `order-1`) — the legacy `@media (max-width: 767px)` behaviour, kept
+ * exactly, because on a narrow screen a decorative canvas above the headline just
+ * pushes the message off-screen.
+ *
+ * One correctness fix carried over: the heading was a bare `<div>` in the original,
+ * which left this section absent from the document outline. It is an `<h2>` here
+ * with the same type scale.
+ */
+export function PulseAiSection() {
+  return (
+    <section
+      id="pulse-ai-spotlight"
+      className="relative scroll-mt-[250px] overflow-hidden bg-[#eaf8ff] text-body to-767:flex to-767:flex-col"
+    >
+      <PulseSphere />
+
+      <div className="relative z-10 mx-auto max-w-shell px-6 py-16 sm:py-20 to-767:order-1">
+        <div
+          className={reveal('left')}
+          {...revealAttrs()}
+          // Capped so the copy reads well beside the sphere bleeding off the edge.
+          style={{ maxWidth: '850px' }}
+        >
+          <h2 className="mb-[18px] text-[clamp(30px,3.2vw,46px)] font-normal leading-[1.08] tracking-[-0.03em] text-ink">
+            {PULSE_AI_CONTENT.headingLead}
+            <GradientText>{PULSE_AI_CONTENT.headingHighlight}</GradientText>
+            {PULSE_AI_CONTENT.headingTail}
+          </h2>
+
+          <p className="mb-0 text-[18px] leading-[1.8] text-black">
+            <span className="text-[21px] font-bold">
+              {PULSE_AI_CONTENT.productName}
+            </span>
+            {PULSE_AI_CONTENT.description}
+          </p>
+
+          <div
+            className="mt-6 flex flex-wrap gap-2.5"
+            aria-label="Pulse AI capabilities"
+          >
+            {PULSE_AI_CAPABILITIES.map((capability) => (
+              <Chip
+                key={capability.id}
+                variant="a"
+                icon={<Icon name={capability.icon} />}
+              >
+                {capability.label}
+              </Chip>
+            ))}
+          </div>
+
+          <CtaGroup
+            ctas={PULSE_AI_CTAS}
+            className="mt-7 flex flex-wrap gap-[13px]"
+          />
+        </div>
+      </div>
+    </section>
+  );
+}
