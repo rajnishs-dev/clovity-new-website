@@ -72,7 +72,6 @@ export function StatTile({ stat, index }: { stat: StatItem; index: number }) {
   const dividers = cn(
     n % 2 === 0 && 'to-640:border-l to-640:border-line to-640:pl-6',
     n >= 3 && 'to-640:border-t to-640:border-line to-640:pt-6',
-    n >= 4 && 'to-640:border-t-0 to-640:pt-0',
     n >= 2 && 'to-480:border-t to-480:border-line to-480:pt-6',
   );
 

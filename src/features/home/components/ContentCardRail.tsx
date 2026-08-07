@@ -88,7 +88,18 @@ export function ContentCardRail({
         </div>
       </div>
 
-      <div className={cn('relative -mx-1.5', reveal())} {...revealAttrs()}>
+      {/*
+        Only `-mr-1.5` on this wrapper, not `-mx-1.5`. The track's `px-1.5`
+        exists so a card's hover border/shadow has room before the scroll
+        container's own clipping — but browsers don't render a scroll
+        container's START padding at `scrollLeft: 0` (only the END padding is
+        respected), so a matching `-ml-1.5` here would pull the first card
+        6px past the section's actual gutter instead of cancelling anything.
+        Dropping the left margin lines the first card back up with the
+        heading above it; the right margin still cancels `px-1.5` on the end,
+        where it does render.
+      */}
+      <div className={cn('relative -mr-1.5', reveal())} {...revealAttrs()}>
         <div
           ref={trackRef}
           role="group"
@@ -101,7 +112,7 @@ export function ContentCardRail({
               key={item.id}
               href={item.href}
               aria-label={item.title}
-              className="group relative block h-[255px] flex-[0_0_calc((100%-20px)/2)] overflow-hidden rounded-[14px] border border-line bg-white text-inherit no-underline [scroll-snap-align:start] [transition:box-shadow_.3s,border-color_.3s] hover:border-blue-200 to-640:h-[300px] to-640:flex-[0_0_86%]"
+              className="group relative block h-[240px] md:h-[255px] flex-[0_0_calc((100%-20px)/2)] overflow-hidden rounded-[14px] border border-line bg-white text-inherit no-underline [scroll-snap-align:start] [transition:box-shadow_.3s,border-color_.3s] hover:border-blue-200 to-640:flex-[0_0_100%]"
               {...(item.external ? { forceExternal: true } : {})}
             >
               <div className="absolute inset-0 h-full overflow-hidden bg-slate-100">

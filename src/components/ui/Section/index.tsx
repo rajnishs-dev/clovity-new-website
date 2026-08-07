@@ -17,7 +17,7 @@ import { HEADING_CLASS, LABEL_CLASS, SUBHEADING_CLASS } from '../Typography';
 export type SectionPadding = 'default' | 'tight' | 'loose' | 'none';
 
 const PADDING_CLASS: Record<SectionPadding, string> = {
-  default: 'py-16 sm:py-20',
+  default: 'py-12 lg:py-16',
   tight: 'py-12 sm:py-16',
   loose: 'py-20 sm:py-28',
   none: '',

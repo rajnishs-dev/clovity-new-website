@@ -1,3 +1,4 @@
+import { cn } from '@/lib/cn';
 import { reveal, revealAttrs } from '@/lib/reveal';
 import { Chip } from '@/components/ui/Chip';
 import { GradientText } from '@/components/ui/Typography';
@@ -30,13 +31,18 @@ export function PulseAiSection() {
   return (
     <section
       id="pulse-ai-spotlight"
-      className="relative scroll-mt-[250px] overflow-hidden bg-[#eaf8ff] text-body to-767:flex to-767:flex-col"
+      className="relative scroll-mt-[250px] px-6 py-12 lg:py-16 overflow-hidden bg-[#eaf8ff] text-body to-1024:flex to-1024:flex-col"
     >
       <PulseSphere />
 
-      <div className="relative z-10 mx-auto max-w-shell px-6 py-16 sm:py-20 to-767:order-1">
+      <div className="relative z-10 mx-auto max-w-shell to-1024:order-1">
         <div
-          className={reveal('left')}
+          // `reveal()` bakes in `md:text-left` — this column has to stay
+          // centered through the whole stacked range (up to `lg`, where the
+          // sphere has room beside it again), so `to-1024:text-center` has to
+          // come after it to win. `to-1024:mx-auto` centers the block itself,
+          // since the inline `maxWidth` below stops it from filling the row.
+          className={cn(reveal('left'), 'to-1024:mx-auto to-1024:text-center')}
           {...revealAttrs()}
           // Capped so the copy reads well beside the sphere bleeding off the edge.
           style={{ maxWidth: '850px' }}
@@ -55,7 +61,9 @@ export function PulseAiSection() {
           </p>
 
           <div
-            className="mt-6 flex flex-wrap gap-2.5"
+            // `text-center` above only centers inline content — these chips
+            // are a flex row, so it needs its own `justify-center`.
+            className="mt-6 flex flex-wrap gap-2.5 to-1024:justify-center"
             aria-label="Pulse AI capabilities"
           >
             {PULSE_AI_CAPABILITIES.map((capability) => (
@@ -71,7 +79,7 @@ export function PulseAiSection() {
 
           <CtaGroup
             ctas={PULSE_AI_CTAS}
-            className="mt-7 flex flex-wrap gap-[13px]"
+            className="mt-7 flex flex-wrap gap-[13px] to-1024:justify-center"
           />
         </div>
       </div>

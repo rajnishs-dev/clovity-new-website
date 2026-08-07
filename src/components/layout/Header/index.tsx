@@ -108,7 +108,7 @@ export function Header({
                  `.nav-logo-img` rule resolved to on the home page. */
               imageClassName={cn(
                 'w-auto [transition:height_.35s_ease,filter_.35s_ease]',
-                scrolled ? 'h-[56px]' : 'h-[72px]',
+                scrolled ? 'h-[50px] md:h-[56px]' : 'h-[60px] md:h-[72px]',
               )}
               showWhite={onDark}
               priority={priorityLogo}

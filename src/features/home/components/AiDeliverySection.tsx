@@ -61,10 +61,17 @@ export function AiDeliverySection({ capabilities }: AiDeliverySectionProps) {
   } = useSnapCarousel({ gap: CARD_GAP, itemCount: capabilities.length });
 
   return (
-    <section id="ai-delivery" className="py-16 sm:py-20">
+    <section id="ai-delivery" className="py-12 lg:py-16">
       <div className="mx-auto max-w-shell px-6">
         <div
-          className={cn('mx-auto mb-8 max-w-[680px] text-center', reveal())}
+          // `md:text-center` has to come after `reveal()` — it bakes in
+          // `md:text-left`, which would otherwise beat the plain `text-center`
+          // at desktop widths.
+          className={cn(
+            'mx-auto mb-8 lg:mb-10 max-w-[680px] text-center',
+            reveal(),
+            'md:text-center',
+          )}
           {...revealAttrs()}
         >
           <h2 className={HEADING_CLASS}>
@@ -111,7 +118,7 @@ export function AiDeliverySection({ capabilities }: AiDeliverySectionProps) {
             {capabilities.map((capability) => (
               <div
                 key={capability.id}
-                className="relative flex h-[400px] w-[300px] flex-[0_0_300px] flex-col justify-end overflow-hidden rounded-[10px] bg-deliver-card bg-cover bg-[center_top] bg-no-repeat p-6 text-white [scroll-snap-align:start] to-640:h-[380px] to-640:w-[82vw] to-640:flex-[0_0_82vw]"
+                className="relative flex h-[400px] flex-[0_0_100%] flex-col justify-end overflow-hidden rounded-[10px] bg-deliver-card bg-cover bg-[center_top] bg-no-repeat p-6 text-white [scroll-snap-align:start] sm:flex-[0_0_calc((100%-16px)/2)] md:flex-[0_0_calc((100%-32px)/3)] xl:flex-[0_0_calc((100%-48px)/4)]"
                 {...(capability.backgroundImage
                   ? {
                       style: {

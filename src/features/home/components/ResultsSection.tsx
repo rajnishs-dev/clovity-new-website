@@ -28,11 +28,18 @@ export function ResultsSection({ stats }: ResultsSectionProps) {
   return (
     <section
       id="results"
-      className="relative overflow-hidden py-16 sm:py-20"
+      className="relative overflow-hidden py-12 lg:py-16"
     >
       <div className="relative mx-auto w-full max-w-shell px-6">
         <div
-          className={cn('mx-auto mb-10 max-w-[680px] text-center', reveal())}
+          // `md:text-center` has to come after `reveal()` — it bakes in
+          // `md:text-left`, which would otherwise beat the plain `text-center`
+          // at desktop widths.
+          className={cn(
+            'mx-auto mb-8 lg:mb-10 max-w-[680px] text-center',
+            reveal(),
+            'md:text-center',
+          )}
           {...revealAttrs()}
         >
           <h2 className="text-[clamp(30px,3.2vw,46px)] font-normal leading-[1.1] tracking-[-0.03em] text-title to-480:text-[26px]">

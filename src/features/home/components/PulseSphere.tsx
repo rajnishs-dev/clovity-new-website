@@ -323,8 +323,10 @@ export function PulseSphere() {
       aria-hidden
       className={[
         'pointer-events-none absolute right-[-90px] top-1/2 z-0 h-[460px] w-[460px] -translate-y-1/2',
-        'md:right-[-150px] md:h-[600px] md:w-[600px]',
-        'to-767:static to-767:order-2 to-767:mx-auto to-767:mt-2 to-767:translate-y-0',
+        'md:right-[-120px] md:h-[570px] md:w-[570px]',
+        // Below `lg` there isn't room beside the copy any more, so the sphere
+        // drops out of the absolute flow and becomes a centred block after it.
+        'to-1024:static to-1024:order-2 to-1024:mx-auto to-1024:mt-2 to-1024:translate-y-0 to-1024:h-[460px] to-1024:w-[460px]',
         'to-640:right-[-90px] to-640:h-[360px] to-640:w-[360px]',
       ].join(' ')}
     >

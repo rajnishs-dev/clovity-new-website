@@ -11,6 +11,7 @@ import {
   SUBHEADING_CLASS,
 } from '@/components/ui/Typography';
 import { CREDENTIALS_CONTENT } from '@/constants/home';
+import { CredentialsMarquee } from './CredentialsMarquee';
 
 /**
  * Section 4.5b — "Credentials Earned, Not Claimed.", as Tailwind utilities.
@@ -100,10 +101,10 @@ export function CredentialsSection({ rows }: CredentialsSectionProps) {
   return (
     <section
       id="recognition"
-      className="relative overflow-hidden bg-white pb-[240px] pt-[76px]"
+      className="relative overflow-hidden bg-white pb-[240px] pt-12 lg:pt-16"
     >
       <div className="relative z-10 mx-auto max-w-shell px-6">
-        <div className="grid items-center gap-12 lg:grid-cols-[1fr_1.5fr] to-1100:grid-cols-1 to-1100:text-center">
+        <div className="grid items-center gap-8 lg:gap-10 lg:grid-cols-[1fr_1.5fr] to-1100:grid-cols-1 to-1100:text-center">
           <div
             className={cn(
               'max-w-[440px] to-1100:mx-auto to-1100:max-w-[620px]',
@@ -126,41 +127,77 @@ export function CredentialsSection({ rows }: CredentialsSectionProps) {
             >
               {CREDENTIALS_CONTENT.subheading}
             </p>
+            {/*
+              Visible at `lg`+ only. Below that the grid collapses to one
+              column and the CTA has to fall after the badge collage instead —
+              see the second copy below. Keeping this one in place (rather than
+              pulling the CTA out into its own grid row) means the `items-center`
+              row-height math above stays exactly what it was.
+            */}
             <SmartLink
               href={CREDENTIALS_CONTENT.ctaHref}
-              className={buttonClass('primary', 'md', 'mt-7')}
+              className={cn(buttonClass('primary', 'md', 'mt-7'), 'to-1100:hidden')}
             >
               {CREDENTIALS_CONTENT.ctaLabel} <ArrowIcon />
             </SmartLink>
           </div>
 
           <div
-            className={cn('flex flex-col items-center gap-6', reveal('right'))}
+            className={cn(
+              'flex w-full flex-col items-center gap-6',
+              reveal('right'),
+            )}
             {...revealAttrs()}
           >
-            {rows.map((row) => (
-              <div
-                key={row.id}
-                className={cn(
-                  'flex flex-wrap items-center justify-center',
-                  // Both rows collapse to a 14px gap below 640px. `.cred-row-plain`
-                  // and `.cred-row` tie on specificity, and the media block comes
-                  // later in the file — so the narrow gap wins for the plain row too,
-                  // which also carries `.cred-row`.
-                  row.variant === 'plain' ? 'gap-[34px]' : 'gap-5',
-                  'to-640:gap-3.5',
-                )}
-              >
-                {row.badges.map((badge) =>
-                  row.variant === 'plain' ? (
-                    <PlainBadge key={badge.id} badge={badge} />
-                  ) : (
-                    <CardBadge key={badge.id} badge={badge} />
-                  ),
-                )}
-              </div>
-            ))}
+            {/*
+              Below `md` the collage becomes a single auto-scrolling marquee
+              (`CredentialsMarquee`) — three flex-wrap rows have no room to
+              breathe at that width, so the rows themselves are hidden rather
+              than reflowed.
+            */}
+            <div className="flex w-full flex-col items-center gap-6 to-767:hidden">
+              {rows.map((row) => (
+                <div
+                  key={row.id}
+                  className={cn(
+                    'flex flex-wrap items-center justify-center',
+                    // Both rows collapse to a 14px gap below 640px. `.cred-row-plain`
+                    // and `.cred-row` tie on specificity, and the media block comes
+                    // later in the file — so the narrow gap wins for the plain row too,
+                    // which also carries `.cred-row`.
+                    row.variant === 'plain' ? 'gap-[34px]' : 'gap-5',
+                    'to-640:gap-3.5',
+                  )}
+                >
+                  {row.badges.map((badge) =>
+                    row.variant === 'plain' ? (
+                      <PlainBadge key={badge.id} badge={badge} />
+                    ) : (
+                      <CardBadge key={badge.id} badge={badge} />
+                    ),
+                  )}
+                </div>
+              ))}
+            </div>
+
+            <CredentialsMarquee rows={rows} />
           </div>
+
+          {/*
+            Same CTA, `lg`-hidden twin of the one above — see that comment.
+            `justify-self-center`: a grid item is blockified regardless of its
+            own `display`, so without it this would stretch to the column's
+            full width instead of staying a content-sized pill.
+          */}
+          <SmartLink
+            href={CREDENTIALS_CONTENT.ctaHref}
+            className={cn(
+              buttonClass('primary', 'md'),
+              'hidden to-1100:inline-flex to-1100:justify-self-center',
+            )}
+          >
+            {CREDENTIALS_CONTENT.ctaLabel} <ArrowIcon />
+          </SmartLink>
         </div>
       </div>
     </section>
