@@ -60,7 +60,7 @@ export function useHoverIntent<TId extends string>(): {
 
   useEffect(() => clearTimer, [clearTimer]);
 
-  // Escape dismisses the open panel — keyboard parity the legacy nav lacked.
+  // Escape dismisses the open panel - keyboard parity the legacy nav lacked.
   useEffect(() => {
     if (openId === null) return;
     const onKeyDown = (event: KeyboardEvent) => {

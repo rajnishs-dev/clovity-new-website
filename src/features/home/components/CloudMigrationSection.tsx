@@ -16,25 +16,25 @@ import {
 import { MIGRATION_CONTENT } from '@/constants/home';
 
 /**
- * Section 5 — "Data Center Is Ending. Your Momentum Isn't.", as Tailwind
+ * Section 5 - "Data Center Is Ending. Your Momentum Isn't.", as Tailwind
  * utilities.
  *
  * The signature graphic is a three-column flow: source instance → four dashed
  * steps → Atlassian Cloud / AGC. The spine is an inline SVG with two stacked
- * paths — a static dotted track and a `#pulseGrad`-stroked segment whose
+ * paths - a static dotted track and a `#pulseGrad`-stroked segment whose
  * `stroke-dashoffset` runs on a loop (`animate-mf-line`). Both keep their exact
  * original `d` value; the curve was hand-tuned to land between the four step icons.
  *
  * Below 1020px the three columns become one, the spine is hidden (it would run
- * across nothing) and the steps wrap two-up — the legacy behaviour, kept.
+ * across nothing) and the steps wrap two-up - the legacy behaviour, kept.
  *
- * BACKGROUND — this used to composite a tinted data-centre photo. The original
+ * BACKGROUND - this used to composite a tinted data-centre photo. The original
  * dropped it: `.mig-sec` now paints only a soft three-stop gradient, and nothing in
  * the site references `data-center-bg` any more, so the photo is gone here too and
  * the asset is unused.
  *
  * The section also carries `bg-[#eaf8ff]` in the legacy markup. That sets only
- * `background-color`, which the opaque gradient covers completely — so it is a
+ * `background-color`, which the opaque gradient covers completely - so it is a
  * no-op and is not reproduced. The gradient is the visible background.
  */
 
@@ -67,7 +67,7 @@ export function CloudMigrationSection({
     >
       <div className="relative z-10 mx-auto max-w-shell px-6">
         <div
-          // `md:text-center` has to come after `reveal()` — it bakes in
+          // `md:text-center` has to come after `reveal()` - it bakes in
           // `md:text-left`, which would otherwise beat the plain `text-center`
           // at desktop widths.
           className={cn(
@@ -116,7 +116,7 @@ export function CloudMigrationSection({
                   className="flex items-center gap-2.5 text-[13.5px] font-700 text-ink"
                 >
                   {/*
-                    No chip behind these — the glyph sits on the card in its
+                    No chip behind these - the glyph sits on the card in its
                     product's brand colour, and the background tint and radius are
                     deliberately gone.
 
@@ -182,7 +182,7 @@ export function CloudMigrationSection({
           {/* Destination */}
           <div className="rounded-[10px] border border-[#dbe7ff] bg-[linear-gradient(180deg,#fff,#f5f9ff)] p-[22px] text-left shadow-[0_14px_34px_-12px_rgba(15,23,42,.14)] to-1020:mx-auto to-1020:w-full to-1020:max-w-[420px]">
             {/*
-              The head is a flex row — chip beside the title — because the original
+              The head is a flex row - chip beside the title - because the original
               reuses `.mflow-src-head` here, the same wrapper the source card uses.
 
               THE TWO BOTTOM MARGINS ARE LOAD-BEARING, which is not obvious. They are

@@ -4,7 +4,7 @@ import { tokenStorage } from './tokenStorage';
 
 /**
  * Auth surface for phase 2 (JWT + role-based access control on the Express
- * side). The public marketing pages are anonymous, so nothing calls this yet —
+ * side). The public marketing pages are anonymous, so nothing calls this yet -
  * it exists so the admin panel and any gated content plug in without
  * restructuring the services layer.
  */
@@ -54,7 +54,7 @@ export const authApi = {
       AUTH_ENDPOINTS.logout,
       {},
     );
-    // Drop the local token regardless — a failed logout must not leave a
+    // Drop the local token regardless - a failed logout must not leave a
     // credential sitting in memory.
     tokenStorage.clear();
     return result.success ? { success: true, data: null } : result;

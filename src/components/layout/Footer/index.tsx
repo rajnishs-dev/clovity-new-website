@@ -18,10 +18,10 @@ import { FooterLinkColumn } from './FooterLinkColumn';
  *
  * `overlap` reproduces the legacy `.footer-overlap` padding (260px, stepping down
  * at 900px and 640px). It exists purely to make room for the final CTA card, which
- * tucks itself up into the footer with negative margins — so pages without that
+ * tucks itself up into the footer with negative margins - so pages without that
  * CTA leave it off rather than carrying dead space.
  *
- * MIGRATION NOTE — the social icons and legal links previously set their hover
+ * MIGRATION NOTE - the social icons and legal links previously set their hover
  * state with inline `onmouseover` / `onmouseout` attributes plus an inline
  * `style`. Because inline styles beat classes, Tailwind `hover:` variants could
  * not have overridden them; converting meant removing the inline style entirely.
@@ -49,7 +49,7 @@ export function Footer({ overlap = false, className }: FooterProps) {
             <div className="mb-5">
               <SmartLink
                 href={ROUTES.home}
-                aria-label="Clovity — go to home page"
+                aria-label="Clovity - go to home page"
               >
                 <AppImage
                   src={logoWhite}

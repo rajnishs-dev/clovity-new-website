@@ -11,15 +11,15 @@ import { useReducedMotion } from './useReducedMotion';
  * browser scrolling: swipe left moves the content left (increasing
  * `scrollLeft`), swipe right moves it right, with no custom gesture code.
  * `requestAnimationFrame` only nudges `scrollLeft` forward while nothing is
- * pressed — `pausedRef` flips on `pointerdown` and back on release, so a drag
+ * pressed - `pausedRef` flips on `pointerdown` and back on release, so a drag
  * in progress is never fought by the auto-advance.
  *
  * Looping is the classic doubled-content trick: the track renders its items
  * twice back to back, and once `scrollLeft` passes the first copy's width
  * (`scrollWidth / 2`) it wraps by subtracting that width. Because the second
  * copy is pixel-identical to the first, the wrap is invisible forward. It is
- * not invisible backward — dragging past the start just stops at 0, same as
- * any ordinary scroll container — which is an acceptable trade for not
+ * not invisible backward - dragging past the start just stops at 0, same as
+ * any ordinary scroll container - which is an acceptable trade for not
  * tripling the DOM.
  */
 export interface UseAutoScrollMarqueeOptions {

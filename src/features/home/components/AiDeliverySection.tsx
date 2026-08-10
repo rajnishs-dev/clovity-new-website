@@ -14,15 +14,15 @@ import {
 import { AI_DELIVERY_CONTENT } from '@/constants/home';
 
 /**
- * Section 3 — "AI Is Not a Feature We Add.", as Tailwind utilities.
+ * Section 3 - "AI Is Not a Feature We Add.", as Tailwind utilities.
  *
  * A horizontal scroll-snap rail: arrows on desktop, dots below 900px, matching the
  * original's media queries. Step distance is one card width plus the gap, and the
  * arrows disable at each end using the same thresholds the legacy script used.
  *
  * `[scrollbar-width:none]` + `[&::-webkit-scrollbar]:hidden` hides the native
- * scrollbar. Tailwind ships no utility for either — the first is a Firefox-only
- * property and the second is a pseudo-element — so arbitrary property and
+ * scrollbar. Tailwind ships no utility for either - the first is a Firefox-only
+ * property and the second is a pseudo-element - so arbitrary property and
  * arbitrary variant are the correct tools rather than a stylesheet.
  *
  * Card art comes through `--card-photo` because the background composites a
@@ -32,7 +32,7 @@ import { AI_DELIVERY_CONTENT } from '@/constants/home';
  *
  * Improvement over the original: the rail is a labelled `role="group"` with
  * `aria-roledescription="carousel"`, arrows announce their purpose, and dots expose
- * `aria-current` — none of which the legacy version had.
+ * `aria-current` - none of which the legacy version had.
  */
 
 const CARD_GAP = 22; // matches the legacy `stepDeliver` offset
@@ -64,7 +64,7 @@ export function AiDeliverySection({ capabilities }: AiDeliverySectionProps) {
     <section id="ai-delivery" className="py-12 lg:py-16">
       <div className="mx-auto max-w-shell px-6">
         <div
-          // `md:text-center` has to come after `reveal()` — it bakes in
+          // `md:text-center` has to come after `reveal()` - it bakes in
           // `md:text-left`, which would otherwise beat the plain `text-center`
           // at desktop widths.
           className={cn(

@@ -1,8 +1,8 @@
 /**
  * Home page.
  *
- * No page-scoped stylesheet. What used to be a ~940-line inline `<style>` block —
- * including `#navbar` overrides that redefined the header for this route only — is
+ * No page-scoped stylesheet. What used to be a ~940-line inline `<style>` block -
+ * including `#navbar` overrides that redefined the header for this route only - is
  * now Tailwind utilities inside each section, and the header's two treatments are a
  * `variant` prop rather than a stylesheet that happens to load later.
  */
@@ -57,7 +57,7 @@ export const metadata: Metadata = buildMetadata({
  * Static by default. Nothing on this page is per-request, so it prerenders at
  * build time and is served from the edge cache. Once the CMS is live, changing
  * this to `export const revalidate = 300` (or wiring the on-demand webhook) is
- * the only edit needed — the data layer in features/home/data.ts already fetches
+ * the only edit needed - the data layer in features/home/data.ts already fetches
  * through the API-with-fallback seam.
  */
 export default async function HomePage() {

@@ -7,7 +7,7 @@ import { SmartLink } from '../Link';
  * Pagination for the blog / news / events / case-study indexes.
  *
  * Renders real links (`?page=2`) rather than buttons, so pages are crawlable,
- * shareable and work with the browser's back button — which matters for SEO on
+ * shareable and work with the browser's back button - which matters for SEO on
  * an index that the CMS will keep growing.
  *
  * Wrapped in `<nav aria-label>`, with `aria-current="page"` on the active number

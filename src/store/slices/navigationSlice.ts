@@ -6,7 +6,7 @@ import type { ActiveNav, NavGroupId } from '@/types/navigation';
  *
  * The legacy site did this by reading `<body data-nav>` and adding `.active` in
  * a DOM sweep. Here the active pair is state, set once per route, and the
- * header/footer/mobile-drawer all derive their `.active` class from it — the
+ * header/footer/mobile-drawer all derive their `.active` class from it - the
  * same highlight, without imperative DOM mutation.
  */
 export interface NavigationState extends ActiveNav {

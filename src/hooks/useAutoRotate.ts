@@ -8,7 +8,7 @@ import { useCallback, useEffect, useState } from 'react';
  * Matches the legacy behaviour exactly: 5000ms autoplay, arrows jump and then
  * restart the timer, hover pauses and leaving resumes, and reduced motion
  * disables rotation entirely (which in the original left both cards visible in
- * normal block flow — the `enabled` flag reproduces that by never adding the
+ * normal block flow - the `enabled` flag reproduces that by never adding the
  * `gcs-slider` class).
  *
  * Added: the timer also pauses when the tab is hidden, so a backgrounded tab is
@@ -40,7 +40,7 @@ export function useAutoRotate({
 }: AutoRotateOptions): AutoRotate {
   const [index, setIndex] = useState(0);
   const [paused, setPaused] = useState(false);
-  // Bumping this restarts the interval — how an arrow click resets autoplay.
+  // Bumping this restarts the interval - how an arrow click resets autoplay.
   const [cycle, setCycle] = useState(0);
 
   const goTo = useCallback(

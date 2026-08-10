@@ -7,7 +7,7 @@ import { siteConfig } from '@/config/site';
  * drift from the actual origin.
  *
  * Preview and staging deployments set `NEXT_PUBLIC_ALLOW_INDEXING=false` and are
- * fully disallowed — a preview URL competing with production in search results is
+ * fully disallowed - a preview URL competing with production in search results is
  * a real and surprisingly common SEO problem.
  */
 export default function robots(): MetadataRoute.Robots {

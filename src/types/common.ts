@@ -15,7 +15,7 @@ export type Maybe<T> = T | null | undefined;
 /** Make `K` required on an otherwise partial `T`. */
 export type RequireOnly<T, K extends keyof T> = Partial<T> & Pick<T, K>;
 
-/** Union of the values of a const object — safer than enums. */
+/** Union of the values of a const object - safer than enums. */
 export type ValueOf<T> = T[keyof T];
 
 /** Shared visual scales used across the UI kit. */

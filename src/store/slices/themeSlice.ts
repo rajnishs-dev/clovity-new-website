@@ -8,7 +8,7 @@ export type ThemeMode = 'light' | 'dark' | 'system';
  * The current design is light-only, and `mode` stays `'light'` so the migration
  * changes nothing visually. The slice exists because `reducedMotion` is read by
  * every animation hook (GSAP, Framer Motion, the canvas sphere, the carousels)
- * — one resolved value instead of a dozen `matchMedia` calls.
+ * - one resolved value instead of a dozen `matchMedia` calls.
  */
 export interface ThemeState {
   mode: ThemeMode;

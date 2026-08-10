@@ -31,7 +31,7 @@ export function getFocusableElements(container: HTMLElement): HTMLElement[] {
 }
 
 /**
- * Trap Tab inside `container`. Returns a `keydown` handler to attach — the
+ * Trap Tab inside `container`. Returns a `keydown` handler to attach - the
  * caller owns attach/detach so it stays symmetric with the effect lifecycle.
  */
 export function createFocusTrap(container: HTMLElement) {

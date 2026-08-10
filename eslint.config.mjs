@@ -6,7 +6,7 @@ import prettierConfig from 'eslint-config-prettier/flat';
  * ESLint flat config.
  *
  * `eslint-config-next` 16 ships native flat configs (arrays of `Linter.Config`),
- * so they are spread directly — no `FlatCompat` shim, which is what the old
+ * so they are spread directly - no `FlatCompat` shim, which is what the old
  * eslintrc-based setup needed and which breaks against this version.
  *
  * `prettierConfig` goes last so it can switch off any stylistic rule that would
@@ -34,7 +34,7 @@ const config = [
 
   {
     rules: {
-      // Enforce next/link + next/image across the whole app — the migration's
+      // Enforce next/link + next/image across the whole app - the migration's
       // two hard requirements, so a regression fails the build rather than
       // sliding through review.
       '@next/next/no-html-link-for-pages': 'error',
@@ -59,7 +59,7 @@ const config = [
 
   {
     /**
-     * `tools/` holds the parity harness and the legacy static server — Node CLI
+     * `tools/` holds the parity harness and the legacy static server - Node CLI
      * scripts, not app code. Printing a report to stdout is their entire interface,
      * so `no-console` is the wrong rule here rather than a rule being dodged; the
      * app code in `src/` is still held to it.

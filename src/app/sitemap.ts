@@ -9,7 +9,7 @@ import { siteConfig } from '@/config/site';
  * entry there instead of remembering to touch a separate file.
  *
  * `lastModified` uses build time. That is honest for statically prerendered
- * marketing pages — they genuinely change when the site is rebuilt. Once the CMS
+ * marketing pages - they genuinely change when the site is rebuilt. Once the CMS
  * is live, the per-item `updatedAt` should be appended here for blog, news,
  * events and case-study detail routes; the per-feature data loaders already
  * return that field.

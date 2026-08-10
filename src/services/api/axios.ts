@@ -35,7 +35,7 @@ export function getApiClient(): AxiosInstance {
   return instance;
 }
 
-/** Test/HMR hook — forces the next `getApiClient()` to rebuild the instance. */
+/** Test/HMR hook - forces the next `getApiClient()` to rebuild the instance. */
 export function resetApiClient(): void {
   instance = null;
 }

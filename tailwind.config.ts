@@ -5,7 +5,7 @@ import type { Config } from 'tailwindcss';
  *
  * This file replaces the hand-written stylesheets the migration started with
  * (`theme.css`, `pages/home.css`, `migration.css`). Every value below was read
- * out of those files, so the tokens are the legacy design's own numbers — nothing
+ * out of those files, so the tokens are the legacy design's own numbers - nothing
  * was re-picked or rounded.
  *
  * Pinned to Tailwind 3.4 on purpose: the legacy site was authored against the v3
@@ -28,7 +28,7 @@ const config: Config = {
    * One glob over all of src, not a per-directory list.
    *
    * The previous list named app/components/features/constants/config and omitted
-   * `lib/`, `hooks/` and `utils/` — which silently broke every class string those
+   * `lib/`, `hooks/` and `utils/` - which silently broke every class string those
    * files build. `lib/reveal.ts` holds the entire scroll-reveal treatment, so none
    * of it was in the stylesheet: the classes were on the elements, the rules did
    * not exist, and nothing failed loudly.
@@ -73,7 +73,7 @@ const config: Config = {
         sans: ['var(--font-space-grotesk)', '"DM Sans"', 'sans-serif'],
         display: ['var(--font-space-grotesk)', 'sans-serif'],
         body: ['"DM Sans"', 'sans-serif'],
-        // `.askai` in the legacy hero asked for Inter, which was never loaded —
+        // `.askai` in the legacy hero asked for Inter, which was never loaded -
         // so it always fell through to system-ui. Kept faithful.
         ui: ['Inter', 'system-ui', 'sans-serif'],
       },
@@ -93,7 +93,7 @@ const config: Config = {
        * No custom `fontSize` tokens on purpose.
        *
        * A named size token and a named colour token both compile to `text-*`,
-       * and `tailwind-merge` classifies `text-<name>` heuristically — it cannot
+       * and `tailwind-merge` classifies `text-<name>` heuristically - it cannot
        * tell `text-heading` (a clamp size) from `text-heading` (a hex colour), so
        * one would silently drop the other. Colour tokens are named below; the
        * handful of fluid sizes use arbitrary values (`text-[clamp(...)]`) at the
@@ -178,7 +178,7 @@ const config: Config = {
          * Named tokens instead of arbitrary values like
          * `transition-[opacity,transform]`.
          *
-         * That arbitrary form silently produced NO CSS — the class never made it
+         * That arbitrary form silently produced NO CSS - the class never made it
          * into the stylesheet, so `transition-property` fell back to its initial
          * value `all` and every scroll-reveal transitioned every property. A
          * named token cannot fail that way, and the failure is invisible without
@@ -196,7 +196,7 @@ const config: Config = {
          * DEFAULT is overridden to the CSS `ease` keyword.
          *
          * Tailwind's own default is `cubic-bezier(.4,0,.2,1)`, but the legacy
-         * stylesheet wrote `transition: background .25s` etc. without an easing —
+         * stylesheet wrote `transition: background .25s` etc. without an easing -
          * which resolves to `ease` (cubic-bezier(.25,.1,.25,1)). Setting DEFAULT
          * here fixes every `transition-*` utility at once instead of needing an
          * explicit `ease-*` on ~450 elements. Call sites that genuinely wanted a
@@ -205,7 +205,7 @@ const config: Config = {
         DEFAULT: 'ease',
         native: 'ease',
         // `ease-in-out` is already cubic-bezier(.4,0,.2,1), which is what the
-        // legacy mobile menu and hover handlers used — no token needed for it.
+        // legacy mobile menu and hover handlers used - no token needed for it.
         spring: 'cubic-bezier(.34,1.56,.64,1)', // card lift
         flood: 'cubic-bezier(.22,.61,.36,1)', // card stack / hover flood
         'power2-out': 'cubic-bezier(.215,.61,.355,1)', // GSAP power2.out
@@ -229,7 +229,7 @@ const config: Config = {
           to: { opacity: '1', transform: 'translateX(-50%) translateY(0)' },
         },
 
-        // Client logo marquee — travels exactly -50% because the track holds the
+        // Client logo marquee - travels exactly -50% because the track holds the
         // list twice, which is what makes the loop seamless.
         marquee: {
           from: { transform: 'translateX(0)' },
@@ -342,13 +342,13 @@ const config: Config = {
         'grad-cta':
           'linear-gradient(135deg,#23408a 0%,#3a6fde 65%,#5b89eb 100%)',
         'grad-spine': 'linear-gradient(180deg,#2563eb,#e2e8f0)',
-        /** `.mig-sec` — the cloud-migration section's backdrop. */
+        /** `.mig-sec` - the cloud-migration section's backdrop. */
 
         /**
          * AI-delivery carousel card: a darkening scrim composited over a photo.
          *
-         * Two background layers cannot come from two separate utilities — the
-         * second `background-image` would replace the first — so the whole value
+         * Two background layers cannot come from two separate utilities - the
+         * second `background-image` would replace the first - so the whole value
          * lives here as one token, with the photo injected through
          * `--card-photo`. The variable is the only runtime part, set inline
          * because the URL is a build-hashed asset path.

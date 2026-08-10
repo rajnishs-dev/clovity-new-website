@@ -5,7 +5,7 @@ import { CDN } from './media';
  * The client-logo marquee.
  *
  * The legacy page built these with a `for` loop that injected 23 `<img>` tags
- * into two duplicated tracks via `innerHTML` — so the logos did not exist until
+ * into two duplicated tracks via `innerHTML` - so the logos did not exist until
  * JavaScript ran, and were invisible to crawlers and to anyone with JS blocked.
  * Generating the list here means the same 23 logos are in the server-rendered
  * HTML, from the same CDN paths.

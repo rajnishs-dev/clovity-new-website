@@ -14,12 +14,12 @@ import { SmartLink } from '@/components/ui/Link';
  * The heading row plus the horizontal card rail beneath it, as Tailwind utilities.
  *
  * Head and track are one component because the heading and the arrow pair are
- * siblings inside a `justify-between` flex row while the track sits below — and the
+ * siblings inside a `justify-between` flex row while the track sits below - and the
  * arrows need the track's scroll state, so all three share one hook.
  *
  * Card structure: the image fills the card and the dark caption panel is translated
  * 100% down, sliding up on hover (`group-hover:translate-y-0`). That hover-only
- * reveal is a real accessibility problem in the original — the title existed only
+ * reveal is a real accessibility problem in the original - the title existed only
  * inside a panel shown on `:hover`, so keyboard and touch users got an unlabelled
  * image link. Fixed with an `aria-label` on the anchor; the visual behaviour is
  * untouched.
@@ -40,7 +40,7 @@ export interface ContentCardRailProps {
   items: ContentItem[];
   columnTitle: string;
   columnSubtitle: string;
-  /** Rendered after the rail — the "View More" row. */
+  /** Rendered after the rail - the "View More" row. */
   footer?: ReactNode;
 }
 
@@ -91,7 +91,7 @@ export function ContentCardRail({
       {/*
         Only `-mr-1.5` on this wrapper, not `-mx-1.5`. The track's `px-1.5`
         exists so a card's hover border/shadow has room before the scroll
-        container's own clipping — but browsers don't render a scroll
+        container's own clipping - but browsers don't render a scroll
         container's START padding at `scrollLeft: 0` (only the END padding is
         respected), so a matching `-ml-1.5` here would pull the first card
         6px past the section's actual gutter instead of cancelling anything.

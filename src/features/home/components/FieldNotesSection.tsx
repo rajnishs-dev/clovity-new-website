@@ -17,10 +17,10 @@ import { HIGHLIGHTS_CONTENT } from '@/constants/home';
 import { ContentCardRail } from './ContentCardRail';
 
 /**
- * Section 7.5 — "What We Learn in the Field, We Publish.", as Tailwind utilities.
+ * Section 7.5 - "What We Learn in the Field, We Publish.", as Tailwind utilities.
  *
  * Five content types; picking one swaps the card rail, the column heading, the
- * subheading and the "View More" destination — exactly as the legacy script did.
+ * subheading and the "View More" destination - exactly as the legacy script did.
  *
  * The section's dot-grid backdrop is a `before:` layer with a radial-gradient
  * pattern, masked so it fades out away from the top-left corner. `mask-image` has
@@ -30,15 +30,15 @@ import { ContentCardRail } from './ContentCardRail';
  *  1. The cards were built with `innerHTML` and a hand-rolled `escapeHtml()`, so
  *     they did not exist until JS ran and were invisible to crawlers. They are
  *     server-rendered now, and React does the escaping.
- *  2. The tabs were plain buttons toggling a class — no `role`, no arrow-key
+ *  2. The tabs were plain buttons toggling a class - no `role`, no arrow-key
  *     navigation, no link between a tab and the content it controlled. They are a
  *     proper WAI-ARIA tablist now.
  *  3. Remounting the rail on tab change (`key`) resets its scroll position and
- *     re-measures the arrows — what the original did imperatively.
+ *     re-measures the arrows - what the original did imperatively.
  */
 const TAB_ID_PREFIX = 'field-notes';
 
-/** `.hi-tab` — a left-aligned pill that slides right on hover. */
+/** `.hi-tab` - a left-aligned pill that slides right on hover. */
 const TAB_CLASS =
   'flex sm:flex-1 cursor-pointer items-center gap-3 rounded-xl border border-line bg-white px-4 py-3.5 text-left text-[14px] font-500 text-[#334155] shadow-[0_1px_2px_rgba(15,23,42,.04)] [transition:transform_.22s,box-shadow_.22s,border-color_.22s,background_.22s,color_.22s] hover:translate-x-[5px] hover:border-blue-200 hover:shadow-[0_12px_26px_rgba(15,23,42,.08)] [&_i]:w-[18px] [&_i]:text-center [&_i]:text-[13.5px] [&_i]:text-faint [&_i]:transition-colors';
 
@@ -105,7 +105,7 @@ export function FieldNotesSection({ collections }: FieldNotesSectionProps) {
                  * The reveal lives per item, not on `tabClassName`, for two
                  * reasons: the original staggered these tabs (`data-delay` 0,
                  * .05, .1, .15, .2), and `reveal()`'s classes are useless without
-                 * the matching `data-reveal` attribute — which only a per-item
+                 * the matching `data-reveal` attribute - which only a per-item
                  * `attrs` can carry.
                  */
                 className: reveal('up', index * 50),

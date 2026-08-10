@@ -14,13 +14,13 @@ import { MegaPanel } from './MegaPanel';
 /**
  * Desktop navigation.
  *
- * Reproduces the legacy hover behaviour exactly — including the 250ms close delay
+ * Reproduces the legacy hover behaviour exactly - including the 250ms close delay
  * that lets the cursor cross the gap between a nav link and its fixed-position
- * panel (see `useHoverIntent`) — and adds the keyboard support the original never
+ * panel (see `useHoverIntent`) - and adds the keyboard support the original never
  * had: a real `<button>` trigger with `aria-expanded`/`aria-controls`, click,
  * Enter, Space, Escape, and close-on-focus-out.
  *
- * MIGRATION NOTE — the nav link's colour was previously decided by two competing
+ * MIGRATION NOTE - the nav link's colour was previously decided by two competing
  * stylesheets: `theme.css` set the dark default, and `home.css` overrode it with
  * `#navbar:not(.scrolled) .nav-link { color: rgba(255,255,255,.88) }` so the links
  * read white over the dark hero. That override only worked because of import
@@ -38,12 +38,12 @@ export interface NavbarProps {
 }
 
 /**
- * `.nav-link` — 16px/400 with the brand underline that grows in on hover.
+ * `.nav-link` - 16px/400 with the brand underline that grows in on hover.
  *
  * The current page is marked by the underline ONLY; its label keeps the same
  * colour as every other link. The legacy `.nav-link.active` rule also recoloured
  * the text to #1d4ed8, which read as a permanently hovered item over the dark
- * hero — so that part is deliberately dropped. `aria-current="page"` carries the
+ * hero - so that part is deliberately dropped. `aria-current="page"` carries the
  * same information for anyone who cannot see the underline.
  */
 function navLinkClass(onDark: boolean, active: boolean): string {
@@ -54,8 +54,8 @@ function navLinkClass(onDark: boolean, active: boolean): string {
     'hover:after:w-full',
     onDark
       ? 'text-white/[.88] hover:text-white'
-      : 'text-muted hover:text-brand-700',
-    // Underline only — no colour change. Listed last so it beats `after:w-0`.
+      : 'text-ink hover:text-brand-700',
+    // Underline only - no colour change. Listed last so it beats `after:w-0`.
     active && 'after:w-full',
   );
 }

@@ -10,7 +10,7 @@ import { Icon } from '../Icon';
  * labelled by its trigger.
  *
  * The legacy mobile nav accordion toggled a `.open` class from a click handler
- * with no ARIA at all — a screen-reader user had no way to know a section was
+ * with no ARIA at all - a screen-reader user had no way to know a section was
  * collapsed. Same visuals, correct semantics.
  *
  * `allowMultiple={false}` (the default) reproduces the legacy behaviour of

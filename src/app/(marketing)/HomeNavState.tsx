@@ -10,7 +10,7 @@ import { useActiveNav } from '@/hooks/useActiveNav';
  * pair into the store instead means the header, mobile drawer and footer all
  * derive their highlight declaratively and cannot desync from the route.
  *
- * A tiny client component so the page itself stays a Server Component — only the
+ * A tiny client component so the page itself stays a Server Component - only the
  * `useEffect` that dispatches needs to run in the browser.
  */
 export function HomeNavState() {

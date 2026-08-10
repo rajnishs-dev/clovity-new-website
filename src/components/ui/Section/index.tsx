@@ -19,7 +19,7 @@ export type SectionPadding = 'default' | 'tight' | 'loose' | 'none';
 const PADDING_CLASS: Record<SectionPadding, string> = {
   default: 'py-12 lg:py-16',
   tight: 'py-12 sm:py-16',
-  loose: 'py-20 sm:py-28',
+  loose: 'py-16 sm:py-20',
   none: '',
 };
 
@@ -108,8 +108,14 @@ export function SectionHeader({
   return (
     <div
       className={cn(
-        align === 'center' ? 'text-center' : 'text-left',
+        // `reveal()` itself ships `text-center md:text-left` (the right
+        // default for the callers that reveal a left-aligned block), so it
+        // has to be layered UNDER the real alignment choice - including its
+        // `md:` step - or `align="center"` silently loses to reveal's own
+        // `md:text-left` at desktop widths despite being the explicit,
+        // documented default.
         revealing && reveal(revealFrom, revealDelayMs),
+        align === 'center' ? 'text-center md:text-center' : 'text-left md:text-left',
         className,
       )}
       style={style}
@@ -120,7 +126,7 @@ export function SectionHeader({
         {heading}
       </h2>
       {subheading ? (
-        <p className={cn(SUBHEADING_CLASS, subheadingClassName)}>
+        <p className={cn(SUBHEADING_CLASS, 'mt-4', subheadingClassName)}>
           {subheading}
         </p>
       ) : null}

@@ -6,7 +6,7 @@ import { formatNumber } from '@/utils/format';
 /**
  * Animated counter for the results band.
  *
- * The legacy page ran this twice — once in `site.js` with a 16ms `setInterval`,
+ * The legacy page ran this twice - once in `site.js` with a 16ms `setInterval`,
  * and again via a GSAP `ScrollTrigger` in the page script. Both fought over the
  * same element. This is the single implementation:
  *   • 2000ms duration and thousands separators, same as the original
@@ -16,7 +16,7 @@ import { formatNumber } from '@/utils/format';
  *   • reduced motion shows the final value immediately
  *
  * The reduced-motion case is *derived*, not written through `setState` in an
- * effect — that would trigger a cascading render on mount for no benefit, and is
+ * effect - that would trigger a cascading render on mount for no benefit, and is
  * the pattern `react-hooks/set-state-in-effect` exists to catch.
  */
 export interface CountUpOptions {
@@ -52,7 +52,7 @@ export function useCountUp({
     const tick = (now: number) => {
       if (startTime === 0) startTime = now;
       const progress = Math.min(1, (now - startTime) / durationMs);
-      // easeOutQuad — matches the 'power2.out' feel of the GSAP version.
+      // easeOutQuad - matches the 'power2.out' feel of the GSAP version.
       const eased = 1 - (1 - progress) * (1 - progress);
       setAnimatedValue(Math.floor(eased * target));
       if (progress < 1) {

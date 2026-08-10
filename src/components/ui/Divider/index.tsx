@@ -2,7 +2,7 @@ import { cn } from '@/lib/cn';
 
 /**
  * Rule between content blocks. Presentational, so it carries `role="presentation"`
- * rather than the implicit `separator` role — screen readers should not announce
+ * rather than the implicit `separator` role - screen readers should not announce
  * decorative lines.
  */
 export interface DividerProps {

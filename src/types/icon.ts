@@ -3,7 +3,7 @@
  *
  * This union is the contract, and it lives in `types/` rather than next to the
  * registry on purpose. Content types (`NavLink.icon`, `ServiceCard.icon`) need to
- * name an icon, and a type in `types/` must not import from `components/` — that
+ * name an icon, and a type in `types/` must not import from `components/` - that
  * would point the dependency arrow the wrong way and make the data layer aware of
  * the render layer, which is exactly what phase 2's CMS split has to avoid.
  *
@@ -14,7 +14,7 @@
  * never drift.
  *
  * Names are semantic, not transliterated from whichever icon set is currently
- * installed — `mail` not `envelope`, `close` not `xmark`. The site has already
+ * installed - `mail` not `envelope`, `close` not `xmark`. The site has already
  * changed icon sets once (Font Awesome 6.5.1 -> Lucide); this vocabulary is meant
  * to survive the next change without touching a single content file.
  */
@@ -79,7 +79,12 @@ export type IconName =
   // Company
   | 'building'
   | 'briefcase'
-  // Brand marks — inline SVG, since Lucide ships no brand icons.
+  // Location and resource metadata
+  | 'map-pin'
+  | 'link'
+  | 'landmark'
+  | 'handshake'
+  // Brand marks - inline SVG, since Lucide ships no brand icons.
   | 'atlassian'
   | 'jira'
   | 'confluence'

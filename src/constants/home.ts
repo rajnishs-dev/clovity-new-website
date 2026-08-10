@@ -44,7 +44,7 @@ import {
  * This is the static fallback half of the backend-ready seam: each section reads
  * its data from here today, and from `contentApi` / `marketingApi` once the
  * Express + PostgreSQL CMS is live. Same types, same components, no markup
- * change — which is the whole reason the copy is data and not JSX.
+ * change - which is the whole reason the copy is data and not JSX.
  *
  * Every string below is the legacy site's own wording, punctuation included. No
  * claim, metric or certification was added, rounded or reworded.
@@ -169,7 +169,7 @@ export const CUSTOMER_STORIES: CustomerStory[] = [
 
 export const PUBLIC_SECTOR_CONTENT = {
   // The legacy heading is: We Don't Visit the <span class="grad">Public
-  // Sector</span>.<br> We Work Here. — split into parts so the gradient span and
+  // Sector</span>.<br> We Work Here. - split into parts so the gradient span and
   // the hard line break stay exactly where they were.
   headingLead: "We Don't Visit the ",
   headingHighlight: 'Public Sector',
@@ -623,7 +623,7 @@ export const CREDENTIALS_CONTENT = {
  * `CredentialRow` for why the split is data rather than flex-wrap.
  *
  * The plain badges keep the per-image inline sizing the original applies: 100px
- * tall, capped at 150px wide — 160px for the Marketplace Partner lockup, which is
+ * tall, capped at 150px wide - 160px for the Marketplace Partner lockup, which is
  * wider than the rest.
  */
 export const CREDENTIAL_ROWS: CredentialRow[] = [

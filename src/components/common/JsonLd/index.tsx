@@ -5,14 +5,14 @@ import type { JsonLdObject } from '@/lib/schema';
  *
  * Two safety details:
  *  • `JSON.stringify` output has `<` escaped to `<`, which is what stops a
- *    string inside the data from closing the script tag early — the standard
+ *    string inside the data from closing the script tag early - the standard
  *    JSON-LD injection vector.
  *  • The tag is emitted from a Server Component, so the structured data is in
  *    the initial HTML where crawlers actually read it. Injecting it on the
  *    client would leave it invisible to most parsers.
  */
 export interface JsonLdProps {
-  /** A single graph or several — several are wrapped in an @graph array. */
+  /** A single graph or several - several are wrapped in an @graph array. */
   schema: JsonLdObject | JsonLdObject[];
   id?: string;
 }

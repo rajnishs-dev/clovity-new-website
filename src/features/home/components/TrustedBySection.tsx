@@ -16,14 +16,14 @@ import { TRUSTED_BY_CONTENT } from '@/constants/home';
 import { ClientMarquee } from './ClientMarquee';
 
 /**
- * Section 2 — Trusted By: intro copy, three customer-story cards, logo marquee.
+ * Section 2 - Trusted By: intro copy, three customer-story cards, logo marquee.
  *
  * The story cards are their own treatment rather than the shared `<Card>`: the
  * legacy `.csp-card` uses a 3px lift and a different shadow/border pair from
  * `.card`, so folding them together would change one of them.
  *
  * `group` on the card drives the arrow nudge that `.csp-card:hover .csp-link i`
- * used to do — the arrow no longer depends on a stylesheet knowing its class name.
+ * used to do - the arrow no longer depends on a stylesheet knowing its class name.
  *
  * Below `md` the grid becomes a one-card-at-a-time scroll-snap rail (same
  * `useSnapCarousel` hook the AI Delivery and Expert Insights rails use), with
@@ -49,7 +49,7 @@ export function TrustedBySection({ stories, logos }: TrustedBySectionProps) {
     <section className="relative overflow-hidden bg-white py-12 lg:py-16">
       <div
         // `reveal()` bakes in `md:text-left` (it's meant for content that
-        // re-aligns on desktop) — this heading stays centered at every
+        // re-aligns on desktop) - this heading stays centered at every
         // breakpoint, so `md:text-center` has to come after it to win.
         className={cn(
           'relative mx-auto mb-8 lg:mb-10 max-w-shell px-6 text-center',

@@ -16,7 +16,7 @@ import { SmartLink } from '@/components/ui/Link';
  * `transition-property` identical.
  *
  * Split into its own client component so the rest of the footer stays a Server
- * Component — only the `.active` highlight needs store access.
+ * Component - only the `.active` highlight needs store access.
  *
  * `prefetch={false}`: these are bulk navigation links on every page. Prefetching
  * all ~17 would fire a burst of requests for routes the visitor will not open.

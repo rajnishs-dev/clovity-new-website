@@ -9,13 +9,13 @@ import { AppImage } from '@/components/ui/Image';
  * rows: one draggable, auto-scrolling strip built on `useAutoScrollMarquee`.
  *
  * Unlike `ClientMarquee` (a pure CSS `translateX` loop with no user input),
- * this track is a real `overflow-x-auto` element — the hook only nudges
+ * this track is a real `overflow-x-auto` element - the hook only nudges
  * `scrollLeft` forward while idle, so swiping it is native browser scrolling
  * the whole time: drag left to move the strip left, drag right to move it
  * right, exactly as any other horizontal scroller behaves.
  *
  * `isSvg` and the card treatment are intentionally re-declared here rather
- * than imported from `CredentialsSection` — that file imports this one for
+ * than imported from `CredentialsSection` - that file imports this one for
  * the mobile strip, so importing back would be a cycle.
  */
 function isSvg(source: CredentialBadge['image']['src']): boolean {
@@ -25,8 +25,8 @@ function isSvg(source: CredentialBadge['image']['src']): boolean {
 
 /**
  * Marquee-only card treatment. Every badge gets the same rounded white box in
- * the strip — including the four bare Atlassian partner badges, which render
- * unwrapped in the desktop rows — and none of them carry the desktop card's
+ * the strip - including the four bare Atlassian partner badges, which render
+ * unwrapped in the desktop rows - and none of them carry the desktop card's
  * drop shadow: constant sideways motion turned it into a smear rather than
  * depth, so a plain border stands in for it instead.
  */

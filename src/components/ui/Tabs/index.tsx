@@ -7,7 +7,7 @@ import { cn } from '@/lib/cn';
  * Tab list following the WAI-ARIA tabs pattern.
  *
  * The legacy "What We Learn in the Field" tabs were plain buttons toggling an
- * `.active` class — no `role`, no arrow-key navigation, no association between
+ * `.active` class - no `role`, no arrow-key navigation, no association between
  * a tab and the cards it controlled. This keeps the same look and adds:
  *   • `role="tablist"` / `tab` / `tabpanel` with `aria-selected` + `aria-controls`
  *   • roving tabindex, so Tab enters the group once and arrows move within it
@@ -20,7 +20,7 @@ export interface TabItem {
   id: string;
   label: ReactNode;
   /**
-   * Extra classes for this tab only — e.g. a per-index staggered reveal.
+   * Extra classes for this tab only - e.g. a per-index staggered reveal.
    * Applied after `tabClassName`, so it wins on conflicts.
    */
   className?: string;
@@ -30,7 +30,7 @@ export interface TabItem {
    * This exists because a class alone is not always enough: the scroll-reveal
    * treatment needs both its utilities *and* a `data-reveal` attribute for the
    * observer to find the element. Without a way to pass the attribute, callers
-   * could apply the classes and silently leave every tab stuck at opacity 0 —
+   * could apply the classes and silently leave every tab stuck at opacity 0 -
    * which is exactly what happened.
    */
   attrs?: Record<string, string>;

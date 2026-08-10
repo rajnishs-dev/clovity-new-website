@@ -16,13 +16,13 @@ import { AGC_CONTENT, PUBLIC_SECTOR_CONTENT } from '@/constants/home';
 import { publicSectorBg } from '@/constants/media';
 
 /**
- * Section 2.5 — Public Sector + Atlassian Government Cloud, as Tailwind
+ * Section 2.5 - Public Sector + Atlassian Government Cloud, as Tailwind
  * utilities.
  *
  * Two panels share one grid cell (`[grid-area:1/1]`), so the stack is always as
  * tall as the taller card and the shorter one cannot make the section jump when it
  * rotates to the front. Autoplay is 5s, arrows jump and restart the timer, hover
- * pauses — all matching the original.
+ * pauses - all matching the original.
  *
  * Reduced motion drops the stacking transforms entirely, which is what the legacy
  * script did by bailing out before adding `.gcs-slider`: both panels then render in
@@ -31,14 +31,14 @@ import { publicSectorBg } from '@/constants/media';
  * The `nth-child` selectors the original used to strip dividers off the first row
  * (`.gfg-item:nth-child(-n+2)`) and to stop the last step's padding
  * (`.agc-step:nth-child(n+3)`) are now index checks. The data is mapped here, so
- * the index is already in hand — and unlike nth-child, it cannot be thrown off by
+ * the index is already in hand - and unlike nth-child, it cannot be thrown off by
  * a wrapper element appearing later.
  *
  * The section background is set inline because the URL is a build-hashed asset
  * path, which no static Tailwind class can name. Size, position and repeat stay
  * utilities.
  *
- * Accessibility note — deliberately NOT adding `aria-hidden` to the panel behind.
+ * Accessibility note - deliberately NOT adding `aria-hidden` to the panel behind.
  * The rotation is a visual affordance; hiding half the section's content from
  * screen readers to mirror a decorative z-order would remove real information.
  */
@@ -82,7 +82,7 @@ export function PublicSectorSection({
         <div className="flex justify-end to-900:justify-center">
           {/*
             Below `to-900` this column no longer sits beside the background
-            art, so it re-centers instead of hugging full width — `max-w-full`
+            art, so it re-centers instead of hugging full width - `max-w-full`
             would fill the row and make `justify-center` on the row above a
             no-op.
           */}
@@ -124,7 +124,7 @@ export function PublicSectorSection({
                   </button>
                 </div>
 
-                {/* Panel 1 — federal practice + procurement facts */}
+                {/* Panel 1 - federal practice + procurement facts */}
                 <div
                   className={cn(
                     PANEL_BASE,
@@ -180,7 +180,7 @@ export function PublicSectorSection({
                   </div>
                 </div>
 
-                {/* Panel 2 — AGC readiness */}
+                {/* Panel 2 - AGC readiness */}
                 <div
                   className={cn(
                     PANEL_BASE,

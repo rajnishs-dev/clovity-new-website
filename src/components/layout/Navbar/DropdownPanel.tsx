@@ -14,7 +14,7 @@ import {
 /**
  * The narrow single-column dropdown (Discover), as Tailwind utilities.
  *
- * `before:` reproduces the legacy `.mega-wrap::before` — a 12px invisible strip
+ * `before:` reproduces the legacy `.mega-wrap::before` - a 12px invisible strip
  * above the panel that bridges the gap to the trigger, so the cursor does not
  * leave the hover target on its way down. `useHoverIntent`'s close delay covers
  * the rest.
@@ -56,7 +56,7 @@ export function DropdownPanel({
       className={cn(
         MEGA_PANEL_BASE,
         'absolute left-1/2 min-w-[520px] -translate-x-1/2 px-6 py-5 shadow-mega',
-        // Matches MegaPanel's fixed top-88/top-104 — the wrapper this panel is
+        // Matches MegaPanel's fixed top-88/top-104 - the wrapper this panel is
         // absolutely positioned against only spans the nav row's own height, not
         // the header's padding, so the offset has to make up that difference.
         scrolled ? 'top-[calc(100%+21px)]' : 'top-[calc(100%+23px)]',

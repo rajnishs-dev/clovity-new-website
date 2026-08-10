@@ -23,7 +23,7 @@ import { toPaginated } from './response';
 /**
  * The resource-oriented API surface components and Server Components call.
  *
- * Nothing below knows about Axios, status codes or envelopes — that all lives
+ * Nothing below knows about Axios, status codes or envelopes - that all lives
  * in request.ts / response.ts. When the Express backend lands, only the
  * ENDPOINTS map and (if the JSON shape differs) the mappers change.
  */
@@ -61,6 +61,17 @@ export const contentApi = {
       : result;
   },
 
+  caseStudy(
+    slug: string,
+    options?: RequestOptions,
+  ): Promise<ApiResult<CaseStudyItem>> {
+    return apiGet<CaseStudyItem>(
+      ENDPOINTS.caseStudies.detail(slug),
+      undefined,
+      options,
+    );
+  },
+
   async events(
     query?: ListQuery,
     options?: RequestOptions,
@@ -71,6 +82,10 @@ export const contentApi = {
       options,
     );
     return result.success ? toPaginated<EventItem>(result.data, query) : result;
+  },
+
+  event(slug: string, options?: RequestOptions): Promise<ApiResult<EventItem>> {
+    return apiGet<EventItem>(ENDPOINTS.events.detail(slug), undefined, options);
   },
 
   async webinars(
@@ -87,12 +102,27 @@ export const contentApi = {
       : result;
   },
 
+  webinar(
+    slug: string,
+    options?: RequestOptions,
+  ): Promise<ApiResult<WebinarItem>> {
+    return apiGet<WebinarItem>(
+      ENDPOINTS.webinars.detail(slug),
+      undefined,
+      options,
+    );
+  },
+
   async news(
     query?: ListQuery,
     options?: RequestOptions,
   ): Promise<PaginatedResult<NewsItem>> {
     const result = await apiGet<unknown>(ENDPOINTS.news.list(), query, options);
     return result.success ? toPaginated<NewsItem>(result.data, query) : result;
+  },
+
+  newsItem(slug: string, options?: RequestOptions): Promise<ApiResult<NewsItem>> {
+    return apiGet<NewsItem>(ENDPOINTS.news.detail(slug), undefined, options);
   },
 };
 

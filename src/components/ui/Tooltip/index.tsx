@@ -11,7 +11,7 @@ import { cn } from '@/lib/cn';
  * being a purely visual hint. CSS-only `:hover` tooltips are invisible to
  * keyboard and screen-reader users, which is why this is a component.
  *
- * Never put essential information here — a tooltip is supplementary by
+ * Never put essential information here - a tooltip is supplementary by
  * definition, and touch devices have no hover state at all.
  */
 export interface TooltipProps {

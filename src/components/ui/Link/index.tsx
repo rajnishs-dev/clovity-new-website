@@ -13,8 +13,8 @@ import {
 /**
  * The only anchor in the app.
  *
- * Routing every link through here means the `next/link` vs `<a>` decision — and
- * the `rel="noopener noreferrer"` hardening on external links — is made by one
+ * Routing every link through here means the `next/link` vs `<a>` decision - and
+ * the `rel="noopener noreferrer"` hardening on external links - is made by one
  * rule instead of remembered at ~400 call sites in the migrated markup.
  *
  *  • in-app path  → next/link (client-side nav + automatic prefetch)
@@ -84,7 +84,7 @@ export function SmartLink({
     );
   }
 
-  // Anything unclassifiable is treated as off-site — fail safe, not open.
+  // Anything unclassifiable is treated as off-site - fail safe, not open.
   return (
     <a
       href={href}

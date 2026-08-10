@@ -9,7 +9,7 @@ import { ROUTES } from '@/config/routes';
 /**
  * Route error boundary.
  *
- * Must be a client component — Next.js needs to catch a render error and hand it
+ * Must be a client component - Next.js needs to catch a render error and hand it
  * the `reset` callback.
  *
  * `error.digest` is shown rather than `error.message`: in production Next
@@ -43,7 +43,7 @@ export default function RootError({
         <h1 className="s-heading mb-4">Something went wrong.</h1>
         <p className="s-sub mb-8">
           We hit an unexpected error loading this page. Try again, or head back
-          to the home page — our team has been notified.
+          to the home page - our team has been notified.
         </p>
 
         <div className="flex flex-wrap items-center justify-center gap-3.5">

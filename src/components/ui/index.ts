@@ -88,3 +88,4 @@ export {
 export { Tabs, TabPanel, type TabsProps, type TabItem } from './Tabs';
 export { Tooltip, type TooltipProps } from './Tooltip';
 export { Pagination, type PaginationProps } from './Pagination';
+export { Select, type SelectProps, type SelectOption } from './Select';

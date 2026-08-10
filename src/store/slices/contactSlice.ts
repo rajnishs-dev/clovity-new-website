@@ -14,7 +14,7 @@ export interface ContactState {
   status: AsyncState;
   message: string | null;
   fieldErrors: Record<string, string[]>;
-  /** Epoch ms of the last successful submit — drives the "already sent" UI. */
+  /** Epoch ms of the last successful submit - drives the "already sent" UI. */
   lastSubmittedAt: number | null;
   newsletter: {
     status: AsyncState;
@@ -42,7 +42,7 @@ export const submitContactForm = createAsyncThunk<
       ...(result.fieldErrors ? { fieldErrors: result.fieldErrors } : {}),
     });
   }
-  return { message: 'Thanks — our team responds within one business day.' };
+  return { message: 'Thanks - our team responds within one business day.' };
 });
 
 export const subscribeToNewsletter = createAsyncThunk<

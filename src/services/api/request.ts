@@ -12,7 +12,7 @@ import { fail, normalizeError, ok, unwrapData } from './response';
  *     degrades a section to its fallback instead of blanking the page.
  *  2. It short-circuits when the API is not configured, which is what lets the
  *     site run today on bundled static content and switch to live data by
- *     flipping one env flag — with no component change.
+ *     flipping one env flag - with no component change.
  */
 
 const NOT_CONFIGURED = () =>

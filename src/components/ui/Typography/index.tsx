@@ -24,15 +24,15 @@ import { cn } from '@/lib/cn';
  * share one definition rather than restating the clamp in every file.
  */
 
-/** `.s-heading` — the site's section heading. */
+/** `.s-heading` - the site's section heading. */
 export const HEADING_CLASS =
   'text-[clamp(30px,3.2vw,46px)] font-normal leading-[1.1] tracking-[-0.03em] text-title';
 
-/** `.s-sub` — the supporting paragraph under a section heading. */
+/** `.s-sub` - the supporting paragraph under a section heading. */
 export const SUBHEADING_CLASS =
   'text-[16px] font-normal leading-[1.65] text-black';
 
-/** `.s-label` — the small uppercase eyebrow above a heading. */
+/** `.s-label` - the small uppercase eyebrow above a heading. */
 export const LABEL_CLASS =
   'inline-block text-[14px] font-500 uppercase tracking-[.14em] text-brand-600';
 
@@ -70,7 +70,7 @@ const VARIANT_CLASS: Record<TypographyVariant, string> = {
   label: LABEL_CLASS,
 };
 
-/** Default element per variant — keeps the heading hierarchy honest. */
+/** Default element per variant - keeps the heading hierarchy honest. */
 const VARIANT_TAG: Record<TypographyVariant, ElementType> = {
   display: 'h1',
   h1: 'h1',
@@ -93,7 +93,7 @@ export interface TypographyProps {
   className?: string;
   /**
    * Override the rendered element. Use this to keep a visual scale while fixing
-   * the document outline — e.g. a card title that looks like an h4 but must be an
+   * the document outline - e.g. a card title that looks like an h4 but must be an
    * h3 because of where it sits in the page.
    */
   as?: ElementType;

@@ -15,7 +15,7 @@ import {
 import { MARKETPLACE_CONTENT } from '@/constants/home';
 
 /**
- * Section 6 — Marketplace apps, as Tailwind utilities.
+ * Section 6 - Marketplace apps, as Tailwind utilities.
  *
  * `APP_CARD_CLASS` is the legacy `.app-card`: a 10px-radius card with the same
  * spring lift as `.card` but a tighter radius. It is spelled out here rather than
@@ -23,7 +23,7 @@ import { MARKETPLACE_CONTENT } from '@/constants/home';
  * layout differs per instance, and the class string is the part that needs sharing.
  *
  * Star ratings render from `rating` rather than five hard-coded glyphs, and carry an
- * `aria-label` with the actual score — the legacy markup drew five identical stars
+ * `aria-label` with the actual score - the legacy markup drew five identical stars
  * with no text alternative, so a screen reader announced nothing at all. The visible
  * output for a 5.0 app is identical.
  *
@@ -31,7 +31,7 @@ import { MARKETPLACE_CONTENT } from '@/constants/home';
  * `useSnapCarousel` hook the other card rails use), with dots for navigation.
  * `to-767:` utilities win over the `sm:grid-cols-2` ones in the 640–767px
  * overlap because max-width variants are declared after min-width ones in
- * `tailwind.config.ts` — same mechanism `TrustedBySection` uses.
+ * `tailwind.config.ts` - same mechanism `TrustedBySection` uses.
  */
 const CARD_GAP = 20; // matches `gap-5`
 const APP_CARD_CLASS =
@@ -88,7 +88,7 @@ export function MarketplaceSection({ apps }: MarketplaceSectionProps) {
           {/* Left column */}
           <div
             // `reveal()` bakes in `md:text-left`, which would otherwise beat
-            // `lg:text-left` below — the column has to stay centered through
+            // `lg:text-left` below - the column has to stay centered through
             // the 768–1024px range too, since the grid doesn't go two-column
             // until `lg`.
             className={cn(reveal('left'), 'md:text-center lg:text-left')}
@@ -121,7 +121,7 @@ export function MarketplaceSection({ apps }: MarketplaceSectionProps) {
 
             {/*
               Visible at `lg`+ only. Below that the grid collapses to one
-              column and this has to fall after the app tiles instead — see
+              column and this has to fall after the app tiles instead - see
               the second copy below.
             */}
             <SmartLink
@@ -168,7 +168,7 @@ export function MarketplaceSection({ apps }: MarketplaceSectionProps) {
                 )}
               >
                 <div className="mb-4 flex items-start justify-between">
-                  {/* Fixed 44×44 tile icon — no `sizes`, so Next emits 1x/2x. */}
+                  {/* Fixed 44×44 tile icon - no `sizes`, so Next emits 1x/2x. */}
                   <AppImage
                     src={app.logo.src}
                     alt={app.logo.alt}
@@ -230,7 +230,7 @@ export function MarketplaceSection({ apps }: MarketplaceSectionProps) {
           )}
 
           {/*
-            Same link, `lg`-hidden twin of the one above — see that comment.
+            Same link, `lg`-hidden twin of the one above - see that comment.
             `justify-self-center`: a grid item is blockified regardless of its
             own `display`, so without it this would stretch to the full
             column width instead of staying a content-sized card.

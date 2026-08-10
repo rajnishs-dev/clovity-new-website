@@ -8,7 +8,7 @@ import { SkeletonCard } from '@/components/ui/Skeleton';
  *
  * Shaped to the home page's own layout (floating header + dark hero + a card
  * row) rather than a generic spinner, so the swap into real content doesn't
- * jolt — same idea as `Skeleton`, just applied at the page level.
+ * jolt - same idea as `Skeleton`, just applied at the page level.
  */
 const pulse = 'animate-pulse rounded-full bg-white/10';
 

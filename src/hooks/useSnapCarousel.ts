@@ -18,7 +18,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
  * mega menu or a font swap changed the layout).
  */
 export interface SnapCarouselOptions {
-  /** Gap between cards in px — must match the CSS `gap`. */
+  /** Gap between cards in px - must match the CSS `gap`. */
   gap: number;
   /** Number of cards, used to size the dot list. */
   itemCount: number;

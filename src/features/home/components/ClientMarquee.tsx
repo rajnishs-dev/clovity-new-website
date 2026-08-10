@@ -6,7 +6,7 @@ import { AppImage } from '@/components/ui/Image';
  *
  * `w-max` + `animate-marquee` translates the track 0 → −50% over 45s, which is why
  * the list is rendered twice: the second copy is what the eye reads as the loop
- * point. Hover pauses it via `[animation-play-state:paused]` — there is no
+ * point. Hover pauses it via `[animation-play-state:paused]` - there is no
  * Tailwind utility for that property, so an arbitrary property is the right tool.
  *
  * The duplicate is `aria-hidden` so assistive tech reads the 23 logos once instead

@@ -18,7 +18,7 @@ import { cn } from './cn';
  *     attribute from a single document-level hook does not.
  *
  * Stagger is now `transition-delay` rather than a delayed class toggle. Same
- * visual result — the element sits at opacity 0 either way — with no timers to
+ * visual result - the element sits at opacity 0 either way - with no timers to
  * leak on unmount.
  *
  * Values are the legacy ones exactly: 28px offset, 700ms, CSS `ease`.
@@ -67,7 +67,7 @@ function delayClass(ms: number | undefined): string {
  *
  * Pair with `revealAttrs()` so the observer can find it.
  * `motion-reduce:` guarantees the content is visible for anyone who has asked
- * for reduced motion, even before the observer runs — the legacy equivalent was
+ * for reduced motion, even before the observer runs - the legacy equivalent was
  * a 2.5s `setTimeout` that added `.sr-fallback` to `<html>`.
  */
 export function reveal(
@@ -95,7 +95,7 @@ export function reveal(
  *
  * It used to be mandatory, and that was a design mistake: a caller who applied
  * `reveal()` but forgot this left the element stuck at `opacity: 0` with nothing
- * to recover it — no error, no warning, just invisible content.
+ * to recover it - no error, no warning, just invisible content.
  */
 export function revealAttrs(): { 'data-reveal': '' } {
   return { 'data-reveal': '' };

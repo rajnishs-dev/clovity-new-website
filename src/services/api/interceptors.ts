@@ -6,7 +6,7 @@ import { tokenStorage } from '@/services/auth/tokenStorage';
  * Cross-cutting HTTP concerns, attached once per Axios instance.
  *
  * Kept out of `axios.ts` so the transport config and the behaviour that wraps
- * it can be reasoned about — and swapped — independently.
+ * it can be reasoned about - and swapped - independently.
  */
 
 /** Extra fields we thread through the request config. */
@@ -62,7 +62,7 @@ export function attachResponseInterceptors(client: AxiosInstance): void {
       return response;
     },
     (error: unknown) => {
-      // A 401 means the token we hold is dead — drop it so the next request
+      // A 401 means the token we hold is dead - drop it so the next request
       // does not retry with a credential we already know is invalid.
       if (
         error &&

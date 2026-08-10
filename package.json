@@ -2,7 +2,7 @@
   "name": "clovity-website",
   "version": "1.0.0",
   "private": true,
-  "description": "Clovity — Atlassian + AI Transformation Partner. Enterprise Next.js App Router frontend.",
+  "description": "Clovity - Atlassian + AI Transformation Partner. Enterprise Next.js App Router frontend.",
   "engines": {
     "node": ">=20.9.0"
   },

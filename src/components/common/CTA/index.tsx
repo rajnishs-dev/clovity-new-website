@@ -8,8 +8,8 @@ import { ButtonLink, type ButtonVariant } from '@/components/ui/Button';
 /**
  * A row of CTA buttons driven by data.
  *
- * Every CTA on the site is a `<CtaLink>` record, so a CMS-managed button — new
- * label, new destination, different variant — needs no component change. The
+ * Every CTA on the site is a `<CtaLink>` record, so a CMS-managed button - new
+ * label, new destination, different variant - needs no component change. The
  * trailing arrow is added automatically for the variants that carry one in the
  * original design.
  */
@@ -69,7 +69,7 @@ export function CtaGroup({
  * The negative vertical margins (−180px top and bottom) are what pull the card up
  * out of the credentials section and down into the footer, so it straddles the
  * seam. They only work because the footer reserves matching space via its
- * `overlap` prop and the credentials section carries the bottom padding — three
+ * `overlap` prop and the credentials section carries the bottom padding - three
  * pieces that have to agree, which is why each one says so in a comment.
  *
  * The three orbs and the dot grid are decorative `<span>`s rather than
@@ -94,7 +94,7 @@ export function FinalCta({
   return (
     <section
       id={id}
-      className={cn('mx-5 overflow-visible bg-white', className)}
+      className={cn('mx-5 overflow-visible bg-transparent', className)}
     >
       <div
         className={cn(

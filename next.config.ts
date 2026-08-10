@@ -23,13 +23,13 @@ const nextConfig: NextConfig = {
   typescript: { ignoreBuildErrors: false },
 
   images: {
-    // AVIF first, then WebP — both fall back to the original for old clients.
+    // AVIF first, then WebP - both fall back to the original for old clients.
     formats: ['image/avif', 'image/webp'],
 
     /**
      * Kept deliberately short. Every entry in `deviceSizes` + `imageSizes`
      * becomes a `srcset` candidate on any image that passes `sizes`, and the
-     * home page renders 46 marquee logos plus 11 credential badges — an
+     * home page renders 46 marquee logos plus 11 credential badges - an
      * over-long list is pure HTML weight for candidates no browser will pick.
      * These are Next's defaults plus only the widths this design actually uses
      * (44 app logo, 55 stat icon, 92 mega thumb, 148 logo pill, 210 badge).
@@ -38,7 +38,7 @@ const nextConfig: NextConfig = {
     imageSizes: [16, 32, 44, 48, 55, 64, 92, 148, 210, 256, 384],
 
     /**
-     * Next 16 rejects any `q` not listed here with a 400 — a silent failure mode
+     * Next 16 rejects any `q` not listed here with a 400 - a silent failure mode
      * if a component passes an unlisted value. 75 is the default; 90 exists for
      * large hero and case-study art where the extra bytes are justified.
      */

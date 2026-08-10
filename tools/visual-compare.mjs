@@ -34,7 +34,7 @@ const MIME = {
   '.ico': 'image/x-icon',
 };
 
-/** Minimal static server — no dependency, and enough for a local snapshot. */
+/** Minimal static server - no dependency, and enough for a local snapshot. */
 function serveLegacy() {
   const server = createServer(async (req, res) => {
     try {
@@ -93,7 +93,7 @@ async function shoot(page, url, label, outDir, vp) {
    *
    * The step size and dwell time matter: viewport-sized jumps outran the
    * IntersectionObserver, so elements were scrolled past before their callback
-   * ran and stayed at opacity 0 — which looked exactly like a broken conversion.
+   * ran and stayed at opacity 0 - which looked exactly like a broken conversion.
    * 400px steps with a 120ms dwell give the observer time on every element.
    */
   await page.evaluate(async () => {
@@ -106,7 +106,7 @@ async function shoot(page, url, label, outDir, vp) {
   });
   await page.waitForTimeout(1200);
 
-  // Fail loudly if any reveal is still hidden — a blank section in a screenshot
+  // Fail loudly if any reveal is still hidden - a blank section in a screenshot
   // is otherwise indistinguishable from a genuine styling regression.
   const hidden = await page.evaluate(
     () =>
@@ -172,7 +172,7 @@ for (const vp of VIEWPORTS) {
   const migrated = await shoot(page, migratedUrl, 'migrated', outDir, vp);
 
   console.log(
-    `\n════ ${vp.name} (${vp.width}px) — section box comparison ════`,
+    `\n════ ${vp.name} (${vp.width}px) - section box comparison ════`,
   );
   console.log(
     '  section                      legacy WxH        migrated WxH      Δheight',

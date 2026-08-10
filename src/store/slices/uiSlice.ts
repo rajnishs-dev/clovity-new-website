@@ -5,7 +5,7 @@ import type { NavGroupId } from '@/types/navigation';
  * Transient interface state: the mobile drawer, which mega panel is open, the
  * sticky-header scroll flag, and a modal/drawer stack.
  *
- * Not persisted — none of it should survive a reload.
+ * Not persisted - none of it should survive a reload.
  */
 export interface UiState {
   mobileMenuOpen: boolean;
@@ -15,7 +15,7 @@ export interface UiState {
   openMegaMenu: NavGroupId | null;
   /** True once the page has scrolled past the header threshold (24px). */
   headerScrolled: boolean;
-  /** Ids of open overlays, newest last — enables correct Escape handling. */
+  /** Ids of open overlays, newest last - enables correct Escape handling. */
   overlayStack: string[];
   /** Set while an overlay owns the scroll position. */
   scrollLocked: boolean;

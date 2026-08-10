@@ -5,7 +5,7 @@ import type { Metadata, Viewport } from 'next';
  * layers plus the four things that genuinely cannot be utility classes (see the
  * file header in `globals.css`).
  *
- * There used to be a second one — a self-hosted Font Awesome 6.5.1 — and a long
+ * There used to be a second one - a self-hosted Font Awesome 6.5.1 - and a long
  * comment here about how its load order had to be the reverse of the legacy site's
  * so that `.fa-solid`'s single-class rules would not outrank the Tailwind utilities
  * sitting on the same element. All of that is gone: icons are SVG components now
@@ -40,7 +40,7 @@ export const metadata: Metadata = {
     : { index: false, follow: false },
   /**
    * No `icons` block on purpose. The legacy site shipped no favicon, and the
-   * only brand marks available are two animated GIFs — not usable as an icon
+   * only brand marks available are two animated GIFs - not usable as an icon
    * source without design input. Declaring `/favicon.ico` here would put a
    * guaranteed 404 in every page's <head>.
    *
@@ -57,7 +57,7 @@ export const metadata: Metadata = {
 
 /**
  * `themeColor` and `viewport` belong in the viewport export, not metadata.
- * `maximumScale` is deliberately left unset — capping zoom is an accessibility
+ * `maximumScale` is deliberately left unset - capping zoom is an accessibility
  * failure, and the legacy `<meta viewport>` did not cap it either.
  */
 export const viewport: Viewport = {

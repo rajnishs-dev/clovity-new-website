@@ -14,7 +14,7 @@ import { setReducedMotion } from './slices/themeSlice';
  *  1. The store is created via a lazy `useState` initializer, not at module
  *     scope. Module scope would share one store across every SSR request, leaking
  *     one visitor's state into another's render. The initializer runs exactly
- *     once per mount and — unlike the `useRef` variant — never reads a ref during
+ *     once per mount and - unlike the `useRef` variant - never reads a ref during
  *     render, which React 19 correctly flags.
  *
  *  2. `PersistGate` is intentionally NOT used. Gating render on rehydration would
@@ -23,7 +23,7 @@ import { setReducedMotion } from './slices/themeSlice';
  *     so letting it land a tick later is strictly better.
  *
  *  3. Reduced-motion is resolved once, here, and pushed into the store for every
- *     animation hook to read — one `matchMedia` subscription instead of a dozen.
+ *     animation hook to read - one `matchMedia` subscription instead of a dozen.
  */
 export function StoreProvider({ children }: { children: ReactNode }) {
   const [store] = useState(makeStore);

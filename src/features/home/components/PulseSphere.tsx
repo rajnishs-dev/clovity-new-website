@@ -20,7 +20,7 @@ import { appPulseAi } from '@/constants/media';
  *    under the logo with `ctx.fillText`; that call was simply not carried over, so
  *    the mark appeared with no label.
  *  • The logo was put on a fade-in / hold / fade-out loop that the original never
- *    had. The original's comment is explicit — it "fades in once, then stays on
+ *    had. The original's comment is explicit - it "fades in once, then stays on
  *    screen while the pulse trace keeps sweeping behind it". The looping fade made
  *    the product mark blink in and out.
  *
@@ -32,7 +32,7 @@ import { appPulseAi } from '@/constants/media';
  *  1. `requestAnimationFrame` was never cancelled. On a client-side navigation
  *     the loop kept running against a detached canvas forever. It is cancelled on
  *     unmount now.
- *  2. Reduced motion drew exactly one frame and stopped — leaving a half-drawn
+ *  2. Reduced motion drew exactly one frame and stopped - leaving a half-drawn
  *     sweep on screen. It now renders the settled state (sphere, dim trace, and
  *     the logo with its tagline) as a deliberate still.
  *  3. The animation ran even when scrolled far out of view, burning a frame
@@ -63,7 +63,7 @@ interface SpherePoint {
 
 /**
  * Fibonacci sphere. Deterministic: the legacy version used `Math.random()` for
- * dot size and the "big" flag, which meant a different sphere every reload — and
+ * dot size and the "big" flag, which meant a different sphere every reload - and
  * would break server/client determinism here. A hash of the index gives the same
  * visual scatter, reproducibly.
  */
@@ -221,7 +221,7 @@ export function PulseSphere() {
 
       /**
        * The Pulse AI mark and its tagline, drawn last so the sphere and trace pass
-       * behind them. Fully opaque on every frame — this is the one part of the
+       * behind them. Fully opaque on every frame - this is the one part of the
        * canvas that does not animate.
        */
       if (logoReady && logo.naturalHeight > 0) {
@@ -239,7 +239,7 @@ export function PulseSphere() {
         ctx.restore();
 
         ctx.save();
-        // Inter is never actually loaded — the original asked for it too, so this
+        // Inter is never actually loaded - the original asked for it too, so this
         // resolves to system-ui exactly as it did there.
         ctx.font = '600 15px Inter, system-ui, sans-serif';
         ctx.fillStyle = '#1d4ed8';
@@ -255,7 +255,7 @@ export function PulseSphere() {
        * Settled still: sphere, dim trace, and the mark with its tagline. No sweep.
        *
        * Redrawn on load as well, because there is no animation loop here to pick the
-       * image up once it decodes — a single early draw would leave the logo out of
+       * image up once it decodes - a single early draw would leave the logo out of
        * the still permanently.
        */
       drawScene(null);
@@ -281,7 +281,7 @@ export function PulseSphere() {
       if (visible) rafId = window.requestAnimationFrame(frame);
     };
 
-    // Pause while off-screen — no reason to spend frames on an invisible canvas.
+    // Pause while off-screen - no reason to spend frames on an invisible canvas.
     const observer = new IntersectionObserver(
       (entries) => {
         const entry = entries[0];
