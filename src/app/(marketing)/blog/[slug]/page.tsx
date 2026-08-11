@@ -17,10 +17,25 @@ import {
   ShareRow, } from '@/components/common/Resources';
 import { formatLongDate } from '@/utils/format';
 import { resolveImageSrc } from '@/utils/image';
-import { getAllBlogPosts, getBlogPost, getBlogSlugs } from '@/features/blog/data';
+import {
+  getBlogPost,
+  getBlogPosts,
+  getBlogSlugs,
+  getOtherBlogPosts,
+} from '@/features/blog/data';
 
-export function generateStaticParams() {
-  return getBlogSlugs().map((slug) => ({ slug }));
+export const revalidate = 3600;
+
+/**
+ * Prerender the posts the list page can reach.
+ *
+ * `dynamicParams` stays at its default of `true`, which is what makes the rest of the
+ * 504-post archive work: a slug that is not in this list is rendered on the first
+ * request and then cached, rather than 404ing. Prerendering all of them instead would
+ * mean fetching every post at build time for pages almost nobody opens.
+ */
+export async function generateStaticParams() {
+  return (await getBlogSlugs()).map((slug) => ({ slug }));
 }
 
 export async function generateMetadata({
@@ -54,10 +69,10 @@ export default async function BlogDetailPage({
   if (!post) notFound();
 
   const url = `${siteConfig.url}${ROUTES.resources.blog}/${post.slug}`;
-  const related = getAllBlogPosts()
-    .filter((item) => item.slug !== post.slug)
-    .slice(0, 3);
-  const topPosts = getAllBlogPosts().slice(0, 3);
+  const [related, topPosts] = await Promise.all([
+    getOtherBlogPosts(post.slug, 3),
+    getBlogPosts().then((posts) => posts.slice(0, 3)),
+  ]);
 
   return (
     <>

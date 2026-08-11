@@ -17,11 +17,17 @@ import {
   ShareRow, } from '@/components/common/Resources';
 import { formatLongDate } from '@/utils/format';
 import { resolveImageSrc } from '@/utils/image';
-import { getAllWebinars, getWebinarBySlug, getWebinarSlugs } from '@/features/webinars/data';
+import {
+  getOtherWebinars,
+  getWebinarItemBySlug,
+  getWebinarSlugs,
+} from '@/features/webinars/data';
 import { WebinarSidebar } from '@/features/webinars/components/WebinarSidebar';
 
-export function generateStaticParams() {
-  return getWebinarSlugs().map((slug) => ({ slug }));
+export const revalidate = 3600;
+
+export async function generateStaticParams() {
+  return (await getWebinarSlugs()).map((slug) => ({ slug }));
 }
 
 export async function generateMetadata({
@@ -30,7 +36,7 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const webinar = await getWebinarBySlug(slug);
+  const webinar = await getWebinarItemBySlug(slug);
   if (!webinar) return {};
 
   return buildMetadata({
@@ -50,13 +56,11 @@ export default async function WebinarDetailPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const webinar = await getWebinarBySlug(slug);
+  const webinar = await getWebinarItemBySlug(slug);
   if (!webinar) notFound();
 
   const url = `${siteConfig.url}${ROUTES.resources.webinars}/${webinar.slug}`;
-  const related = getAllWebinars()
-    .filter((item) => item.slug !== webinar.slug)
-    .slice(0, 3);
+  const related = await getOtherWebinars(webinar.slug, 3);
 
   return (
     <>

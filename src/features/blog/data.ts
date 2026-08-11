@@ -1,15 +1,20 @@
+import { cache } from 'react';
 import { ROUTES } from '@/config/routes';
-import { withFallback } from '@/services/api/request';
-import { contentApi } from '@/services/api/api';
 import type { BlogPost } from '@/types/content';
+import { getBlogBySlug, getBlogs, withCmsFallback } from '@/api/cms';
+import { prerenderableSlugs } from '@/utils/slug';
 import { cardPartnerAward, cardTeam26, CDN } from '@/constants/media';
 
 /**
- * Static fallback content for `/blog` and `/blog/[slug]`.
+ * The `/blog` data layer: Strapi first, bundled content as the fallback.
  *
- * Ported from the legacy `blog.html` / `blog-detail.html` markup. Only the
- * DevSecOps post carried a full body on the old site - the rest are original
- * placeholder copy written to the same brand voice, pending the CMS.
+ * `BLOG_POSTS` below is the FALLBACK, not the content. It renders when the CMS is
+ * unreachable or unconfigured, which is also what keeps `npm run build` working with no
+ * `.env.local`. Live, the page shows the `blog` collection - 504 published posts.
+ *
+ * The bundled posts were ported from the legacy `blog.html` / `blog-detail.html`
+ * markup; only the DevSecOps post carried a full body on the old site, so the rest are
+ * placeholder copy in the same brand voice.
  */
 
 const AUTHOR = {
@@ -419,31 +424,56 @@ export const BLOG_POSTS: BlogPost[] = [
   },
 ];
 
-/** All blog posts, most recent first - the ordering every list/sidebar uses. */
+/** The bundled posts, most recent first - the order the fallback list renders in. */
 export function getAllBlogPosts(): BlogPost[] {
   return [...BLOG_POSTS].sort(
     (a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime(),
   );
 }
 
-/** Every post for the `/blog` index - revealed in batches by `<LoadMoreGrid>`. */
-export async function getBlogPosts(): Promise<BlogPost[]> {
-  return withFallback(async () => {
-    const result = await contentApi.blogs({ pageSize: 100 });
-    return result.success
-      ? { success: true as const, data: result.data.items }
-      : result;
-  }, getAllBlogPosts());
-}
+/**
+ * Every post for the `/blog` index - revealed in batches by `<LoadMoreGrid>`.
+ *
+ * `cache()` DEDUPES THE FETCH WITHIN ONE REQUEST. A detail page asks for this list
+ * three times over - `generateMetadata`, the article itself, and the "Top Blogs"
+ * sidebar - and without this each of those is its own HTTP round trip, multiplied by
+ * every page prerendered at build time. React's cache is per-request, so it costs
+ * nothing in freshness: the next request re-fetches.
+ */
+export const getBlogPosts = cache(async (): Promise<BlogPost[]> => {
+  return withCmsFallback(() => getBlogs(), getAllBlogPosts());
+});
 
+/**
+ * One post by slug.
+ *
+ * Checks the list first because the caller almost always has already loaded it (see
+ * `cache()` above), which makes the common case free. The by-slug request is the path
+ * for a post outside the list's first page - with 504 published rows and a 100-row cap,
+ * that is most of the archive, and those pages still render in full on demand.
+ */
 export async function getBlogPost(slug: string): Promise<BlogPost | undefined> {
+  const listed = (await getBlogPosts()).find((post) => post.slug === slug);
+  if (listed) return listed;
+
   const fallback = BLOG_POSTS.find((post) => post.slug === slug);
-  return withFallback(async () => {
-    const result = await contentApi.blog(slug);
-    return result.success ? { success: true as const, data: result.data } : result;
-  }, fallback);
+  return withCmsFallback(
+    async () => (await getBlogBySlug(slug)) ?? undefined,
+    fallback,
+  );
 }
 
-export function getBlogSlugs(): string[] {
-  return BLOG_POSTS.map((post) => post.slug);
+/** Sibling posts for the "Related Insights" rail and the sidebar. */
+export async function getOtherBlogPosts(
+  slug: string,
+  count: number,
+): Promise<BlogPost[]> {
+  const posts = await getBlogPosts();
+  return posts.filter((post) => post.slug !== slug).slice(0, count);
+}
+
+/** Slugs to prerender. `dynamicParams` covers the rest of the archive on demand. */
+export async function getBlogSlugs(): Promise<string[]> {
+  const posts = await getBlogPosts();
+  return prerenderableSlugs('blog', posts.map((post) => post.slug));
 }

@@ -129,6 +129,133 @@ export interface StrapiGetInTouch extends StrapiEntityBase {
   isPhoneNumberRequired: boolean;
 }
 
+/* ── Resource collections ───────────────────────────────────────────────── */
+
+/**
+ * `blog` — a blog post. 504 published rows.
+ *
+ * `content` is WYSIWYG HTML despite the `richtext` type; `cms.richtext.ts` documents
+ * the tag census. Every live row has both an `image` and a `blog_date`, but both stay
+ * nullable here: the schema marks only `image` required, and a row created before that
+ * constraint existed can still come back null.
+ */
+export interface StrapiBlog extends StrapiEntityBase {
+  title: string;
+  content: string;
+  blog_date: string | null;
+  image: StrapiMedia | null;
+  slug: string;
+}
+
+/**
+ * `news` — a press release or announcement. 56 published rows.
+ *
+ * PLURAL ROUTE IS `newses`, which is why `CMS_ENDPOINTS` writes it down.
+ *
+ * `subtitle` is the ONLY editorial summary column in any of these five collections,
+ * so it is the one excerpt that is not derived from the body.
+ *
+ * `isFeatured` is NOT used to order the list: three of the live rows are flagged, and
+ * all three are 2018-2019 press releases, so honouring the flag would pin a
+ * seven-year-old story to the top of the page. The list is date-ordered, matching
+ * `website-t`.
+ *
+ * `content` has NO date field of its own — `createdAt` is the only chronology.
+ */
+export interface StrapiNews extends StrapiEntityBase {
+  title: string;
+  subtitle: string | null;
+  content: string;
+  featuredImage: StrapiMedia | null;
+  secondaryImage: StrapiMedia | null;
+  isFeatured: boolean;
+  publishedLink: string | null;
+  slug: string;
+}
+
+/**
+ * `event` — a conference, tour stop or summit. 64 published rows.
+ *
+ * `featureImage`, not `featuredImage` — the two sibling collections spell it the other
+ * way, and getting it wrong yields `undefined` and a dropped card rather than an error.
+ *
+ * There is NO description column, so an event has no body and no editorial teaser. The
+ * mapper leaves both empty rather than inventing copy; adding a `description` richtext
+ * field to the content type in `clovity-admin` is what fills them.
+ */
+export interface StrapiEvent extends StrapiEntityBase {
+  name: string;
+  startDateTime: string | null;
+  endDateTime: string | null;
+  location: string;
+  isSponsors: boolean;
+  eventLink: string;
+  order: number | null;
+  featureImage: StrapiMedia | null;
+  slug: string;
+}
+
+/**
+ * One person in a webinar's `theWho` / `moderator` JSON column.
+ *
+ * `name` holds BOTH the person and their role in one string, separated by an em dash,
+ * an en dash or a comma depending on who typed the row — see `toWebinarPresenters`.
+ */
+export interface StrapiWebinarPerson {
+  name?: string;
+  link?: string;
+}
+
+/**
+ * `webinar` — a live or recorded session. 3 published rows.
+ *
+ * `theWho` and `moderator` are `json` columns typed `unknown` on purpose: they hold an
+ * ARRAY of `StrapiWebinarPerson` on some rows and the EMPTY STRING on others (verified
+ * live), so anything that assumes an array crashes on the first such row.
+ *
+ * `eventDescription` is plain text with markdown emphasis, not HTML.
+ *
+ * `createdAtText` is a human-typed date — "January 28, 2026" parses, "6th February
+ * 2025" does not, hence the fallback chain in the mapper.
+ */
+export interface StrapiWebinar extends StrapiEntityBase {
+  title: string | null;
+  coHostedBy: string | null;
+  eventDescription: string | null;
+  eventDateTime: string | null;
+  eventHeader: string | null;
+  createdAtText: string;
+  floatingButtonText: string | null;
+  recordingLink: string | null;
+  youtubeVideoLink: string | null;
+  showVideoPlayer: boolean;
+  isActive: boolean;
+  banner: StrapiMedia | null;
+  peopleImages: StrapiMedia[] | null;
+  theWho: unknown;
+  moderator: unknown;
+  slug: string;
+}
+
+/**
+ * `jsm-resource` — what the published site renders as a CASE STUDY. 3 published rows.
+ *
+ * NOT the `case-study` collection, which also exists and holds 25 older rows ("JIRA
+ * Service Management", "DevOps as a Service") that no page shows. `website-t` reads
+ * `jsm-resources` for `/case-study`, and its three rows are exactly the three case
+ * studies the design was built around — Forcepoint, Hashgraph and DSH.
+ *
+ * No client / industry / outcome columns exist, so those fields on `CaseStudyItem` stay
+ * unset for CMS rows and their meta chips do not render.
+ */
+export interface StrapiJsmResource extends StrapiEntityBase {
+  title: string;
+  content: string;
+  featuredImage: StrapiMedia | null;
+  secondaryImage: StrapiMedia | null;
+  slug: string;
+}
+
 /* ── Collections this site writes ───────────────────────────────────────── */
 
 /**

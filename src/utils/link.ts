@@ -64,14 +64,6 @@ export function isExternalHref(href: string): boolean {
 /** The `rel` value required for a safe new-tab link. */
 export const EXTERNAL_REL = 'noopener noreferrer' as const;
 
-/** Attributes to spread onto an external anchor. */
-export function externalLinkAttrs(): {
-  target: '_blank';
-  rel: typeof EXTERNAL_REL;
-} {
-  return { target: '_blank', rel: EXTERNAL_REL };
-}
-
 /** Strip the origin off an absolute same-site URL so next/link can route it. */
 export function toRoutablePath(href: string): string {
   if (href.startsWith('/') || href.startsWith('#')) return href;

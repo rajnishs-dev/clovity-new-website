@@ -7,7 +7,7 @@ import { FinalCta } from '@/components/common/CTA';
 import {
   RevealScope, RESOURCE_CTA_LINKS, ResourceCard, ResourceHero } from '@/components/common/Resources';
 import { SectionHeader } from '@/components/ui/Section';
-import { getWebinars } from '@/features/webinars/data';
+import { getWebinarItems } from '@/features/webinars/data';
 
 export const metadata: Metadata = buildMetadata({
   title: 'Webinars - On-Demand Atlassian & Cloud Sessions',
@@ -16,8 +16,11 @@ export const metadata: Metadata = buildMetadata({
   path: ROUTES.resources.webinars,
 });
 
+/** Safety net under the Strapi webhook — see the note in `/blog`. */
+export const revalidate = 3600;
+
 export default async function WebinarsPage() {
-  const webinars = await getWebinars();
+  const webinars = await getWebinarItems();
 
   return (
     <>

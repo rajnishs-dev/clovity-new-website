@@ -12,7 +12,7 @@ import {
   ResourceHero,
   ResourceSidebar, } from '@/components/common/Resources';
 import { formatContentDate } from '@/utils/format';
-import { getAllNewsItems, getNewsItems } from '@/features/news/data';
+import { getNewsItems } from '@/features/news/data';
 
 export const metadata: Metadata = buildMetadata({
   title: 'News - Company Updates & Press Releases',
@@ -21,10 +21,13 @@ export const metadata: Metadata = buildMetadata({
   path: ROUTES.resources.news,
 });
 
+/** Safety net under the Strapi webhook — see the note in `/blog`. */
+export const revalidate = 3600;
+
 export default async function NewsPage() {
   const items = await getNewsItems();
   const [featured, ...rest] = items;
-  const topNews = getAllNewsItems().slice(0, 4);
+  const topNews = items.slice(0, 4);
 
   return (
     <>

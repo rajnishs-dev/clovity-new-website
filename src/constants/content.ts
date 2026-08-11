@@ -386,8 +386,3 @@ export const CONTENT_COLLECTIONS: ContentCollection[] = [
     ],
   },
 ];
-
-/** Lookup by tab id, so the section does not re-scan the array on every switch. */
-export const CONTENT_COLLECTION_MAP = new Map(
-  CONTENT_COLLECTIONS.map((collection) => [collection.kind, collection]),
-);

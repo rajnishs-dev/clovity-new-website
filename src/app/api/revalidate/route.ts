@@ -9,10 +9,10 @@ import { ROUTES } from '@/config/routes';
  *
  * ── WHAT IT SOLVES ──
  * The CMS-backed pages are statically generated and carry a time-based
- * `revalidate` window (5 minutes for About and Careers, 1 hour for Contact). That
- * window is a floor on how long a publish takes to appear. This endpoint lets Strapi
- * say "this changed, rebuild that page now", so an editor sees their change on the
- * next request instead of waiting out the timer.
+ * `revalidate` window (5 minutes for About and Careers, 1 hour for Contact and every
+ * resource page). That window is a floor on how long a publish takes to appear. This
+ * endpoint lets Strapi say "this changed, rebuild that page now", so an editor sees
+ * their change on the next request instead of waiting out the timer.
  *
  * The time-based windows STAY as a safety net. If the webhook is misconfigured,
  * blocked by a firewall, or fails silently, the site still refreshes on its own —
@@ -39,7 +39,15 @@ import { ROUTES } from '@/config/routes';
  *     so it cannot be used to probe what is in the CMS.
  */
 
-/** Strapi content-type name → the pages that render it. */
+/**
+ * Strapi content-type name → the pages that render it.
+ *
+ * The resource entries list the LISTING page only. Their detail pages are dynamic
+ * segments, and `revalidatePath` needs a concrete path — the webhook payload does carry
+ * the entry, but Strapi's shape for it differs by event, so the detail page is left to
+ * its own hourly `revalidate` window instead of being guessed at here. Publishing
+ * therefore updates a listing immediately and the article within the hour.
+ */
 const MODEL_ROUTES: Record<string, readonly string[]> = {
   // About: the "Certifications & Diversity" badge row.
   award: [ROUTES.discover.about],
@@ -48,19 +56,33 @@ const MODEL_ROUTES: Record<string, readonly string[]> = {
   'life-at-clovity': [ROUTES.discover.careers],
   // Contact: which form fields show and whether each is required.
   'get-in-touch': [ROUTES.discover.contact],
+
+  // The resource collections. `news` is the singular model name even though the route
+  // is `/api/newses`, and the case studies come from `jsm-resource` — see
+  // `CMS_ENDPOINTS` in `src/api/cms.ts` for why that is the right collection.
+  blog: [ROUTES.resources.blog],
+  news: [ROUTES.resources.news],
+  event: [ROUTES.resources.events],
+  webinar: [ROUTES.resources.webinars],
+  'jsm-resource': [ROUTES.resources.caseStudy],
 };
 
 /**
  * Every CMS-backed page.
  *
  * Used for media events, which carry no model: a replaced upload could be an award
- * badge or a culture photo, and Strapi does not say which entry references it.
- * Revalidating all three is cheaper than getting it wrong.
+ * badge, a culture photo or a blog post's hero, and Strapi does not say which entry
+ * references it. Revalidating all of them is cheaper than getting it wrong.
  */
 const ALL_CMS_ROUTES = [
   ROUTES.discover.about,
   ROUTES.discover.careers,
   ROUTES.discover.contact,
+  ROUTES.resources.blog,
+  ROUTES.resources.news,
+  ROUTES.resources.events,
+  ROUTES.resources.webinars,
+  ROUTES.resources.caseStudy,
 ] as const;
 
 /** Constant-time string compare that tolerates differing lengths. */
@@ -127,9 +149,10 @@ export async function POST(request: Request) {
     : [...(MODEL_ROUTES[model] ?? [])];
 
   if (paths.length === 0) {
-    // A content type this site does not render — blogs, events, webinars. Not an
-    // error: Strapi fires one webhook for everything, and answering 200 keeps it
-    // from marking the endpoint as failing and retrying.
+    // A content type this site does not render — `dynamic-page`, `news-ticker`,
+    // `recording`, the lead collections. Not an error: Strapi fires one webhook for
+    // everything, and answering 200 keeps it from marking the endpoint as failing
+    // and retrying.
     return NextResponse.json({
       revalidated: [],
       message: `No page renders "${model || event || 'unknown'}".`,

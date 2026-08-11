@@ -1,14 +1,12 @@
-/** Accessibility helpers shared across interactive components. */
-
-/** Keys that should activate a `role="button"` element. */
-export const ACTIVATION_KEYS = ['Enter', ' ', 'Spacebar'] as const;
-
-export function isActivationKey(key: string): boolean {
-  return (ACTIVATION_KEYS as readonly string[]).includes(key);
-}
+/**
+ * Accessibility helpers shared across interactive components.
+ *
+ * Two of them: `getFocusableElements` and `createFocusTrap`, used by the mobile menu,
+ * the drawer and the modal. Everything else this file once exported had no caller.
+ */
 
 /** CSS selector matching every natively focusable element. */
-export const FOCUSABLE_SELECTOR = [
+const FOCUSABLE_SELECTOR = [
   'a[href]',
   'button:not([disabled])',
   'input:not([disabled]):not([type="hidden"])',
@@ -52,9 +50,4 @@ export function createFocusTrap(container: HTMLElement) {
       first.focus();
     }
   };
-}
-
-/** Stable id generator for aria-controls / aria-labelledby pairs. */
-export function ariaId(prefix: string, suffix: string | number): string {
-  return `${prefix}-${String(suffix).replace(/[^a-zA-Z0-9_-]/g, '-')}`;
 }

@@ -1,15 +1,20 @@
+import { cache } from 'react';
 import { ROUTES } from '@/config/routes';
-import { withFallback } from '@/services/api/request';
-import { contentApi } from '@/services/api/api';
 import type { WebinarItem } from '@/types/content';
+import { getWebinarBySlug, getWebinars, withCmsFallback } from '@/api/cms';
+import { prerenderableSlugs } from '@/utils/slug';
 import { CDN } from '@/constants/media';
 
 /**
- * Static fallback content for `/webinars` and `/webinars/[slug]`.
+ * The `/webinars` data layer: Strapi first, bundled content as the fallback.
  *
- * Ported from the legacy `webinars.html` cards. Only the "Ascend to Cloud"
- * session carried a real recap on the old site - the other two bodies are
- * original placeholder copy written to the same brand voice, pending the CMS.
+ * The `webinar` collection has exactly three published rows, and they are the same
+ * three sessions bundled below - so unlike blog or news, going live changes the copy
+ * rather than the number of cards. The CMS wins on freshness (an editor can publish a
+ * fourth) and on the presenter list, which it stores per session.
+ *
+ * The bundled entries were ported from the legacy `webinars.html` cards; only "Ascend to
+ * Cloud" carried a real recap, so the other two bodies are placeholder copy.
  */
 
 export const WEBINARS: WebinarItem[] = [
@@ -150,7 +155,7 @@ export const WEBINARS: WebinarItem[] = [
   },
 ];
 
-/** All webinars, most recent first - the ordering every list/sidebar uses. */
+/** The bundled webinars, most recent first. */
 export function getAllWebinars(): WebinarItem[] {
   return [...WEBINARS].sort(
     (a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime(),
@@ -158,23 +163,35 @@ export function getAllWebinars(): WebinarItem[] {
 }
 
 /** Every webinar for the `/webinars` index. */
-export async function getWebinars(): Promise<WebinarItem[]> {
-  return withFallback(async () => {
-    const result = await contentApi.webinars({ pageSize: 100 });
-    return result.success
-      ? { success: true as const, data: result.data.items }
-      : result;
-  }, getAllWebinars());
-}
+export const getWebinarItems = cache(async (): Promise<WebinarItem[]> => {
+  return withCmsFallback(() => getWebinars(), getAllWebinars());
+});
 
-export async function getWebinarBySlug(slug: string): Promise<WebinarItem | undefined> {
+export async function getWebinarItemBySlug(
+  slug: string,
+): Promise<WebinarItem | undefined> {
+  const listed = (await getWebinarItems()).find(
+    (webinar) => webinar.slug === slug,
+  );
+  if (listed) return listed;
+
   const fallback = WEBINARS.find((webinar) => webinar.slug === slug);
-  return withFallback(async () => {
-    const result = await contentApi.webinar(slug);
-    return result.success ? { success: true as const, data: result.data } : result;
-  }, fallback);
+  return withCmsFallback(
+    async () => (await getWebinarBySlug(slug)) ?? undefined,
+    fallback,
+  );
 }
 
-export function getWebinarSlugs(): string[] {
-  return WEBINARS.map((webinar) => webinar.slug);
+/** Sibling sessions for the related rail. */
+export async function getOtherWebinars(
+  slug: string,
+  count: number,
+): Promise<WebinarItem[]> {
+  const webinars = await getWebinarItems();
+  return webinars.filter((webinar) => webinar.slug !== slug).slice(0, count);
+}
+
+export async function getWebinarSlugs(): Promise<string[]> {
+  const webinars = await getWebinarItems();
+  return prerenderableSlugs('webinars', webinars.map((webinar) => webinar.slug));
 }

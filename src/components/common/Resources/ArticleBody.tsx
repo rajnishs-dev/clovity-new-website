@@ -48,6 +48,35 @@ export function ArticleBody({ blocks }: { blocks: ContentBlock[] }) {
                 ))}
               </ul>
             );
+          /**
+           * A RAW `<img>`, NOT `next/image`, and this is deliberate.
+           *
+           * These URLs are pasted into the CMS by editors, and the live bodies prove how
+           * uncontrolled that is: six distinct hosts across the published posts
+           * (`clovity-website.s3…`, `ww1.prweb.com`, two Giphy CDNs, `cioreview.com`,
+           * `globalspec.com`), some served over `http`, and eleven tags with no
+           * dimensions at all. `next/image` THROWS on a host that is not in
+           * `next.config.ts`, so routing these through it would mean an editor pasting
+           * from a new domain takes the whole article page down - and no allow-list can
+           * be kept ahead of that.
+           *
+           * The trade is losing optimization on body images only. Every curated image on
+           * the site - heroes, cards, badges - still goes through `next/image`.
+           */
+          case 'image':
+            return (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img
+                key={index}
+                src={block.src}
+                alt={block.alt}
+                {...(block.width ? { width: block.width } : {})}
+                {...(block.height ? { height: block.height } : {})}
+                loading="lazy"
+                decoding="async"
+                className="mb-6 h-auto max-w-full rounded-[8px]"
+              />
+            );
           case 'quote':
             return (
               <blockquote

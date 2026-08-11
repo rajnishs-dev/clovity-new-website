@@ -44,7 +44,20 @@ export type ContentBlock =
   | { type: 'paragraph'; text: string }
   | { type: 'heading'; text: string; level?: 2 | 3 }
   | { type: 'list'; items: string[] }
-  | { type: 'quote'; text: string; cite?: string };
+  | { type: 'quote'; text: string; cite?: string }
+  /**
+   * An illustration inside an article body.
+   *
+   * Exists because the CMS bodies contain them: 160 `<img>` tags across 51 of the 504
+   * published blog posts, plus the press-release screenshots in `news`. Without this
+   * block those posts would render as text with their diagrams silently missing.
+   *
+   * `src` is a plain URL string rather than `ImageSource`, and `ArticleBody` renders it
+   * with a raw `<img>` rather than `next/image`, ON PURPOSE - see the note there. These
+   * are editor-pasted URLs from arbitrary hosts, which is a different problem from the
+   * curated art every other `ContentImage` in the app describes.
+   */
+  | { type: 'image'; src: string; alt: string; width?: number; height?: number };
 
 /** Fields every publishable CMS record shares. */
 export interface ContentBase {

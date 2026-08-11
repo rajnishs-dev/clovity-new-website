@@ -67,17 +67,6 @@ export function truncate(text: string, maxLength: number): string {
   return `${(lastSpace > maxLength * 0.6 ? slice.slice(0, lastSpace) : slice).trimEnd()}…`;
 }
 
-/** URL-safe slug from arbitrary title text. */
-export function slugify(input: string): string {
-  return input
-    .normalize('NFKD')
-    .replace(/[̀-ͯ]/g, '')
-    .toLowerCase()
-    .replace(/['’]/g, '')
-    .replace(/[^a-z0-9]+/g, '-')
-    .replace(/^-+|-+$/g, '');
-}
-
 /** Initials for avatar fallbacks: `"Jane Doe"` → `"JD"`. */
 export function initials(name: string, max = 2): string {
   return name

@@ -17,7 +17,7 @@ import {
 import { Icon } from '@/components/ui/Icon';
 import { Section, SectionHeader } from '@/components/ui/Section';
 import { formatContentDate } from '@/utils/format';
-import { getAllCaseStudies, getCaseStudies } from '@/features/case-study/data';
+import { getCaseStudyItems } from '@/features/case-study/data';
 import { resolveCategoryMeta } from '@/features/case-study/categoryMeta';
 
 export const metadata: Metadata = buildMetadata({
@@ -33,10 +33,13 @@ const TRUST_CHIPS = [
   'U.S. Data Compliance',
 ];
 
+/** Safety net under the Strapi webhook — see the note in `/blog`. */
+export const revalidate = 3600;
+
 export default async function CaseStudyPage() {
-  const caseStudies = await getCaseStudies();
+  const caseStudies = await getCaseStudyItems();
   const [featured, ...rest] = caseStudies;
-  const topCaseStudies = getAllCaseStudies();
+  const topCaseStudies = caseStudies;
 
   return (
     <>

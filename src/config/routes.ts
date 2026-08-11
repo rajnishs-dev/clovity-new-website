@@ -78,7 +78,7 @@ export const EXTERNAL_LINKS = {
  * this app at all (`/clovity-ai-apps-studio`), and routing those client-side turns
  * a working link into a 404.
  */
-export const APP_ROUTE_PATHS: ReadonlySet<string> = new Set<string>([
+const APP_ROUTE_PATHS: ReadonlySet<string> = new Set<string>([
   ROUTES.home,
   ...Object.values(ROUTES.expertise),
   ...Object.values(ROUTES.resources),

@@ -1,15 +1,24 @@
+import { cache } from 'react';
 import { ROUTES } from '@/config/routes';
-import { withFallback } from '@/services/api/request';
-import { contentApi } from '@/services/api/api';
 import type { EventItem } from '@/types/content';
+import { getEventBySlug, getEvents, withCmsFallback } from '@/api/cms';
+import { prerenderableSlugs } from '@/utils/slug';
 import { cardGovMeetUsAt, CDN } from '@/constants/media';
 
 /**
- * Static fallback content for `/events` and `/events/[slug]`.
+ * The `/events` data layer: Strapi first (the `event` collection, 64 published rows),
+ * bundled content as the fallback.
  *
- * Ported from the legacy `events.html` cards, which all linked out to
- * `clovity.com/events/...` with no local recap page. The recap bodies below
- * are original placeholder copy pending the CMS.
+ * ONE THING THE CMS CANNOT SUPPLY HERE: a body. The `event` content type has no
+ * description column at all - just name, dates, location, image and an outbound link -
+ * so a CMS-sourced event's detail page is its hero, date and location, with no recap
+ * prose and no teaser on the card. The bundled events below DO have recap bodies, which
+ * is why the fallback reads richer than the live page. Adding a `description` richtext
+ * field in `clovity-admin` is the fix, and needs no change here.
+ *
+ * The bundled entries were ported from the legacy `events.html` cards, which all linked
+ * out to `clovity.com/events/...` with no local recap page; their bodies are placeholder
+ * copy.
  */
 
 export const EVENTS: EventItem[] = [
@@ -166,6 +175,7 @@ export const EVENTS: EventItem[] = [
   },
 ];
 
+/** The bundled events, most recent first. */
 export function getAllEvents(): EventItem[] {
   return [...EVENTS].sort(
     (a, b) => new Date(b.startsAt ?? b.publishedAt).getTime() -
@@ -173,23 +183,33 @@ export function getAllEvents(): EventItem[] {
   );
 }
 
-export async function getEventItems(): Promise<EventItem[]> {
-  return withFallback(async () => {
-    const result = await contentApi.events({ pageSize: 100 });
-    return result.success
-      ? { success: true as const, data: result.data.items }
-      : result;
-  }, getAllEvents());
-}
+export const getEventItems = cache(async (): Promise<EventItem[]> => {
+  return withCmsFallback(() => getEvents(), getAllEvents());
+});
 
-export async function getEventBySlug(slug: string): Promise<EventItem | undefined> {
+export async function getEventItemBySlug(
+  slug: string,
+): Promise<EventItem | undefined> {
+  const listed = (await getEventItems()).find((event) => event.slug === slug);
+  if (listed) return listed;
+
   const fallback = EVENTS.find((event) => event.slug === slug);
-  return withFallback(async () => {
-    const result = await contentApi.event(slug);
-    return result.success ? { success: true as const, data: result.data } : result;
-  }, fallback);
+  return withCmsFallback(
+    async () => (await getEventBySlug(slug)) ?? undefined,
+    fallback,
+  );
 }
 
-export function getEventSlugs(): string[] {
-  return EVENTS.map((event) => event.slug);
+/** Sibling events for the related rail. */
+export async function getOtherEvents(
+  slug: string,
+  count: number,
+): Promise<EventItem[]> {
+  const events = await getEventItems();
+  return events.filter((event) => event.slug !== slug).slice(0, count);
+}
+
+export async function getEventSlugs(): Promise<string[]> {
+  const events = await getEventItems();
+  return prerenderableSlugs('events', events.map((event) => event.slug));
 }

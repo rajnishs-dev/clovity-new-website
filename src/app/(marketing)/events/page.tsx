@@ -16,6 +16,9 @@ export const metadata: Metadata = buildMetadata({
   path: ROUTES.resources.events,
 });
 
+/** Safety net under the Strapi webhook — see the note in `/blog`. */
+export const revalidate = 3600;
+
 export default async function EventsPage() {
   const events = await getEventItems();
 

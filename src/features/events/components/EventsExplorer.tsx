@@ -57,6 +57,21 @@ export function EventsExplorer({ items }: { items: EventItem[] }) {
   const [status, setStatus] = useState<StatusFilter>('all');
   const [query, setQuery] = useState('');
 
+  /**
+   * The category filter only exists when the events HAVE categories.
+   *
+   * The Strapi `event` content type has no category column, so live events carry none -
+   * and a "Government Tours" option that filters 64 events down to zero reads as a
+   * broken page, not as an empty category. Derived from the data for the same reason the
+   * careers page derives its track tabs from the openings it is about to render.
+   *
+   * The bundled fallback events DO set a category, so the filter appears with them.
+   */
+  const hasCategories = useMemo(
+    () => items.some((item) => item.category),
+    [items],
+  );
+
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
     return items.filter((item) => {
@@ -75,13 +90,15 @@ export function EventsExplorer({ items }: { items: EventItem[] }) {
   return (
     <>
       <div className="mb-8 flex flex-wrap items-center gap-3.5">
-        <Select
-          value={category}
-          onChange={setCategory}
-          options={CATEGORY_OPTIONS}
-          ariaLabel="Filter by category"
-          className="min-w-[170px]"
-        />
+        {hasCategories ? (
+          <Select
+            value={category}
+            onChange={setCategory}
+            options={CATEGORY_OPTIONS}
+            ariaLabel="Filter by category"
+            className="min-w-[170px]"
+          />
+        ) : null}
 
         <Select
           value={status}
@@ -125,11 +142,16 @@ export function EventsExplorer({ items }: { items: EventItem[] }) {
               className="lg:col-span-3 lg:grid-cols-[0.55fr_1fr]"
               meta={
                 <>
-                  <CategoryPill
-                    label={CATEGORY_META[featured.category ?? 'government'].label}
-                    icon={CATEGORY_META[featured.category ?? 'government'].icon}
-                    tone={CATEGORY_META[featured.category ?? 'government'].tone}
-                  />
+                  {/* No pill rather than a wrong one: an uncategorised CMS event used to
+                      fall through to the "Government Tour" label, which mislabels an
+                      industry conference on the page's most prominent card. */}
+                  {featured.category ? (
+                    <CategoryPill
+                      label={CATEGORY_META[featured.category].label}
+                      icon={CATEGORY_META[featured.category].icon}
+                      tone={CATEGORY_META[featured.category].tone}
+                    />
+                  ) : null}
                   <div className="mb-2 flex flex-wrap gap-4">
                     <MetaItem icon="calendar-days">
                       {new Date(featured.startsAt ?? featured.publishedAt).toLocaleDateString(

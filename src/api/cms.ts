@@ -2,41 +2,61 @@ import axios, { type AxiosInstance } from 'axios';
 import { env } from '@/config/env';
 import type {
   BadgeGroup,
+  BlogPost,
+  CaseStudyItem,
   ContactFormConfig,
   CultureHighlight,
+  EventItem,
   JobOpening,
+  NewsItem,
+  WebinarItem,
 } from '@/types/content';
 import {
   composeEnquiryGoal,
   toAwardBadges,
+  toBlogPost,
+  toCaseStudyItem,
   toContactFormConfig,
   toCultureHighlight,
+  toEventItem,
   toJobOpening,
+  toNewsItem,
+  toWebinarItem,
   type EnquiryInput,
 } from './cms.mappers';
 import type {
   StrapiAward,
+  StrapiBlog,
   StrapiContactUsInput,
+  StrapiEvent,
   StrapiGetInTouch,
   StrapiGetInTouchLeadInput,
   StrapiJob,
+  StrapiJsmResource,
   StrapiLifeAtClovity,
   StrapiListResponse,
+  StrapiNews,
+  StrapiWebinar,
 } from './cms.types';
 
 /**
  * The Strapi CMS (`clovity-admin`) — one axios instance and one flat list of calls,
  * the same shape as `website-t/src/api/cms.ts`.
  *
- * Four files, and each earns its place:
- *   cms.ts          this file — client, endpoints, queries, calls
- *   cms.types.ts    Strapi's wire shapes
- *   cms.mappers.ts  Strapi shapes → the app's own content types
- *   cms.hooks.ts    the browser-side hooks
+ * EVERY CMS ROUTE THIS SITE TALKS TO IS IN `CMS_ENDPOINTS` BELOW, and every request
+ * goes through the one instance in this file. No component, page or feature builds a
+ * URL — that is what keeps a collection rename a one-line change here.
  *
- * NOT to be confused with `src/services/api`, which targets a completely different
- * backend (the future Express admin API, base URL `NEXT_PUBLIC_API_BASE_URL`).
- * Rule of thumb: `api/cms*` is Strapi, `services/api` is the other one.
+ * Five files, and each earns its place:
+ *   cms.ts           this file — client, endpoints, queries, calls
+ *   cms.types.ts     Strapi's wire shapes
+ *   cms.mappers.ts   Strapi shapes → the app's own content types
+ *   cms.richtext.ts  Strapi richtext (HTML, in practice) → `ContentBlock[]`
+ *   cms.hooks.ts     the browser-side hooks
+ *
+ * This is the site's ONLY HTTP layer. The `src/services/api` scaffolding that targeted
+ * a never-built Express backend was removed - form submissions go through Server
+ * Actions, and everything else reads Strapi from here.
  */
 
 /* ── Endpoints ──────────────────────────────────────────────────────────── */
@@ -54,6 +74,18 @@ export const CMS_ENDPOINTS = {
   contactUs: '/api/contact-uses',
   getInTouchLeads: '/api/get-in-touch-leads',
   subscribes: '/api/subscribes',
+
+  // The five resource collections. Two of these are guesses waiting to happen:
+  //   • `news` pluralises to `newses`;
+  //   • the case studies the site renders live in `jsm-resources`, NOT in the
+  //     `case-study` collection. That one exists too, with 25 older rows no page
+  //     shows — `website-t` reads `jsm-resources` for `/case-study`, and its three
+  //     rows are the three case studies this design was built around.
+  blogs: '/api/blogs',
+  news: '/api/newses',
+  events: '/api/events',
+  webinars: '/api/webinars',
+  caseStudies: '/api/jsm-resources',
 } as const;
 
 /**
@@ -275,6 +307,186 @@ export async function getInTouch(
   );
   const row = body.data?.[0];
   return row ? toContactFormConfig(row) : null;
+}
+
+/* ── Reads: the resource collections ────────────────────────────────────── */
+
+/**
+ * How many rows a resource list page asks for.
+ *
+ * ONE request, not every page. `blog` has 504 published rows and the 100-row cap means
+ * walking it costs six round trips at build time for every one of the five collections
+ * — and the list pages reveal 5 cards with a "Load More" that steps 4 at a time, so
+ * nothing past the first hundred is reachable by clicking anyway.
+ *
+ * Detail pages are unaffected: each fetches its own row by slug, so a post outside the
+ * first hundred still renders in full. See `PRERENDERED_DETAIL_PAGES` in the detail
+ * routes for how those slugs are chosen.
+ */
+const RESOURCE_PAGE_SIZE = MAX_PAGE_SIZE;
+
+/**
+ * Fetch one row by its `slug` column.
+ *
+ * Strapi 5 addresses single entries by `documentId`, not by slug, so a detail page has
+ * to filter a list instead of hitting `/api/blogs/:slug` — the same thing `website-t`
+ * does. `pageSize: 1` because `slug` is unique in every one of these schemas.
+ */
+async function getBySlug<TEntity>(
+  path: string,
+  slug: string,
+  signal?: AbortSignal,
+): Promise<TEntity | null> {
+  const body = await getList<TEntity>(
+    path,
+    {
+      populate: '*',
+      pageSize: 1,
+      filters: { 'filters[slug][$eq]': slug },
+    },
+    signal,
+  );
+  return body.data?.[0] ?? null;
+}
+
+/**
+ * Map rows, dropping the ones that cannot render.
+ *
+ * Every resource mapper returns `null` for a row with no artwork, because these designs
+ * are image-first: a card with an empty 255px frame is worse than one fewer card.
+ */
+function mapRows<TEntity, TItem>(
+  rows: TEntity[] | undefined,
+  map: (row: TEntity) => TItem | null,
+): TItem[] {
+  return (rows ?? [])
+    .map(map)
+    .filter((item): item is NonNullable<typeof item> => item !== null);
+}
+
+/**
+ * Blog posts, newest first.
+ *
+ * `blog_date` is the editorial date and what the published site sorts on; `createdAt`
+ * breaks ties and covers any row whose `blog_date` an editor left empty, which would
+ * otherwise sort last-and-randomly.
+ */
+export async function getBlogs(signal?: AbortSignal): Promise<BlogPost[]> {
+  const body = await getList<StrapiBlog>(
+    CMS_ENDPOINTS.blogs,
+    {
+      populate: '*',
+      sort: ['blog_date:desc', 'createdAt:desc'],
+      pageSize: RESOURCE_PAGE_SIZE,
+    },
+    signal,
+  );
+  return mapRows(body.data, toBlogPost);
+}
+
+export async function getBlogBySlug(
+  slug: string,
+  signal?: AbortSignal,
+): Promise<BlogPost | null> {
+  const row = await getBySlug<StrapiBlog>(CMS_ENDPOINTS.blogs, slug, signal);
+  return row ? toBlogPost(row) : null;
+}
+
+/**
+ * News, newest first.
+ *
+ * Sorted on `createdAt` alone: the collection has no date column, and `isFeatured` — the
+ * obvious candidate for pinning a lead story — is set on three rows that are all
+ * 2018-2019 press releases. Date order is what `website-t` uses and what puts the
+ * current announcement in the page's featured slot.
+ */
+export async function getNews(signal?: AbortSignal): Promise<NewsItem[]> {
+  const body = await getList<StrapiNews>(
+    CMS_ENDPOINTS.news,
+    { populate: '*', sort: ['createdAt:desc'], pageSize: RESOURCE_PAGE_SIZE },
+    signal,
+  );
+  return mapRows(body.data, toNewsItem);
+}
+
+export async function getNewsBySlug(
+  slug: string,
+  signal?: AbortSignal,
+): Promise<NewsItem | null> {
+  const row = await getBySlug<StrapiNews>(CMS_ENDPOINTS.news, slug, signal);
+  return row ? toNewsItem(row) : null;
+}
+
+/** Events, most recent first — the explorer splits upcoming from past itself. */
+export async function getEvents(signal?: AbortSignal): Promise<EventItem[]> {
+  const body = await getList<StrapiEvent>(
+    CMS_ENDPOINTS.events,
+    {
+      populate: '*',
+      sort: ['startDateTime:desc'],
+      pageSize: RESOURCE_PAGE_SIZE,
+    },
+    signal,
+  );
+  return mapRows(body.data, toEventItem);
+}
+
+export async function getEventBySlug(
+  slug: string,
+  signal?: AbortSignal,
+): Promise<EventItem | null> {
+  const row = await getBySlug<StrapiEvent>(CMS_ENDPOINTS.events, slug, signal);
+  return row ? toEventItem(row) : null;
+}
+
+/** Webinars — the active session first, then newest, matching the published site. */
+export async function getWebinars(signal?: AbortSignal): Promise<WebinarItem[]> {
+  const body = await getList<StrapiWebinar>(
+    CMS_ENDPOINTS.webinars,
+    {
+      populate: '*',
+      sort: ['isActive:desc', 'createdAt:desc'],
+      pageSize: RESOURCE_PAGE_SIZE,
+    },
+    signal,
+  );
+  return mapRows(body.data, toWebinarItem);
+}
+
+export async function getWebinarBySlug(
+  slug: string,
+  signal?: AbortSignal,
+): Promise<WebinarItem | null> {
+  const row = await getBySlug<StrapiWebinar>(
+    CMS_ENDPOINTS.webinars,
+    slug,
+    signal,
+  );
+  return row ? toWebinarItem(row) : null;
+}
+
+/** Case studies — the `jsm-resource` collection. See `CMS_ENDPOINTS` for why. */
+export async function getCaseStudies(
+  signal?: AbortSignal,
+): Promise<CaseStudyItem[]> {
+  const body = await getList<StrapiJsmResource>(
+    CMS_ENDPOINTS.caseStudies,
+    { populate: '*', sort: ['createdAt:desc'], pageSize: RESOURCE_PAGE_SIZE },
+    signal,
+  );
+  return mapRows(body.data, toCaseStudyItem);
+}
+
+export async function getCaseStudyBySlug(
+  slug: string,
+  signal?: AbortSignal,
+): Promise<CaseStudyItem | null> {
+  const row = await getBySlug<StrapiJsmResource>(
+    CMS_ENDPOINTS.caseStudies,
+    slug,
+    signal,
+  );
+  return row ? toCaseStudyItem(row) : null;
 }
 
 /* ── Writes ─────────────────────────────────────────────────────────────── */

@@ -20,14 +20,17 @@ import {
 import { formatLongDate } from '@/utils/format';
 import { resolveImageSrc } from '@/utils/image';
 import {
-  getAllCaseStudies,
-  getCaseStudyBySlug,
+  getCaseStudyItemBySlug,
+  getCaseStudyItems,
   getCaseStudySlugs,
+  getOtherCaseStudies,
 } from '@/features/case-study/data';
 import { resolveCategoryMeta } from '@/features/case-study/categoryMeta';
 
-export function generateStaticParams() {
-  return getCaseStudySlugs().map((slug) => ({ slug }));
+export const revalidate = 3600;
+
+export async function generateStaticParams() {
+  return (await getCaseStudySlugs()).map((slug) => ({ slug }));
 }
 
 export async function generateMetadata({
@@ -36,7 +39,7 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const caseStudy = await getCaseStudyBySlug(slug);
+  const caseStudy = await getCaseStudyItemBySlug(slug);
   if (!caseStudy) return {};
 
   return buildMetadata({
@@ -56,15 +59,15 @@ export default async function CaseStudyDetailPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const caseStudy = await getCaseStudyBySlug(slug);
+  const caseStudy = await getCaseStudyItemBySlug(slug);
   if (!caseStudy) notFound();
 
   const url = `${siteConfig.url}${ROUTES.resources.caseStudy}/${caseStudy.slug}`;
-  const related = getAllCaseStudies()
-    .filter((item) => item.slug !== caseStudy.slug)
-    .slice(0, 3);
   const categoryMeta = resolveCategoryMeta(caseStudy.category);
-  const topCaseStudies = getAllCaseStudies().slice(0, 3);
+  const [related, topCaseStudies] = await Promise.all([
+    getOtherCaseStudies(caseStudy.slug, 3),
+    getCaseStudyItems().then((items) => items.slice(0, 3)),
+  ]);
 
   return (
     <>

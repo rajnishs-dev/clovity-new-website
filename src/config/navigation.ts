@@ -309,12 +309,3 @@ export const FOOTER_COLUMNS: FooterColumn[] = [
 ];
 
 export const FOOTER_SOCIALS: SocialLink[] = [...siteConfig.social];
-
-/** Footer "Resources" column order in the legacy markup. */
-export const FOOTER_RESOURCE_ORDER = [
-  'blog',
-  'case-studies',
-  'events',
-  'webinars',
-  'news',
-] as const;

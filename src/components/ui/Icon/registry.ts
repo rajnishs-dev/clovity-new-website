@@ -33,7 +33,6 @@ import {
   GraduationCap,
   Grip,
   Handshake,
-  Handshake,
   Headset,
   HeartPulse,
   Inbox,
@@ -45,7 +44,6 @@ import {
   ListChecks,
   Lock,
   Mail,
-  MapPin,
   MapPin,
   MessagesSquare,
   Newspaper,
@@ -213,6 +211,7 @@ export const ICONS = {
   // text node, which no screen reader could announce as a control.
   ellipsis: Ellipsis,
   copy: Copy,
+  link: Link2,
 
   // Brand marks — see `brands.tsx` for why these are inline SVG, not Lucide.
   atlassian: AtlassianGlyph,

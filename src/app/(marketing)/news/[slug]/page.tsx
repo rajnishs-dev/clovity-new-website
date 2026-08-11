@@ -18,13 +18,17 @@ import {
 import { formatLongDate } from '@/utils/format';
 import { resolveImageSrc } from '@/utils/image';
 import {
-  getAllNewsItems,
   getNewsItemBySlug,
+  getNewsItems,
   getNewsSlugs,
+  getOtherNewsItems,
 } from '@/features/news/data';
 
-export function generateStaticParams() {
-  return getNewsSlugs().map((slug) => ({ slug }));
+export const revalidate = 3600;
+
+/** Prerender what the list can reach; `dynamicParams` covers the rest on demand. */
+export async function generateStaticParams() {
+  return (await getNewsSlugs()).map((slug) => ({ slug }));
 }
 
 export async function generateMetadata({
@@ -57,10 +61,10 @@ export default async function NewsDetailPage({
   if (!item) notFound();
 
   const url = `${siteConfig.url}${ROUTES.resources.news}/${item.slug}`;
-  const related = getAllNewsItems()
-    .filter((news) => news.slug !== item.slug)
-    .slice(0, 3);
-  const topNews = getAllNewsItems().slice(0, 3);
+  const [related, topNews] = await Promise.all([
+    getOtherNewsItems(item.slug, 3),
+    getNewsItems().then((items) => items.slice(0, 3)),
+  ]);
 
   return (
     <>

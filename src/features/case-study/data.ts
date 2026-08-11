@@ -1,16 +1,23 @@
+import { cache } from 'react';
 import { ROUTES } from '@/config/routes';
-import { withFallback } from '@/services/api/request';
-import { contentApi } from '@/services/api/api';
 import type { CaseStudyItem } from '@/types/content';
+import { getCaseStudies, getCaseStudyBySlug, withCmsFallback } from '@/api/cms';
+import { prerenderableSlugs } from '@/utils/slug';
 import { cardDsh, cardForcepoint, cardHashgraph } from '@/constants/media';
 
 /**
- * Static fallback content for `/case-study` and `/case-study/[slug]`.
+ * The `/case-study` data layer: Strapi first, bundled content as the fallback.
  *
- * Ported from the legacy `case-study.html` cards. The outcomes lists are the
- * only real figures carried over from the legacy site - the Challenge /
- * Solution / Results bodies below are original placeholder copy written to
- * the same brand voice, pending the CMS.
+ * The CMS collection behind this is `jsm-resource`, NOT `case-study` - see
+ * `CMS_ENDPOINTS`. Its three published rows are the same three engagements the design
+ * was built around (Forcepoint, Hashgraph, DSH), which is why the live page and the
+ * fallback look alike.
+ *
+ * What the CMS does NOT carry is the outcome figures, the client name and the industry:
+ * those columns do not exist on `jsm-resource`, so live rows render without those meta
+ * chips. The bundled copies below keep them, and the outcomes lists are the only real
+ * figures carried over from the legacy site - the Challenge / Solution / Results bodies
+ * are placeholder copy in the same brand voice.
  */
 
 export const CASE_STUDIES: CaseStudyItem[] = [
@@ -160,7 +167,7 @@ export const CASE_STUDIES: CaseStudyItem[] = [
   },
 ];
 
-/** All case studies, most recent first - the ordering every list/sidebar uses. */
+/** The bundled case studies, most recent first. */
 export function getAllCaseStudies(): CaseStudyItem[] {
   return [...CASE_STUDIES].sort(
     (a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime(),
@@ -168,25 +175,33 @@ export function getAllCaseStudies(): CaseStudyItem[] {
 }
 
 /** Every case study for the `/case-study` index - revealed via `<LoadMoreGrid>`. */
-export async function getCaseStudies(): Promise<CaseStudyItem[]> {
-  return withFallback(async () => {
-    const result = await contentApi.caseStudies({ pageSize: 100 });
-    return result.success
-      ? { success: true as const, data: result.data.items }
-      : result;
-  }, getAllCaseStudies());
-}
+export const getCaseStudyItems = cache(async (): Promise<CaseStudyItem[]> => {
+  return withCmsFallback(() => getCaseStudies(), getAllCaseStudies());
+});
 
-export async function getCaseStudyBySlug(
+export async function getCaseStudyItemBySlug(
   slug: string,
 ): Promise<CaseStudyItem | undefined> {
+  const listed = (await getCaseStudyItems()).find((item) => item.slug === slug);
+  if (listed) return listed;
+
   const fallback = CASE_STUDIES.find((item) => item.slug === slug);
-  return withFallback(async () => {
-    const result = await contentApi.caseStudy(slug);
-    return result.success ? { success: true as const, data: result.data } : result;
-  }, fallback);
+  return withCmsFallback(
+    async () => (await getCaseStudyBySlug(slug)) ?? undefined,
+    fallback,
+  );
 }
 
-export function getCaseStudySlugs(): string[] {
-  return CASE_STUDIES.map((item) => item.slug);
+/** Sibling case studies for the related rail and the sidebar. */
+export async function getOtherCaseStudies(
+  slug: string,
+  count: number,
+): Promise<CaseStudyItem[]> {
+  const items = await getCaseStudyItems();
+  return items.filter((item) => item.slug !== slug).slice(0, count);
+}
+
+export async function getCaseStudySlugs(): Promise<string[]> {
+  const items = await getCaseStudyItems();
+  return prerenderableSlugs('case-study', items.map((item) => item.slug));
 }

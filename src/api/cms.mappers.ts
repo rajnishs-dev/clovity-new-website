@@ -1,19 +1,36 @@
 import { env } from '@/config/env';
+import { ROUTES } from '@/config/routes';
 import { siteConfig } from '@/config/site';
 import type {
   BadgeGroup,
+  BlogPost,
+  CaseStudyItem,
   ContactFormConfig,
   ContentImage,
   CultureHighlight,
+  EventItem,
   JobOpening,
   JobTrackFilter,
+  NewsItem,
+  WebinarItem,
 } from '@/types/content';
+import {
+  excerptFromBlocks,
+  readingMinutesFromBlocks,
+  richTextToBlocks,
+} from './cms.richtext';
 import type {
   StrapiAward,
+  StrapiBlog,
+  StrapiEvent,
   StrapiGetInTouch,
   StrapiJob,
+  StrapiJsmResource,
   StrapiLifeAtClovity,
   StrapiMedia,
+  StrapiNews,
+  StrapiWebinar,
+  StrapiWebinarPerson,
 } from './cms.types';
 
 /**
@@ -234,6 +251,253 @@ export function toCultureHighlight(row: StrapiLifeAtClovity): CultureHighlight {
       format: 'large',
     }),
     ...(row.link?.trim() ? { href: row.link.trim() } : {}),
+  };
+}
+
+/* ── Resource collections → the /blog, /news, /events, /webinars and
+      /case-study pages ──────────────────────────────────────────────────── */
+
+/**
+ * Reserved box for a resource card's artwork.
+ *
+ * Only a fallback: every live row in these collections has real `width`/`height` on its
+ * upload. 1100×619 is the 16:9 pair the bundled fallback content already declares, so a
+ * CMS image with no dimensions reserves the same space as the static one it replaces.
+ */
+const RESOURCE_BOX = { fallbackWidth: 1100, fallbackHeight: 619 } as const;
+
+/**
+ * First non-empty date wins.
+ *
+ * Every one of these collections dates its rows differently — `blog_date`, an event's
+ * `startDateTime`, a webinar's hand-typed `createdAtText`, and `news`, which has no
+ * date column at all and only has `createdAt`. Each mapper passes its own preference
+ * order, and `publishedAt`/`createdAt` backstop them all because `ContentBase.publishedAt`
+ * is required and the cards render a `<time>` from it.
+ */
+function firstDate(...candidates: Array<string | null | undefined>): string {
+  for (const candidate of candidates) {
+    if (candidate?.trim()) return candidate;
+  }
+  return '';
+}
+
+/**
+ * A human-typed date string → ISO, or `null` when it is not parseable.
+ *
+ * `webinar.createdAtText` is free text. "January 28, 2026" and "October 14, 2025"
+ * parse; "6th February 2025" does NOT — `Date` chokes on the ordinal suffix — and it is
+ * a live value, so a mapper that trusted this would emit `Invalid Date` on that row.
+ */
+function parseTypedDate(value: string | null | undefined): string | null {
+  if (!value?.trim()) return null;
+  const parsed = new Date(value.trim());
+  return Number.isNaN(parsed.getTime()) ? null : parsed.toISOString();
+}
+
+export function toBlogPost(row: StrapiBlog): BlogPost | null {
+  const image = toContentImage(row.image, {
+    fallbackAlt: row.title,
+    ...RESOURCE_BOX,
+  });
+  if (!image) return null;
+
+  const content = richTextToBlocks(row.content);
+
+  return {
+    kind: 'blog',
+    id: row.documentId || String(row.id),
+    slug: row.slug,
+    title: row.title,
+    excerpt: excerptFromBlocks(content),
+    publishedAt: firstDate(row.blog_date, row.publishedAt, row.createdAt),
+    ...(row.updatedAt ? { updatedAt: row.updatedAt } : {}),
+    image,
+    href: `${ROUTES.resources.blog}/${row.slug}`,
+    // `author` and `category` have no columns in the `blog` content type, so a
+    // CMS-sourced post renders without a byline or a category — both are already
+    // conditional in the detail page's meta row.
+    ...(content.length
+      ? { content, readingMinutes: readingMinutesFromBlocks(content) }
+      : {}),
+  };
+}
+
+export function toNewsItem(row: StrapiNews): NewsItem | null {
+  const image = toContentImage(row.featuredImage, {
+    fallbackAlt: row.title,
+    ...RESOURCE_BOX,
+  });
+  if (!image) return null;
+
+  const content = richTextToBlocks(row.content);
+
+  return {
+    kind: 'news',
+    id: row.documentId || String(row.id),
+    slug: row.slug,
+    title: row.title,
+    // The one collection with an editorial summary of its own.
+    excerpt: row.subtitle?.trim() || excerptFromBlocks(content),
+    publishedAt: firstDate(row.publishedAt, row.createdAt),
+    ...(row.updatedAt ? { updatedAt: row.updatedAt } : {}),
+    image,
+    href: `${ROUTES.resources.news}/${row.slug}`,
+    ...(content.length ? { content } : {}),
+  };
+}
+
+export function toEventItem(row: StrapiEvent): EventItem | null {
+  const image = toContentImage(row.featureImage, {
+    fallbackAlt: row.name,
+    ...RESOURCE_BOX,
+  });
+  if (!image) return null;
+
+  const startsAt = firstDate(row.startDateTime, row.publishedAt, row.createdAt);
+
+  return {
+    kind: 'events',
+    id: row.documentId || String(row.id),
+    slug: row.slug,
+    title: row.name,
+    // No description column exists on `event`, so there is nothing to excerpt and no
+    // body to render. The cards keep their layout with an empty teaser; adding a
+    // `description` richtext field in `clovity-admin` is what fills both.
+    excerpt: '',
+    publishedAt: startsAt,
+    image,
+    href: `${ROUTES.resources.events}/${row.slug}`,
+    startsAt,
+    ...(row.endDateTime ? { endsAt: row.endDateTime } : {}),
+    ...(row.location?.trim() ? { location: row.location.trim() } : {}),
+    // The published site's cards link straight out to `eventLink`; this site has its own
+    // detail route, so the outbound link is preserved here rather than in `href`.
+    ...(row.eventLink?.trim() ? { registrationUrl: row.eventLink.trim() } : {}),
+    // `category` has no column — the explorer hides its filter and its pill when no
+    // event carries one, rather than labelling everything "Government".
+  };
+}
+
+/**
+ * `theWho` / `moderator` → `presenters`.
+ *
+ * Both are `json` columns holding an array of `{ name, link }` on some rows and the
+ * EMPTY STRING on others, so the shape is checked before it is trusted.
+ *
+ * Each `name` packs the person AND their role into one string, with whichever separator
+ * the editor happened to type — "Matthew Graviss — Public Sector CTO at Atlassian" (em
+ * dash), "Cameron Starman – Senior Director…" (en dash), "McKenzie Nieman, Marketing
+ * Coordinator @ Carahsoft" (comma). The dash split requires surrounding whitespace so a
+ * hyphenated name survives it.
+ */
+function toWebinarPresenters(
+  ...columns: unknown[]
+): NonNullable<WebinarItem['presenters']> {
+  const people: StrapiWebinarPerson[] = columns
+    .filter((column): column is StrapiWebinarPerson[] => Array.isArray(column))
+    .flat()
+    .filter(
+      (person): person is StrapiWebinarPerson =>
+        typeof person === 'object' && person !== null,
+    );
+
+  return people
+    .map((person) => {
+      const raw = person.name?.trim();
+      if (!raw) return null;
+
+      const dash = raw.split(/\s+[—–-]\s+/);
+      const parts = dash.length > 1 ? dash : raw.split(/,\s+/);
+      const [name, ...rest] = parts;
+      if (!name?.trim()) return null;
+
+      return { name: name.trim(), role: rest.join(', ').trim() };
+    })
+    .filter((person): person is { name: string; role: string } => person !== null);
+}
+
+/**
+ * A YouTube link → an embeddable one.
+ *
+ * The CMS stores the watch URL an editor copied from the address bar
+ * (`youtube.com/watch?v=ID`); `WebinarSidebar` puts the value straight into an
+ * `<iframe src>`, and a watch URL in an iframe is refused by YouTube with
+ * "Video unavailable". Already-embed and `youtu.be` forms pass through.
+ */
+function toEmbedUrl(link: string | null | undefined): string | null {
+  const value = link?.trim();
+  if (!value) return null;
+  if (/youtube\.com\/embed\//i.test(value)) return value;
+
+  const id =
+    /[?&]v=([\w-]{6,})/.exec(value)?.[1] ??
+    /youtu\.be\/([\w-]{6,})/i.exec(value)?.[1];
+
+  return id ? `https://www.youtube.com/embed/${id}` : value;
+}
+
+export function toWebinarItem(row: StrapiWebinar): WebinarItem | null {
+  const title = row.title?.trim();
+  if (!title) return null;
+
+  const image = toContentImage(row.banner, {
+    fallbackAlt: title,
+    ...RESOURCE_BOX,
+  });
+  if (!image) return null;
+
+  const content = richTextToBlocks(row.eventDescription);
+  const presenters = toWebinarPresenters(row.theWho, row.moderator);
+  const videoUrl = row.showVideoPlayer ? toEmbedUrl(row.youtubeVideoLink) : null;
+  const recording = row.recordingLink?.trim();
+
+  return {
+    kind: 'webinars',
+    id: row.documentId || String(row.id),
+    slug: row.slug,
+    title,
+    excerpt: excerptFromBlocks(content),
+    // `createdAtText` is what the published page shows as the session date, so it is
+    // preferred over the row's own timestamps — when it parses.
+    publishedAt: firstDate(
+      parseTypedDate(row.createdAtText),
+      row.publishedAt,
+      row.createdAt,
+    ),
+    image,
+    href: `${ROUTES.resources.webinars}/${row.slug}`,
+    // A session with a recording is watchable on demand; one without is not.
+    onDemand: Boolean(recording || videoUrl),
+    ...(presenters.length ? { presenters } : {}),
+    ...(videoUrl ? { videoUrl } : {}),
+    ...(content.length ? { content } : {}),
+  };
+}
+
+export function toCaseStudyItem(row: StrapiJsmResource): CaseStudyItem | null {
+  const image = toContentImage(row.featuredImage, {
+    fallbackAlt: row.title,
+    ...RESOURCE_BOX,
+  });
+  if (!image) return null;
+
+  const content = richTextToBlocks(row.content);
+
+  return {
+    kind: 'case-study',
+    id: row.documentId || String(row.id),
+    slug: row.slug,
+    title: row.title,
+    excerpt: excerptFromBlocks(content),
+    publishedAt: firstDate(row.publishedAt, row.createdAt),
+    ...(row.updatedAt ? { updatedAt: row.updatedAt } : {}),
+    image,
+    href: `${ROUTES.resources.caseStudy}/${row.slug}`,
+    // `jsm-resource` has no client / industry / category / outcome columns, so those
+    // meta chips do not render for CMS rows. The category pill falls back to the
+    // literal "Case Study" label the list page already supplies.
+    ...(content.length ? { content } : {}),
   };
 }
 

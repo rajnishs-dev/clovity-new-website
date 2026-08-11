@@ -102,11 +102,8 @@ export type IconName =
   | 'refresh'
   | 'ellipsis'
   | 'copy'
-  // Location and resource metadata
-  | 'map-pin'
+  // The "copy link" affordance on a resource detail page's share row.
   | 'link'
-  | 'landmark'
-  | 'handshake'
   // Brand marks - inline SVG, since Lucide ships no brand icons.
   | 'atlassian'
   | 'jira'

@@ -1,11 +1,13 @@
+import { cache } from 'react';
 import { ROUTES } from '@/config/routes';
-import { withFallback } from '@/services/api/request';
-import { contentApi } from '@/services/api/api';
 import type { NewsItem } from '@/types/content';
+import { getNews, getNewsBySlug, withCmsFallback } from '@/api/cms';
+import { prerenderableSlugs } from '@/utils/slug';
 import { CDN } from '@/constants/media';
 
 /**
- * Static fallback content for `/news` and `/news/[slug]`.
+ * The `/news` data layer: Strapi first (the `news` collection, 56 published rows),
+ * with everything below as the fallback when the CMS is unreachable.
  *
  * Ported from the legacy `news.html` list and `news-detail.html`. Only the
  * Japan/UK expansion release carried a full body on the old site - it is
@@ -19,8 +21,7 @@ import { CDN } from '@/constants/media';
  * expansion first) rather than resorted by `publishedAt`, because that is the
  * order `/news` renders the featured story in - mirroring how
  * `getBlogPosts()` relies on `BLOG_POSTS` already being in the order the blog
- * list wants. `getAllNewsItems()` below is the date-sorted view used by the
- * sidebar and "Related News" rail, where most-recent-first is what matters.
+ * list wants.
  */
 
 const ABOUT_CLOVITY =
@@ -294,38 +295,42 @@ export const NEWS_ITEMS: NewsItem[] = [
   },
 ];
 
-/** All news items, most recent first - used by the sidebar and related rail. */
-export function getAllNewsItems(): NewsItem[] {
-  return [...NEWS_ITEMS].sort(
-    (a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime(),
-  );
-}
-
 /**
  * Every item for the `/news` index - revealed in batches by `<LoadMoreGrid>`.
  *
- * Falls back to `NEWS_ITEMS` (not the date-sorted `getAllNewsItems()`)
- * because the list page takes its featured story as the first element of
- * this array, and the legacy site's featured release is not the most
- * recently dated item.
+ * The FALLBACK is `NEWS_ITEMS` in its authored order, not the date-sorted view: the
+ * list page takes its featured story from the first element, and the legacy site's
+ * featured release is not its most recently dated one. CMS results arrive
+ * `createdAt:desc`, so live the newest release takes that slot.
+ *
+ * `cache()` for the same reason as the blog list - one request per HTTP request even
+ * though the page, its metadata and its sidebar each ask.
  */
-export async function getNewsItems(): Promise<NewsItem[]> {
-  return withFallback(async () => {
-    const result = await contentApi.news({ pageSize: 100 });
-    return result.success
-      ? { success: true as const, data: result.data.items }
-      : result;
-  }, NEWS_ITEMS);
-}
+export const getNewsItems = cache(async (): Promise<NewsItem[]> => {
+  return withCmsFallback(() => getNews(), NEWS_ITEMS);
+});
 
 export async function getNewsItemBySlug(slug: string): Promise<NewsItem | undefined> {
+  const listed = (await getNewsItems()).find((item) => item.slug === slug);
+  if (listed) return listed;
+
   const fallback = NEWS_ITEMS.find((item) => item.slug === slug);
-  return withFallback(async () => {
-    const result = await contentApi.newsItem(slug);
-    return result.success ? { success: true as const, data: result.data } : result;
-  }, fallback);
+  return withCmsFallback(
+    async () => (await getNewsBySlug(slug)) ?? undefined,
+    fallback,
+  );
 }
 
-export function getNewsSlugs(): string[] {
-  return NEWS_ITEMS.map((item) => item.slug);
+/** Sibling items for the "Related News" rail and the sidebar. */
+export async function getOtherNewsItems(
+  slug: string,
+  count: number,
+): Promise<NewsItem[]> {
+  const items = await getNewsItems();
+  return items.filter((item) => item.slug !== slug).slice(0, count);
+}
+
+export async function getNewsSlugs(): Promise<string[]> {
+  const items = await getNewsItems();
+  return prerenderableSlugs('news', items.map((item) => item.slug));
 }

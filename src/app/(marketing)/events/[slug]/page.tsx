@@ -18,10 +18,17 @@ import {
   ShareRow, } from '@/components/common/Resources';
 import { formatLongDate } from '@/utils/format';
 import { resolveImageSrc } from '@/utils/image';
-import { getAllEvents, getEventBySlug, getEventSlugs } from '@/features/events/data';
+import {
+  getEventItemBySlug,
+  getEventItems,
+  getEventSlugs,
+  getOtherEvents,
+} from '@/features/events/data';
 
-export function generateStaticParams() {
-  return getEventSlugs().map((slug) => ({ slug }));
+export const revalidate = 3600;
+
+export async function generateStaticParams() {
+  return (await getEventSlugs()).map((slug) => ({ slug }));
 }
 
 export async function generateMetadata({
@@ -30,7 +37,7 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const event = await getEventBySlug(slug);
+  const event = await getEventItemBySlug(slug);
   if (!event) return {};
 
   return buildMetadata({
@@ -50,14 +57,14 @@ export default async function EventDetailPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const event = await getEventBySlug(slug);
+  const event = await getEventItemBySlug(slug);
   if (!event) notFound();
 
   const url = `${siteConfig.url}${ROUTES.resources.events}/${event.slug}`;
-  const related = getAllEvents()
-    .filter((item) => item.slug !== event.slug)
-    .slice(0, 3);
-  const topEvents = getAllEvents().slice(0, 3);
+  const [related, topEvents] = await Promise.all([
+    getOtherEvents(event.slug, 3),
+    getEventItems().then((items) => items.slice(0, 3)),
+  ]);
 
   return (
     <>

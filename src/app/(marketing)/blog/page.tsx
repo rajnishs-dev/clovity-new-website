@@ -12,7 +12,7 @@ import {
   ResourceHero,
   ResourceSidebar, } from '@/components/common/Resources';
 import { formatContentDate } from '@/utils/format';
-import { getAllBlogPosts, getBlogPosts } from '@/features/blog/data';
+import { getBlogPosts } from '@/features/blog/data';
 
 export const metadata: Metadata = buildMetadata({
   title: 'Blog - Atlassian, AI & Cloud Insights',
@@ -21,10 +21,21 @@ export const metadata: Metadata = buildMetadata({
   path: ROUTES.resources.blog,
 });
 
+/**
+ * Safety net under the Strapi webhook.
+ *
+ * `POST /api/revalidate` is what makes a publish appear immediately; this hour is what
+ * covers the webhook being misconfigured, blocked or silently failing. Matches the
+ * window `/contact` already uses.
+ */
+export const revalidate = 3600;
+
 export default async function BlogPage() {
   const posts = await getBlogPosts();
   const [featured, ...rest] = posts;
-  const topPosts = getAllBlogPosts().slice(0, 4);
+  // Same list as the grid, so the sidebar can never advertise a post the page does not
+  // have — which is exactly what happened while this read the bundled content instead.
+  const topPosts = posts.slice(0, 4);
 
   return (
     <>
