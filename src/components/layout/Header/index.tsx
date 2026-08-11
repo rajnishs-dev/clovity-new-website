@@ -48,9 +48,16 @@ const HAMBURGER_OPEN = {
 export interface HeaderProps {
   /**
    * `floating` for pages whose hero sits behind the header (the home page),
-   * `solid` for standard interior pages.
+   * `solid` for standard interior pages, `opaque` for pages whose hero is a
+   * full-bleed DARK PHOTOGRAPH — About, Careers and Contact.
+   *
+   * `opaque` is not a nicety. `solid` is transparent until the visitor scrolls, and
+   * its nav labels are `#1e293b`; over a near-black hero photo that is dark text on
+   * dark artwork, i.e. an unreadable header on first paint. The three photo-hero
+   * pages each re-declare `#navbar` in their own stylesheet to be solid white from
+   * the start for exactly that reason, and this reproduces it.
    */
-  variant?: 'floating' | 'solid';
+  variant?: 'floating' | 'solid' | 'opaque';
   /** Fetch the logo with priority — it is the LCP-adjacent element. */
   priorityLogo?: boolean;
 }
@@ -64,6 +71,7 @@ export function Header({
   const toggleRef = useRef<HTMLButtonElement | null>(null);
 
   const floating = variant === 'floating';
+  const opaque = variant === 'opaque';
   // Nav text and hamburger bars go white only while the header is transparent
   // over dark artwork.
   const onDark = floating && !scrolled;
@@ -83,7 +91,14 @@ export function Header({
                 '[transition:background_.35s_ease,box-shadow_.35s_ease,padding_.35s_ease,border-color_.35s_ease,backdrop-filter_.35s_ease]',
                 scrolled
                   ? 'bg-white/95 py-2.5 shadow-[0_1px_24px_rgba(0,0,0,.06)] backdrop-blur-[10px]'
-                  : 'bg-transparent py-4',
+                  : // `opaque` at rest: 97% white, a visible `#e2e8f0` rule, a
+                    // slightly tighter shadow and 12px padding. On scroll it hands
+                    // over to the shared scrolled state above, which is what the
+                    // published pages do — `#navbar.scrolled` outranks their own
+                    // `#navbar` override on specificity.
+                    opaque
+                    ? 'border-line bg-white/[.97] py-3 shadow-[0_1px_20px_rgba(15,23,42,.06)] backdrop-blur-[10px]'
+                    : 'bg-transparent py-4',
               ),
         )}
       >
@@ -108,7 +123,11 @@ export function Header({
                  `.nav-logo-img` rule resolved to on the home page. */
               imageClassName={cn(
                 'w-auto [transition:height_.35s_ease,filter_.35s_ease]',
-                scrolled ? 'h-[56px]' : 'h-[72px]',
+                // `opaque` pins the logo at 68px in both states: those pages set
+                // `#navbar .nav-logo-img { height: 68px }`, which ties with the
+                // theme's own rule and wins on source order, and the scrolled rule
+                // also resolves to 68px — so it never resizes on scroll.
+                opaque ? 'h-[68px]' : scrolled ? 'h-[56px]' : 'h-[72px]',
               )}
               showWhite={onDark}
               priority={priorityLogo}

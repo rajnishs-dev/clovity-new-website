@@ -11,7 +11,41 @@ const REMOTE_IMAGE_HOSTS = [
   'clovity.com',
   'images.unsplash.com',
   'marketplace.atlassian.com',
+  // Country flags on the Contact page's office cards.
+  'flagcdn.com',
 ] as const;
+
+/**
+ * Hosts that serve Strapi uploads, derived from the environment.
+ *
+ * next/image refuses any host that is not allow-listed, and Strapi media can come
+ * from three different origins depending on how `clovity-admin` is deployed: the
+ * S3 provider (already listed above), the Strapi instance itself, or a CDN in front
+ * of it. Reading them out of the env means changing the CMS host is a deploy
+ * variable, not a code change — and a missing variable degrades to "no extra host"
+ * rather than breaking the build.
+ *
+ * Note this runs at config-eval time, so the variables must be present in the
+ * BUILD environment, not just at runtime.
+ */
+function cmsImageHosts(): string[] {
+  const candidates = [
+    process.env.NEXT_PUBLIC_CMS_MEDIA_URL,
+    process.env.NEXT_PUBLIC_CMS_API_URL,
+  ];
+
+  const hosts = new Set<string>();
+  for (const candidate of candidates) {
+    if (!candidate) continue;
+    try {
+      hosts.add(new URL(candidate).hostname);
+    } catch {
+      // A malformed value must not take the build down — the allow-list simply
+      // does not gain that host, and the image request fails visibly instead.
+    }
+  }
+  return [...hosts];
+}
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,
@@ -45,10 +79,21 @@ const nextConfig: NextConfig = {
     qualities: [75, 90],
 
     minimumCacheTTL: 60 * 60 * 24 * 30,
-    remotePatterns: REMOTE_IMAGE_HOSTS.map((hostname) => ({
-      protocol: 'https' as const,
-      hostname,
-    })),
+    remotePatterns: [
+      ...REMOTE_IMAGE_HOSTS.map((hostname) => ({
+        protocol: 'https' as const,
+        hostname,
+      })),
+      /**
+       * Strapi hosts get both protocols: a local `clovity-admin` runs on
+       * `http://localhost:1337`, and pinning to https would block every image on
+       * the About and Careers pages during development.
+       */
+      ...cmsImageHosts().flatMap((hostname) => [
+        { protocol: 'https' as const, hostname },
+        { protocol: 'http' as const, hostname },
+      ]),
+    ],
   },
 
   experimental: {

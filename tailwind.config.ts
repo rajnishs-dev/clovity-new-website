@@ -61,6 +61,17 @@ const config: Config = {
       'to-640': { max: '640px' },
       'to-585': { max: '585px' },
       'to-560': { max: '560px' },
+      /**
+       * The About/Careers stat band and the Contact form's two-up rows.
+       *
+       * A NAMED screen, not an arbitrary `max-[520px]:` variant — that variant
+       * silently produces NO CSS in this project. Tailwind only generates the
+       * `max-*` family when every entry in `screens` is a plain min-width string,
+       * and the `to-*` entries above are `{ max: … }` objects, so it is disabled
+       * wholesale. There is no warning: the class is accepted, no rule is emitted,
+       * and the layout just keeps its desktop columns on a phone.
+       */
+      'to-520': { max: '520px' },
       'to-480': { max: '480px' },
     },
 
@@ -279,6 +290,17 @@ const config: Config = {
           '0%,100%': { transform: 'translateY(0)' },
           '50%': { transform: 'translateY(-10px)' },
         },
+        /**
+         * Interior-page hero orbs (`@keyframes abFloat` / `crFloat`).
+         *
+         * Separate from `floatY` because the travel is 16px, not 10px, and the two
+         * are used side by side on the Careers hero — merging them would change one
+         * of the two amplitudes.
+         */
+        heroOrbFloat: {
+          '0%,100%': { transform: 'translateY(0)' },
+          '50%': { transform: 'translateY(-16px)' },
+        },
         blinkCaret: {
           'from,to': { borderColor: 'transparent' },
           '50%': { borderColor: '#f2642a' },
@@ -312,6 +334,10 @@ const config: Config = {
         'banner-ping': 'bannerPing 2s ease-in-out infinite',
         'ping-soft': 'pingSoft 2s ease-in-out infinite',
         'float-y': 'floatY 3s ease-in-out infinite',
+        'hero-orb': 'heroOrbFloat 10s ease-in-out infinite',
+        // `reverse` is part of the shorthand, matching `animation: crFloat 12s
+        // ease-in-out infinite reverse` on the second orb.
+        'hero-orb-reverse': 'heroOrbFloat 12s ease-in-out infinite reverse',
         'blink-caret': 'blinkCaret .75s step-end infinite',
         'mf-line': 'mfLineRun 3.6s linear infinite',
         'fde-glow': 'fdeFloatGlow 4.5s ease-in-out infinite',

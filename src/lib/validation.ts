@@ -64,6 +64,91 @@ export const contactSchema = z.object({
 
 export type ContactFormValues = z.infer<typeof contactSchema>;
 
+/**
+ * The Contact page's enquiry form.
+ *
+ * Separate from `contactSchema` above, which models the future admin API's payload
+ * and requires an explicit `consent` boolean. The published contact form has no
+ * consent checkbox and asks for a topic instead, so validating it against that
+ * schema would fail every submission on a field the form does not render.
+ *
+ * BUILT FROM THE CMS CONFIG, not fixed: the Strapi `get-in-touch` row for this page
+ * decides whether the name, company and phone fields are shown at all and whether
+ * each is mandatory. A fixed schema would either reject a submission for a field the
+ * page is not showing, or accept an empty value an editor marked required.
+ *
+ * `message` and `email` are always required — they are the enquiry — and the design
+ * marks both accordingly.
+ */
+export interface EnquiryFieldRules {
+  showFullName: boolean;
+  requireFullName: boolean;
+  showCompany: boolean;
+  requireCompany: boolean;
+  showPhone: boolean;
+  requirePhone: boolean;
+}
+
+/** Optional free-text field: absent, empty, or within length. */
+const optionalText = (max: number, tooLong: string) =>
+  z.string().trim().max(max, tooLong).optional().or(z.literal(''));
+
+export function buildEnquirySchema(rules: EnquiryFieldRules) {
+  return z.object({
+    fullName:
+      rules.showFullName && rules.requireFullName
+        ? z
+            .string()
+            .trim()
+            .min(2, 'Please enter your full name.')
+            .max(120, 'That name is too long.')
+        : optionalText(120, 'That name is too long.'),
+
+    email,
+
+    company:
+      rules.showCompany && rules.requireCompany
+        ? z
+            .string()
+            .trim()
+            .min(2, 'Please enter your company name.')
+            .max(160, 'That company name is too long.')
+        : optionalText(160, 'That company name is too long.'),
+
+    phone:
+      rules.showPhone && rules.requirePhone
+        ? z
+            .string()
+            .trim()
+            .regex(/^[\d\s()+.-]{7,24}$/, 'Enter a valid phone number.')
+        : z
+            .string()
+            .trim()
+            .regex(/^[\d\s()+.-]{7,24}$/, 'Enter a valid phone number.')
+            .optional()
+            .or(z.literal('')),
+
+    topic: z.string().trim().min(1, 'Please choose a topic.').max(120),
+
+    message: z
+      .string()
+      .trim()
+      .min(10, 'Please tell us a little about what you need.')
+      .max(4000, 'Please keep the message under 4000 characters.'),
+  });
+}
+
+/**
+ * Field values the enquiry form holds.
+ *
+ * Derived from the permissive build so one type covers every configuration — the
+ * required/optional distinction is a validation concern, not a shape concern, and
+ * a per-config type would make the form component generic for no benefit.
+ */
+export type EnquiryFormValues = z.infer<
+  ReturnType<typeof buildEnquirySchema>
+>;
+
 export const searchSchema = z.object({
   query: z
     .string()

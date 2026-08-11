@@ -59,6 +59,16 @@ export const siteConfig = {
     salesEmail: 'sales@clovity.com',
     supportUrl: 'https://clovity-help-center.vercel.app/',
     responseSla: 'Our team responds within one business day.',
+    /**
+     * The address every interior-page CTA and the careers "Apply Now" mailto
+     * points at, taken from the published markup. One constant, because it
+     * appears in ~12 prefilled mailto links across About, Careers and Contact.
+     */
+    globalEmail: 'info-global@clovity.com',
+    phone: '(925) 264-6360',
+    /** `tel:` form of `phone` — digits only, so the dialler cannot misparse it. */
+    phoneHref: 'tel:+19252646360',
+    headquarters: 'Dublin, California',
   },
 
   /**

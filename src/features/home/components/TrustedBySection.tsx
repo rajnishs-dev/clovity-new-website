@@ -9,7 +9,7 @@ import {
   SUBHEADING_CLASS,
 } from '@/components/ui/Typography';
 import { TRUSTED_BY_CONTENT } from '@/constants/home';
-import { ClientMarquee } from './ClientMarquee';
+import { ClientMarquee, HOME_LOGO_PILL_CLASS } from './ClientMarquee';
 
 /**
  * Section 2 — Trusted By: intro copy, three customer-story cards, logo marquee.
@@ -90,7 +90,8 @@ export function TrustedBySection({ stories, logos }: TrustedBySectionProps) {
         </div>
       </div>
 
-      <ClientMarquee logos={logos} />
+      {/* The home page's own `.trusted-sec .logo-pill` border + shadow override. */}
+      <ClientMarquee logos={logos} pillClassName={HOME_LOGO_PILL_CLASS} />
     </section>
   );
 }

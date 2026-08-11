@@ -81,6 +81,15 @@ export interface SectionHeaderProps {
   label?: string;
   align?: 'center' | 'left';
   className?: string;
+  /**
+   * Classes for the eyebrow label.
+   *
+   * Needed because the gap between label and heading is a per-section decision in
+   * the source design — 16px on most section headers, 12px on the About page's
+   * "Trusted By" — and the label is an `inline-block`, so that gap can only be its
+   * own bottom margin.
+   */
+  labelClassName?: string;
   headingClassName?: string;
   subheadingClassName?: string;
   /** Scroll-reveal direction, or `false` to render statically. */
@@ -96,6 +105,7 @@ export function SectionHeader({
   label,
   align = 'center',
   className,
+  labelClassName,
   headingClassName,
   subheadingClassName,
   revealFrom = 'up',
@@ -115,7 +125,9 @@ export function SectionHeader({
       style={style}
       {...(revealing ? revealAttrs() : {})}
     >
-      {label ? <span className={LABEL_CLASS}>{label}</span> : null}
+      {label ? (
+        <span className={cn(LABEL_CLASS, labelClassName)}>{label}</span>
+      ) : null}
       <h2 id={id} className={cn(HEADING_CLASS, headingClassName)}>
         {heading}
       </h2>

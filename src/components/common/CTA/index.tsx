@@ -2,7 +2,7 @@ import type { ReactNode } from 'react';
 import { cn } from '@/lib/cn';
 import { reveal, revealAttrs } from '@/lib/reveal';
 import type { CtaLink } from '@/types/content';
-import { ArrowIcon } from '@/components/ui/Icon';
+import { ArrowIcon, Icon } from '@/components/ui/Icon';
 import { ButtonLink, type ButtonVariant } from '@/components/ui/Button';
 
 /**
@@ -17,6 +17,7 @@ const VARIANT_MAP: Record<CtaLink['variant'], ButtonVariant> = {
   primary: 'primary',
   secondary: 'secondary',
   white: 'white',
+  'white-pill': 'whitePill',
   'ghost-dark': 'ghostDark',
 };
 
@@ -25,7 +26,24 @@ const ARROW_VARIANTS = new Set<CtaLink['variant']>([
   'primary',
   'secondary',
   'white',
+  'white-pill',
 ]);
+
+/**
+ * The trailing glyph for one CTA.
+ *
+ * `cta.icon` wins when set, which is how the interior pages get their
+ * `arrow-up-right` without a second component. `text-xs` matches the `text-xs` the
+ * markup puts on every one of these arrows.
+ */
+function trailingGlyph(cta: CtaLink) {
+  if (!ARROW_VARIANTS.has(cta.variant)) return undefined;
+  return cta.icon ? (
+    <Icon name={cta.icon} className="text-xs" />
+  ) : (
+    <ArrowIcon />
+  );
+}
 
 export interface CtaGroupProps {
   ctas: CtaLink[];
@@ -52,8 +70,8 @@ export function CtaGroup({
           variant={VARIANT_MAP[cta.variant]}
           size={size}
           {...(cta.external ? { forceExternal: true } : {})}
-          {...(!hideArrows && ARROW_VARIANTS.has(cta.variant)
-            ? { trailingIcon: <ArrowIcon /> }
+          {...(!hideArrows && trailingGlyph(cta)
+            ? { trailingIcon: trailingGlyph(cta) }
             : {})}
         >
           {cta.label}
@@ -82,6 +100,33 @@ export interface FinalCtaProps {
   ctas: CtaLink[];
   id?: string;
   className?: string;
+  /**
+   * Classes for the gradient card itself.
+   *
+   * The interior pages (About / Careers / Contact) declare their own `.cta-card`
+   * gradient — `#152a6b → #2557c9 → #3568e0`, a step darker than the home page's —
+   * and their own heading clamp. Those are page-level stylesheet values in the
+   * published markup, not a shared token, so they arrive as overrides here rather
+   * than changing the default and shifting the home page with it.
+   */
+  cardClassName?: string;
+  headingClassName?: string;
+  /**
+   * Pull the card up out of the preceding section (the home page's `-mt-[180px]`).
+   *
+   * Off for the interior pages, whose `.cta-card` sets `margin-top: 0` — the
+   * section above them is padded normally and there is nothing to tuck into. It
+   * still overlaps DOWNWARD into the footer either way; that is the `-mb-[180px]`
+   * below, which is not optional because the footer reserves matching space.
+   */
+  pullUp?: boolean;
+  /**
+   * The hand-drawn arrow-and-sparkle flourish under the heading.
+   *
+   * Home page only. The interior pages' CTA cards have no such mark, and rendering
+   * one would be inventing artwork the design does not have.
+   */
+  flourish?: boolean;
 }
 
 export function FinalCta({
@@ -90,6 +135,10 @@ export function FinalCta({
   ctas,
   id = 'final-cta',
   className,
+  cardClassName,
+  headingClassName,
+  pullUp = true,
+  flourish = true,
 }: FinalCtaProps) {
   return (
     <section
@@ -98,10 +147,12 @@ export function FinalCta({
     >
       <div
         className={cn(
-          'relative mx-auto -mb-[180px] -mt-[180px] flex max-w-shell flex-wrap items-center justify-between gap-12 overflow-hidden rounded-[32px] bg-grad-cta px-14 py-[60px] shadow-cta',
+          'relative mx-auto -mb-[180px] flex max-w-shell flex-wrap items-center justify-between gap-12 overflow-hidden rounded-[32px] bg-grad-cta px-14 py-[60px] shadow-cta',
+          pullUp && '-mt-[180px]',
           'to-900:justify-center to-900:px-9 to-900:py-12 to-900:text-center',
           'to-640:-mb-[100px] to-640:rounded-[24px]',
           reveal(),
+          cardClassName,
         )}
         {...revealAttrs()}
       >
@@ -115,9 +166,15 @@ export function FinalCta({
         </div>
 
         <div className="relative z-[1] min-w-[280px] flex-[1_1_380px] to-900:max-w-full to-900:flex-[1_1_100%]">
-          <h2 className="m-0 text-[clamp(30px,3.2vw,46px)] font-normal leading-[1.1] tracking-[-0.03em] text-white">
+          <h2
+            className={cn(
+              'm-0 text-[clamp(30px,3.2vw,46px)] font-normal leading-[1.1] tracking-[-0.03em] text-white',
+              headingClassName,
+            )}
+          >
             {heading}
           </h2>
+          {flourish ? (
           <svg
             width="170"
             height="64"
@@ -147,6 +204,7 @@ export function FinalCta({
               fillOpacity=".9"
             />
           </svg>
+          ) : null}
         </div>
 
         <div className="relative z-[1] min-w-[280px] max-w-[460px] flex-[1_1_380px] to-900:max-w-full to-900:flex-[1_1_100%]">
@@ -160,8 +218,8 @@ export function FinalCta({
                 href={cta.href}
                 variant={VARIANT_MAP[cta.variant]}
                 {...(cta.external ? { forceExternal: true } : {})}
-                {...(ARROW_VARIANTS.has(cta.variant)
-                  ? { trailingIcon: <ArrowIcon /> }
+                {...(trailingGlyph(cta)
+                  ? { trailingIcon: trailingGlyph(cta) }
                   : {})}
               >
                 {cta.label}

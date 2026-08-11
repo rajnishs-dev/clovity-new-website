@@ -2,6 +2,7 @@ import {
   ArrowLeft,
   ArrowRight,
   ArrowUpRight,
+  Bot,
   Brain,
   Briefcase,
   Building2,
@@ -16,23 +17,41 @@ import {
   ClipboardList,
   Cloud,
   CloudUpload,
+  Code,
   Cog,
+  Copy,
   Compass,
   Database,
+  DoorOpen,
+  Ellipsis,
   ExternalLink,
+  FileSignature,
+  Flag,
   Flame,
   GitBranch,
+  Globe,
+  GraduationCap,
   Grip,
+  Handshake,
   Headset,
+  HeartPulse,
   Inbox,
   Info,
+  Landmark,
+  Laptop,
   LifeBuoy,
   ListChecks,
   Lock,
   Mail,
+  MapPin,
   MessagesSquare,
   Newspaper,
   PenTool,
+  Phone,
+  PhoneCall,
+  Plus,
+  Quote,
+  RefreshCw,
   Search,
   Send,
   Server,
@@ -153,10 +172,44 @@ export const ICONS = {
   newspaper: Newspaper,
   comments: MessagesSquare,
   mail: Mail,
+  phone: Phone,
+  'phone-call': PhoneCall,
+  quote: Quote,
 
   // Company
   building: Building2,
   briefcase: Briefcase,
+  landmark: Landmark,
+  flag: Flag,
+  globe: Globe,
+  // Lucide ships one globe, not a per-continent set. The published markup used
+  // Font Awesome's `earth-europe` and `earth-asia` to mark the EMEA and APAC
+  // offices; both resolve to the same glyph here, and the office label is what
+  // actually names the region.
+  'earth-asia': Globe,
+  'map-pin': MapPin,
+  handshake: Handshake,
+
+  // AI and delivery
+  robot: Bot,
+  code: Code,
+
+  // Hiring and people development
+  'graduation-cap': GraduationCap,
+  // "Flexible & remote-friendly" — a laptop, which is what Font Awesome's
+  // `house-laptop` composite conveyed.
+  'remote-work': Laptop,
+  'heart-pulse': HeartPulse,
+  'file-signature': FileSignature,
+  'door-open': DoorOpen,
+
+  // Small controls
+  plus: Plus,
+  refresh: RefreshCw,
+  // The role card's overflow menu — the legacy card drew this as a literal "..."
+  // text node, which no screen reader could announce as a control.
+  ellipsis: Ellipsis,
+  copy: Copy,
 
   // Brand marks — see `brands.tsx` for why these are inline SVG, not Lucide.
   atlassian: AtlassianGlyph,

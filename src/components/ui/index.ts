@@ -86,5 +86,15 @@ export {
   type AccordionItem,
 } from './Accordion';
 export { Tabs, TabPanel, type TabsProps, type TabItem } from './Tabs';
+export {
+  SplitMedia,
+  SplitMediaFrame,
+  type SplitMediaProps,
+  type SplitMediaFrameProps,
+} from './SplitMedia';
+export { StatBand, type StatBandProps } from './StatBand';
+export { RichText, type RichTextProps } from './RichText';
+export { PillarGrid, type PillarGridProps } from './PillarGrid';
+export { BentoGrid, type BentoGridProps } from './BentoGrid';
 export { Tooltip, type TooltipProps } from './Tooltip';
 export { Pagination, type PaginationProps } from './Pagination';

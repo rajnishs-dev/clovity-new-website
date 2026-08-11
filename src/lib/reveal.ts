@@ -87,6 +87,37 @@ export function reveal(
 }
 
 /**
+ * `reveal()` with the element's text alignment stated explicitly.
+ *
+ * WHY THIS IS NEEDED — `reveal()` emits `text-center md:text-left` as part of its
+ * base string, so applying it to a block silently changes that block's alignment:
+ * centred on small screens, left-aligned from 768px up. For anything whose design
+ * specifies a single alignment (a centred section header, a left-aligned card body)
+ * that is a visual change coming from a motion utility, which is not a decision the
+ * motion utility should be making.
+ *
+ * Rather than edit `reveal()` — the home page's sections were written against its
+ * current output and changing it would shift that page — this composes on top and
+ * lets tailwind-merge resolve the conflict, so the alignment a caller asks for is
+ * the alignment that renders at every width.
+ *
+ * Use this on interior pages. Both alignments are declared at both breakpoints on
+ * purpose: naming only the base would leave `reveal()`'s `md:text-left` in play.
+ */
+const ALIGNMENT: Record<'left' | 'center', string> = {
+  left: 'text-left md:text-left',
+  center: 'text-center md:text-center',
+};
+
+export function revealAligned(
+  align: 'left' | 'center',
+  direction: RevealDirection = 'up',
+  delayMs?: number,
+): string {
+  return cn(reveal(direction, delayMs), ALIGNMENT[align]);
+}
+
+/**
  * Marks the element for the reveal observer.
  *
  * OPTIONAL. `useScrollReveal` also matches the `transition-reveal` class that

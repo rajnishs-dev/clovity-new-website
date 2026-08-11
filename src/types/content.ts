@@ -245,5 +245,208 @@ export interface CtaLink {
   label: string;
   href: string;
   external?: boolean;
-  variant: 'primary' | 'secondary' | 'white' | 'ghost-dark';
+  variant: 'primary' | 'secondary' | 'white' | 'ghost-dark' | 'white-pill';
+  /**
+   * Trailing glyph override. Omitted means the right-arrow every CTA on the home
+   * page carries; the interior pages' CTAs use `arrow-up-right` instead, and that
+   * is a per-button decision in the published markup rather than a property of the
+   * variant.
+   */
+  icon?: IconName;
+}
+
+/* ── Interior pages: About / Careers / Contact ──────────────────────────── */
+
+/**
+ * A three-across value-prop card ("Why Clovity", "Why build your career here").
+ *
+ * `iconChipClass` carries the chip's background/foreground pair as Tailwind
+ * classes rather than a hex pair, because the four tints in this design are a
+ * fixed palette (blue / violet / orange / green) and naming them as classes keeps
+ * the colour decision reviewable in the constants file instead of buried in a
+ * style object.
+ */
+export interface PillarCard {
+  id: string;
+  title: string;
+  description: string;
+  icon: IconName;
+  iconChipClass: string;
+}
+
+/** One metric in the dark stat band. */
+export interface StatBandItem {
+  id: string;
+  /** Rendered as-is. Not a number: the design's values are "Platinum", "24×7". */
+  value: string;
+  /** True for the values the design tints orange (the first cell). */
+  accent?: boolean;
+  label: string;
+}
+
+/** A tile in the four-up bento grid (values, benefits). */
+export interface BentoTile {
+  id: string;
+  title: string;
+  description: string;
+  icon: IconName;
+  iconChipClass: string;
+}
+
+/** A step in the vertical numbered timeline (About → milestones). */
+export interface MilestoneStep {
+  id: string;
+  /** Small uppercase kicker above the title, e.g. "Partner Tier". */
+  eyebrow: string;
+  title: string;
+  description: string;
+}
+
+/** A numbered card in the horizontal hiring-process strip. */
+export interface HiringStep {
+  id: string;
+  /** Watermark ordinal, e.g. "01". Two digits, so it is data not a computed index. */
+  ordinal: string;
+  title: string;
+  description: string;
+  icon: IconName;
+  iconChipClass: string;
+}
+
+/**
+ * A labelled group of credential badges.
+ *
+ * The About page shows two groups under their own uppercase labels. `variant`
+ * distinguishes badges that need the tall treatment (the two Atlassian
+ * specialization SVGs, which the design pulls 16px below the card) from the rest.
+ */
+export interface BadgeGroup {
+  id: string;
+  label: string;
+  badges: Array<CredentialBadge & { tall?: boolean }>;
+}
+
+/** A press logo in the "Featured In" strip. */
+export interface PressLogo {
+  id: string;
+  name: string;
+  image: ContentImage;
+}
+
+/**
+ * A disclosure entry in the careers FAQ.
+ *
+ * Named `FaqItem`, not `FaqEntry`: `types/seo.ts` already exports a `FaqEntry` that
+ * feeds `faqSchema()`, and both are re-exported from `types/index.ts`. This one
+ * carries an `id` for React keys; the SEO one is question/answer only.
+ */
+export interface FaqItem {
+  id: string;
+  question: string;
+  answer: string;
+}
+
+/**
+ * A career opening.
+ *
+ * Maps 1:1 onto the Strapi `job` content type, plus two derived fields the design
+ * needs and the CMS does not store:
+ *  • `trackTagClass` — the pill tint for the track, resolved from a fixed palette.
+ *  • `applyHref` — the prefilled mailto the design's "Apply Now" button uses.
+ */
+export interface JobOpening {
+  id: string;
+  slug: string;
+  title: string;
+  /** Strapi `track`. Empty string when an editor left it unset. */
+  track: string;
+  /** Display label for the track pill; falls back to a generic label. */
+  trackLabel: string;
+  trackTagClass: string;
+  location: string;
+  /**
+   * Employment type chip, e.g. Full-time / Contract.
+   *
+   * NOT a Strapi field — the `job` content type has no column for it. It exists so
+   * the bundled fallback roles can render the second meta chip the published page
+   * shows; CMS-sourced roles fill that slot with `experience` instead.
+   */
+  employmentType?: { label: string; icon: IconName };
+  /** Strapi `experience`, e.g. "5-8". Rendered as "N Years" by the card. */
+  experience?: string;
+  practice?: string;
+  /** Strapi `job_description` (markdown). Clamped to three lines by the card. */
+  description: string;
+  applyHref: string;
+}
+
+/** A filter tab over `JobOpening.track`. `id` of `'all'` clears the filter. */
+export interface JobTrackFilter {
+  id: string;
+  label: string;
+}
+
+/** A culture highlight from the Strapi `life-at-clovity` collection. */
+export interface CultureHighlight {
+  id: string;
+  headingLead: string;
+  headingHighlight?: string;
+  info: string;
+  image: ContentImage | null;
+  href?: string;
+}
+
+/**
+ * A flip-card office on the Contact page.
+ *
+ * `accent` selects the back face's gradient and the flag chip tint from the four
+ * pairs the design defines; it is not a free-form colour.
+ */
+export interface OfficeLocation {
+  id: string;
+  /** Front face: the uppercase kicker, e.g. "Global HQ". */
+  tag: string;
+  /** Front face: the city line. */
+  city: string;
+  flag: ContentImage;
+  /** Chip glyph over the flag. */
+  icon: IconName;
+  accent: 'blue' | 'violet' | 'orange' | 'green';
+  /** Back face heading. */
+  title: string;
+  /** Back face address, one entry per rendered line. */
+  addressLines: string[];
+  email?: string;
+  /** Shown in place of the email link for offices without a direct address. */
+  noEmailNote?: string;
+}
+
+/** A direct-contact row in the Contact page's side card. */
+export interface ContactChannel {
+  id: string;
+  label: string;
+  value: string;
+  /** Absent for rows that are not actionable (a city name). */
+  href?: string;
+  icon: IconName;
+}
+
+/**
+ * Contact form configuration, from the Strapi `get-in-touch` row whose
+ * `website_slug` matches the page.
+ *
+ * Lets an editor hide a field or make it optional without a deploy. `emailSubject`
+ * is what the lead record is tagged with, so enquiries from different pages stay
+ * distinguishable in the admin panel.
+ */
+export interface ContactFormConfig {
+  /** Strapi `documentId`, recorded on the lead so it can be traced back. */
+  sourceId?: string;
+  emailSubject: string;
+  showFullName: boolean;
+  requireFullName: boolean;
+  showCompany: boolean;
+  requireCompany: boolean;
+  showPhone: boolean;
+  requirePhone: boolean;
 }

@@ -3,12 +3,8 @@
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { newsletterSchema, type NewsletterFormValues } from '@/lib/validation';
-import { isApiConfigured } from '@/services/api/axios';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
-import {
-  markNewsletterSubscribedLocally,
-  subscribeToNewsletter,
-} from '@/store/slices/contactSlice';
+import { subscribeToNewsletter } from '@/store/slices/contactSlice';
 import { buttonClass } from '@/components/ui/Button';
 import { Icon } from '@/components/ui/Icon';
 
@@ -60,11 +56,8 @@ export function Newsletter({
   });
 
   const onSubmit = async (values: NewsletterFormValues) => {
-    if (!isApiConfigured()) {
-      dispatch(markNewsletterSubscribedLocally());
-      reset({ email: '', source });
-      return;
-    }
+    // The "CMS not configured" case is handled inside the Server Action, which
+    // reports success without writing — so there is no branch here.
     const result = await dispatch(
       subscribeToNewsletter({ email: values.email, source }),
     );

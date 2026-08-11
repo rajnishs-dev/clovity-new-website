@@ -48,6 +48,21 @@ export const EXTERNAL_LINKS = {
   dashboardTemplatesListing:
     'https://marketplace.atlassian.com/apps/359777765/dashboard-templates-charts-graphs-reports-for-jira',
   aiAppsStudio: 'https://clovity.com/clovity-ai-apps-studio',
+  /**
+   * Pages that exist on the production site but not yet in this app.
+   *
+   * `/case-study` and `/life-at-clovity` are linked from the careers cards' "About
+   * Us" and "Our Benefits" copy. Routing them internally would 404 — `/case-study`
+   * is declared in ROUTES but has no page yet, and `/life-at-clovity` has no route
+   * at all — so they point at the live pages until those are migrated.
+   */
+  legacyCaseStudy: 'https://www.clovity.com/case-study',
+  legacyLifeAtClovity: 'https://www.clovity.com/life-at-clovity',
+  /** Third-party coverage cited in the careers "About Us" copy. */
+  cioReviewProfile:
+    'https://internet-of-things.cioreview.com/vendor/2019/clovity',
+  yahooFinanceFeature:
+    'https://www.yahoo.com/lifestyle/clovity-named-global-iot-innovation-141500302.html',
   legacyBlog: 'https://www.clovity.com/blog',
   legacyEvents: 'https://www.clovity.com/events',
   legacyWebinars: 'https://www.clovity.com/webinars',

@@ -76,9 +76,32 @@ export type IconName =
   | 'newspaper'
   | 'comments'
   | 'mail'
+  | 'phone'
+  | 'phone-call'
+  | 'quote'
   // Company
   | 'building'
   | 'briefcase'
+  | 'landmark'
+  | 'flag'
+  | 'globe'
+  | 'earth-asia'
+  | 'map-pin'
+  | 'handshake'
+  // AI and delivery
+  | 'robot'
+  | 'code'
+  // Hiring and people development
+  | 'graduation-cap'
+  | 'remote-work'
+  | 'heart-pulse'
+  | 'file-signature'
+  | 'door-open'
+  // Small controls
+  | 'plus'
+  | 'refresh'
+  | 'ellipsis'
+  | 'copy'
   // Brand marks — inline SVG, since Lucide ships no brand icons.
   | 'atlassian'
   | 'jira'

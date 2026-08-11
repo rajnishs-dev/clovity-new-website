@@ -1,5 +1,3 @@
-import { withFallback } from '@/services/api/request';
-import { contentApi, marketingApi } from '@/services/api/api';
 import type {
   ClientLogo,
   ContentCollection,
@@ -18,105 +16,50 @@ import {
 } from '@/constants/home';
 
 /**
- * The home page's data layer — the seam between UI and backend.
+ * The home page's data layer.
  *
- * Every loader here calls the API and falls back to the bundled static content
- * when the API is not configured or the request fails. `withFallback` makes that
- * a one-liner, and it is what lets the site ship today on static content and
- * switch to the CMS by setting `NEXT_PUBLIC_ENABLE_CMS=true` — with no change to
- * any component, prop or class name.
+ * ALL BUNDLED CONTENT TODAY, and honestly so. This used to route every loader
+ * through an API-with-fallback seam pointed at a Node/Express admin panel that was
+ * never built: `NEXT_PUBLIC_API_BASE_URL` has never been set, so `isApiConfigured()`
+ * was always false and every one of these calls short-circuited straight to the
+ * constant below without a request. Seven files of transport code that only ever
+ * returned "not configured".
  *
- * The loaders are async even where they currently resolve instantly, so the page
- * already awaits them and turning on live data does not change the call sites.
+ * That layer is gone. What is left says what actually happens.
  *
- * When the API does come online, these will additionally be the place to set
- * per-collection `revalidate` windows and cache tags for on-demand ISR from the
- * CMS's publish webhook — again without touching a component.
+ * NONE OF THIS IS IN STRAPI EITHER — `clovity-admin` has no collection for customer
+ * stories, client logos, marketplace apps, result statistics or credential badges, so
+ * there is nothing to fetch even now. The three CMS-backed pages read
+ * `@/api/cms`; when a collection appears for one of these, the change is to swap the
+ * body of the matching function here, and no component moves.
+ *
+ * The loaders stay async so the page keeps awaiting them and turning on a real
+ * source does not touch a single call site.
  */
 
 export async function getCustomerStories(): Promise<CustomerStory[]> {
-  return withFallback(() => marketingApi.customerStories(), CUSTOMER_STORIES);
+  return CUSTOMER_STORIES;
 }
 
 export async function getClientLogos(): Promise<ClientLogo[]> {
-  return withFallback(() => marketingApi.clientLogos(), CLIENT_LOGOS);
+  return CLIENT_LOGOS;
 }
 
 export async function getMarketplaceApps(): Promise<MarketplaceApp[]> {
-  return withFallback(() => marketingApi.marketplaceApps(), MARKETPLACE_APPS);
+  return MARKETPLACE_APPS;
 }
 
 export async function getResultStats(): Promise<StatItem[]> {
-  return withFallback(() => marketingApi.statistics(), RESULT_STATS);
+  return RESULT_STATS;
 }
 
 export async function getCredentialRows(): Promise<CredentialRow[]> {
-  return withFallback(() => marketingApi.credentials(), CREDENTIAL_ROWS);
+  return CREDENTIAL_ROWS;
 }
 
-/**
- * The five tabbed collections.
- *
- * Fetches all five in parallel rather than in series — five sequential round
- * trips would put the slowest section's latency on the critical path five times
- * over. Any collection whose request fails keeps its static items, so one bad
- * endpoint degrades a single tab instead of the whole module.
- */
+/** The five tabbed collections of the "What We Learn in the Field" module. */
 export async function getContentCollections(): Promise<ContentCollection[]> {
-  const loaders: Array<() => Promise<ContentCollection>> =
-    CONTENT_COLLECTIONS.map((fallback) => async () => {
-      switch (fallback.kind) {
-        case 'blog': {
-          const data = await withFallback(async () => {
-            const result = await contentApi.blogs({ pageSize: 4 });
-            return result.success
-              ? { success: true as const, data: result.data.items }
-              : result;
-          }, fallback.items);
-          return { ...fallback, items: data };
-        }
-        case 'events': {
-          const data = await withFallback(async () => {
-            const result = await contentApi.events({ pageSize: 4 });
-            return result.success
-              ? { success: true as const, data: result.data.items }
-              : result;
-          }, fallback.items);
-          return { ...fallback, items: data };
-        }
-        case 'webinars': {
-          const data = await withFallback(async () => {
-            const result = await contentApi.webinars({ pageSize: 3 });
-            return result.success
-              ? { success: true as const, data: result.data.items }
-              : result;
-          }, fallback.items);
-          return { ...fallback, items: data };
-        }
-        case 'case-study': {
-          const data = await withFallback(async () => {
-            const result = await contentApi.caseStudies({ pageSize: 3 });
-            return result.success
-              ? { success: true as const, data: result.data.items }
-              : result;
-          }, fallback.items);
-          return { ...fallback, items: data };
-        }
-        case 'news': {
-          const data = await withFallback(async () => {
-            const result = await contentApi.news({ pageSize: 4 });
-            return result.success
-              ? { success: true as const, data: result.data.items }
-              : result;
-          }, fallback.items);
-          return { ...fallback, items: data };
-        }
-        default:
-          return fallback;
-      }
-    });
-
-  return Promise.all(loaders.map((load) => load()));
+  return CONTENT_COLLECTIONS;
 }
 
 /** Everything the home page needs, resolved in parallel. */

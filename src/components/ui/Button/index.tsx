@@ -32,6 +32,7 @@ export type ButtonVariant =
   | 'link'
   | 'icon'
   | 'white'
+  | 'whitePill'
   | 'ghostDark';
 
 export type ButtonSize = 'sm' | 'md' | 'lg';
@@ -83,6 +84,27 @@ const VARIANT_CLASS: Record<ButtonVariant, string> = {
     'inline-flex items-center gap-2.5 rounded-[14px] border-2 border-white bg-white px-[26px] py-3.5 text-[14.5px] font-800 text-[#152a6b] no-underline',
     'shadow-[0_8px_20px_-6px_rgba(0,0,0,.25)] [transition:transform_.2s,box-shadow_.2s]',
     'hover:-translate-y-0.5 hover:bg-white hover:text-[#152a6b] hover:shadow-[0_12px_26px_-6px_rgba(0,0,0,.3)]',
+  ),
+
+  /**
+   * The interior pages' `.btn-white` — the shared pill, not the home page's.
+   *
+   * `white` above is the HOME page's override (14px radius, weight 800,
+   * `#152a6b` text). About / Careers / Contact never load that override, so their
+   * white CTA is the base `theme.css` rule: 100px pill, weight 700, `#1e40af`
+   * text, 13px×28px padding. Two different buttons, so two variants — folding them
+   * together would silently restyle one of the two.
+   *
+   * The hover here is the CTA-card-scoped one those pages declare: it stays white
+   * (the shared rule would flip it to orange), lifts 3px and casts a neutral
+   * shadow. This variant is only used inside that card, which is what makes the
+   * scoped hover the correct one to bake in.
+   */
+  whitePill: cn(
+    PILL_BASE,
+    'border-white bg-white font-700 text-brand-800',
+    '[transition:background_.25s,color_.25s,transform_.2s,box-shadow_.25s]',
+    'hover:-translate-y-[3px] hover:border-white hover:bg-white hover:text-brand-800 hover:shadow-[0_10px_24px_rgba(15,23,42,.15)]',
   ),
 
   ghostDark: cn(
