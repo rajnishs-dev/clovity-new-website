@@ -15,6 +15,11 @@ export {
   type SnapCarouselOptions,
 } from './useSnapCarousel';
 export { useAutoRotate, type AutoRotate } from './useAutoRotate';
+export {
+  useAutoScrollMarquee,
+  type AutoScrollMarquee,
+  type UseAutoScrollMarqueeOptions,
+} from './useAutoScrollMarquee';
 export { useCountUp } from './useCountUp';
 export {
   useGsapReveal,

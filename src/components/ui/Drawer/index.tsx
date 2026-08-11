@@ -14,7 +14,7 @@ import { createFocusTrap, getFocusableElements } from '@/utils/a11y';
  * at document level anyway.
  *
  * It stays mounted and translated off-screen rather than unmounting, which is
- * what makes the 0.35s cubic-bezier slide-out visible — unmounting would cut it
+ * what makes the 0.35s cubic-bezier slide-out visible - unmounting would cut it
  * off. `inert` keeps the hidden panel out of the tab order and the a11y tree.
  */
 export interface DrawerProps {
@@ -23,7 +23,7 @@ export interface DrawerProps {
   /** Accessible name for the panel. */
   label: string;
   children: ReactNode;
-  /** DOM id — the legacy stylesheet targets `#mobile-menu`. */
+  /** DOM id - the legacy stylesheet targets `#mobile-menu`. */
   id?: string;
   side?: 'left' | 'right';
   className?: string;

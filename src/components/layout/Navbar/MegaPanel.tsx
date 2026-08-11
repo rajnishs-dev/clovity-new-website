@@ -19,13 +19,13 @@ import {
  * The full-width mega panel (Expertise, Resources), as Tailwind utilities.
  *
  * `position: fixed` with a viewport-relative `top` is what the legacy CSS did,
- * and it is why the hover-intent bridge in `useHoverIntent` exists — the panel
+ * and it is why the hover-intent bridge in `useHoverIntent` exists - the panel
  * sits below its trigger with a gap the cursor has to cross.
  *
  * `top` shifts from 104px to 88px once the header is scrolled, so the panel stays
  * tucked under the shrunken pill.
  *
- * The per-link icon chips ARE rendered here, which the legacy site does not do — it
+ * The per-link icon chips ARE rendered here, which the legacy site does not do - it
  * ships them in the markup and then hides them with `.mega-icon { display: none }`.
  * See `megaItemClass` in `megaStyles.tsx` for why that was changed.
  */
@@ -153,7 +153,7 @@ export function MegaPanel({
                   {...(card.external ? { forceExternal: true } : {})}
                 >
                   <div className="h-[92px] w-[150px] shrink-0 overflow-hidden rounded-2xl bg-line-faint">
-                    {/* Fixed 92×92 thumb — no `sizes`, so Next emits 1x/2x. */}
+                    {/* Fixed 92×92 thumb - no `sizes`, so Next emits 1x/2x. */}
                     <AppImage
                       src={card.imageUrl}
                       alt={card.imageAlt}

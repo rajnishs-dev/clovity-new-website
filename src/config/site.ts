@@ -2,7 +2,7 @@ import { env } from './env';
 
 /**
  * Single source of truth for brand-level facts. Referenced by metadata,
- * JSON-LD, the footer and the contact page — change it once, everywhere follows.
+ * JSON-LD, the footer and the contact page - change it once, everywhere follows.
  *
  * Every value here mirrors the copy already published on the legacy site. No
  * claim was added, embellished or invented during the migration.
@@ -46,7 +46,7 @@ export const siteConfig = {
     url: '/assets/og/clovity-og.png',
     width: 1200,
     height: 630,
-    alt: 'Clovity — Atlassian + AI Transformation Partner',
+    alt: 'Clovity - Atlassian + AI Transformation Partner',
   },
 
   twitter: {

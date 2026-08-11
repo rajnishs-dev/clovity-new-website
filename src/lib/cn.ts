@@ -9,7 +9,7 @@ import { twMerge } from 'tailwind-merge';
  * a component's defaults without `!important`.
  *
  * Note: hand-written theme classes (`.btn-primary`, `.s-heading`, …) are opaque
- * to twMerge and pass through untouched — which is what we want, since those
+ * to twMerge and pass through untouched - which is what we want, since those
  * carry the pixel contract from the legacy stylesheet.
  */
 export function cn(...inputs: ClassValue[]): string {

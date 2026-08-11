@@ -8,16 +8,16 @@ import { Icon } from '@/components/ui/Icon';
  * `.mega-desc` / `.mega-col*` rules.
  */
 
-/** `.mega-wrap` — the white panel itself (shared by both panel shapes). */
+/** `.mega-wrap` - the white panel itself (shared by both panel shapes). */
 export const MEGA_PANEL_BASE = 'rounded-mega bg-white z-[200]';
 
 /**
- * `.mega-item` — a leaf link row. `group` drives the chip and arrow hover states.
+ * `.mega-item` - a leaf link row. `group` drives the chip and arrow hover states.
  *
  * DELIBERATE DEVIATION FROM THE LEGACY CSS. `theme.css` sets `.mega-item` to
  * `display: block` and `.mega-icon` to `display: none`, so the original renders no
  * icon beside a mega-menu link even though every one of them is in the markup. This
- * is a flex row instead, so the chips are visible — requested explicitly, and the
+ * is a flex row instead, so the chips are visible - requested explicitly, and the
  * one place in the header where the port is not pixel-identical to the original.
  *
  * The chip design is not invented: an earlier revision of `theme.css` styled
@@ -33,7 +33,7 @@ export function megaItemClass(options?: {
 }): string {
   return cn(
     // NAMED group, and that matters. `group-hover:` compiles to `.group:hover &`,
-    // so it fires for ANY hovered ancestor carrying the class — and every mega item
+    // so it fires for ANY hovered ancestor carrying the class - and every mega item
     // sits inside the nav-item wrapper, which is also a group (it drives the chevron
     // rotation). With bare `group` on both, hovering the "Expertise" trigger put
     // every chip and arrow in the open panel into its hover state at once. Naming
@@ -88,11 +88,11 @@ export const MEGA_COL_TITLE_CLASS =
   'mb-[18px] px-1 text-[21px] font-600 tracking-[-0.01em] text-ink';
 
 /**
- * `.mega-col` — a titled column with a divider on its left edge.
+ * `.mega-col` - a titled column with a divider on its left edge.
  *
  * The legacy CSS reached the first and second columns with `:first-child` and
  * `:nth-child(2)`. Columns are mapped from data here, so the index is already in
- * hand and the classes are applied directly — clearer than an nth-child selector
+ * hand and the classes are applied directly - clearer than an nth-child selector
  * and immune to a stray wrapper element shifting the count.
  */
 export function megaColumnClass(index: number): string {
@@ -106,7 +106,7 @@ export function megaColumnClass(index: number): string {
 }
 
 /**
- * `.mega-col-cta` / `.mega-col-whatsnew` — the right-hand rail.
+ * `.mega-col-cta` / `.mega-col-whatsnew` - the right-hand rail.
  * Below 1100px it spans the full two-column grid and gains a top divider.
  */
 export const MEGA_RAIL_CLASS =
@@ -115,7 +115,7 @@ export const MEGA_RAIL_CLASS =
 /**
  * The diagonal "opens this" arrow beside every mega-menu title.
  *
- * MIGRATION NOTE — this is a real DOM change, and the only one in the conversion.
+ * MIGRATION NOTE - this is a real DOM change, and the only one in the conversion.
  * The original drew it as a `::after` pseudo-element using `mask-image` with an
  * inline `data:image/svg+xml` URI plus `background-color: currentColor`, so the
  * glyph inherited the text colour.
@@ -128,8 +128,8 @@ export const MEGA_RAIL_CLASS =
  * 2px/-2px hover nudge identical, and is legible.
  *
  * Geometry matches: the original masked an 18×19 viewBox into a 10×11 box with
- * `mask-size: contain`, which is what `preserveAspectRatio="xMidYMid meet"` — the
- * SVG default — does here.
+ * `mask-size: contain`, which is what `preserveAspectRatio="xMidYMid meet"` - the
+ * SVG default - does here.
  */
 export function MegaArrow() {
   return (

@@ -10,13 +10,13 @@ import { useIsomorphicLayoutEffect } from './useIsomorphicLayoutEffect';
  *
  * The legacy page ran one long inline script with a `rv(...)` helper and a 3s
  * "safety net" that force-revealed anything still at opacity 0. That approach
- * leaks on client-side navigation — every ScrollTrigger it creates survives the
+ * leaks on client-side navigation - every ScrollTrigger it creates survives the
  * route change and keeps firing against detached nodes.
  *
  * This wrapper keeps the exact same animation definitions but scopes them to a
  * `gsap.context()` bound to a container element, so `ctx.revert()` on unmount
  * removes every tween, ScrollTrigger and inline style GSAP added. The safety
- * net is therefore no longer needed — nothing can be left stuck invisible.
+ * net is therefore no longer needed - nothing can be left stuck invisible.
  */
 
 gsap.registerPlugin(ScrollTrigger);

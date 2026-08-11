@@ -2,7 +2,7 @@ import { cn } from '@/lib/cn';
 
 /**
  * Loading placeholder. Shaped to the real content's box so the swap does not
- * shift layout — the whole point of a skeleton over a spinner.
+ * shift layout - the whole point of a skeleton over a spinner.
  *
  * `aria-hidden` because a skeleton conveys nothing to a screen reader; the
  * container should own the `aria-busy`/`role="status"` announcement instead.

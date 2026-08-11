@@ -15,7 +15,7 @@ import { SmartLink } from '../Link';
  *
  *  • `[transition:…]` arbitrary property, not `transition-colors`. The originals
  *    set different durations per property (background .25s, transform .2s), which
- *    no combination of `transition-*` + `duration-*` utilities can express —
+ *    no combination of `transition-*` + `duration-*` utilities can express -
  *    those apply one duration to every property. The arbitrary property keeps the
  *    per-property timing exact.
  *
@@ -56,7 +56,7 @@ const VARIANT_CLASS: Record<ButtonVariant, string> = {
     'hover:-translate-y-px hover:border-brand-600 hover:bg-brand-600 hover:text-white',
   ),
 
-  // The legacy design has no separate outline treatment — secondary IS the
+  // The legacy design has no separate outline treatment - secondary IS the
   // outline button (transparent fill, 2px brand border). Aliased rather than
   // invented, so no new visual style enters the system.
   outline: cn(
@@ -75,11 +75,11 @@ const VARIANT_CLASS: Record<ButtonVariant, string> = {
 
   icon: 'inline-flex items-center justify-center rounded-full border border-line bg-white text-[#334155] shadow-[0_4px_14px_rgba(15,23,42,.14)] transition-all duration-200 hover:border-brand-600 hover:bg-brand-600 hover:text-white disabled:cursor-default disabled:opacity-35 disabled:hover:border-line disabled:hover:bg-white disabled:hover:text-[#334155]',
 
-  // The final-CTA white button: 14px radius, weight 800, 10px gap — this is the
+  // The final-CTA white button: 14px radius, weight 800, 10px gap - this is the
   // home page's own `.btn-white`, which overrode the shared pill treatment.
   white: cn(
     // The 2px white border comes from the shared button rule, which the home
-    // page's own .btn-white override never reset — so it applied, and dropping it
+    // page's own .btn-white override never reset - so it applied, and dropping it
     // made this button 4px shorter and 4px narrower than the original.
     'inline-flex items-center gap-2.5 rounded-[14px] border-2 border-white bg-white px-[26px] py-3.5 text-[14.5px] font-800 text-[#152a6b] no-underline',
     'shadow-[0_8px_20px_-6px_rgba(0,0,0,.25)] [transition:transform_.2s,box-shadow_.2s]',
@@ -138,7 +138,7 @@ interface CommonProps {
   /** Screen-reader text announced while `loading`. */
   loadingLabel?: string;
   leadingIcon?: ReactNode;
-  /** Rendered after the label — where the CTA arrow goes. */
+  /** Rendered after the label - where the CTA arrow goes. */
   trailingIcon?: ReactNode;
   fullWidth?: boolean;
 }
@@ -234,7 +234,7 @@ export function Button({
 
 /**
  * A CTA that navigates. Almost every button in the legacy markup is actually an
- * `<a>`, so this is the common case — and it keeps `<button>` reserved for things
+ * `<a>`, so this is the common case - and it keeps `<button>` reserved for things
  * that really do act on the page.
  */
 export function ButtonLink({
@@ -274,7 +274,7 @@ export function ButtonLink({
 
 /**
  * The button classes as a plain string, for the few places that must render a
- * raw `<a>`/`<button>` — e.g. a form submit inside the footer, or a link whose
+ * raw `<a>`/`<button>` - e.g. a form submit inside the footer, or a link whose
  * surrounding CSS grid needs the anchor to be the direct child.
  */
 export function buttonClass(

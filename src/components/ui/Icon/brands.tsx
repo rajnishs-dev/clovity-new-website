@@ -3,7 +3,7 @@ import type { ComponentType, SVGProps } from 'react';
 /**
  * Brand marks, as inline SVG.
  *
- * WHY THESE ARE HAND-ROLLED — Lucide has no brand icons. It never shipped
+ * WHY THESE ARE HAND-ROLLED - Lucide has no brand icons. It never shipped
  * Atlassian, Jira or Confluence, and the ones it did have (`Linkedin`, `Github`,
  * `Youtube`, `Slack`, `Twitter`) were removed upstream over trademark concerns and
  * do not exist in the installed v1.28. So "use Lucide everywhere" cannot cover the
@@ -64,7 +64,7 @@ function makeBrand(
   function BrandGlyph({
     size = GRID,
     // Pulled out and dropped on purpose. These are solid filled paths, so stroke
-    // width is meaningless — and `absoluteStrokeWidth` is not a real DOM attribute,
+    // width is meaningless - and `absoluteStrokeWidth` is not a real DOM attribute,
     // so letting it through `...rest` would trigger a React unknown-prop warning.
     strokeWidth: _strokeWidth,
     absoluteStrokeWidth: _absoluteStrokeWidth,
@@ -146,7 +146,7 @@ export const GitHubGlyph = makeBrand(
 );
 
 /**
- * A geometric "C" monogram — the Cherwell row in the migration-sources list.
+ * A geometric "C" monogram - the Cherwell row in the migration-sources list.
  *
  * Lucide has no letterform icons, and this is a product mark rather than a UI
  * affordance, so it belongs with the brand glyphs.

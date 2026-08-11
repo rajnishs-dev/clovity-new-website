@@ -26,7 +26,7 @@ const audit = async (label) =>
     };
     // `checkVisibility` is the only reliable test here: an SVG has no
     // `offsetParent`, so the usual `offsetParent !== null` trick reports every icon
-    // as shown — including the ones inside a closed panel.
+    // as shown - including the ones inside a closed panel.
     const shown = (el) =>
       el.checkVisibility({
         contentVisibilityAuto: true,
@@ -50,7 +50,7 @@ const audit = async (label) =>
  * Every laid-out icon, smallest first.
  *
  * This exists because of a real bug: the brand glyphs derived `width` from `height`
- * in JS, `Icon` defaults `size` to `1em`, and `parseFloat('1em') === 1` — so every
+ * in JS, `Icon` defaults `size` to `1em`, and `parseFloat('1em') === 1` - so every
  * brand mark rendered as a 1×1 dot while still passing a "does it have a non-zero
  * box" check. Anything under ~6px here is almost certainly that failure mode again.
  */

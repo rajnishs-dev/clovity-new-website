@@ -15,6 +15,11 @@ import type { AsyncState } from '@/types/common';
  * it went with that API layer.
  */
 export interface ContactState {
+  status: AsyncState;
+  message: string | null;
+  fieldErrors: Record<string, string[]>;
+  /** Epoch ms of the last successful submit - drives the "already sent" UI. */
+  lastSubmittedAt: number | null;
   newsletter: {
     status: AsyncState;
     message: string | null;
@@ -24,6 +29,21 @@ export interface ContactState {
 const initialState: ContactState = {
   newsletter: { status: 'idle', message: null },
 };
+
+export const submitContactForm = createAsyncThunk<
+  { message: string },
+  ContactSubmission,
+  { rejectValue: { message: string; fieldErrors?: Record<string, string[]> } }
+>('contact/submit', async (payload, { rejectWithValue }) => {
+  const result = await formsApi.submitContact(payload);
+  if (!result.success) {
+    return rejectWithValue({
+      message: result.message,
+      ...(result.fieldErrors ? { fieldErrors: result.fieldErrors } : {}),
+    });
+  }
+  return { message: 'Thanks - our team responds within one business day.' };
+});
 
 export const subscribeToNewsletter = createAsyncThunk<
   { message: string },

@@ -45,7 +45,7 @@ export function useMediaQuery(query: string): {
     getServerSnapshot,
   );
 
-  // True on the client, false during SSR — no state, no effect.
+  // True on the client, false during SSR - no state, no effect.
   const hasResolved = useSyncExternalStore(
     noopSubscribe,
     () => true,
@@ -55,7 +55,7 @@ export function useMediaQuery(query: string): {
   return useMemo(() => ({ matches, hasResolved }), [matches, hasResolved]);
 }
 
-/** `(hover: hover) and (pointer: fine)` — a real mouse, not a touch screen. */
+/** `(hover: hover) and (pointer: fine)` - a real mouse, not a touch screen. */
 export function useHasFinePointer(): boolean {
   return useMediaQuery('(hover: hover) and (pointer: fine)').matches;
 }

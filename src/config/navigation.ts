@@ -1,9 +1,14 @@
 import type {
   FooterColumn,
+  NavFeatureCard,
   NavItem,
   NavLink,
   SocialLink,
 } from '@/types/navigation';
+import { formatContentDate } from '@/utils/format';
+import { resolveImageSrc } from '@/utils/image';
+import { getAllBlogPosts } from '@/features/blog/data';
+import { getAllEvents } from '@/features/events/data';
 import { EXTERNAL_LINKS, ROUTES } from './routes';
 import { siteConfig } from './site';
 
@@ -12,7 +17,7 @@ import { siteConfig } from './site';
  *
  * Labels, descriptions, ordering and icon classes match index.html exactly.
  * The header, mega menus, mobile drawer and footer all render from this one
- * structure — so the desktop and mobile menus can no longer drift apart, and
+ * structure - so the desktop and mobile menus can no longer drift apart, and
  * swapping in a CMS-served tree later touches this file only.
  */
 
@@ -173,6 +178,50 @@ const DISCOVER_LINKS: NavLink[] = [
   },
 ];
 
+/* ── Resources mega panel: "What's New" rail ───────────────────────────── */
+
+/**
+ * The two "What's New" feature cards in the Resources mega panel — always the
+ * single most recent event and the single most recent blog post, read
+ * straight from the same static data the `/events` and `/blog` pages render,
+ * rather than a hand-maintained pair of URLs that drift out of date (the
+ * legacy markup linked to `clovity.com` — the old production site — instead
+ * of this app's own pages).
+ */
+const [latestEvent] = getAllEvents();
+const [latestBlog] = getAllBlogPosts();
+
+const WHATS_NEW_CARDS: NavFeatureCard[] = [
+  ...(latestEvent
+    ? [
+        {
+          id: latestEvent.id,
+          tag: `Event · ${formatContentDate(latestEvent.publishedAt)}`,
+          title: latestEvent.title,
+          href: latestEvent.href,
+          imageUrl: resolveImageSrc(latestEvent.image.src),
+          imageAlt: latestEvent.image.alt,
+          ctaLabel: 'Read the full story',
+          ...(latestEvent.external ? { external: true } : {}),
+        },
+      ]
+    : []),
+  ...(latestBlog
+    ? [
+        {
+          id: latestBlog.id,
+          tag: `Blog · ${formatContentDate(latestBlog.publishedAt)}`,
+          title: latestBlog.title,
+          href: latestBlog.href,
+          imageUrl: resolveImageSrc(latestBlog.image.src),
+          imageAlt: latestBlog.image.alt,
+          ctaLabel: 'Read the full story',
+          ...(latestBlog.external ? { external: true } : {}),
+        },
+      ]
+    : []),
+];
+
 /* ── Assembled primary nav ──────────────────────────────────────────────── */
 
 export const PRIMARY_NAV: NavItem[] = [
@@ -210,30 +259,7 @@ export const PRIMARY_NAV: NavItem[] = [
     rail: {
       kind: 'feature',
       title: "What's New",
-      cards: [
-        {
-          id: 'team-on-tour-gov',
-          tag: 'Event · 10 Feb 2026',
-          title: 'Atlassian Team on Tour — Government',
-          href: 'https://www.clovity.com/events/atlassian-team-on-tour-government',
-          imageUrl:
-            'https://clovity-website.s3.ap-south-1.amazonaws.com/small_Building_bdd27730bf.png',
-          imageAlt: 'Atlassian Team on Tour - Government',
-          ctaLabel: 'Read the full story',
-          external: true,
-        },
-        {
-          id: 'team-26-takeaways',
-          tag: 'Blog · 29 May 2026',
-          title: 'Team ‘26 Key Takeaways from Clovity',
-          href: 'https://clovity.com/blog',
-          imageUrl:
-            'https://clovity-website.s3.ap-south-1.amazonaws.com/Artboard_13_copy_4x_100_1_3e948d4b70.jpg',
-          imageAlt: "Team '26 Key Takeaways from Clovity",
-          ctaLabel: 'Read the full story',
-          external: true,
-        },
-      ],
+      cards: WHATS_NEW_CARDS,
     },
   },
   {

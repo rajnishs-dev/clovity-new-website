@@ -15,7 +15,7 @@ import type { ActiveNav } from '@/types/navigation';
  * render `.active` declaratively.
  *
  * Destructures `group`/`item` so the effect depends on those primitives rather
- * than on a fresh object identity every render — otherwise an inline
+ * than on a fresh object identity every render - otherwise an inline
  * `useActiveNav({ group: 'home' })` would re-dispatch on every render.
  */
 export function useActiveNav(active: ActiveNav): void {

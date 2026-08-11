@@ -3,7 +3,7 @@ import { z } from 'zod';
 /**
  * Zod schemas shared by React Hook Form (client) and, later, the Express API
  * (server). One definition means the two can never disagree about what a valid
- * submission looks like — the most common source of "the form said OK but the
+ * submission looks like - the most common source of "the form said OK but the
  * API rejected it" bugs.
  */
 
@@ -24,7 +24,7 @@ const email = z
 
 export const newsletterSchema = z.object({
   email,
-  /** Which form instance submitted — footer, blog sidebar, modal. */
+  /** Which form instance submitted - footer, blog sidebar, modal. */
   source: z.string().optional(),
 });
 
@@ -46,7 +46,7 @@ export const contactSchema = z.object({
   phone: z
     .string()
     .trim()
-    // Digits, spaces and the usual separators — permissive on purpose, because
+    // Digits, spaces and the usual separators - permissive on purpose, because
     // international formats vary far more than most patterns allow for.
     .regex(/^[\d\s()+.-]{7,24}$/, 'Enter a valid phone number.')
     .optional()

@@ -7,7 +7,7 @@ import { useEffect } from 'react';
  *
  * The original bound a click listener to every `a[href^="#"]` on load, so links
  * added later (the mega menu, the rendered card rails) were never covered. This
- * uses one delegated listener on the document, which covers everything —
+ * uses one delegated listener on the document, which covers everything -
  * including nodes React mounts after hydration.
  *
  * `html { scroll-behavior: smooth }` in theme.css already handles most cases;
@@ -36,7 +36,7 @@ export function useSmoothAnchors(enabled = true): void {
       try {
         target = document.querySelector(hash);
       } catch {
-        return; // Not a valid selector — let the browser deal with it.
+        return; // Not a valid selector - let the browser deal with it.
       }
       if (!target) return;
 

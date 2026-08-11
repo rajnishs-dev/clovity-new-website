@@ -2,12 +2,12 @@ import { HERO_CONTENT } from '@/constants/home';
 import { HERO_VIDEO_SRC, heroVideoPoster } from '@/constants/media';
 
 /**
- * Section 1 — the hero banner, as Tailwind utilities.
+ * Section 1 - the hero banner, as Tailwind utilities.
  *
  * A Server Component: video, scrim and copy are static markup, so none of this
  * ships as JavaScript.
  *
- * The entrance is `animate-hero-rise-*` — a CSS animation, not GSAP. A React
+ * The entrance is `animate-hero-rise-*` - a CSS animation, not GSAP. A React
  * effect cannot reproduce the original's GSAP timeline without a visible flicker:
  * the server-rendered headline paints first, and the effect (even
  * `useLayoutEffect`) only runs after hydration, so the text would appear, blink
@@ -16,15 +16,15 @@ import { HERO_VIDEO_SRC, heroVideoPoster } from '@/constants/media';
  * `power2.out` = cubic-bezier(.215,.61,.355,1)) and `both` fill mode replaces the
  * original's 2s "safety net" timeout.
  *
- * `min-h-[100svh]` — small-viewport height, so the hero is not clipped by mobile
+ * `min-h-[100svh]` - small-viewport height, so the hero is not clipped by mobile
  * browser chrome the way `100vh` would be.
  *
  * Video decisions:
- *  • served from /public, not bundled — an 8.8MB asset must be range-requestable
+ *  • served from /public, not bundled - an 8.8MB asset must be range-requestable
  *    so the browser can stream rather than buffer it whole
  *  • `poster` is a bundled, optimizable still that paints immediately and stands
  *    in permanently for anyone on a data saver or with autoplay blocked
- *  • `preload="metadata"` — the original let the browser default to `auto`, which
+ *  • `preload="metadata"` - the original let the browser default to `auto`, which
  *    starts downloading megabytes before the visitor has scrolled an inch
  *  • `muted` + `playsInline` are what make autoplay legal on iOS and Chrome
  *  • `aria-hidden` because it is decorative, as the original marked it
@@ -66,28 +66,6 @@ export function HeroSection() {
         <p className="mx-auto mt-[22px] max-w-[820px] animate-hero-rise-sm text-[18px] font-light leading-[1.7] text-white/75 motion-reduce:animate-none">
           {HERO_CONTENT.subheading}
         </p>
-
-        <a
-          href={HERO_CONTENT.scrollCueHref}
-          aria-label={HERO_CONTENT.scrollCueLabel}
-          className="absolute bottom-8 left-1/2 z-10 flex h-11 w-11 -translate-x-1/2 animate-scroll-bounce items-center justify-center rounded-[50%] border-[1.5px] border-white/30 text-white/60 no-underline [transition:border-color_.2s,color_.2s] hover:border-white/70 hover:text-white motion-reduce:animate-none"
-        >
-          <svg
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            aria-hidden
-          >
-            <path
-              d="M12 5v14m0 0l-6-6m6 6l6-6"
-              stroke="currentColor"
-              strokeWidth="1.5"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
-        </a>
       </div>
     </section>
   );

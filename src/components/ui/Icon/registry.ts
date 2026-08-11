@@ -33,6 +33,7 @@ import {
   GraduationCap,
   Grip,
   Handshake,
+  Handshake,
   Headset,
   HeartPulse,
   Inbox,
@@ -40,9 +41,11 @@ import {
   Landmark,
   Laptop,
   LifeBuoy,
+  Link2,
   ListChecks,
   Lock,
   Mail,
+  MapPin,
   MapPin,
   MessagesSquare,
   Newspaper,
@@ -90,7 +93,7 @@ export type { IconName };
 /**
  * The icon registry: one semantic name per glyph.
  *
- * WHY A NAME REGISTRY AND NOT COMPONENT IMPORTS IN THE DATA FILES —
+ * WHY A NAME REGISTRY AND NOT COMPONENT IMPORTS IN THE DATA FILES -
  * the icon for a nav link or a service card is *content*, and in phase 2 that
  * content comes out of Postgres via the CMS. A database can store the string
  * `"cloud-upload"`; it cannot store a React component. So the data layer keeps
@@ -98,7 +101,7 @@ export type { IconName };
  * map is the single place that turns a name into something renderable.
  *
  * The difference from the Font Awesome strings it replaces is that `IconName` is a
- * closed union. `"fa-solid fa-clod-arrow-up"` was a silent no-op — a typo rendered
+ * closed union. `"fa-solid fa-clod-arrow-up"` was a silent no-op - a typo rendered
  * an empty box and nothing complained. A bad `IconName` is a compile error, and
  * `resolveIcon` handles the runtime case where a CMS sends a name this build does
  * not know about.

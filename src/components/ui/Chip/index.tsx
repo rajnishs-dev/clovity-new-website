@@ -11,7 +11,7 @@ import { cn } from '@/lib/cn';
  * The legacy CSS styled the icon with a descendant selector
  * (`.a-chip i { color: #2563eb; font-size: 12px }`). The icon is passed in by the
  * caller, so `[&_i]:` arbitrary variants reproduce that reach without wrapping it
- * in an extra element — which would have changed the DOM.
+ * in an extra element - which would have changed the DOM.
  */
 export type ChipVariant = 'a' | 'cloud' | 'assurance';
 
@@ -37,7 +37,7 @@ const VARIANT_CLASS: Record<ChipVariant, string> = {
 
 /**
  * The chip classes as a plain string, for the few places that need the treatment
- * on an element the component cannot render — e.g. an anchor that must be the
+ * on an element the component cannot render - e.g. an anchor that must be the
  * direct child of a flex row.
  */
 export function chipClass(variant: ChipVariant = 'a', extra?: string): string {

@@ -2,7 +2,7 @@ import type { CSSProperties, ReactNode } from 'react';
 import { cn } from '@/lib/cn';
 
 /**
- * Editorial category tags — the small uppercase, letter-spaced label above a
+ * Editorial category tags - the small uppercase, letter-spaced label above a
  * card title, as Tailwind utilities.
  *
  *   'story'   ← .csp-tag           customer-story cards

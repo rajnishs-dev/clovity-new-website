@@ -4,7 +4,7 @@
  * WHY THIS EXISTS
  * The custom stylesheets (theme.css / home.css / migration.css) were the pixel
  * contract for this migration. Converting them into Tailwind utilities removes
- * that contract, and a class-name diff can no longer detect drift — the class
+ * that contract, and a class-name diff can no longer detect drift - the class
  * names are the thing being replaced.
  *
  * So instead we compare what the browser actually computes. Every element is
@@ -242,7 +242,7 @@ async function capture(url, outPath) {
      * Freeze every running animation at frame 0.
      *
      * `reducedMotion: 'reduce'` only stops animations the CSS itself guards
-     * behind the media query — the marquee and the Pulse sphere are not guarded,
+     * behind the media query - the marquee and the Pulse sphere are not guarded,
      * so their `transform` advanced between runs and produced false positives.
      * Rewinding and pausing makes the sampled frame deterministic while leaving
      * the declared animation-name / duration / timing-function intact, which is
@@ -278,7 +278,7 @@ function tracked() {
  * Properties whose value is *produced* by a running animation, so their
  * instantaneous value is a sampled frame rather than a style contract. The
  * animation's declaration (name, duration, timing function, iteration count,
- * fill mode) is still compared — that is the part that must not change.
+ * fill mode) is still compared - that is the part that must not change.
  */
 const ANIMATED_OUTPUT_PROPS = new Set([
   'transform',
@@ -301,7 +301,7 @@ function isAnimating(layer) {
  * Tailwind's shadow utilities always emit
  *   --tw-ring-offset-shadow, --tw-ring-shadow, --tw-shadow
  * which computes to two fully transparent, zero-size shadows in front of the real
- * one. They paint nothing, so they are stripped before comparing — otherwise every
+ * one. They paint nothing, so they are stripped before comparing - otherwise every
  * shadowed element reports a diff and a genuine shadow change is invisible.
  */
 const INERT_SHADOW =
@@ -395,7 +395,7 @@ function diff(beforePath, afterPath) {
       }
     }
 
-    console.log(`\n=== ${vpName} — ${findings.length} finding(s) ===`);
+    console.log(`\n=== ${vpName} - ${findings.length} finding(s) ===`);
     for (const f of findings.slice(0, 150)) {
       if (f.kind === 'CHANGED') {
         console.log(

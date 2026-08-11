@@ -1,5 +1,5 @@
 /**
- * Presentation-layer formatters. All pure, all locale-explicit — the same input
+ * Presentation-layer formatters. All pure, all locale-explicit - the same input
  * renders the same string on the server and in the browser, which is what keeps
  * React from throwing a hydration mismatch.
  */
@@ -7,7 +7,7 @@
 const DEFAULT_LOCALE = 'en-US';
 
 /**
- * `"2026-05-29"` → `"29 May 2026"` — the legacy card date format, exactly.
+ * `"2026-05-29"` → `"29 May 2026"` - the legacy card date format, exactly.
  *
  * Assembled from `formatToParts` rather than handed to `format()`: en-US would
  * emit "May 29, 2026" (month-first, with a comma), which is a different string

@@ -19,8 +19,8 @@ import {
  * data here means:
  *   • the cards are server-rendered, so they are indexable (they previously did
  *     not exist until JavaScript ran)
- *   • escaping is React's job, so the manual escape helper — and the injection
- *     risk it was guarding against — is gone
+ *   • escaping is React's job, so the manual escape helper - and the injection
+ *     risk it was guarding against - is gone
  *   • dates are ISO and formatted at render time, instead of being hard-coded
  *     display strings that a CMS could not supply
  *

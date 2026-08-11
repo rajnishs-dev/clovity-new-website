@@ -16,34 +16,34 @@ import {
 import { MIGRATION_CONTENT } from '@/constants/home';
 
 /**
- * Section 5 — "Data Center Is Ending. Your Momentum Isn't.", as Tailwind
+ * Section 5 - "Data Center Is Ending. Your Momentum Isn't.", as Tailwind
  * utilities.
  *
  * The signature graphic is a three-column flow: source instance → four dashed
  * steps → Atlassian Cloud / AGC. The spine is an inline SVG with two stacked
- * paths — a static dotted track and a `#pulseGrad`-stroked segment whose
+ * paths - a static dotted track and a `#pulseGrad`-stroked segment whose
  * `stroke-dashoffset` runs on a loop (`animate-mf-line`). Both keep their exact
  * original `d` value; the curve was hand-tuned to land between the four step icons.
  *
  * Below 1020px the three columns become one, the spine is hidden (it would run
- * across nothing) and the steps wrap two-up — the legacy behaviour, kept.
+ * across nothing) and the steps wrap two-up - the legacy behaviour, kept.
  *
- * BACKGROUND — this used to composite a tinted data-centre photo. The original
+ * BACKGROUND - this used to composite a tinted data-centre photo. The original
  * dropped it: `.mig-sec` now paints only a soft three-stop gradient, and nothing in
  * the site references `data-center-bg` any more, so the photo is gone here too and
  * the asset is unused.
  *
  * The section also carries `bg-[#eaf8ff]` in the legacy markup. That sets only
- * `background-color`, which the opaque gradient covers completely — so it is a
+ * `background-color`, which the opaque gradient covers completely - so it is a
  * no-op and is not reproduced. The gradient is the visible background.
  */
 
-/** Tone classes for the destination benefit chips (legacy `.ic-*`). */
+/** Tone classes for the destination benefit icons (legacy `.ic-*`). */
 const TONE_CLASS: Record<string, string> = {
-  'ic-blue': 'bg-[#d5e7ff] text-brand-600',
-  'ic-vio': 'bg-[#dbe7ff] text-brand-700',
-  'ic-org': 'bg-[#fdece1] text-orange',
-  'ic-grn': 'bg-[#f0fdf4] text-brand-green',
+  'ic-blue': 'text-brand-600',
+  'ic-vio': 'text-brand-700',
+  'ic-org': 'text-orange',
+  'ic-grn': 'text-brand-green',
 };
 
 const FLOW_PATH =
@@ -63,11 +63,18 @@ export function CloudMigrationSection({
   return (
     <section
       id="cloud-migration"
-      className="relative overflow-hidden bg-[#eaf8ff] py-16 sm:py-20"
+      className="relative overflow-hidden bg-[#eaf8ff] py-12 lg:py-16"
     >
       <div className="relative z-10 mx-auto max-w-shell px-6">
         <div
-          className={cn('mx-auto mb-6 max-w-[680px] text-center', reveal())}
+          // `md:text-center` has to come after `reveal()` - it bakes in
+          // `md:text-left`, which would otherwise beat the plain `text-center`
+          // at desktop widths.
+          className={cn(
+            'mx-auto mb-8 lg:mb-10 max-w-[680px] text-center',
+            reveal(),
+            'md:text-center',
+          )}
           {...revealAttrs()}
         >
           <h2 className={HEADING_CLASS}>
@@ -88,7 +95,7 @@ export function CloudMigrationSection({
           {...revealAttrs()}
         >
           {/* Source instance */}
-          <div className="rounded-[10px] border border-line bg-white p-[22px] shadow-[0_14px_34px_-12px_rgba(15,23,42,.14)]">
+          <div className="rounded-[10px] border border-line bg-white p-[22px] shadow-[0_14px_34px_-12px_rgba(15,23,42,.14)] to-1020:mx-auto to-1020:w-full to-1020:max-w-[420px]">
             <div className="mb-3.5 flex items-center gap-3">
               <span className="flex h-[38px] w-[38px] shrink-0 items-center justify-center rounded-[10px] bg-blue-50 text-[20px] text-brand-600">
                 <Icon name="server" />
@@ -109,7 +116,7 @@ export function CloudMigrationSection({
                   className="flex items-center gap-2.5 text-[13.5px] font-700 text-ink"
                 >
                   {/*
-                    No chip behind these — the glyph sits on the card in its
+                    No chip behind these - the glyph sits on the card in its
                     product's brand colour, and the background tint and radius are
                     deliberately gone.
 
@@ -173,9 +180,9 @@ export function CloudMigrationSection({
           </div>
 
           {/* Destination */}
-          <div className="rounded-[10px] border border-[#dbe7ff] bg-[linear-gradient(180deg,#fff,#f5f9ff)] p-[22px] text-left shadow-[0_14px_34px_-12px_rgba(15,23,42,.14)]">
+          <div className="rounded-[10px] border border-[#dbe7ff] bg-[linear-gradient(180deg,#fff,#f5f9ff)] p-[22px] text-left shadow-[0_14px_34px_-12px_rgba(15,23,42,.14)] to-1020:mx-auto to-1020:w-full to-1020:max-w-[420px]">
             {/*
-              The head is a flex row — chip beside the title — because the original
+              The head is a flex row - chip beside the title - because the original
               reuses `.mflow-src-head` here, the same wrapper the source card uses.
 
               THE TWO BOTTOM MARGINS ARE LOAD-BEARING, which is not obvious. They are
@@ -206,11 +213,11 @@ export function CloudMigrationSection({
                 >
                   <span
                     className={cn(
-                      'm-0 flex h-[26px] w-[26px] shrink-0 items-center justify-center rounded-lg text-[14px]',
+                      'flex h-[22px] w-[22px] shrink-0 items-center justify-center',
                       TONE_CLASS[benefit.toneClass],
                     )}
                   >
-                    <Icon name={benefit.icon} />
+                    <Icon name={benefit.icon} size={18} />
                   </span>{' '}
                   {benefit.label}
                 </li>
@@ -219,7 +226,10 @@ export function CloudMigrationSection({
           </div>
         </div>
 
-        <div className={cn('text-center', reveal())} {...revealAttrs()}>
+        <div
+          className={cn('text-center', reveal(), 'md:text-center')}
+          {...revealAttrs()}
+        >
           <SmartLink
             href={MIGRATION_CONTENT.ctaHref}
             className={buttonClass('primary')}

@@ -98,3 +98,4 @@ export { PillarGrid, type PillarGridProps } from './PillarGrid';
 export { BentoGrid, type BentoGridProps } from './BentoGrid';
 export { Tooltip, type TooltipProps } from './Tooltip';
 export { Pagination, type PaginationProps } from './Pagination';
+export { Select, type SelectProps, type SelectOption } from './Select';

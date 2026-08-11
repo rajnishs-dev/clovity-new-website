@@ -22,7 +22,7 @@ import {
 
 /**
  * Store factory. One store *per request* on the server and one per browser
- * session — never a module-level singleton, which in the App Router would leak
+ * session - never a module-level singleton, which in the App Router would leak
  * one visitor's state into another's SSR pass.
  */
 

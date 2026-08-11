@@ -10,7 +10,7 @@ import { siteConfig } from '@/config/site';
 /**
  * In-app path that `next/link` can route: `/about-us`, `/expertise/ai`.
  *
- * A `/`-rooted href is always treated as internal — a developer wrote it against
+ * A `/`-rooted href is always treated as internal - a developer wrote it against
  * this app's own routes, and during a phased migration it may point at a page not
  * built yet, which is a routing concern rather than a link-classification one.
  *
@@ -18,7 +18,7 @@ import { siteConfig } from '@/config/site';
  * pointing at `https://clovity.com/...` pages that live on the production site and
  * are not part of this application (`/clovity-ai-apps-studio`). Matching on
  * hostname alone handed those to `next/link`, which turned a working external link
- * into a client-side navigation to a route that does not exist — a 404 on click,
+ * into a client-side navigation to a route that does not exist - a 404 on click,
  * plus a failing RSC prefetch on hover. So an absolute same-host URL only counts as
  * internal when its path is actually one of ours, and self-corrects as pages are
  * migrated.

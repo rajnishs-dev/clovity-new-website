@@ -8,14 +8,14 @@ import { SmartLink } from '@/components/ui/Link';
 /**
  * The Clovity wordmark.
  *
- * Both GIFs stay mounted and one is hidden, exactly as the legacy header did —
+ * Both GIFs stay mounted and one is hidden, exactly as the legacy header did -
  * swapping a `src` in JS would flash a missing image on the first scroll, whereas
  * toggling visibility on an already-decoded frame is instant.
  *
- * MIGRATION NOTE — which mark shows used to be decided by CSS in `home.css`
+ * MIGRATION NOTE - which mark shows used to be decided by CSS in `home.css`
  * (`#navbar.scrolled .nav-logo-white { display: none }`). That meant the logo's
  * behaviour lived in a page stylesheet rather than in the logo, and interior pages
- * — which never loaded that block — would have rendered both marks stacked. It is
+ * - which never loaded that block - would have rendered both marks stacked. It is
  * now the `showWhite` prop, so the component is correct wherever it is used.
  *
  * `animated` forces `unoptimized`: these are animated GIFs, and the image
@@ -28,7 +28,7 @@ export interface LogoProps {
   imageClassName?: string;
   /** Wrap in a link to the home page. */
   href?: string | false;
-  /** Set on the header logo only — it is the LCP-adjacent element. */
+  /** Set on the header logo only - it is the LCP-adjacent element. */
   priority?: boolean;
 }
 
@@ -89,7 +89,7 @@ export function Logo({
     <SmartLink
       href={href}
       className={cn('flex flex-shrink-0 items-center', className)}
-      aria-label="Clovity — go to home page"
+      aria-label="Clovity - go to home page"
     >
       {images}
     </SmartLink>

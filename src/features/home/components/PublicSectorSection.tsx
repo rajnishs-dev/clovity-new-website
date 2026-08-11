@@ -16,13 +16,13 @@ import { AGC_CONTENT, PUBLIC_SECTOR_CONTENT } from '@/constants/home';
 import { publicSectorBg } from '@/constants/media';
 
 /**
- * Section 2.5 — Public Sector + Atlassian Government Cloud, as Tailwind
+ * Section 2.5 - Public Sector + Atlassian Government Cloud, as Tailwind
  * utilities.
  *
  * Two panels share one grid cell (`[grid-area:1/1]`), so the stack is always as
  * tall as the taller card and the shorter one cannot make the section jump when it
  * rotates to the front. Autoplay is 5s, arrows jump and restart the timer, hover
- * pauses — all matching the original.
+ * pauses - all matching the original.
  *
  * Reduced motion drops the stacking transforms entirely, which is what the legacy
  * script did by bailing out before adding `.gcs-slider`: both panels then render in
@@ -31,14 +31,14 @@ import { publicSectorBg } from '@/constants/media';
  * The `nth-child` selectors the original used to strip dividers off the first row
  * (`.gfg-item:nth-child(-n+2)`) and to stop the last step's padding
  * (`.agc-step:nth-child(n+3)`) are now index checks. The data is mapped here, so
- * the index is already in hand — and unlike nth-child, it cannot be thrown off by
+ * the index is already in hand - and unlike nth-child, it cannot be thrown off by
  * a wrapper element appearing later.
  *
  * The section background is set inline because the URL is a build-hashed asset
  * path, which no static Tailwind class can name. Size, position and repeat stay
  * utilities.
  *
- * Accessibility note — deliberately NOT adding `aria-hidden` to the panel behind.
+ * Accessibility note - deliberately NOT adding `aria-hidden` to the panel behind.
  * The rotation is a visual affordance; hiding half the section's content from
  * screen readers to mirror a decorative z-order would remove real information.
  */
@@ -51,7 +51,7 @@ const PANEL_COUNT = 2;
 
 /** Shared shell for both stacked panels. */
 const PANEL_BASE =
-  'relative rounded-[10px] p-6 pt-8 [grid-area:1/1] [transition:transform_.6s_cubic-bezier(.22,.61,.36,1),opacity_.6s_ease,box-shadow_.6s_ease] to-640:px-5 to-640:py-6';
+  'relative rounded-[10px] p-6 !pt-10 [grid-area:1/1] [transition:transform_.6s_cubic-bezier(.22,.61,.36,1),opacity_.6s_ease,box-shadow_.6s_ease] to-640:px-5 to-640:py-6';
 
 export function PublicSectorSection({
   facts,
@@ -68,8 +68,8 @@ export function PublicSectorSection({
   const stackClass = (panelIndex: number) => {
     if (reducedMotion) return '';
     return index === panelIndex
-      ? 'z-[2] translate-x-0 scale-100 opacity-100 pointer-events-auto'
-      : 'z-[1] -translate-x-[35px] scale-[.96] opacity-[.55] pointer-events-none';
+      ? 'z-[2] sm:translate-x-0 scale-100 opacity-100 pointer-events-auto'
+      : 'z-[1] sm:-translate-x-[35px] scale-[.96] opacity-[.55] pointer-events-none';
   };
 
   return (
@@ -78,11 +78,17 @@ export function PublicSectorSection({
       className="relative bg-cover bg-left bg-no-repeat"
       style={{ backgroundImage: `url(${publicSectorBg.src})` }}
     >
-      <div className="relative z-10 mx-auto max-w-shell px-6 py-16 pl-0 sm:py-20 to-900:pl-6">
+      <div className="relative z-10 mx-auto max-w-shell px-6 py-12 pl-0 lg:py-16 to-900:pl-6">
         <div className="flex justify-end to-900:justify-center">
-          <div className="w-full max-w-[860px] flex-[0_1_860px] to-900:max-w-full">
+          {/*
+            Below `to-900` this column no longer sits beside the background
+            art, so it re-centers instead of hugging full width - `max-w-full`
+            would fill the row and make `justify-center` on the row above a
+            no-op.
+          */}
+          <div className="w-full max-w-[860px] flex-[0_1_860px] to-900:max-w-[620px]">
             <div className="relative">
-              <h2 className={HEADING_CLASS}>
+              <h2 className={cn(HEADING_CLASS, 'to-1024:text-center')}>
                 {PUBLIC_SECTOR_CONTENT.headingLead}
                 <GradientText>
                   {PUBLIC_SECTOR_CONTENT.headingHighlight}
@@ -90,12 +96,12 @@ export function PublicSectorSection({
                 {PUBLIC_SECTOR_CONTENT.headingAfterHighlight}
                 <br /> {PUBLIC_SECTOR_CONTENT.headingSecondLine}
               </h2>
-              <p className={cn(SUBHEADING_CLASS, 'mt-3')}>
+              <p className={cn(SUBHEADING_CLASS, 'mt-3 to-1024:text-center')}>
                 {PUBLIC_SECTOR_CONTENT.subheading}
               </p>
 
               <div
-                className="relative grid pl-5 pt-2"
+                className="relative grid SM:pl-5 pt-2"
                 onMouseEnter={pause}
                 onMouseLeave={resume}
               >
@@ -118,7 +124,7 @@ export function PublicSectorSection({
                   </button>
                 </div>
 
-                {/* Panel 1 — federal practice + procurement facts */}
+                {/* Panel 1 - federal practice + procurement facts */}
                 <div
                   className={cn(
                     PANEL_BASE,
@@ -174,7 +180,7 @@ export function PublicSectorSection({
                   </div>
                 </div>
 
-                {/* Panel 2 — AGC readiness */}
+                {/* Panel 2 - AGC readiness */}
                 <div
                   className={cn(
                     PANEL_BASE,

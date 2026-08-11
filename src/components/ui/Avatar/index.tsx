@@ -25,7 +25,7 @@ export function Avatar({ name, src, size = 52, className }: AvatarProps) {
         className={cn('block overflow-hidden rounded-full', className)}
         style={dimension}
       >
-        {/* Fixed square — no `sizes`, so Next emits a 1x/2x srcset. */}
+        {/* Fixed square - no `sizes`, so Next emits a 1x/2x srcset. */}
         <AppImage
           src={src}
           alt={name}
@@ -37,7 +37,7 @@ export function Avatar({ name, src, size = 52, className }: AvatarProps) {
     );
   }
 
-  // Initials fallback — the legacy `.quote-avatar` treatment, as utilities.
+  // Initials fallback - the legacy `.quote-avatar` treatment, as utilities.
   return (
     <span
       className={cn(

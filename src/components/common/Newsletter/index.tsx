@@ -11,18 +11,18 @@ import { Icon } from '@/components/ui/Icon';
 /**
  * Footer newsletter form, as Tailwind utilities.
  *
- * MIGRATION NOTE — the input's focus ring used to be inline
+ * MIGRATION NOTE - the input's focus ring used to be inline
  * `onfocus="this.style.borderColor='#2563eb'"` on top of an inline `style`
  * attribute. Because inline styles beat classes, a Tailwind `focus:` variant could
  * not have won against it, so the previous port reproduced it with React state.
- * With the inline style gone, `focus:border-brand-600` does the job — the state,
+ * With the inline style gone, `focus:border-brand-600` does the job - the state,
  * the two handlers and the re-render on every focus all disappear.
  *
  * Behavioural parity while the backend is pending: the legacy handler called
  * `preventDefault()` and revealed the thank-you line. When the API is not
  * configured this does the same, so the UX is unchanged; once
  * `NEXT_PUBLIC_ENABLE_CMS=true` the same submit posts to the real endpoint. What
- * is genuinely new is validation — an invalid address now gets a message instead
+ * is genuinely new is validation - an invalid address now gets a message instead
  * of silent "success".
  */
 export interface NewsletterProps {

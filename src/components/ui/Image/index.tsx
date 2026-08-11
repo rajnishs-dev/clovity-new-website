@@ -10,13 +10,13 @@ import { cn } from '@/lib/cn';
  *  • a static import (`import logo from '@/assets/images/…'`) supplies intrinsic
  *    width/height, which removes the layout shift the legacy `<img>` tags caused.
  *
- * WHEN TO PASS `sizes` — this is the decision that actually moves bytes:
+ * WHEN TO PASS `sizes` - this is the decision that actually moves bytes:
  *  • FLUID images (fill mode, or a width that tracks the viewport) need `sizes`.
  *    Without it the browser assumes 100vw and downloads a far larger candidate
  *    than it will display. Use one of the IMAGE_SIZES presets.
  *  • FIXED-SIZE images (logo pills, app tiles, badges, stat icons) should NOT
  *    pass `sizes`. Next then emits a two-candidate `1x`/`2x` srcset instead of one
- *    entry per configured width — on this page that is the difference between 2
+ *    entry per configured width - on this page that is the difference between 2
  *    and ~19 candidates across 46 marquee logos.
  *
  * `quality` is left to Next's default (75). Anything else must be listed in
@@ -24,7 +24,7 @@ import { cn } from '@/lib/cn';
  */
 
 /**
- * `sizes` presets for FLUID images only — see the note above on when to pass
+ * `sizes` presets for FLUID images only - see the note above on when to pass
  * `sizes` at all. Fixed-size images (logos, badges, icons) deliberately have no
  * preset here, because the right answer for them is to omit `sizes` entirely.
  */

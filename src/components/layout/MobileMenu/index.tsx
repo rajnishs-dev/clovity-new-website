@@ -18,13 +18,13 @@ import { createFocusTrap, getFocusableElements } from '@/utils/a11y';
  * Mobile navigation drawer, as Tailwind utilities.
  *
  * The slide is `translate-x-full → translate-x-0` over 350ms on
- * `cubic-bezier(.4,0,.2,1)` — the legacy `#mobile-menu` transition, and the same
+ * `cubic-bezier(.4,0,.2,1)` - the legacy `#mobile-menu` transition, and the same
  * curve as Tailwind's `ease-in-out`, so no custom token is needed. The panel stays
  * mounted so the slide-out is actually visible; unmounting would cut it off.
  *
  * Accessibility, all of it new: `role="dialog"`, focus trap, focus return to the
  * toggle, Escape to close, `aria-expanded`/`aria-controls` on the accordion
- * triggers, and `inert` when closed — the legacy version sat permanently in the
+ * triggers, and `inert` when closed - the legacy version sat permanently in the
  * DOM at `translateX(100%)`, so every link in it stayed tabbable while hidden.
  */
 
@@ -81,7 +81,7 @@ export function MobileMenu({ open, onClose, toggleRef }: MobileMenuProps) {
 
   /**
    * A closed drawer shows no expanded section. Derived rather than reset through
-   * an effect — resetting state in an effect causes a cascading render and is
+   * an effect - resetting state in an effect causes a cascading render and is
    * what `react-hooks/set-state-in-effect` exists to prevent.
    */
   const activeSection = open ? expanded : null;
@@ -125,7 +125,7 @@ export function MobileMenu({ open, onClose, toggleRef }: MobileMenuProps) {
 
   /**
    * Tapping any link closes the drawer, so it never covers the page it just
-   * navigated to. Handled on the click — a user event — rather than by watching
+   * navigated to. Handled on the click - a user event - rather than by watching
    * `usePathname` in an effect, which would also fire for navigations that have
    * nothing to do with this menu.
    */

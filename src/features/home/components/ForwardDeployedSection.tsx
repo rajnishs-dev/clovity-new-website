@@ -12,19 +12,19 @@ import {
 import { FDE_CONTENT, FDE_PROOF_CARDS } from '@/constants/home';
 
 /**
- * Section 4.5 — Forward-Deployed Engineers, as Tailwind utilities.
+ * Section 4.5 - Forward-Deployed Engineers, as Tailwind utilities.
  *
  * Copy left, photo with three floating proof cards right. The cards' entrance
  * stagger and the sparkline draw stay GSAP (see `HomeAnimations`); their idle glow
  * is `animate-fde-glow`, behind `motion-safe:` so it only runs for visitors who
- * have not asked for reduced motion — the legacy equivalent was a
+ * have not asked for reduced motion - the legacy equivalent was a
  * `@media (prefers-reduced-motion: no-preference)` block.
  *
  * Below 560px the cards leave the absolute flow and stack under the photo
  * (`to-560:static`), because three overlapping panels on a phone cover the image
  * they are annotating.
  *
- * The photo is a remote Unsplash URL in the original and stays remote — it is stock
+ * The photo is a remote Unsplash URL in the original and stays remote - it is stock
  * art, not a brand asset, so bundling it would add ~200KB to the repo for no gain.
  */
 
@@ -46,12 +46,19 @@ export function ForwardDeployedSection() {
   return (
     <section
       id="forward-deployed-engineers"
-      className="relative overflow-hidden py-16 sm:py-20"
+      className="relative overflow-hidden py-12 lg:py-16"
     >
       <div className="relative mx-auto max-w-shell px-6">
-        <div className="grid items-center gap-16 lg:grid-cols-[1.05fr_1fr]">
+        <div className="grid items-center gap-8 lg:gap-10 lg:grid-cols-[1.05fr_1fr]">
           {/* Left: copy */}
-          <div className={reveal('left')} {...revealAttrs()}>
+          <div
+            // `reveal()` bakes in `md:text-left` - this column has to stay
+            // centered through the whole stacked range (up to `lg`, where
+            // the grid actually goes two-column), so `md:text-center` has to
+            // come after it to win, with `lg:text-left` taking back over.
+            className={cn(reveal('left'), 'md:text-center lg:text-left')}
+            {...revealAttrs()}
+          >
             <h2 className={cn(HEADING_CLASS, 'mt-4')}>
               {FDE_CONTENT.headingLead}
               <br />
@@ -60,7 +67,12 @@ export function ForwardDeployedSection() {
             <p className={cn(SUBHEADING_CLASS, 'mt-4')}>
               {FDE_CONTENT.subheading}
             </p>
-            <div className="mt-4">
+            {/*
+              Visible at `lg`+ only. Below that the grid collapses to one
+              column and the CTA has to fall after the photo instead - see
+              the second copy below.
+            */}
+            <div className="mt-4 hidden lg:block">
               <SmartLink
                 href={FDE_CONTENT.ctaHref}
                 className={buttonClass('primary')}
@@ -151,6 +163,16 @@ export function ForwardDeployedSection() {
                 </div>
               ))}
             </div>
+          </div>
+
+          {/* Same CTA, `lg`-hidden twin of the one above - see that comment. */}
+          <div className="text-center lg:hidden">
+            <SmartLink
+              href={FDE_CONTENT.ctaHref}
+              className={buttonClass('primary')}
+            >
+              {FDE_CONTENT.ctaLabel} <ArrowIcon />
+            </SmartLink>
           </div>
         </div>
       </div>

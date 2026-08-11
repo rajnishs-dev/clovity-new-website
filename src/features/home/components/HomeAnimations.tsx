@@ -12,8 +12,8 @@ import { useSmoothAnchors } from '@/hooks/useSmoothAnchors';
  * The legacy page spread this across four inline `<script>` blocks and a shared
  * `site.js`. Consolidating it fixes three real problems:
  *
- *  1. The counters were animated twice — once by `site.js` with a 16ms
- *     `setInterval` and again by a GSAP ScrollTrigger — both writing to the same
+ *  1. The counters were animated twice - once by `site.js` with a 16ms
+ *     `setInterval` and again by a GSAP ScrollTrigger - both writing to the same
  *     element. Only one implementation runs now (`useCountUp`).
  *  2. Nothing was ever cleaned up, so every ScrollTrigger survived a
  *     client-side navigation and kept firing against detached nodes. Every tween
@@ -22,8 +22,8 @@ import { useSmoothAnchors } from '@/hooks/useSmoothAnchors';
  *     opacity 0 are gone: `immediateRender: false` plus context cleanup means
  *     content cannot get stuck invisible in the first place.
  *
- * Tween definitions — targets, from/to values, durations, eases, stagger and
- * trigger elements — are copied unchanged from the original, so the motion is
+ * Tween definitions - targets, from/to values, durations, eases, stagger and
+ * trigger elements - are copied unchanged from the original, so the motion is
  * identical. Selectors whose elements are not on the page are skipped by the
  * hook rather than throwing.
  *

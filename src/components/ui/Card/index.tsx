@@ -7,7 +7,7 @@ import { SmartLink } from '../Link';
  * Card shells, as Tailwind utilities.
  *
  * Replaces the legacy `.card` / `.app-card` / `.exp-card` rules. The lift is the
- * original's exact spring — `cubic-bezier(.34,1.56,.64,1)` over 300ms — expressed
+ * original's exact spring - `cubic-bezier(.34,1.56,.64,1)` over 300ms - expressed
  * as an arbitrary `[transition:…]` property because the three transitioned
  * properties had different easings, which `transition-*` + `ease-*` utilities
  * cannot express (they apply one easing to all).
@@ -36,7 +36,7 @@ const VARIANT_CLASS: Record<CardVariant, string> = {
   ),
   /**
    * The gradient underline is an `after:` pseudo-element that scales in from the
-   * left on hover — kept as a pseudo-element rather than a real node so the card's
+   * left on hover - kept as a pseudo-element rather than a real node so the card's
    * DOM stays as it was, and so the bar cannot be reached by the tab order.
    */
   expertise: cn(
@@ -53,7 +53,7 @@ const VARIANT_CLASS: Record<CardVariant, string> = {
  * Classes for the arrow inside an `expertise` card.
  *
  * The legacy CSS reached it with `.exp-card:hover .exp-arrow`. Here the card sets
- * `group` and the arrow opts in with `group-hover:` — same result, but the arrow
+ * `group` and the arrow opts in with `group-hover:` - same result, but the arrow
  * no longer depends on a stylesheet knowing its class name.
  */
 export const EXP_ARROW_CLASS =
@@ -137,7 +137,7 @@ export function CardLink({
   );
 }
 
-/** Padded inner region — the legacy `.csp-card-body` (28px). */
+/** Padded inner region - the legacy `.csp-card-body` (28px). */
 export function CardBody({
   children,
   className,
@@ -154,7 +154,7 @@ export function CardBody({
   );
 }
 
-/** The rounded icon chip inside a card — legacy `.card-icon` (52×52, r14). */
+/** The rounded icon chip inside a card - legacy `.card-icon` (52×52, r14). */
 export function CardIcon({
   children,
   className,

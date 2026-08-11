@@ -21,7 +21,7 @@ export default function manifest(): MetadataRoute.Manifest {
     categories: ['business', 'productivity', 'developer'],
     /**
      * `icons` is deliberately empty. The legacy site had no favicon or app icon,
-     * and the only brand marks on hand are two animated GIFs — not an icon
+     * and the only brand marks on hand are two animated GIFs - not an icon
      * source. Listing files that do not exist would put 404s in the manifest,
      * which is worse than omitting them.
      *

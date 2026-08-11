@@ -2,6 +2,7 @@ import { cn } from '@/lib/cn';
 import type { NavGroupId, NavLink } from '@/types/navigation';
 import { SmartLink } from '@/components/ui/Link';
 import {
+  MEGA_COL_TITLE_CLASS,
   MEGA_DESC_CLASS,
   MEGA_PANEL_BASE,
   MEGA_TITLE_CLASS,
@@ -13,7 +14,7 @@ import {
 /**
  * The narrow single-column dropdown (Discover), as Tailwind utilities.
  *
- * `before:` reproduces the legacy `.mega-wrap::before` — a 12px invisible strip
+ * `before:` reproduces the legacy `.mega-wrap::before` - a 12px invisible strip
  * above the panel that bridges the gap to the trigger, so the cursor does not
  * leave the hover target on its way down. `useHoverIntent`'s close delay covers
  * the rest.
@@ -55,15 +56,16 @@ export function DropdownPanel({
       className={cn(
         MEGA_PANEL_BASE,
         'absolute left-1/2 min-w-[520px] -translate-x-1/2 px-6 py-5 shadow-mega',
-        scrolled ? 'top-[calc(100%+10px)]' : 'top-[calc(100%+16px)]',
+        // Matches MegaPanel's fixed top-88/top-104 - the wrapper this panel is
+        // absolutely positioned against only spans the nav row's own height, not
+        // the header's padding, so the offset has to make up that difference.
+        scrolled ? 'top-[calc(100%+21px)]' : 'top-[calc(100%+23px)]',
         // Hover bridge between the trigger and the panel.
-        'before:absolute before:-top-3 before:left-0 before:h-3 before:w-full before:content-[""]',
+        'before:absolute before:-top-6 before:left-0 before:h-6 before:w-full before:content-[""]',
         open ? 'block animate-mega-fade' : 'hidden',
       )}
     >
-      <p className="mb-3 px-2 text-[11px] font-800 uppercase tracking-widest text-slate-400">
-        {eyebrow}
-      </p>
+      <p className={MEGA_COL_TITLE_CLASS}>{eyebrow}</p>
       {links.map((link) => (
         <SmartLink
           key={link.id}

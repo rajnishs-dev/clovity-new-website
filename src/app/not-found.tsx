@@ -13,7 +13,7 @@ import { buildMetadata } from '@/lib/seo';
  * `noIndex` matters: a soft-404 that search engines index is worse than the
  * missing page itself, because it competes with the real content.
  *
- * Offers concrete routes onward rather than a dead end — most 404s on a marketing
+ * Offers concrete routes onward rather than a dead end - most 404s on a marketing
  * site are stale inbound links, and the visitor was looking for something
  * specific.
  */

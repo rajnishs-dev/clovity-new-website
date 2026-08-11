@@ -3,7 +3,7 @@ import type { IconName } from './icon';
 /**
  * Navigation is data, not markup. The header, mega menu, mobile drawer and
  * footer all render from these shapes, so when the CMS starts serving the
- * navigation tree in phase 2 only the data source changes — no component does.
+ * navigation tree in phase 2 only the data source changes - no component does.
  */
 
 /** Top-level nav groups. Doubles as the `data-nav` value on <body>. */
@@ -12,7 +12,7 @@ export type NavGroupId =
 
 /** A single leaf link inside a mega-menu column or mobile accordion. */
 export interface NavLink {
-  /** Stable id — matches the legacy `data-nav-id` attribute. */
+  /** Stable id - matches the legacy `data-nav-id` attribute. */
   id: string;
   label: string;
   href: string;
@@ -54,7 +54,7 @@ export interface NavFeatureCard {
   external?: boolean;
 }
 
-/** Right-hand rail of a mega panel — either a CTA card or feature cards. */
+/** Right-hand rail of a mega panel - either a CTA card or feature cards. */
 export type NavPanelRail =
   | { kind: 'cta'; card: NavCtaCard }
   | { kind: 'feature'; title: string; cards: NavFeatureCard[] };

@@ -1,5 +1,5 @@
 /* =====================================================================
-   GLOBAL ENTRY STYLESHEET — the only CSS file in the project.
+   GLOBAL ENTRY STYLESHEET - the only CSS file in the project.
 
    `theme.css`, `pages/home.css` and `migration.css` are gone: every rule they
    held is now a Tailwind utility on the element that needs it, a token in
@@ -8,12 +8,12 @@
 
    What is left below is only what genuinely cannot be a utility class:
 
-   1. `@tailwind` directives — the framework's own entry points.
+   1. `@tailwind` directives - the framework's own entry points.
    2. Document-level element defaults. `<html>` and `<body>` can carry classes
       (and do, in app/layout.tsx), but `p { font-size: 16px }` cannot be applied
       per-element without touching hundreds of call sites for no benefit, and
       Tailwind's preflight resets it to inherit.
-   3. `::-webkit-scrollbar` — a pseudo-element on the scrolling root. Tailwind
+   3. `::-webkit-scrollbar` - a pseudo-element on the scrolling root. Tailwind
       ships no variant for it, and it cannot be targeted from a class on any
       element other than the one that scrolls.
    4. The `:focus-visible` accessibility ring, which must apply to every
@@ -56,7 +56,7 @@
   }
 
   /*
-   * (4) ACCESSIBILITY ADDITION — not present in the legacy site.
+   * (4) ACCESSIBILITY ADDITION - not present in the legacy site.
    * Scoped to :focus-visible only, so it never renders for mouse or touch
    * interaction; the default and :hover appearance are untouched.
    */
@@ -78,12 +78,12 @@
   }
 
   /*
-   * (2)+(4) REDUCED MOTION — a `*` selector, so it cannot be a utility class.
+   * (2)+(4) REDUCED MOTION - a `*` selector, so it cannot be a utility class.
    *
    * Ported from the legacy stylesheet, which killed every transition globally for
    * visitors who ask for reduced motion. Tailwind's `motion-reduce:` variant only
    * covers elements that opt in one by one, and this has to hold for every element
-   * on the page — including ones rendered by Font Awesome or future third-party
+   * on the page - including ones rendered by Font Awesome or future third-party
    * markup. `.01ms` rather than `0s` so transitionend handlers still fire.
    *
    * Component-level animations are separately guarded with `motion-reduce:` /

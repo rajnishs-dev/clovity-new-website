@@ -5,7 +5,7 @@ import { ButtonLink } from '../Button';
 import { Icon } from '../Icon';
 
 /**
- * Shown when a list resolves to nothing — an empty blog filter, a search with no
+ * Shown when a list resolves to nothing - an empty blog filter, a search with no
  * hits, a category with no published items yet.
  *
  * Always offers a next action. A dead end with no way forward is a worse outcome

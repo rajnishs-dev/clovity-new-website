@@ -8,7 +8,7 @@
  *     in production
  *
  * Central so an asset audit is one file, not a grep across forty components.
- * Videos live in /public/assets/videos and are referenced by URL — they must be
+ * Videos live in /public/assets/videos and are referenced by URL - they must be
  * range-requestable for seeking, which a bundled asset is not.
  */
 
@@ -35,7 +35,7 @@ export { default as deliverExperts } from '@/assets/images/home/human-experts.pn
 
 /* ── Section background photos ──────────────────────────────────────────── */
 /**
- * UNUSED as of the cloud-migration redesign — that section now paints a flat
+ * UNUSED as of the cloud-migration redesign - that section now paints a flat
  * gradient and the original no longer references this photo anywhere. Kept
  * exported (and the asset on disk) rather than deleted, because it is a real brand
  * asset the interior pages still to be migrated may want. Nothing imports it, so it

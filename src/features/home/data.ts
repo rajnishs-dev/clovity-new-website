@@ -16,25 +16,20 @@ import {
 } from '@/constants/home';
 
 /**
- * The home page's data layer.
+ * The home page's data layer - the seam between UI and backend.
  *
- * ALL BUNDLED CONTENT TODAY, and honestly so. This used to route every loader
- * through an API-with-fallback seam pointed at a Node/Express admin panel that was
- * never built: `NEXT_PUBLIC_API_BASE_URL` has never been set, so `isApiConfigured()`
- * was always false and every one of these calls short-circuited straight to the
- * constant below without a request. Seven files of transport code that only ever
- * returned "not configured".
+ * Every loader here calls the API and falls back to the bundled static content
+ * when the API is not configured or the request fails. `withFallback` makes that
+ * a one-liner, and it is what lets the site ship today on static content and
+ * switch to the CMS by setting `NEXT_PUBLIC_ENABLE_CMS=true` - with no change to
+ * any component, prop or class name.
  *
- * That layer is gone. What is left says what actually happens.
+ * The loaders are async even where they currently resolve instantly, so the page
+ * already awaits them and turning on live data does not change the call sites.
  *
- * NONE OF THIS IS IN STRAPI EITHER — `clovity-admin` has no collection for customer
- * stories, client logos, marketplace apps, result statistics or credential badges, so
- * there is nothing to fetch even now. The three CMS-backed pages read
- * `@/api/cms`; when a collection appears for one of these, the change is to swap the
- * body of the matching function here, and no component moves.
- *
- * The loaders stay async so the page keeps awaiting them and turning on a real
- * source does not touch a single call site.
+ * When the API does come online, these will additionally be the place to set
+ * per-collection `revalidate` windows and cache tags for on-demand ISR from the
+ * CMS's publish webhook - again without touching a component.
  */
 
 export async function getCustomerStories(): Promise<CustomerStory[]> {
@@ -57,7 +52,14 @@ export async function getCredentialRows(): Promise<CredentialRow[]> {
   return CREDENTIAL_ROWS;
 }
 
-/** The five tabbed collections of the "What We Learn in the Field" module. */
+/**
+ * The five tabbed collections.
+ *
+ * Fetches all five in parallel rather than in series - five sequential round
+ * trips would put the slowest section's latency on the critical path five times
+ * over. Any collection whose request fails keeps its static items, so one bad
+ * endpoint degrades a single tab instead of the whole module.
+ */
 export async function getContentCollections(): Promise<ContentCollection[]> {
   return CONTENT_COLLECTIONS;
 }

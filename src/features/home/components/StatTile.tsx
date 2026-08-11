@@ -14,7 +14,7 @@ import { AppImage } from '@/components/ui/Image';
  * when it actually comes into view.
  *
  * The hover flood is a `before:` circle sized to the icon that scales to 14× to
- * wash the whole card — the legacy `.res2-stat::before`. Each tile has its own
+ * wash the whole card - the legacy `.res2-stat::before`. Each tile has its own
  * accent, which the original expressed as five `:nth-child(N)` rules; here the
  * index picks from an array, so reordering or adding a stat cannot silently
  * reassign colours.
@@ -22,7 +22,7 @@ import { AppImage } from '@/components/ui/Image';
  * `isolate` matters: without it the scaled flood would escape the card's stacking
  * context and paint over its neighbours.
  *
- * The icons are SVG and passed `unoptimized` — Next's optimizer rejects SVG unless
+ * The icons are SVG and passed `unoptimized` - Next's optimizer rejects SVG unless
  * `dangerouslyAllowSVG` is set, and there is nothing to gain by rasterising a 5KB
  * vector.
  */
@@ -62,7 +62,7 @@ export function StatTile({ stat, index }: { stat: StatItem; index: number }) {
    *
    * Translated to index checks, which is both clearer and immune to a wrapper
    * element shifting the child count. `to-480` is declared after `to-640` in the
-   * screens config, so it wins where the two overlap — exactly as the source order
+   * screens config, so it wins where the two overlap - exactly as the source order
    * of the original media queries did.
    *
    * Missing this was worth 12px of extra height per tile boundary on mobile: the
@@ -72,7 +72,6 @@ export function StatTile({ stat, index }: { stat: StatItem; index: number }) {
   const dividers = cn(
     n % 2 === 0 && 'to-640:border-l to-640:border-line to-640:pl-6',
     n >= 3 && 'to-640:border-t to-640:border-line to-640:pt-6',
-    n >= 4 && 'to-640:border-t-0 to-640:pt-0',
     n >= 2 && 'to-480:border-t to-480:border-line to-480:pt-6',
   );
 

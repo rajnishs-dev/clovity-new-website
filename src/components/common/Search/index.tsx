@@ -12,8 +12,8 @@ import { Icon } from '@/components/ui/Icon';
 /**
  * Site search input.
  *
- * The legacy site had no search UI. This is built now — as a real `role="search"`
- * landmark with a labelled input and a submit button — so switching it on later
+ * The legacy site had no search UI. This is built now - as a real `role="search"`
+ * landmark with a labelled input and a submit button - so switching it on later
  * is a route plus an endpoint, not a new component and a new state shape.
  *
  * Submitting navigates to `/search?q=…` rather than filtering in place, so a
@@ -25,7 +25,7 @@ export interface SearchProps {
   /** Accessible name for the search landmark. */
   label?: string;
   autoFocus?: boolean;
-  /** Override navigation — e.g. to filter a list in place. */
+  /** Override navigation - e.g. to filter a list in place. */
   onSubmitQuery?: (query: string) => void;
 }
 

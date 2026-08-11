@@ -26,12 +26,25 @@ export interface ContentImage {
   /** Static import, absolute URL, or a `/`-rooted path served from /public. */
   src: ImageSource;
   alt: string;
-  /** Required only for remote string sources — static imports infer these. */
+  /** Required only for remote string sources - static imports infer these. */
   width?: number;
   height?: number;
   /** Low-quality base64 placeholder, when the CMS provides one. */
   blurDataURL?: string;
 }
+
+/**
+ * One block of an article body. Kept as a small closed union - not raw HTML or
+ * markdown - so a detail page can render it with the site's own typography
+ * components no matter which resource kind it belongs to, and so the eventual
+ * CMS only has to emit this same shape (a rich-text field mapped block-by-block)
+ * rather than a bag of sanitized HTML.
+ */
+export type ContentBlock =
+  | { type: 'paragraph'; text: string }
+  | { type: 'heading'; text: string; level?: 2 | 3 }
+  | { type: 'list'; items: string[] }
+  | { type: 'quote'; text: string; cite?: string };
 
 /** Fields every publishable CMS record shares. */
 export interface ContentBase {
@@ -39,7 +52,7 @@ export interface ContentBase {
   slug: string;
   title: string;
   excerpt: string;
-  /** ISO-8601. Formatted at render time — never pre-formatted in the model. */
+  /** ISO-8601. Formatted at render time - never pre-formatted in the model. */
   publishedAt: string;
   updatedAt?: string;
   image: ContentImage;
@@ -47,6 +60,8 @@ export interface ContentBase {
   href: string;
   external?: boolean;
   tags?: string[];
+  /** Full article body, rendered on the detail page only. */
+  content?: ContentBlock[];
 }
 
 export type ContentKind =
@@ -57,11 +72,13 @@ export interface BlogPost extends ContentBase {
   author?: { name: string; role?: string; avatar?: ContentImage };
   readingMinutes?: number;
   category?: string;
-  body?: string;
 }
+
+export type EventCategory = 'government' | 'conference' | 'industry';
 
 export interface EventItem extends ContentBase {
   kind: 'events';
+  category?: EventCategory;
   location?: string;
   startsAt?: string;
   endsAt?: string;
@@ -70,10 +87,12 @@ export interface EventItem extends ContentBase {
 
 export interface WebinarItem extends ContentBase {
   kind: 'webinars';
-  presenters?: string[];
+  presenters?: { name: string; role: string }[];
   onDemand?: boolean;
   durationMinutes?: number;
   registrationUrl?: string;
+  /** Embeddable player URL (e.g. a YouTube `/embed/...` URL). */
+  videoUrl?: string;
 }
 
 export interface CaseStudyItem extends ContentBase {
@@ -81,6 +100,7 @@ export interface CaseStudyItem extends ContentBase {
   client?: string;
   clientLogo?: ContentImage;
   industry?: string;
+  category?: string;
   /** Headline outcomes, e.g. "50% lower infrastructure cost". */
   outcomes?: string[];
 }
@@ -167,7 +187,7 @@ export interface CredentialBadge {
  * 4 / 4 / 3 split is a design decision, not an accident of width. A single wrapping
  * row happens to break 4+3 at the desktop column width, but once the layout
  * collapses to one column below 1100px the right side gets wide enough to fit all
- * seven cards on one line — which is not the intended arrangement.
+ * seven cards on one line - which is not the intended arrangement.
  *
  * `variant` distinguishes the top row of Atlassian partner badges, which sit bare on
  * the background, from the certification badges, which sit in white cards.
@@ -218,7 +238,7 @@ export interface MigrationSource {
   label: string;
   icon: IconName;
   /**
-   * Brand tint for the glyph. Colour only — these icons sit directly on the card,
+   * Brand tint for the glyph. Colour only - these icons sit directly on the card,
    * with no chip behind them, so there is deliberately no `background` here.
    */
   iconStyle: { color: string };

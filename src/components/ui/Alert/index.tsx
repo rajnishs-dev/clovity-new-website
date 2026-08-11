@@ -4,7 +4,7 @@ import type { IconName } from '@/types/icon';
 import { Icon } from '../Icon';
 
 /**
- * Inline feedback banner — form results, API failures, notices.
+ * Inline feedback banner - form results, API failures, notices.
  *
  * The ARIA wiring is the important part: `error` uses `role="alert"` (assertive,
  * interrupts) because a failed submit must be heard immediately, while the other

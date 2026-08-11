@@ -7,7 +7,7 @@ import { useAppSelector } from '@/store/hooks';
  *
  * Resolved once in StoreProvider and read from the store here, so every
  * animation (GSAP, Framer Motion, the canvas sphere, the carousels, the
- * counters) honours `prefers-reduced-motion` consistently — matching the
+ * counters) honours `prefers-reduced-motion` consistently - matching the
  * `reduceMotion` guards the legacy inline scripts used.
  */
 export function useReducedMotion(): boolean {
