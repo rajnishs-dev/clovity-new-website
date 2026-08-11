@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import { formatNumber } from '@/utils/format';
+import { formatNumber } from '@/lib/format';
 
 /**
  * Animated counter for the results band.

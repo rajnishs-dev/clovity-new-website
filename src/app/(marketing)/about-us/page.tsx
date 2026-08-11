@@ -15,7 +15,7 @@
 import type { Metadata } from 'next';
 import { buildMetadata } from '@/lib/seo';
 import { breadcrumbSchema } from '@/lib/schema';
-import { ROUTES } from '@/config/routes';
+import { ROUTES } from '@/constants/routes';
 import { Footer } from '@/components/layout/Footer';
 import { Header } from '@/components/layout/Header';
 import {
@@ -25,19 +25,17 @@ import {
   PageAnimations,
   PageHero,
 } from '@/components/common';
-import {
-  CredentialsSection,
-  FeaturedInSection,
-  MilestonesSection,
-  MissionSection,
-  StatsSection,
-  TrustedBySection,
-  ValuesSection,
-  WhoWeAreSection,
-  WhySection,
-  WorkWithUsSection,
-} from '@/features/about/components';
-import { getAboutPageData } from '@/features/about/data';
+import { CredentialsSection } from './CredentialsSection';
+import { FeaturedInSection } from './FeaturedInSection';
+import { MilestonesSection } from './MilestonesSection';
+import { MissionSection } from './MissionSection';
+import { StatsSection } from './StatsSection';
+import { TrustedBySection } from './TrustedBySection';
+import { ValuesSection } from './ValuesSection';
+import { WhoWeAreSection } from './WhoWeAreSection';
+import { WhySection } from './WhySection';
+import { WorkWithUsSection } from './WorkWithUsSection';
+import { getAboutPageData } from '@/data/about';
 import {
   ABOUT_ATLASSIAN_BADGES,
   ABOUT_FINAL_CTA,

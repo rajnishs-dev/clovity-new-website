@@ -12,7 +12,7 @@ import {
 import { buttonClass } from '@/components/ui/Button';
 import { SmartLink } from '@/components/ui/Link';
 import { Select, type SelectOption } from '@/components/ui/Select';
-import { ROUTES } from '@/config/routes';
+import { ROUTES } from '@/constants/routes';
 
 /**
  * The filter toolbar + featured card + grid for `/events` - the legacy

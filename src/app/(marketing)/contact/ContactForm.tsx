@@ -14,7 +14,7 @@ import {
   CONTACT_FORM_SLUG,
   CONTACT_TOPICS,
 } from '@/constants/contact';
-import { submitEnquiryAction } from '../actions';
+import { submitEnquiryAction } from './actions';
 
 /**
  * The contact form card.

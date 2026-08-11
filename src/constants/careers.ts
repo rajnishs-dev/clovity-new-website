@@ -8,8 +8,8 @@ import type {
   PillarCard,
   StatBandItem,
 } from '@/types/content';
-import { EXTERNAL_LINKS, ROUTES } from '@/config/routes';
-import { siteConfig } from '@/config/site';
+import { EXTERNAL_LINKS, ROUTES } from '@/constants/routes';
+import { siteConfig } from '@/constants/site';
 
 /**
  * Careers page content.
@@ -122,7 +122,7 @@ export const CAREERS_STATS: StatBandItem[] = [
  * The culture block's copy.
  *
  * STATIC, and deliberately so — see the long note in
- * `features/careers/components/CultureSection.tsx`. The Strapi `life-at-clovity`
+ * `app/(marketing)/careers/CultureSection.tsx`. The Strapi `life-at-clovity`
  * collection is a photo gallery: each row is one image with a caption, and its
  * `header_*` fields name the gallery a row belongs to, not the row. Mapping them
  * onto this section's headline and paragraph would print a gallery title and a photo

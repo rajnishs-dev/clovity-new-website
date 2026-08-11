@@ -1,7 +1,7 @@
 import type { ReactNode } from 'react';
 import { cn } from '@/lib/cn';
 import type { ContentImage } from '@/types/content';
-import { formatContentDate } from '@/utils/format';
+import { formatContentDate } from '@/lib/format';
 import { ArrowIcon } from '@/components/ui/Icon';
 import { CoverImage } from '@/components/ui/Image';
 import { CardLink } from '@/components/ui/Card';

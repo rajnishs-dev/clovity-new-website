@@ -3,7 +3,7 @@
 import { buildEnquirySchema, type EnquiryFormValues } from '@/lib/validation';
 import { isCmsConfigured, postEnquiry } from '@/api/cms';
 import { CONTACT_FORM_CONTENT } from '@/constants/contact';
-import { getContactFormConfig } from './data';
+import { getContactFormConfig } from '@/data/contact';
 
 /**
  * Contact form submission, as a Server Action.

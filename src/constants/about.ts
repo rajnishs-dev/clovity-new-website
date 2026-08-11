@@ -8,8 +8,8 @@ import type {
   PressLogo,
   StatBandItem,
 } from '@/types/content';
-import { ROUTES } from '@/config/routes';
-import { siteConfig } from '@/config/site';
+import { ROUTES } from '@/constants/routes';
+import { siteConfig } from '@/constants/site';
 import {
   badgeCloudSpecialization,
   badgeItsmSpecialization,
@@ -31,7 +31,7 @@ import {
  * group, which reads the Strapi `award` collection. What is below is its FALLBACK:
  * the eight badges the page publishes today, so the section renders identically
  * when Strapi is unreachable or has not been populated. See
- * `features/about/data.ts`.
+ * `data/about.ts`.
  */
 
 /* ── Hero ───────────────────────────────────────────────────────────────── */

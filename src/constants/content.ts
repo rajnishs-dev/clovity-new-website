@@ -1,4 +1,4 @@
-import { EXTERNAL_LINKS, ROUTES } from '@/config/routes';
+import { EXTERNAL_LINKS, ROUTES } from '@/constants/routes';
 import type { ContentCollection } from '@/types/content';
 import {
   cardDsh,

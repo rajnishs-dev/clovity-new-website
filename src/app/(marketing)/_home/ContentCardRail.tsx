@@ -5,7 +5,7 @@ import { cn } from '@/lib/cn';
 import { reveal, revealAttrs } from '@/lib/reveal';
 import { useSnapCarousel } from '@/hooks/useSnapCarousel';
 import type { ContentItem } from '@/types/content';
-import { formatContentDate } from '@/utils/format';
+import { formatContentDate } from '@/lib/format';
 import { Icon } from '@/components/ui/Icon';
 import { CoverImage } from '@/components/ui/Image';
 import { SmartLink } from '@/components/ui/Link';

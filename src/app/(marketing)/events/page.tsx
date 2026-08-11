@@ -1,13 +1,13 @@
 import type { Metadata } from 'next';
 import { buildMetadata } from '@/lib/seo';
-import { ROUTES } from '@/config/routes';
+import { ROUTES } from '@/constants/routes';
 import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
 import { FinalCta } from '@/components/common/CTA';
 import {
   RevealScope, RESOURCE_CTA_LINKS, ResourceHero, SplitMediaCta } from '@/components/common/Resources';
-import { getEventItems } from '@/features/events/data';
-import { EventsExplorer } from '@/features/events/components/EventsExplorer';
+import { getEventItems } from '@/data/events';
+import { EventsExplorer } from './EventsExplorer';
 
 export const metadata: Metadata = buildMetadata({
   title: 'Events - Atlassian Tours, Summits & Community',

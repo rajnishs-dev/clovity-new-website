@@ -18,7 +18,7 @@
 import type { Metadata } from 'next';
 import { buildMetadata } from '@/lib/seo';
 import { breadcrumbSchema } from '@/lib/schema';
-import { ROUTES } from '@/config/routes';
+import { ROUTES } from '@/constants/routes';
 import { Footer } from '@/components/layout/Footer';
 import { Header } from '@/components/layout/Header';
 import {
@@ -28,11 +28,9 @@ import {
   PageAnimations,
   PageHero,
 } from '@/components/common';
-import {
-  ContactSection,
-  OfficesSection,
-} from '@/features/contact/components';
-import { getContactFormConfig } from '@/features/contact/data';
+import { ContactSection } from './ContactSection';
+import { OfficesSection } from './OfficesSection';
+import { getContactFormConfig } from '@/data/contact';
 import {
   CONTACT_FINAL_CTA,
   CONTACT_FINAL_CTA_LINKS,

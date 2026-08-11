@@ -1,5 +1,5 @@
 import { cn } from '@/lib/cn';
-import { initials as toInitials } from '@/utils/format';
+import { initials as toInitials } from '@/lib/format';
 import { AppImage } from '../Image';
 
 /**

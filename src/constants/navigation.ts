@@ -5,10 +5,10 @@ import type {
   NavLink,
   SocialLink,
 } from '@/types/navigation';
-import { formatContentDate } from '@/utils/format';
-import { resolveImageSrc } from '@/utils/image';
-import { getAllBlogPosts } from '@/features/blog/data';
-import { getAllEvents } from '@/features/events/data';
+import { formatContentDate } from '@/lib/format';
+import { resolveImageSrc } from '@/lib/image';
+import { getAllBlogPosts } from '@/data/blog';
+import { getAllEvents } from '@/data/events';
 import { EXTERNAL_LINKS, ROUTES } from './routes';
 import { siteConfig } from './site';
 

@@ -49,52 +49,66 @@ npm run dev                    # http://localhost:3000
 
 ## Architecture
 
+Eleven directories. A page's own sections live WITH the page; everything shared
+lives under `components/`; everything fetched lives under `data/`.
+
 ```
 src/
-├── app/                        App Router
+├── app/                        App Router - routes, and each route's own sections
 │   ├── layout.tsx              Root: fonts, stylesheet order, JSON-LD, StoreProvider
 │   ├── loading.tsx  error.tsx  not-found.tsx
 │   ├── robots.ts  sitemap.ts  manifest.ts
+│   ├── api/revalidate/         Strapi publish webhook
 │   └── (marketing)/
-│       ├── layout.tsx          Pass-through - see Decision 6
 │       ├── page.tsx            Home page
+│       ├── _home/              its 17 sections (`_` = never a route)
+│       ├── about-us/           page.tsx + its 10 sections
+│       ├── careers/            page.tsx + its 8 sections
+│       ├── contact/            page.tsx + its 4 sections + actions.ts
+│       ├── blog/               page.tsx + [slug]/page.tsx
+│       ├── news/  events/  webinars/  case-study/    same shape
 │       └── HomeNavState.tsx    Declares the active nav entry
 │
-├── components/
-│   ├── ui/                     25 primitives (Button, Typography, Card, Modal, Tabs, …)
-│   ├── common/                 Logo, CTA, Newsletter, Search, Breadcrumb, JsonLd
-│   ├── layout/                 Header, Navbar (+ MegaPanel, DropdownPanel), MobileMenu, Footer
-│   └── sections/               Reserved for shared interior-page sections
+├── components/                 Shared UI only. Never fetches.
+│   ├── ui/                     31 primitives (Button, Card, Modal, Tabs, Icon, …)
+│   ├── common/                 Logo, CTA, Newsletter, Search, PageHero, Resources, …
+│   └── layout/                 Header, Navbar (+ MegaPanel), MobileMenu, Footer
 │
-├── features/home/
-│   ├── components/             11 home sections + HomeAnimations + PulseSphere
-│   └── data.ts                 API-with-fallback loaders  ← the backend seam
+├── api/                        The ONLY place HTTP happens
+│   ├── cms.ts                  Strapi client + every endpoint + every call
+│   ├── cms.types.ts            Strapi wire shapes
+│   ├── cms.mappers.ts          Strapi shapes → types/content
+│   ├── cms.richtext.ts         Strapi richtext (HTML) → ContentBlock[]
+│   └── cms.hooks.ts            Browser-side refetch hooks
 │
-├── constants/                  Content extracted from the legacy HTML
+├── data/                       One loader per page: CMS first, bundled fallback
+│   ├── home.ts  about.ts  careers.ts  contact.ts
+│   └── blog.ts  news.ts  events.ts  webinars.ts  case-study.ts
+│
+├── constants/                  Static content + app config
 │   ├── media.ts                Every bundled image import, in one place
-│   ├── home.ts  content.ts  clients.ts
+│   ├── home.ts  about.ts  careers.ts  contact.ts  content.ts  clients.ts
+│   └── routes.ts  site.ts  navigation.ts  env.ts  fonts.ts
 │
-├── services/
-│   ├── api/                    axios · interceptors · endpoints · request · response · api
-│   └── auth/                   tokenStorage · authService (phase 2)
-│
-├── store/                      index · provider · hooks · storage · slices/ (6)
+├── store/                      Redux: index · provider · hooks · storage · slices/ (6)
 ├── hooks/                      14 hooks - each replaces a legacy inline script
-├── lib/                        cn · seo · schema · validation
-├── config/                     env · site · routes · navigation · fonts
-├── types/                      api · common · content · navigation · seo
-├── utils/                      format · link · a11y
-├── styles/                     globals · theme · migration · pages/home
-└── assets/images/              56 media files (videos in public/assets/videos)
+├── lib/                        cn · seo · schema · validation · format · image · link · a11y · slug
+├── types/                      api · common · content · icon · navigation · seo
+├── styles/                     globals.css
+└── assets/images/              50 media files (videos in public/assets/videos)
 ```
 
 ### The layers, and why they are separate
 
 - **Static UI** - `components/` never fetches. Sections take data as props.
-- **Data** - `features/*/data.ts` is the only place a section's data is resolved.
-- **API** - `services/api/` is the only place HTTP happens.
-- **Content** - `constants/` holds the extracted copy, typed identically to the
-  future API responses.
+- **Page sections** - live in the route folder that renders them. If a second page
+  needs one, it moves to `components/common/` (that is why `ClientMarquee` is there).
+- **Data** - `data/*.ts` is the only place a page's data is resolved. Each loader
+  reads Strapi and falls back to `constants/`.
+- **API** - `api/cms.ts` is the only place HTTP happens, and `CMS_ENDPOINTS` in it is
+  the only place a CMS route is written down.
+- **Content** - `constants/` holds the extracted copy, typed identically to the CMS
+  responses, so a section cannot tell which one it got.
 - **State** - `store/` holds only genuinely shared, cross-component state.
 
 That separation is what makes the backend swap a config change rather than a
@@ -301,7 +315,8 @@ silently at build and 400s at runtime. Allowed here: `[75, 90]`.
   an `@graph`; verified as valid JSON in the rendered HTML.
 - `components/common/JsonLd` escapes `<` to `<`, closing the standard
   JSON-LD injection vector.
-- `app/sitemap.ts` - 17 URLs from `config/routes.ts`.
+- `app/sitemap.ts` - the static routes from `constants/routes.ts`, plus every CMS
+  detail page with its own `lastModified`.
 - `app/robots.ts` - fully disallows preview deploys when
   `NEXT_PUBLIC_ALLOW_INDEXING=false`, so a preview URL never competes with
   production in search.
@@ -340,33 +355,37 @@ section's content to mirror a z-order would remove real information.
 
 ## Backend integration
 
-The seam is `features/*/data.ts`:
+The backend is Strapi (`clovity-admin`). There is no other one - the Express API this
+repo was originally scaffolded against was never built, and its `services/` layer was
+removed. Form submissions go through Server Actions; everything else reads Strapi.
+
+The seam is `data/*.ts`:
 
 ```ts
-export async function getMarketplaceApps(): Promise<MarketplaceApp[]> {
-  return withFallback(() => marketingApi.marketplaceApps(), MARKETPLACE_APPS);
-}
+export const getBlogPosts = cache(async (): Promise<BlogPost[]> => {
+  return withCmsFallback(() => getBlogs(), getAllBlogPosts());
+});
 ```
 
-`withFallback` calls the API and returns the bundled static content when the API
-is not configured **or the request fails**. The static fallbacks in `constants/`
-and the API responses are the *same TypeScript type*, so the section renders
-identically either way.
+`withCmsFallback` calls Strapi and returns the bundled static content when the CMS is
+not configured, **the request fails, or the result is empty**. The fallbacks in the
+data files and the CMS responses are the *same TypeScript type*, so a section cannot
+tell which one it got.
 
-**To go live with the CMS:**
+Every CMS route is in `CMS_ENDPOINTS` in `api/cms.ts`. Two of them are not guessable:
+`news` pluralises to `newses`, and the case studies the site renders come from the
+`jsm-resource` collection, not `case-study`.
 
-1. Set `NEXT_PUBLIC_API_BASE_URL` and `NEXT_PUBLIC_ENABLE_CMS=true`.
-2. Adjust `services/api/endpoints.ts` if the Express routes differ.
-3. Add `revalidate` / cache tags in the data loaders.
+**Freshness** is two mechanisms, and the slower one is the safety net:
 
-No component, prop, class name or folder changes. `services/api/request.ts`
-never throws - a failed fetch degrades one section to its fallback instead of
-blanking the page.
+1. `POST /api/revalidate` - a Strapi webhook that rebuilds the affected listing page
+   the moment an editor publishes.
+2. `export const revalidate` on each page (5 min About/Careers, 1 h Contact and every
+   resource page), which covers the webhook being misconfigured or blocked.
 
-Already scaffolded for phase 2: `services/auth/` (JWT + RBAC), `tokenStorage`
-(in-memory by default - a JWT in `localStorage` is readable by any XSS payload),
-the `contactSlice` thunks, and `lib/validation.ts` schemas ready to be shared
-with the Express validators.
+Detail pages are prerendered from the slugs the listing can reach; `dynamicParams`
+renders anything outside that set on first request. `lib/slug.ts` skips the handful of
+CMS slugs a filesystem path cannot hold, and logs which.
 
 ---
 

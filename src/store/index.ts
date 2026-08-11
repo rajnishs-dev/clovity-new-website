@@ -9,7 +9,7 @@ import {
   persistReducer,
   persistStore,
 } from 'redux-persist';
-import { env } from '@/config/env';
+import { env } from '@/constants/env';
 import { persistStorage } from './storage';
 import {
   contactReducer,

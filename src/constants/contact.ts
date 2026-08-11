@@ -4,8 +4,8 @@ import type {
   CtaLink,
   OfficeLocation,
 } from '@/types/content';
-import { ROUTES } from '@/config/routes';
-import { siteConfig } from '@/config/site';
+import { ROUTES } from '@/constants/routes';
+import { siteConfig } from '@/constants/site';
 
 /**
  * Contact page content.

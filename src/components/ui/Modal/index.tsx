@@ -4,7 +4,7 @@ import { useEffect, useId, useRef, type ReactNode } from 'react';
 import { createPortal } from 'react-dom';
 import { cn } from '@/lib/cn';
 import { useLockBodyScroll } from '@/hooks/useLockBodyScroll';
-import { createFocusTrap, getFocusableElements } from '@/utils/a11y';
+import { createFocusTrap, getFocusableElements } from '@/lib/a11y';
 import { Icon } from '../Icon';
 
 /**

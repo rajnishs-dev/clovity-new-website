@@ -1,8 +1,8 @@
 import logoWhite from '@/assets/images/clovity-logo-white.gif';
 import { cn } from '@/lib/cn';
-import { FOOTER_COLUMNS, FOOTER_SOCIALS } from '@/config/navigation';
-import { ROUTES } from '@/config/routes';
-import { siteConfig } from '@/config/site';
+import { FOOTER_COLUMNS, FOOTER_SOCIALS } from '@/constants/navigation';
+import { ROUTES } from '@/constants/routes';
+import { siteConfig } from '@/constants/site';
 import { Icon } from '@/components/ui/Icon';
 import { AppImage } from '@/components/ui/Image';
 import { SmartLink } from '@/components/ui/Link';

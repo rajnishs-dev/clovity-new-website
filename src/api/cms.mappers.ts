@@ -1,6 +1,6 @@
-import { env } from '@/config/env';
-import { ROUTES } from '@/config/routes';
-import { siteConfig } from '@/config/site';
+import { env } from '@/constants/env';
+import { ROUTES } from '@/constants/routes';
+import { siteConfig } from '@/constants/site';
 import type {
   BadgeGroup,
   BlogPost,

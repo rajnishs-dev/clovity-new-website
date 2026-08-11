@@ -1,7 +1,7 @@
 import logoBlack from '@/assets/images/clovity-logo-black.gif';
 import logoWhite from '@/assets/images/clovity-logo-white.gif';
 import { cn } from '@/lib/cn';
-import { ROUTES } from '@/config/routes';
+import { ROUTES } from '@/constants/routes';
 import { AppImage } from '@/components/ui/Image';
 import { SmartLink } from '@/components/ui/Link';
 

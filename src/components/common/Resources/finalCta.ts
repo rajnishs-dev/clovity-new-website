@@ -1,4 +1,4 @@
-import { ROUTES } from '@/config/routes';
+import { ROUTES } from '@/constants/routes';
 import type { CtaLink } from '@/types/content';
 
 /** The "Schedule a consultation" CTA shared by every resource listing/detail page. */

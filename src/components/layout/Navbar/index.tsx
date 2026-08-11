@@ -1,7 +1,7 @@
 'use client';
 
 import { cn } from '@/lib/cn';
-import { PRIMARY_NAV } from '@/config/navigation';
+import { PRIMARY_NAV } from '@/constants/navigation';
 import { useHoverIntent } from '@/hooks/useHoverIntent';
 import { useAppSelector } from '@/store/hooks';
 import { isNavLinkActive } from '@/store/slices/navigationSlice';

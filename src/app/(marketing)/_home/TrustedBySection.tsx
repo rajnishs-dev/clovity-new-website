@@ -13,7 +13,7 @@ import {
   SUBHEADING_CLASS,
 } from '@/components/ui/Typography';
 import { TRUSTED_BY_CONTENT } from '@/constants/home';
-import { ClientMarquee, HOME_LOGO_PILL_CLASS } from './ClientMarquee';
+import { ClientMarquee, HOME_LOGO_PILL_CLASS } from '@/components/common/ClientMarquee';
 
 /**
  * Section 2 - Trusted By: intro copy, three customer-story cards, logo marquee.

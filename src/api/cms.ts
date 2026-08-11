@@ -1,5 +1,5 @@
 import axios, { type AxiosInstance } from 'axios';
-import { env } from '@/config/env';
+import { env } from '@/constants/env';
 import type {
   BadgeGroup,
   BlogPost,

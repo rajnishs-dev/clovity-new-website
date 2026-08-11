@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
-import { env } from '@/config/env';
-import { siteConfig } from '@/config/site';
+import { env } from '@/constants/env';
+import { siteConfig } from '@/constants/site';
 import type { SeoInput } from '@/types/seo';
 
 /** Turn a `/`-rooted path into an absolute URL on the canonical origin. */

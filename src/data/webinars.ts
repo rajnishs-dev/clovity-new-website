@@ -1,8 +1,8 @@
 import { cache } from 'react';
-import { ROUTES } from '@/config/routes';
+import { ROUTES } from '@/constants/routes';
 import type { WebinarItem } from '@/types/content';
 import { getWebinarBySlug, getWebinars, withCmsFallback } from '@/api/cms';
-import { prerenderableSlugs } from '@/utils/slug';
+import { prerenderableSlugs } from '@/lib/slug';
 import { CDN } from '@/constants/media';
 
 /**

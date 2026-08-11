@@ -4,7 +4,7 @@ import { chipClass } from '@/components/ui/Chip';
 import { Container } from '@/components/ui/Container';
 import { Icon } from '@/components/ui/Icon';
 import { SmartLink } from '@/components/ui/Link';
-import { ROUTES } from '@/config/routes';
+import { ROUTES } from '@/constants/routes';
 import { buildMetadata } from '@/lib/seo';
 
 /**

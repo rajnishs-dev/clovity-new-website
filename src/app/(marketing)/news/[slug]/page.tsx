@@ -2,8 +2,8 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { buildMetadata } from '@/lib/seo';
 import { articleSchema } from '@/lib/schema';
-import { ROUTES } from '@/config/routes';
-import { siteConfig } from '@/config/site';
+import { ROUTES } from '@/constants/routes';
+import { siteConfig } from '@/constants/site';
 import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
 import { FinalCta } from '@/components/common/CTA';
@@ -15,14 +15,14 @@ import {
   RelatedGrid,
   ResourceSidebar,
   ShareRow, } from '@/components/common/Resources';
-import { formatLongDate } from '@/utils/format';
-import { resolveImageSrc } from '@/utils/image';
+import { formatLongDate } from '@/lib/format';
+import { resolveImageSrc } from '@/lib/image';
 import {
   getNewsItemBySlug,
   getNewsItems,
   getNewsSlugs,
   getOtherNewsItems,
-} from '@/features/news/data';
+} from '@/data/news';
 
 export const revalidate = 3600;
 

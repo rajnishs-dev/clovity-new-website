@@ -1,8 +1,8 @@
 import { cache } from 'react';
-import { ROUTES } from '@/config/routes';
+import { ROUTES } from '@/constants/routes';
 import type { BlogPost } from '@/types/content';
 import { getBlogBySlug, getBlogs, withCmsFallback } from '@/api/cms';
-import { prerenderableSlugs } from '@/utils/slug';
+import { prerenderableSlugs } from '@/lib/slug';
 import { cardPartnerAward, cardTeam26, CDN } from '@/constants/media';
 
 /**

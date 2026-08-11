@@ -2,7 +2,7 @@
 
 import { useRef, useState } from 'react';
 import { cn } from '@/lib/cn';
-import { HEADER_CTA } from '@/config/navigation';
+import { HEADER_CTA } from '@/constants/navigation';
 import { useHeaderScroll } from '@/hooks/useHeaderScroll';
 import { ArrowIcon } from '@/components/ui/Icon';
 import { buttonClass } from '@/components/ui/Button';

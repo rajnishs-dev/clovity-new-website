@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import { buildMetadata } from '@/lib/seo';
-import { ROUTES } from '@/config/routes';
+import { ROUTES } from '@/constants/routes';
 import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
 import { FinalCta } from '@/components/common/CTA';
@@ -16,9 +16,9 @@ import {
   SplitMediaCta, } from '@/components/common/Resources';
 import { Icon } from '@/components/ui/Icon';
 import { Section, SectionHeader } from '@/components/ui/Section';
-import { formatContentDate } from '@/utils/format';
-import { getCaseStudyItems } from '@/features/case-study/data';
-import { resolveCategoryMeta } from '@/features/case-study/categoryMeta';
+import { formatContentDate } from '@/lib/format';
+import { getCaseStudyItems } from '@/data/case-study';
+import { resolveCategoryMeta } from './categoryMeta';
 
 export const metadata: Metadata = buildMetadata({
   title: 'Case Studies - Atlassian & AI Transformations',

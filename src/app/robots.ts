@@ -1,6 +1,6 @@
 import type { MetadataRoute } from 'next';
-import { env } from '@/config/env';
-import { siteConfig } from '@/config/site';
+import { env } from '@/constants/env';
+import { siteConfig } from '@/constants/site';
 
 /**
  * robots.txt, generated rather than hand-maintained so the sitemap URL can never

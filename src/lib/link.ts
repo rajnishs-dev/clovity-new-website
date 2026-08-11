@@ -1,5 +1,5 @@
-import { isAppRoute } from '@/config/routes';
-import { siteConfig } from '@/config/site';
+import { isAppRoute } from '@/constants/routes';
+import { siteConfig } from '@/constants/site';
 
 /**
  * Link classification. Every anchor in the app runs through this so the choice

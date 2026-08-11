@@ -15,9 +15,9 @@ import type { Metadata, Viewport } from 'next';
  */
 import '@/styles/globals.css';
 
-import { spaceGrotesk } from '@/config/fonts';
-import { siteConfig } from '@/config/site';
-import { env } from '@/config/env';
+import { spaceGrotesk } from '@/constants/fonts';
+import { siteConfig } from '@/constants/site';
+import { env } from '@/constants/env';
 import { organizationSchema, websiteSchema } from '@/lib/schema';
 import { JsonLd } from '@/components/common/JsonLd';
 import { StoreProvider } from '@/store/provider';

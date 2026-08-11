@@ -16,7 +16,7 @@
 import type { Metadata } from 'next';
 import { buildMetadata } from '@/lib/seo';
 import { breadcrumbSchema } from '@/lib/schema';
-import { ROUTES } from '@/config/routes';
+import { ROUTES } from '@/constants/routes';
 import { Footer } from '@/components/layout/Footer';
 import { Header } from '@/components/layout/Header';
 import { ButtonLink } from '@/components/ui/Button';
@@ -29,16 +29,14 @@ import {
   PageAnimations,
   PageHero,
 } from '@/components/common';
-import {
-  BenefitsSection,
-  CultureSection,
-  FaqSection,
-  HiringProcessSection,
-  OpenPositionsSection,
-  StatsSection,
-  WhySection,
-} from '@/features/careers/components';
-import { getCareersPageData } from '@/features/careers/data';
+import { BenefitsSection } from './BenefitsSection';
+import { CultureSection } from './CultureSection';
+import { FaqSection } from './FaqSection';
+import { HiringProcessSection } from './HiringProcessSection';
+import { OpenPositionsSection } from './OpenPositionsSection';
+import { StatsSection } from './StatsSection';
+import { WhySection } from './WhySection';
+import { getCareersPageData } from '@/data/careers';
 import {
   CAREERS_FINAL_CTA,
   CAREERS_FINAL_CTA_LINKS,

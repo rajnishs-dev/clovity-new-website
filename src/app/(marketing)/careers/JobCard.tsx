@@ -2,7 +2,7 @@
 
 import { useEffect, useId, useRef, useState, type ReactNode } from 'react';
 import { cn } from '@/lib/cn';
-import { richTextToPlainText, truncate } from '@/utils/format';
+import { richTextToPlainText, truncate } from '@/lib/format';
 import type { JobOpening } from '@/types/content';
 import { ArrowIcon, Icon } from '@/components/ui/Icon';
 import { ButtonLink } from '@/components/ui/Button';

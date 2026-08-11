@@ -1,6 +1,6 @@
 import { Fragment, type ReactNode } from 'react';
 import { cn } from '@/lib/cn';
-import { decodeHtmlEntities } from '@/utils/format';
+import { decodeHtmlEntities } from '@/lib/format';
 
 /**
  * Renders a CMS rich-text field as React elements.

@@ -1,9 +1,9 @@
 import type { ClientLogo } from '@/types/content';
 import { Container, GradientText, SectionHeader } from '@/components/ui';
-// Imported from the module, not `features/home/components` — that barrel re-exports
-// every home section, and pulling it in here would drag the hero, the Pulse AI
-// canvas and the GSAP timeline into this page's bundle for one marquee.
-import { ClientMarquee } from '@/features/home/components/ClientMarquee';
+// The marquee lives in `components/common` precisely because two pages render it.
+// It used to sit with the home sections, which meant importing it here reached into
+// that page's folder for one component.
+import { ClientMarquee } from '@/components/common/ClientMarquee';
 import { ABOUT_TRUSTED_CONTENT } from '@/constants/about';
 
 /**
@@ -16,9 +16,9 @@ import { ABOUT_TRUSTED_CONTENT } from '@/constants/about';
  *    .logo-pill` override that only the home page's stylesheet declares
  *  • no customer-story cards; this page shows the marquee alone
  *
- * `ClientMarquee` is imported from `features/home` rather than copied. It is the
- * same 23 logos from the same CDN, and duplicating it would mean two components to
- * keep in step every time the logo set changes.
+ * `ClientMarquee` is shared rather than copied. It is the same 23 logos from the same
+ * CDN, and duplicating it would mean two components to keep in step every time the
+ * logo set changes.
  *
  * Not a `<Section>` because the marquee has to be full-bleed while the header stays
  * inside the 1280px track — one padding value cannot do both.

@@ -1,13 +1,13 @@
 import type { Metadata } from 'next';
 import { buildMetadata } from '@/lib/seo';
-import { ROUTES } from '@/config/routes';
+import { ROUTES } from '@/constants/routes';
 import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
 import { FinalCta } from '@/components/common/CTA';
 import {
   RevealScope, RESOURCE_CTA_LINKS, ResourceCard, ResourceHero } from '@/components/common/Resources';
 import { SectionHeader } from '@/components/ui/Section';
-import { getWebinarItems } from '@/features/webinars/data';
+import { getWebinarItems } from '@/data/webinars';
 
 export const metadata: Metadata = buildMetadata({
   title: 'Webinars - On-Demand Atlassian & Cloud Sessions',

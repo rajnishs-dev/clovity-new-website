@@ -8,27 +8,25 @@
  */
 import type { Metadata } from 'next';
 import { buildMetadata } from '@/lib/seo';
-import { ROUTES } from '@/config/routes';
-import { siteConfig } from '@/config/site';
+import { ROUTES } from '@/constants/routes';
+import { siteConfig } from '@/constants/site';
 import { Footer } from '@/components/layout/Footer';
 import { Header } from '@/components/layout/Header';
 import { FinalCta } from '@/components/common/CTA';
-import {
-  AiDeliverySection,
-  CloudMigrationSection,
-  CredentialsSection,
-  FieldNotesSection,
-  ForwardDeployedSection,
-  HeroSection,
-  HomeAnimations,
-  MarketplaceSection,
-  PublicSectorSection,
-  PulseAiSection,
-  ResultsSection,
-  SvgGradientDefs,
-  TrustedBySection,
-} from '@/features/home/components';
-import { getHomePageData } from '@/features/home/data';
+import { AiDeliverySection } from './_home/AiDeliverySection';
+import { CloudMigrationSection } from './_home/CloudMigrationSection';
+import { CredentialsSection } from './_home/CredentialsSection';
+import { FieldNotesSection } from './_home/FieldNotesSection';
+import { ForwardDeployedSection } from './_home/ForwardDeployedSection';
+import { HeroSection } from './_home/HeroSection';
+import { HomeAnimations } from './_home/HomeAnimations';
+import { MarketplaceSection } from './_home/MarketplaceSection';
+import { PublicSectorSection } from './_home/PublicSectorSection';
+import { PulseAiSection } from './_home/PulseAiSection';
+import { ResultsSection } from './_home/ResultsSection';
+import { SvgGradientDefs } from './_home/SvgGradientDefs';
+import { TrustedBySection } from './_home/TrustedBySection';
+import { getHomePageData } from '@/data/home';
 import {
   AGC_STEPS,
   AI_DELIVERY_CAPABILITIES,
@@ -57,7 +55,7 @@ export const metadata: Metadata = buildMetadata({
  * Static by default. Nothing on this page is per-request, so it prerenders at
  * build time and is served from the edge cache. Once the CMS is live, changing
  * this to `export const revalidate = 300` (or wiring the on-demand webhook) is
- * the only edit needed - the data layer in features/home/data.ts already fetches
+ * the only edit needed - the data layer in data/home.ts already fetches
  * through the API-with-fallback seam.
  */
 export default async function HomePage() {

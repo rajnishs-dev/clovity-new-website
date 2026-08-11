@@ -44,7 +44,7 @@ const publicSchema = z.object({
    * ⚠ THE STRAPI TOKEN IS DELIBERATELY NOT READ HERE.
    *
    * Anything this file touches gets inlined into the CLIENT bundle, because
-   * `config/site.ts` and `store/index.ts` import it and both reach client
+   * `constants/site.ts` and `store/index.ts` import it and both reach client
    * components. Reading `process.env.NEXT_PUBLIC_CMS_API_TOKEN` here put a
    * write-capable Strapi token into a public JS chunk — verified by grepping the
    * built chunks for it. Next inlines `NEXT_PUBLIC_*` as a build-time text

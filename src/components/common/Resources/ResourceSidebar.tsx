@@ -1,6 +1,6 @@
 import { cn } from '@/lib/cn';
 import type { ContentItem } from '@/types/content';
-import { formatContentDate } from '@/utils/format';
+import { formatContentDate } from '@/lib/format';
 import { CoverImage } from '@/components/ui/Image';
 import { SmartLink } from '@/components/ui/Link';
 import { Search } from '@/components/common/Search';

@@ -3,7 +3,7 @@
 import { useEffect, useId, useRef, type ReactNode } from 'react';
 import { cn } from '@/lib/cn';
 import { useLockBodyScroll } from '@/hooks/useLockBodyScroll';
-import { createFocusTrap, getFocusableElements } from '@/utils/a11y';
+import { createFocusTrap, getFocusableElements } from '@/lib/a11y';
 
 /**
  * Slide-in panel. The mobile navigation is built on this.

@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import { buildMetadata } from '@/lib/seo';
-import { ROUTES } from '@/config/routes';
+import { ROUTES } from '@/constants/routes';
 import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
 import { FinalCta } from '@/components/common/CTA';
@@ -11,8 +11,8 @@ import {
   ResourceCard,
   ResourceHero,
   ResourceSidebar, } from '@/components/common/Resources';
-import { formatContentDate } from '@/utils/format';
-import { getNewsItems } from '@/features/news/data';
+import { formatContentDate } from '@/lib/format';
+import { getNewsItems } from '@/data/news';
 
 export const metadata: Metadata = buildMetadata({
   title: 'News - Company Updates & Press Releases',

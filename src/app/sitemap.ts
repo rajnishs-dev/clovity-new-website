@@ -1,12 +1,12 @@
 import type { MetadataRoute } from 'next';
-import { SITEMAP_ROUTES } from '@/config/routes';
-import { siteConfig } from '@/config/site';
+import { SITEMAP_ROUTES } from '@/constants/routes';
+import { siteConfig } from '@/constants/site';
 import type { ContentBase } from '@/types/content';
-import { getBlogPosts } from '@/features/blog/data';
-import { getCaseStudyItems } from '@/features/case-study/data';
-import { getEventItems } from '@/features/events/data';
-import { getNewsItems } from '@/features/news/data';
-import { getWebinarItems } from '@/features/webinars/data';
+import { getBlogPosts } from '@/data/blog';
+import { getCaseStudyItems } from '@/data/case-study';
+import { getEventItems } from '@/data/events';
+import { getNewsItems } from '@/data/news';
+import { getWebinarItems } from '@/data/webinars';
 
 /**
  * XML sitemap.

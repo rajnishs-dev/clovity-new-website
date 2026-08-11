@@ -1,8 +1,8 @@
 import { timingSafeEqual } from 'node:crypto';
 import { revalidatePath } from 'next/cache';
 import { NextResponse } from 'next/server';
-import { serverEnv } from '@/config/env';
-import { ROUTES } from '@/config/routes';
+import { serverEnv } from '@/constants/env';
+import { ROUTES } from '@/constants/routes';
 
 /**
  * On-demand revalidation webhook for `clovity-admin` (Strapi).

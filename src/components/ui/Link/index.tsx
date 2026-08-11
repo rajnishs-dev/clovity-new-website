@@ -8,7 +8,7 @@ import {
   isInternalHref,
   isProtocolHref,
   toRoutablePath,
-} from '@/utils/link';
+} from '@/lib/link';
 
 /**
  * The only anchor in the app.

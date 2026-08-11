@@ -2,8 +2,8 @@
 
 import { useEffect, useId, useRef, useState } from 'react';
 import { cn } from '@/lib/cn';
-import { HEADER_CTA, PRIMARY_NAV } from '@/config/navigation';
-import { ROUTES } from '@/config/routes';
+import { HEADER_CTA, PRIMARY_NAV } from '@/constants/navigation';
+import { ROUTES } from '@/constants/routes';
 import { useLockBodyScroll } from '@/hooks/useLockBodyScroll';
 import { useAppSelector } from '@/store/hooks';
 import { isNavLinkActive } from '@/store/slices/navigationSlice';
@@ -12,7 +12,7 @@ import { ArrowIcon, ExternalIcon, Icon } from '@/components/ui/Icon';
 import { buttonClass } from '@/components/ui/Button';
 import { SmartLink } from '@/components/ui/Link';
 import { Logo } from '@/components/common/Logo';
-import { createFocusTrap, getFocusableElements } from '@/utils/a11y';
+import { createFocusTrap, getFocusableElements } from '@/lib/a11y';
 
 /**
  * Mobile navigation drawer, as Tailwind utilities.
