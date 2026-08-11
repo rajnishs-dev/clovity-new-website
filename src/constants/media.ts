@@ -45,6 +45,12 @@ export { default as dataCenterBg } from '@/assets/images/home/data-center-bg.jpg
 export { default as publicSectorBg } from '@/assets/images/home/public-sector-bg.png';
 export { default as aiPoweredSummary } from '@/assets/images/home/ai-powered-summary.jpg';
 
+/* ── Resource hero banners ───────────────────────────────────────────────── */
+export { default as blogHeroBanner } from '@/assets/images/resources/blog-banner.png';
+export { default as blogHeroBannerTablet } from '@/assets/images/resources/blog-banner-Tab.png';
+export { default as blogHeroBannerMobile } from '@/assets/images/resources/blog-banner-mob.png';
+export { default as caseStudyHeroBanner } from '@/assets/images/resources/case-study-banner.png';
+
 /* ── Marketplace app logos ──────────────────────────────────────────────── */
 export { default as appTimeTracking } from '@/assets/images/mp-time-tracking-logo.png';
 export { default as appContentFormatting } from '@/assets/images/mp-content-formatting-logo.png';

@@ -13,6 +13,11 @@ import {
   ResourceSidebar, } from '@/components/common/Resources';
 import { formatContentDate } from '@/utils/format';
 import { getBlogPosts } from '@/features/blog/data';
+import {
+  blogHeroBanner,
+  blogHeroBannerTablet,
+  blogHeroBannerMobile,
+} from '@/constants/media';
 
 export const metadata: Metadata = buildMetadata({
   title: 'Blog - Atlassian, AI & Cloud Insights',
@@ -55,7 +60,9 @@ export default async function BlogPage() {
             </>
           }
           subheading="Discover fresh perspectives and powerful ideas that spark innovation and drive success daily."
-          image={`https://images.unsplash.com/photo-1497032628192-86f99bcd76bc?auto=format&fit=crop&w=1800&q=80`}
+          image={blogHeroBanner}
+          imageTablet={blogHeroBannerTablet}
+          imageMobile={blogHeroBannerMobile}
         />
 
         <section className="bg-[#f8fafc] pt-14 pb-[240px] sm:pt-20">
@@ -95,8 +102,8 @@ export default async function BlogPage() {
                     />
                   )),
                 ].filter(Boolean)}
-                initialCount={5}
-                step={4}
+                initialCount={10}
+                step={10}
                 gridClassName="grid grid-cols-1 gap-6 sm:grid-cols-2"
                 loadMoreLabel="Load More Articles"
               />

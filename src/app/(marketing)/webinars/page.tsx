@@ -5,7 +5,12 @@ import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
 import { FinalCta } from '@/components/common/CTA';
 import {
-  RevealScope, RESOURCE_CTA_LINKS, ResourceCard, ResourceHero } from '@/components/common/Resources';
+  RevealScope,
+  LoadMoreGrid,
+  RESOURCE_CTA_LINKS,
+  ResourceCard,
+  ResourceHero,
+} from '@/components/common/Resources';
 import { SectionHeader } from '@/components/ui/Section';
 import { getWebinarItems } from '@/features/webinars/data';
 
@@ -51,8 +56,8 @@ export default async function WebinarsPage() {
               className="mb-10"
             />
 
-            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-              {webinars.map((webinar) => (
+            <LoadMoreGrid
+              items={webinars.map((webinar) => (
                 <ResourceCard
                   key={webinar.id}
                   href={webinar.href}
@@ -64,7 +69,11 @@ export default async function WebinarsPage() {
                   ctaLabel="Get Recording"
                 />
               ))}
-            </div>
+              initialCount={10}
+              step={10}
+              gridClassName="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3"
+              loadMoreLabel="Load More Webinars"
+            />
           </div>
         </section>
 

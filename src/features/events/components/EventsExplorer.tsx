@@ -6,6 +6,7 @@ import { Icon } from '@/components/ui/Icon';
 import {
   CategoryPill,
   FeaturedResourceCard,
+  LoadMoreGrid,
   MetaItem,
   ResourceCard,
 } from '@/components/common/Resources';
@@ -129,63 +130,73 @@ export function EventsExplorer({ items }: { items: EventItem[] }) {
       </div>
 
       {filtered.length > 0 ? (
-        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {featured ? (
-            <FeaturedResourceCard
-              href={featured.href}
-              external={featured.external}
-              image={featured.image}
-              ribbon="Most Recent"
-              title={featured.title}
-              excerpt={featured.excerpt}
-              ctaLabel="View Event Recap"
-              className="lg:col-span-3 lg:grid-cols-[0.55fr_1fr]"
-              meta={
-                <>
-                  {/* No pill rather than a wrong one: an uncategorised CMS event used to
-                      fall through to the "Government Tour" label, which mislabels an
-                      industry conference on the page's most prominent card. */}
-                  {featured.category ? (
-                    <CategoryPill
-                      label={CATEGORY_META[featured.category].label}
-                      icon={CATEGORY_META[featured.category].icon}
-                      tone={CATEGORY_META[featured.category].tone}
-                    />
-                  ) : null}
-                  <div className="mb-2 flex flex-wrap gap-4">
-                    <MetaItem icon="calendar-days">
-                      {new Date(featured.startsAt ?? featured.publishedAt).toLocaleDateString(
-                        'en-US',
-                        { day: '2-digit', month: 'short', year: 'numeric', timeZone: 'UTC' },
-                      )}
-                    </MetaItem>
-                    {featured.location ? (
-                      <MetaItem icon="map-pin">{featured.location}</MetaItem>
+        <LoadMoreGrid
+          // Remounts (resetting the revealed count) whenever the filters change, so
+          // narrowing to a shorter list can't leave it stuck mid-way through the
+          // previous, longer one.
+          key={`${category}-${status}-${query}`}
+          items={[
+            featured ? (
+              <FeaturedResourceCard
+                key={featured.id}
+                href={featured.href}
+                external={featured.external}
+                image={featured.image}
+                ribbon="Most Recent"
+                title={featured.title}
+                excerpt={featured.excerpt}
+                ctaLabel="View Event Recap"
+                className="lg:col-span-3 lg:grid-cols-[0.55fr_1fr]"
+                meta={
+                  <>
+                    {/* No pill rather than a wrong one: an uncategorised CMS event used to
+                        fall through to the "Government Tour" label, which mislabels an
+                        industry conference on the page's most prominent card. */}
+                    {featured.category ? (
+                      <CategoryPill
+                        label={CATEGORY_META[featured.category].label}
+                        icon={CATEGORY_META[featured.category].icon}
+                        tone={CATEGORY_META[featured.category].tone}
+                      />
                     ) : null}
-                  </div>
-                </>
-              }
-            />
-          ) : null}
-
-          {rest.map((event) => (
-            <ResourceCard
-              key={event.id}
-              href={event.href}
-              external={event.external}
-              image={event.image}
-              title={event.title}
-              excerpt={event.excerpt}
-              publishedAt={event.startsAt ?? event.publishedAt}
-              ctaLabel="View Recap"
-              meta={
-                event.location ? (
-                  <MetaItem icon="map-pin">{event.location}</MetaItem>
-                ) : undefined
-              }
-            />
-          ))}
-        </div>
+                    <div className="mb-2 flex flex-wrap gap-4">
+                      <MetaItem icon="calendar-days">
+                        {new Date(featured.startsAt ?? featured.publishedAt).toLocaleDateString(
+                          'en-US',
+                          { day: '2-digit', month: 'short', year: 'numeric', timeZone: 'UTC' },
+                        )}
+                      </MetaItem>
+                      {featured.location ? (
+                        <MetaItem icon="map-pin">{featured.location}</MetaItem>
+                      ) : null}
+                    </div>
+                  </>
+                }
+              />
+            ) : null,
+            ...rest.map((event) => (
+              <ResourceCard
+                key={event.id}
+                href={event.href}
+                external={event.external}
+                image={event.image}
+                title={event.title}
+                excerpt={event.excerpt}
+                publishedAt={event.startsAt ?? event.publishedAt}
+                ctaLabel="View Recap"
+                meta={
+                  event.location ? (
+                    <MetaItem icon="map-pin">{event.location}</MetaItem>
+                  ) : undefined
+                }
+              />
+            )),
+          ].filter(Boolean)}
+          initialCount={10}
+          step={10}
+          gridClassName="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3"
+          loadMoreLabel="Load More Events"
+        />
       ) : null}
 
       {filtered.length === 0 ? (

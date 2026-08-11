@@ -87,8 +87,8 @@ export default async function NewsPage() {
                     />
                   )),
                 ].filter(Boolean)}
-                initialCount={5}
-                step={4}
+                initialCount={10}
+                step={10}
                 gridClassName="grid grid-cols-1 gap-6 sm:grid-cols-2"
                 loadMoreLabel="Load More Articles"
               />
