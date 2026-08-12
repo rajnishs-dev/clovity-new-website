@@ -12,6 +12,7 @@ import {
 import { buttonClass } from '@/components/ui/Button';
 import { SmartLink } from '@/components/ui/Link';
 import { Select, type SelectOption } from '@/components/ui/Select';
+import { useEventItems } from '@/api/cms.hooks';
 import { formatContentDate } from '@/lib/format';
 import { ROUTES } from '@/constants/routes';
 
@@ -53,7 +54,15 @@ function eventStatus(item: EventItem): 'upcoming' | 'past' {
   return new Date(date).getTime() >= Date.now() ? 'upcoming' : 'past';
 }
 
-export function EventsExplorer({ items }: { items: EventItem[] }) {
+export function EventsExplorer({ items: initialItems }: { items: EventItem[] }) {
+  /**
+   * FETCHED TWICE, on purpose. `initialItems` comes from the page's server-side fetch, so
+   * the events are in the HTML for crawlers; this refetches in the browser, which puts
+   * `GET https://cms.clovity.com/api/events` in the Network tab and picks up a publish
+   * without waiting out the revalidate window. A failed refetch keeps what is on screen.
+   */
+  const { data: items } = useEventItems(initialItems);
+
   const [category, setCategory] = useState<CategoryFilter>('all');
   const [status, setStatus] = useState<StatusFilter>('all');
   const [query, setQuery] = useState('');

@@ -5,20 +5,15 @@ import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
 import { FinalCta } from '@/components/common/CTA';
 import {
-  RevealScope, CategoryPill,
-  FeaturedResourceCard,
-  LoadMoreGrid,
-  MetaItem,
+  RevealScope,
   RESOURCE_CTA_LINKS,
-  ResourceCard,
   ResourceHero,
-  ResourceSidebar,
-  SplitMediaCta, } from '@/components/common/Resources';
+  SplitMediaCta,
+} from '@/components/common/Resources';
 import { Icon } from '@/components/ui/Icon';
 import { Section, SectionHeader } from '@/components/ui/Section';
-import { formatContentDate } from '@/lib/format';
 import { getCaseStudyItems } from '@/data/case-study';
-import { resolveCategoryMeta } from './categoryMeta';
+import { CaseStudyList } from './CaseStudyList';
 
 export const metadata: Metadata = buildMetadata({
   title: 'Case Studies - Atlassian & AI Transformations',
@@ -38,8 +33,6 @@ export const revalidate = 3600;
 
 export default async function CaseStudyPage() {
   const caseStudies = await getCaseStudyItems();
-  const [featured, ...rest] = caseStudies;
-  const topCaseStudies = caseStudies;
 
   return (
     <>
@@ -63,80 +56,7 @@ export default async function CaseStudyPage() {
         />
 
         <section className="bg-white py-14 sm:py-20">
-          <div className="mx-auto grid max-w-shell grid-cols-1 gap-10 px-6 lg:grid-cols-[1fr_340px]">
-            <div className="min-w-0">
-              <LoadMoreGrid
-                items={[
-                  featured ? (
-                    <FeaturedResourceCard
-                      key={featured.id}
-                      href={featured.href}
-                      external={featured.external}
-                      image={featured.image}
-                      ribbon="Featured"
-                      title={featured.title}
-                      excerpt={featured.excerpt}
-                      ctaLabel="Read Case Study"
-                      meta={
-                        <>
-                          <CategoryPill
-                            label={featured.category ?? 'Case Study'}
-                            icon={resolveCategoryMeta(featured.category).icon}
-                            tone={resolveCategoryMeta(featured.category).tone}
-                          />
-                          <div className="mb-2 flex flex-wrap gap-4">
-                            <MetaItem icon="calendar-days">
-                              {formatContentDate(featured.publishedAt)}
-                            </MetaItem>
-                            {featured.client ? (
-                              <MetaItem icon="building">
-                                {featured.client}
-                                {featured.industry ? ` · ${featured.industry}` : ''}
-                              </MetaItem>
-                            ) : null}
-                          </div>
-                        </>
-                      }
-                      className="lg:col-span-2"
-                    />
-                  ) : null,
-                  ...rest.map((item) => (
-                    <ResourceCard
-                      key={item.id}
-                      href={item.href}
-                      external={item.external}
-                      image={item.image}
-                      title={item.title}
-                      excerpt={item.excerpt}
-                      publishedAt={item.publishedAt}
-                      ctaLabel="Read Case Study"
-                      meta={
-                        item.client ? (
-                          <div className="mb-2">
-                            <MetaItem icon="building">
-                              {item.client}
-                              {item.industry ? ` · ${item.industry}` : ''}
-                            </MetaItem>
-                          </div>
-                        ) : undefined
-                      }
-                    />
-                  )),
-                ].filter(Boolean)}
-                initialCount={3}
-                step={2}
-                gridClassName="grid grid-cols-1 gap-6 sm:grid-cols-2"
-                loadMoreLabel="Load More Case Studies"
-              />
-            </div>
-
-            <ResourceSidebar
-              searchPlaceholder="Search case studies…"
-              topLabel="Top Case Studies"
-              items={topCaseStudies}
-              className="lg:sticky lg:top-[110px]"
-            />
-          </div>
+          <CaseStudyList initialItems={caseStudies} />
         </section>
 
         <Section className="bg-[#eaf8ff]">

@@ -5,14 +5,12 @@ import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
 import { FinalCta } from '@/components/common/CTA';
 import {
-  RevealScope, FeaturedResourceCard,
-  LoadMoreGrid,
+  RevealScope,
   RESOURCE_CTA_LINKS,
-  ResourceCard,
   ResourceHero,
-  ResourceSidebar, } from '@/components/common/Resources';
-import { formatContentDate } from '@/lib/format';
+} from '@/components/common/Resources';
 import { getBlogPosts } from '@/data/blog';
+import { BlogList } from './BlogList';
 
 export const metadata: Metadata = buildMetadata({
   title: 'Blog - Atlassian, AI & Cloud Insights',
@@ -21,21 +19,19 @@ export const metadata: Metadata = buildMetadata({
   path: ROUTES.resources.blog,
 });
 
-/**
- * Safety net under the Strapi webhook.
- *
- * `POST /api/revalidate` is what makes a publish appear immediately; this hour is what
- * covers the webhook being misconfigured, blocked or silently failing. Matches the
- * window `/contact` already uses.
- */
+/** Safety net under the Strapi webhook - see the note in `/api/revalidate`. */
 export const revalidate = 3600;
 
+/**
+ * `/blog`.
+ *
+ * The page fetches the posts on the SERVER and hands them to `<BlogList>`, which refetches
+ * in the browser. That split is what gives both things at once: the posts are in the HTML
+ * for crawlers, and the CMS request is visible in a visitor's Network tab. See the note in
+ * `BlogList` for why neither half is redundant.
+ */
 export default async function BlogPage() {
   const posts = await getBlogPosts();
-  const [featured, ...rest] = posts;
-  // Same list as the grid, so the sidebar can never advertise a post the page does not
-  // have — which is exactly what happened while this read the bundled content instead.
-  const topPosts = posts.slice(0, 4);
 
   return (
     <>
@@ -59,56 +55,7 @@ export default async function BlogPage() {
         />
 
         <section className="bg-[#f8fafc] pt-14 pb-[240px] sm:pt-20">
-          <div className="mx-auto grid max-w-shell grid-cols-1 gap-10 px-6 lg:grid-cols-[1fr_340px]">
-            <div className="min-w-0">
-              <LoadMoreGrid
-                items={[
-                  featured ? (
-                    <FeaturedResourceCard
-                      key={featured.id}
-                      href={featured.href}
-                      external={featured.external}
-                      image={featured.image}
-                      title={featured.title}
-                      excerpt={featured.excerpt}
-                      ctaLabel="Read Full Article"
-                      meta={
-                        <time
-                          dateTime={featured.publishedAt}
-                          className="mb-3 block text-[12.5px] font-700 text-black"
-                        >
-                          {formatContentDate(featured.publishedAt)}
-                        </time>
-                      }
-                      className="lg:col-span-2"
-                    />
-                  ) : null,
-                  ...rest.map((post) => (
-                    <ResourceCard
-                      key={post.id}
-                      href={post.href}
-                      external={post.external}
-                      image={post.image}
-                      title={post.title}
-                      excerpt={post.excerpt}
-                      publishedAt={post.publishedAt}
-                    />
-                  )),
-                ].filter(Boolean)}
-                initialCount={5}
-                step={4}
-                gridClassName="grid grid-cols-1 gap-6 sm:grid-cols-2"
-                loadMoreLabel="Load More Articles"
-              />
-            </div>
-
-            <ResourceSidebar
-              searchPlaceholder="Search articles…"
-              topLabel="Top Blogs"
-              items={topPosts}
-              className="lg:sticky lg:top-[110px]"
-            />
-          </div>
+          <BlogList initialPosts={posts} />
         </section>
 
         <FinalCta

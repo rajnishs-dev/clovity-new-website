@@ -6,6 +6,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { cn } from '@/lib/cn';
 import { buildEnquirySchema, type EnquiryFormValues } from '@/lib/validation';
 import type { ContactFormConfig } from '@/types/content';
+import { isCmsConfigured, postEnquiry } from '@/api/cms';
 import { useInTouch } from '@/api/cms.hooks';
 import { Icon } from '@/components/ui/Icon';
 import { buttonClass } from '@/components/ui/Button';
@@ -14,7 +15,6 @@ import {
   CONTACT_FORM_SLUG,
   CONTACT_TOPICS,
 } from '@/constants/contact';
-import { submitEnquiryAction } from './actions';
 
 /**
  * The contact form card.
@@ -36,8 +36,8 @@ import { submitEnquiryAction } from './actions';
  * full, and with all four shown it produces the published pairing exactly:
  * name + email, then company + phone.
  *
- * The submit goes through a Server Action, so the Strapi write token stays on the
- * server — see `../actions.ts`.
+ * The submit POSTs to Strapi FROM THE BROWSER, so the request is visible in a visitor's
+ * Network tab — see the note on `onSubmit` for what that costs.
  */
 
 /* ── Shared field styling, from `.ct-field` ─────────────────────────────── */
@@ -109,7 +109,6 @@ export function ContactForm({
   const {
     register,
     handleSubmit,
-    setError,
     formState: { errors, isSubmitting },
   } = useForm<EnquiryFormValues>({
     resolver: zodResolver(buildEnquirySchema(config)),
@@ -124,25 +123,45 @@ export function ContactForm({
     mode: 'onSubmit',
   });
 
+  /**
+   * A BROWSER-SIDE write, so the request shows up in a visitor's Network tab as
+   * `POST https://cms.clovity.com/api/contact-uses` (plus the `get-in-touch-lead` row).
+   *
+   * TWO THINGS THE SERVER ACTION USED TO DO that cannot be done from here, and are worth
+   * knowing rather than discovering:
+   *  • It re-validated against the `get-in-touch` config it fetched ITSELF, so a caller
+   *    could not relax the field rules by asking. Here the rules come from `config`,
+   *    which arrives as a prop - a hand-crafted POST bypasses them entirely.
+   *  • It kept `CMS_API_TOKEN` on the server. This POST carries the public token, which
+   *    therefore needs `create` on those collections.
+   */
   const onSubmit = async (values: EnquiryFormValues) => {
     setFormError(null);
-    const result = await submitEnquiryAction(values);
 
-    if (result.ok) {
+    // No CMS configured - behave as the published page did: reveal the thank-you panel.
+    // Validation has already run, so a malformed address still gets a message.
+    if (!isCmsConfigured()) {
       setSent(true);
       return;
     }
 
-    // Field-level messages from the server take precedence over the banner, so the
-    // visitor is pointed at the input rather than told "something is wrong".
-    for (const [field, messages] of Object.entries(result.fieldErrors ?? {})) {
-      const message = messages[0];
-      if (!message) continue;
-      if (field in values) {
-        setError(field as keyof EnquiryFormValues, { message });
-      }
+    try {
+      await postEnquiry({
+        email: values.email,
+        message: values.message,
+        ...(values.fullName ? { fullName: values.fullName } : {}),
+        ...(values.company ? { company: values.company } : {}),
+        ...(values.phone ? { phone: values.phone } : {}),
+        ...(values.topic ? { topic: values.topic } : {}),
+        emailSubject: config.emailSubject,
+        ...(config.sourceId ? { sourceId: config.sourceId } : {}),
+      });
+      setSent(true);
+    } catch {
+      // Strapi's own message is never shown: it is not useful to a visitor and it would
+      // leak the collection's shape.
+      setFormError(CONTACT_FORM_CONTENT.errorFallback);
     }
-    setFormError(result.message);
   };
 
   const id = (name: string) => `${baseId}-${name}`;

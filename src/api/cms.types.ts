@@ -278,9 +278,9 @@ export interface StrapiContactUsInput {
  * comparable set of rows.
  *
  * `recordingMonth` and `recordingDocId` are BOTH `required` in the content type, so a
- * body missing either is rejected with a 400 — see the note in `registerRecordingAction`
- * about where `recordingMonth` comes from, because the field `website-t` fills it from is
- * empty on three of the four published webinars.
+ * body missing either is rejected with a 400 — see the note in `RegisterForm` about where
+ * `recordingMonth` comes from, because the field `website-t` fills it from is empty on
+ * three of the four published webinars.
  */
 export interface StrapiRecordingInput {
   firstName: string;

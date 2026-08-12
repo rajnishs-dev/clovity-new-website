@@ -9,7 +9,10 @@ import type {
   StatItem,
 } from '@/types/content';
 import { CLIENT_LOGOS } from '@/constants/clients';
-import { CONTENT_COLLECTION_TABS } from '@/constants/content';
+import {
+  CONTENT_COLLECTION_TABS,
+  FIELD_NOTES_PER_TAB,
+} from '@/constants/content';
 import {
   CREDENTIAL_ROWS,
   CUSTOMER_STORIES,
@@ -50,9 +53,6 @@ export async function getResultStats(): Promise<StatItem[]> {
 export async function getCredentialRows(): Promise<CredentialRow[]> {
   return CREDENTIAL_ROWS;
 }
-
-/** Cards per tab in the Field Notes rail. The rail shows two at a time and scrolls. */
-const FIELD_NOTES_PER_TAB = 4;
 
 /**
  * The five tabbed collections, newest first, from the CMS.

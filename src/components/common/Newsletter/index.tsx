@@ -1,10 +1,14 @@
 'use client';
 
+import { useEffect, useRef } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { newsletterSchema, type NewsletterFormValues } from '@/lib/validation';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
-import { subscribeToNewsletter } from '@/store/slices/contactSlice';
+import {
+  resetNewsletter,
+  subscribeToNewsletter,
+} from '@/store/slices/contactSlice';
 import { buttonClass } from '@/components/ui/Button';
 import { Icon } from '@/components/ui/Icon';
 
@@ -18,12 +22,17 @@ import { Icon } from '@/components/ui/Icon';
  * With the inline style gone, `focus:border-brand-600` does the job - the state,
  * the two handlers and the re-render on every focus all disappear.
  *
- * Behavioural parity while the backend is pending: the legacy handler called
- * `preventDefault()` and revealed the thank-you line. When the API is not
- * configured this does the same, so the UX is unchanged; once
- * `NEXT_PUBLIC_ENABLE_CMS=true` the same submit posts to the real endpoint. What
- * is genuinely new is validation - an invalid address now gets a message instead
- * of silent "success".
+ * WHERE THE ADDRESS GOES: `subscribeToNewsletter` posts it to Strapi's `subscribe`
+ * collection FROM THE BROWSER, so `POST https://cms.clovity.com/api/subscribes` is
+ * visible in a visitor's Network tab - the same collection and the same hop the published
+ * footer uses. With no CMS configured the thunk reports success without writing, which is
+ * what the legacy handler did (it only called `preventDefault()` and revealed the
+ * thank-you line). What is genuinely new is validation: an invalid address gets a message
+ * instead of a silent "success".
+ *
+ * The confirmation auto-clears and a validation message dismisses on click-away, both
+ * matching the published footer - see the effects below for why the first one matters more
+ * than it looks.
  */
 export interface NewsletterProps {
   /** Recorded with the subscription so signup sources can be attributed. */
@@ -44,10 +53,13 @@ export function Newsletter({
     (state) => state.contact.newsletter,
   );
 
+  const formRef = useRef<HTMLFormElement>(null);
+
   const {
     register,
     handleSubmit,
     reset,
+    clearErrors,
     formState: { errors, isSubmitting },
   } = useForm<NewsletterFormValues>({
     resolver: zodResolver(newsletterSchema),
@@ -56,8 +68,8 @@ export function Newsletter({
   });
 
   const onSubmit = async (values: NewsletterFormValues) => {
-    // The "CMS not configured" case is handled inside the Server Action, which
-    // reports success without writing — so there is no branch here.
+    // The "CMS not configured" case is handled inside the thunk, which reports success
+    // without writing — so there is no branch here.
     const result = await dispatch(
       subscribeToNewsletter({ email: values.email, source }),
     );
@@ -65,6 +77,31 @@ export function Newsletter({
       reset({ email: '', source });
     }
   };
+
+  /**
+   * The confirmation clears itself after five seconds, matching the published footer.
+   *
+   * Not cosmetic. This state lives in Redux, which survives client-side navigation and is
+   * shared by every `<Newsletter>` on the page - so without this, subscribing once left
+   * "Thank you for subscribing!" sitting under an empty input on every subsequent page,
+   * and a second copy of the form rendered the message it never sent.
+   */
+  useEffect(() => {
+    if (status !== 'succeeded') return;
+    const timer = setTimeout(() => dispatch(resetNewsletter()), 5000);
+    return () => clearTimeout(timer);
+  }, [status, dispatch]);
+
+  /** Clicking away dismisses a validation message, as the published footer does. */
+  useEffect(() => {
+    const handlePointerDown = (event: MouseEvent) => {
+      if (formRef.current && !formRef.current.contains(event.target as Node)) {
+        clearErrors();
+      }
+    };
+    document.addEventListener('mousedown', handlePointerDown);
+    return () => document.removeEventListener('mousedown', handlePointerDown);
+  }, [clearErrors]);
 
   const isBusy = isSubmitting || status === 'loading';
 
@@ -78,6 +115,7 @@ export function Newsletter({
       </p>
 
       <form
+        ref={formRef}
         className="flex flex-col gap-3"
         onSubmit={handleSubmit(onSubmit)}
         noValidate

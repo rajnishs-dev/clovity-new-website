@@ -5,14 +5,12 @@ import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
 import { FinalCta } from '@/components/common/CTA';
 import {
-  RevealScope, FeaturedResourceCard,
-  LoadMoreGrid,
+  RevealScope,
   RESOURCE_CTA_LINKS,
-  ResourceCard,
   ResourceHero,
-  ResourceSidebar, } from '@/components/common/Resources';
-import { formatContentDate } from '@/lib/format';
+} from '@/components/common/Resources';
 import { getNewsItems } from '@/data/news';
+import { NewsList } from './NewsList';
 
 export const metadata: Metadata = buildMetadata({
   title: 'News - Company Updates & Press Releases',
@@ -26,8 +24,6 @@ export const revalidate = 3600;
 
 export default async function NewsPage() {
   const items = await getNewsItems();
-  const [featured, ...rest] = items;
-  const topNews = items.slice(0, 4);
 
   return (
     <>
@@ -51,56 +47,7 @@ export default async function NewsPage() {
         />
 
         <section className="bg-[#f8fafc] pt-14 pb-[240px] sm:pt-20">
-          <div className="mx-auto grid max-w-shell grid-cols-1 gap-10 px-6 lg:grid-cols-[1fr_340px]">
-            <div className="min-w-0">
-              <LoadMoreGrid
-                items={[
-                  featured ? (
-                    <FeaturedResourceCard
-                      key={featured.id}
-                      href={featured.href}
-                      external={featured.external}
-                      image={featured.image}
-                      title={featured.title}
-                      excerpt={featured.excerpt}
-                      ctaLabel="Read Full Article"
-                      meta={
-                        <time
-                          dateTime={featured.publishedAt}
-                          className="mb-3 block text-[12.5px] font-700 text-black"
-                        >
-                          {formatContentDate(featured.publishedAt)}
-                        </time>
-                      }
-                      className="lg:col-span-2"
-                    />
-                  ) : null,
-                  ...rest.map((item) => (
-                    <ResourceCard
-                      key={item.id}
-                      href={item.href}
-                      external={item.external}
-                      image={item.image}
-                      title={item.title}
-                      excerpt={item.excerpt}
-                      publishedAt={item.publishedAt}
-                    />
-                  )),
-                ].filter(Boolean)}
-                initialCount={5}
-                step={4}
-                gridClassName="grid grid-cols-1 gap-6 sm:grid-cols-2"
-                loadMoreLabel="Load More Articles"
-              />
-            </div>
-
-            <ResourceSidebar
-              searchPlaceholder="Search news…"
-              topLabel="Top News"
-              items={topNews}
-              className="lg:sticky lg:top-[110px]"
-            />
-          </div>
+          <NewsList initialItems={items} />
         </section>
 
         <FinalCta

@@ -9,24 +9,27 @@ import {
 } from '@/lib/validation';
 import { COUNTRIES } from '@/constants/countries';
 import { buttonClass } from '@/components/ui/Button';
-import { registerRecordingAction } from './actions';
+import { isCmsConfigured, postRecordingRequest } from '@/api/cms';
 
 /**
  * "Register Now!" - the webinar recording request form, ported from the published
  * webinar page.
  *
- * SAME FORM, SAME COLLECTION: the four fields, their copy, their required-ness and the
- * `recordings` row they produce all match `website-t`'s version, so requests from either
- * site land as one comparable set of leads.
+ * SAME FORM, SAME COLLECTION, SAME HOP: the four fields, their copy, their
+ * required-ness, the `recordings` row they produce AND the browser-side POST that
+ * produces it all match `website-t`, so the request shows up in a visitor's Network tab
+ * as `POST https://cms.clovity.com/api/recordings`.
  *
- * TWO DELIBERATE DIFFERENCES from that version, both about not shipping a write token to
- * the browser and not losing a lead:
+ * WHAT THAT COSTS, stated where the code is: the POST carries
+ * `NEXT_PUBLIC_CMS_API_TOKEN`, which Next inlines into this chunk. That token therefore
+ * needs `create` on `recording` - and anyone reading the bundle can use it to write rows
+ * directly. It is the trade `website-t` already makes; the alternative was a Server
+ * Action, where the token stays on the server but the Network tab shows a POST to this
+ * page's URL instead of to Strapi.
  *
- *  • The submit goes through a Server Action (`./actions`), not a browser POST carrying
- *    `NEXT_PUBLIC_CMS_API_TOKEN`.
- *  • Success is shown IN PLACE rather than by navigating to `/success`. The visitor is
- *    mid-page on an article; throwing them to a different route to read one sentence
- *    loses their place, and this page has no other reason to navigate.
+ * ONE DIFFERENCE that is not about the hop: success is shown IN PLACE rather than by
+ * navigating to `/success`. The visitor is mid-article in a sidebar; throwing them to
+ * another route to read one sentence loses their place.
  */
 
 const FIELD_CLASS =
@@ -34,12 +37,23 @@ const FIELD_CLASS =
 
 const ERROR_CLASS = 'mt-1 block text-[12.5px] text-red-600';
 
+const GENERIC_ERROR =
+  'Something went wrong sending your request. Please try again, or email sales@clovity.com.';
+
+/** Titlecase, so "jane" and "Jane" are not two people in the admin panel's list. */
+const capitalize = (value: string): string =>
+  value.charAt(0).toUpperCase() + value.slice(1);
+
 export function RegisterForm({
-  slug,
   title,
+  docId,
+  whenLabel,
 }: {
-  slug: string;
   title: string;
+  /** The webinar's Strapi `documentId`, written to `recording.recordingDocId`. */
+  docId: string;
+  /** The session date as the CMS spells it. Fills the required `recordingMonth`. */
+  whenLabel?: string;
 }) {
   const formId = useId();
   const [sent, setSent] = useState(false);
@@ -48,7 +62,6 @@ export function RegisterForm({
   const {
     register,
     handleSubmit,
-    setError,
     formState: { errors, isSubmitting },
   } = useForm<WebinarRegistrationValues>({
     resolver: zodResolver(webinarRegistrationSchema),
@@ -63,25 +76,38 @@ export function RegisterForm({
 
   const onSubmit = async (values: WebinarRegistrationValues) => {
     setFormError(null);
-    // The session comes from the prop, not the form: nothing the visitor types decides
-    // which webinar they asked about.
-    const result = await registerRecordingAction(slug, values);
 
-    if (result.ok) {
+    /**
+     * No CMS configured - report success rather than showing a visitor an error caused by
+     * our own deployment state. Validation has already run, so a malformed address still
+     * gets a message instead of a silent "sent".
+     */
+    if (!isCmsConfigured()) {
       setSent(true);
       return;
     }
 
-    // Field-level messages from the server's own re-validation take precedence over the
-    // banner, so a rejected address lands on the address rather than above the form.
-    for (const [field, messages] of Object.entries(result.fieldErrors ?? {})) {
-      const message = messages[0];
-      if (!message) continue;
-      if (field in values) {
-        setError(field as keyof WebinarRegistrationValues, { message });
-      }
+    try {
+      /**
+       * `recordingMonth` and `recordingDocId` are BOTH required by the content type.
+       * `website-t` fills the month from the webinar's `eventHeader`, which is null on
+       * three of the four published sessions - so its own POST 400s there. The session
+       * date, then the title, keeps the row valid and still identifies the webinar.
+       */
+      await postRecordingRequest({
+        firstName: capitalize(values.firstName),
+        lastName: capitalize(values.lastName),
+        email: values.email,
+        country: values.country,
+        recordingDocId: docId,
+        recordingMonth: whenLabel?.trim() || title.trim(),
+      });
+      setSent(true);
+    } catch {
+      // Strapi's own message is not shown: it is not useful to a visitor and it would
+      // leak the collection's shape.
+      setFormError(GENERIC_ERROR);
     }
-    setFormError(result.message);
   };
 
   /**

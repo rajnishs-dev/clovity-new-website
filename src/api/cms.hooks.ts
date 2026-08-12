@@ -3,16 +3,35 @@
 import { useEffect, useMemo, useState } from 'react';
 import type {
   BadgeGroup,
+  BlogPost,
+  CaseStudyItem,
   ContactFormConfig,
+  ContentCollection,
+  ContentItem,
+  ContentKind,
   CultureHighlight,
+  EventItem,
   JobOpening,
   JobTrackFilter,
+  NewsItem,
+  WebinarItem,
 } from '@/types/content';
+import { FIELD_NOTES_PER_TAB } from '@/constants/content';
 import {
   getAwards,
+  getBlogBySlug,
+  getBlogs,
+  getCaseStudies,
+  getCaseStudyBySlug,
+  getEventBySlug,
+  getEvents,
   getInTouch,
   getJobs,
   getLifeAtClovity,
+  getNews,
+  getNewsBySlug,
+  getWebinarBySlug,
+  getWebinars,
   isCmsConfigured,
 } from './cms';
 import { toJobTrackFilters } from './cms.mappers';
@@ -151,4 +170,150 @@ export function useInTouch(
     initial,
     `get-in-touch:${websiteSlug}`,
   );
+}
+
+/* ── The resource collections ───────────────────────────────────────────────
+ *
+ * These are what make the CMS reads visible in a browser's Network tab: every list
+ * and every article body is fetched from `cms.clovity.com` by the browser, the way
+ * `website-t` does it.
+ *
+ * The `initial` argument is the bundled fallback, so the first paint is content rather
+ * than a spinner and a CMS outage still shows something. `status` is exposed for callers
+ * that want to say "loading" over the top of it.
+ */
+
+export function useBlogPosts(initial: BlogPost[]): CmsResource<BlogPost[]> {
+  return useCmsResource((signal) => getBlogs(signal), initial, 'blogs');
+}
+
+export function useNewsItems(initial: NewsItem[]): CmsResource<NewsItem[]> {
+  return useCmsResource((signal) => getNews(signal), initial, 'news');
+}
+
+export function useEventItems(initial: EventItem[]): CmsResource<EventItem[]> {
+  return useCmsResource((signal) => getEvents(signal), initial, 'events');
+}
+
+export function useWebinarItems(
+  initial: WebinarItem[],
+): CmsResource<WebinarItem[]> {
+  return useCmsResource((signal) => getWebinars(signal), initial, 'webinars');
+}
+
+export function useCaseStudies(
+  initial: CaseStudyItem[],
+): CmsResource<CaseStudyItem[]> {
+  return useCmsResource(
+    (signal) => getCaseStudies(signal),
+    initial,
+    'case-studies',
+  );
+}
+
+/**
+ * One article, fetched by slug.
+ *
+ * `initial` may be `undefined` — an article outside the bundled fallback has nothing to
+ * show until the request lands, which is the trade-off of fetching in the browser. The
+ * `key` includes the slug so navigating between two articles refetches.
+ */
+function useCmsBySlug<TItem>(
+  load: (slug: string, signal: AbortSignal) => Promise<TItem | null>,
+  slug: string,
+  initial: TItem | undefined,
+  scope: string,
+): CmsResource<TItem | undefined> {
+  return useCmsResource(
+    async (signal) => (await load(slug, signal)) ?? initial,
+    initial,
+    `${scope}:${slug}`,
+  );
+}
+
+export function useBlogPost(
+  slug: string,
+  initial: BlogPost | undefined,
+): CmsResource<BlogPost | undefined> {
+  return useCmsBySlug(getBlogBySlug, slug, initial, 'blog');
+}
+
+export function useNewsItem(
+  slug: string,
+  initial: NewsItem | undefined,
+): CmsResource<NewsItem | undefined> {
+  return useCmsBySlug(getNewsBySlug, slug, initial, 'news');
+}
+
+export function useEventItem(
+  slug: string,
+  initial: EventItem | undefined,
+): CmsResource<EventItem | undefined> {
+  return useCmsBySlug(getEventBySlug, slug, initial, 'event');
+}
+
+export function useWebinarItem(
+  slug: string,
+  initial: WebinarItem | undefined,
+): CmsResource<WebinarItem | undefined> {
+  return useCmsBySlug(getWebinarBySlug, slug, initial, 'webinar');
+}
+
+export function useCaseStudy(
+  slug: string,
+  initial: CaseStudyItem | undefined,
+): CmsResource<CaseStudyItem | undefined> {
+  return useCmsBySlug(getCaseStudyBySlug, slug, initial, 'case-study');
+}
+
+/**
+ * The home page's five Field Notes tabs, refetched together.
+ *
+ * The tab chrome (label, icon, headings, "View More" href) comes from `initial` and is
+ * never refetched - it is page furniture, not CMS content. Only the cards are replaced.
+ *
+ * The casts are contained here on purpose: `ContentCollection.items` is the wide
+ * `ContentItem[]`, but the collection whose `kind` is `'blog'` holds `BlogPost`s and
+ * nothing else, so each hook gets the right initial value without every caller repeating
+ * the assertion.
+ */
+export function useContentCollections(
+  initial: ContentCollection[],
+): CmsResource<ContentCollection[]> {
+  const itemsOf = (kind: ContentKind): ContentItem[] =>
+    initial.find((collection) => collection.kind === kind)?.items ?? [];
+
+  const blogs = useBlogPosts(itemsOf('blog') as BlogPost[]);
+  const news = useNewsItems(itemsOf('news') as NewsItem[]);
+  const events = useEventItems(itemsOf('events') as EventItem[]);
+  const webinars = useWebinarItems(itemsOf('webinars') as WebinarItem[]);
+  const studies = useCaseStudies(itemsOf('case-study') as CaseStudyItem[]);
+
+  const byKind: Record<ContentKind, ContentItem[]> = {
+    blog: blogs.data,
+    news: news.data,
+    events: events.data,
+    webinars: webinars.data,
+    'case-study': studies.data,
+  };
+
+  const data = useMemo(
+    () =>
+      initial.map((collection) => ({
+        ...collection,
+        items: byKind[collection.kind].slice(0, FIELD_NOTES_PER_TAB),
+      })),
+    // Depend on the fetched arrays, not on `byKind`, which is a new object each render.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [initial, blogs.data, news.data, events.data, webinars.data, studies.data],
+  );
+
+  const statuses = [blogs, news, events, webinars, studies].map((r) => r.status);
+  const status: CmsFetchStatus = statuses.includes('loading')
+    ? 'loading'
+    : statuses.includes('error')
+      ? 'error'
+      : 'idle';
+
+  return { data, status };
 }

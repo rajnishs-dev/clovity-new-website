@@ -5,9 +5,10 @@ import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
 import { FinalCta } from '@/components/common/CTA';
 import {
-  RevealScope, RESOURCE_CTA_LINKS, ResourceCard, ResourceHero } from '@/components/common/Resources';
+  RevealScope, RESOURCE_CTA_LINKS, ResourceHero } from '@/components/common/Resources';
 import { SectionHeader } from '@/components/ui/Section';
 import { getWebinarItems } from '@/data/webinars';
+import { WebinarGrid } from './WebinarGrid';
 
 export const metadata: Metadata = buildMetadata({
   title: 'Webinars - On-Demand Atlassian & Cloud Sessions',
@@ -51,20 +52,7 @@ export default async function WebinarsPage() {
               className="mb-10"
             />
 
-            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-              {webinars.map((webinar) => (
-                <ResourceCard
-                  key={webinar.id}
-                  href={webinar.href}
-                  external={webinar.external}
-                  image={webinar.image}
-                  title={webinar.title}
-                  excerpt={webinar.excerpt}
-                  publishedAt={webinar.publishedAt}
-                  ctaLabel="Get Recording"
-                />
-              ))}
-            </div>
+            <WebinarGrid initialWebinars={webinars} />
           </div>
         </section>
 

@@ -8,6 +8,7 @@ import { ArrowIcon, Icon } from '@/components/ui/Icon';
 import { buttonClass } from '@/components/ui/Button';
 import { SmartLink } from '@/components/ui/Link';
 import { Tabs } from '@/components/ui/Tabs';
+import { useContentCollections } from '@/api/cms.hooks';
 import {
   GradientText,
   HEADING_CLASS,
@@ -49,7 +50,17 @@ export interface FieldNotesSectionProps {
   collections: ContentCollection[];
 }
 
-export function FieldNotesSection({ collections }: FieldNotesSectionProps) {
+export function FieldNotesSection({
+  collections: initialCollections,
+}: FieldNotesSectionProps) {
+  /**
+   * FETCHED TWICE, on purpose. The page fetches all five collections on the server, so
+   * the cards are in the HTML for crawlers; this refetches them in the browser, which is
+   * what puts the five `GET https://cms.clovity.com/api/…` requests in a visitor's
+   * Network tab and picks up a publish without waiting out the revalidate window.
+   */
+  const { data: collections } = useContentCollections(initialCollections);
+
   const firstKind = collections[0]?.kind ?? 'blog';
   const [activeKind, setActiveKind] = useState<ContentKind>(firstKind);
 

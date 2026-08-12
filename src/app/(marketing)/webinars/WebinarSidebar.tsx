@@ -36,5 +36,13 @@ export function WebinarSidebar({ webinar }: { webinar: WebinarItem }) {
     );
   }
 
-  return <RegisterForm slug={webinar.slug} title={webinar.title} />;
+  return (
+    <RegisterForm
+      title={webinar.title}
+      /* `id` is the Strapi `documentId` for a CMS-sourced session - what the `recording`
+         row records so a request can be traced back to its webinar. */
+      docId={webinar.id}
+      {...(webinar.whenLabel ? { whenLabel: webinar.whenLabel } : {})}
+    />
+  );
 }

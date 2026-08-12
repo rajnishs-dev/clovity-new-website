@@ -21,6 +21,14 @@ import type { ContentCollection } from '@/types/content';
  */
 export type ContentCollectionTab = Omit<ContentCollection, 'items'>;
 
+/**
+ * Cards per tab in the Field Notes rail. The rail shows two at a time and scrolls.
+ *
+ * Shared, because the server loader and the browser refetch both slice to it - and a rail
+ * that showed four before hydration and six after would visibly jump.
+ */
+export const FIELD_NOTES_PER_TAB = 4;
+
 export const CONTENT_COLLECTION_TABS: ContentCollectionTab[] = [
   {
     kind: 'blog',
