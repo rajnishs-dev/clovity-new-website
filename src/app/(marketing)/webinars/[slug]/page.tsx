@@ -11,17 +11,16 @@ import { JsonLd } from '@/components/common/JsonLd';
 import {
   RevealScope, ArticleBody,
   DetailHero,
-  MetaItem,
   RESOURCE_CTA_LINKS,
   RelatedGrid,
   ShareRow, } from '@/components/common/Resources';
-import { formatLongDate } from '@/lib/format';
 import { resolveImageSrc } from '@/lib/image';
 import {
   getOtherWebinars,
   getWebinarItemBySlug,
   getWebinarSlugs,
 } from '@/data/webinars';
+import { WebinarPanel } from '../WebinarPanel';
 import { WebinarSidebar } from '../WebinarSidebar';
 
 export const revalidate = 3600;
@@ -88,18 +87,14 @@ export default async function WebinarDetailPage({
                   { name: 'Webinars', href: ROUTES.resources.webinars },
                 ]}
                 currentLabel={webinar.title}
-                image={webinar.image}
+                /*
+                  No `image` on purpose. A webinar's hero is its panel, not its banner -
+                  the banner is already the card art on `/webinars` and the OG image for
+                  this page, so repeating it above the panel would push everything that
+                  matters below the fold.
+                */
                 title={webinar.title}
-                meta={
-                  <div className="flex flex-wrap items-center gap-x-5 gap-y-2">
-                    <MetaItem icon="calendar-days">
-                      {formatLongDate(webinar.publishedAt)}
-                    </MetaItem>
-                    {webinar.durationMinutes ? (
-                      <MetaItem icon="video">{webinar.durationMinutes} min</MetaItem>
-                    ) : null}
-                  </div>
-                }
+                meta={<WebinarPanel webinar={webinar} />}
               />
 
               {webinar.content ? <ArticleBody blocks={webinar.content} /> : null}

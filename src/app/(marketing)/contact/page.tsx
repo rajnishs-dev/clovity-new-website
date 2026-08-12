@@ -69,7 +69,7 @@ export default async function ContactPage() {
       <NavState />
       <JsonLd schema={breadcrumbSchema([...CONTACT_HERO.crumbs])} />
 
-      <Header variant="opaque" priorityLogo />
+      <Header variant="pill" priorityLogo />
 
       <PageAnimations>
         <main id="main-content">

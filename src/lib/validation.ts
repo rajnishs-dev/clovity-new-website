@@ -30,6 +30,39 @@ export const newsletterSchema = z.object({
 
 export type NewsletterFormValues = z.infer<typeof newsletterSchema>;
 
+/**
+ * The webinar "Get the Recording" form.
+ *
+ * The four fields, and the fact that all four are required, mirror the published
+ * webinar page - the Strapi `recording` collection only marks `firstName` and `email`
+ * required, but the form has always asked for the last name and country too, and a
+ * half-filled lead is not worth more than a complete one.
+ *
+ * ONLY THE FOUR TYPED FIELDS BELONG HERE. The webinar's slug is passed to the action
+ * separately rather than being a fifth key in this schema: as a schema field it is
+ * validated on the client, where nothing renders an error for it, so a missing value
+ * failed validation invisibly and the submit handler never ran - a dead button with no
+ * message. Every field this schema names now has a visible input and a visible error.
+ */
+export const webinarRegistrationSchema = z.object({
+  firstName: z
+    .string()
+    .trim()
+    .min(1, 'First name is required.')
+    .max(80, 'That first name is too long.'),
+  lastName: z
+    .string()
+    .trim()
+    .min(1, 'Last name is required.')
+    .max(80, 'That last name is too long.'),
+  email,
+  country: z.string().trim().min(1, 'Please select a country.'),
+});
+
+export type WebinarRegistrationValues = z.infer<
+  typeof webinarRegistrationSchema
+>;
+
 export const contactSchema = z.object({
   fullName: z
     .string()

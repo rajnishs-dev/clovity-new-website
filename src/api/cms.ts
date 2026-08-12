@@ -36,6 +36,7 @@ import type {
   StrapiLifeAtClovity,
   StrapiListResponse,
   StrapiNews,
+  StrapiRecordingInput,
   StrapiWebinar,
 } from './cms.types';
 
@@ -74,6 +75,8 @@ export const CMS_ENDPOINTS = {
   contactUs: '/api/contact-uses',
   getInTouchLeads: '/api/get-in-touch-leads',
   subscribes: '/api/subscribes',
+  // Webinar recording requests. Named `recordings`, not `registrations`.
+  recordings: '/api/recordings',
 
   // The five resource collections. Two of these are guesses waiting to happen:
   //   • `news` pluralises to `newses`;
@@ -540,6 +543,18 @@ export async function postEnquiry(
 /** Newsletter signup. */
 export async function postSubscribe(email: string): Promise<void> {
   await post(CMS_ENDPOINTS.subscribes, { email });
+}
+
+/**
+ * A webinar recording request.
+ *
+ * One row in `recordings`, the same collection and the same field names `website-t`
+ * writes from its own webinar page, so submissions from both sites are one dataset.
+ */
+export async function postRecordingRequest(
+  input: StrapiRecordingInput,
+): Promise<void> {
+  await post(CMS_ENDPOINTS.recordings, input);
 }
 
 /* ── Fallback ───────────────────────────────────────────────────────────── */

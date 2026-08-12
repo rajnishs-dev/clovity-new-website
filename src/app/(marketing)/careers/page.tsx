@@ -77,7 +77,7 @@ export default async function CareersPage() {
       <NavState />
       <JsonLd schema={breadcrumbSchema([...CAREERS_HERO.crumbs])} />
 
-      <Header variant="opaque" priorityLogo />
+      <Header variant="pill" priorityLogo />
 
       <PageAnimations>
         <main id="main-content">

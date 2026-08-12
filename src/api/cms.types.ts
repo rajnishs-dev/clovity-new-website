@@ -270,6 +270,28 @@ export interface StrapiContactUsInput {
   goal: string;
 }
 
+/**
+ * `recording` POST body — a webinar recording request.
+ *
+ * The collection is called `recordings`; `website-t` posts the same shape to it from its
+ * webinar page, and matching it is deliberate so both sites' submissions land as one
+ * comparable set of rows.
+ *
+ * `recordingMonth` and `recordingDocId` are BOTH `required` in the content type, so a
+ * body missing either is rejected with a 400 — see the note in `registerRecordingAction`
+ * about where `recordingMonth` comes from, because the field `website-t` fills it from is
+ * empty on three of the four published webinars.
+ */
+export interface StrapiRecordingInput {
+  firstName: string;
+  lastName?: string;
+  email: string;
+  country?: string;
+  /** The webinar's Strapi `documentId`, so a request can be traced to its session. */
+  recordingDocId: string;
+  recordingMonth: string;
+}
+
 /** `get-in-touch-lead` POST body — the structured half of an enquiry. */
 export interface StrapiGetInTouchLeadInput {
   name?: string;

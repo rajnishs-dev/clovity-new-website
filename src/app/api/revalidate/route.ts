@@ -60,11 +60,15 @@ const MODEL_ROUTES: Record<string, readonly string[]> = {
   // The resource collections. `news` is the singular model name even though the route
   // is `/api/newses`, and the case studies come from `jsm-resource` — see
   // `CMS_ENDPOINTS` in `src/api/cms.ts` for why that is the right collection.
-  blog: [ROUTES.resources.blog],
-  news: [ROUTES.resources.news],
-  event: [ROUTES.resources.events],
-  webinar: [ROUTES.resources.webinars],
-  'jsm-resource': [ROUTES.resources.caseStudy],
+  //
+  // Each also revalidates HOME, because the "What We Learn in the Field" module there
+  // renders the four latest of every one of these collections. Miss that and a publish
+  // updates the listing page while the home page keeps showing the previous four.
+  blog: [ROUTES.resources.blog, ROUTES.home],
+  news: [ROUTES.resources.news, ROUTES.home],
+  event: [ROUTES.resources.events, ROUTES.home],
+  webinar: [ROUTES.resources.webinars, ROUTES.home],
+  'jsm-resource': [ROUTES.resources.caseStudy, ROUTES.home],
 };
 
 /**
@@ -75,6 +79,7 @@ const MODEL_ROUTES: Record<string, readonly string[]> = {
  * references it. Revalidating all of them is cheaper than getting it wrong.
  */
 const ALL_CMS_ROUTES = [
+  ROUTES.home,
   ROUTES.discover.about,
   ROUTES.discover.careers,
   ROUTES.discover.contact,

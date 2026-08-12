@@ -33,10 +33,8 @@ import { Navbar } from '../Navbar';
  *     "scrolled" look. Every resource DETAIL page uses this.
  *   • `solid`    - transparent bar that fades to frosted white on scroll, with
  *     16px → 10px vertical padding. Plain interior pages with no hero at all.
- *   • `opaque`   - the same square bar as `solid`, but already white at rest.
- *     About, Careers and Contact, whose heroes are full-bleed dark photographs.
  *
- * All four are rendered from one place, so the behaviour is readable without
+ * All three are rendered from one place, so the behaviour is readable without
  * cross-referencing multiple files.
  */
 
@@ -56,19 +54,16 @@ const HAMBURGER_OPEN = {
 
 export interface HeaderProps {
   /**
-   * `floating` for pages whose hero sits behind the header and is dark (the
-   * home page, every resource listing page); `pill` for pages whose hero is
-   * NOT dark (every resource detail page); `solid` for plain interior pages
-   * with no hero; `opaque` for pages whose hero is a full-bleed DARK
-   * PHOTOGRAPH - About, Careers and Contact.
+   * `floating` for pages whose hero sits behind the header and is dark (the home
+   * page); `pill` for every other page with a hero - it is white from first paint, so
+   * it reads over dark photography and light banners alike; `solid` for a plain
+   * interior page with no hero at all.
    *
-   * `opaque` is not a nicety. `solid` is transparent until the visitor scrolls, and
-   * its nav labels are `#1e293b`; over a near-black hero photo that is dark text on
-   * dark artwork, i.e. an unreadable header on first paint. The three photo-hero
-   * pages each re-declare `#navbar` in their own stylesheet to be solid white from
-   * the start for exactly that reason, and this reproduces it.
+   * NOTE ON `solid`: no page passes it today, so it is only reachable as the default
+   * below. It stays because a page with no hero is the one case `pill` gets wrong -
+   * a rounded pill floating over plain white background has nothing to float over.
    */
-  variant?: 'floating' | 'pill' | 'solid' | 'opaque';
+  variant?: 'floating' | 'pill' | 'solid';
   /** Fetch the logo with priority - it is the LCP-adjacent element. */
   priorityLogo?: boolean;
 }
@@ -82,7 +77,6 @@ export function Header({
   const toggleRef = useRef<HTMLButtonElement | null>(null);
 
   const isPillShell = variant === 'floating' || variant === 'pill';
-  const opaque = variant === 'opaque';
   // `pill` is always in the "settled" state; `floating` settles on scroll.
   const pillActive = variant === 'pill' || scrolled;
   // Nav text and hamburger bars go white only while a `floating` header is
@@ -104,14 +98,7 @@ export function Header({
                 '[transition:background_.35s_ease,box-shadow_.35s_ease,padding_.35s_ease,border-color_.35s_ease,backdrop-filter_.35s_ease]',
                 scrolled
                   ? 'bg-white/95 py-2.5 shadow-[0_1px_24px_rgba(0,0,0,.06)] backdrop-blur-[10px]'
-                  : // `opaque` at rest: 97% white, a visible `#e2e8f0` rule, a
-                    // slightly tighter shadow and 12px padding. On scroll it hands
-                    // over to the shared scrolled state above, which is what the
-                    // published pages do - `#navbar.scrolled` outranks their own
-                    // `#navbar` override on specificity.
-                    opaque
-                    ? 'border-line bg-white/[.97] py-3 shadow-[0_1px_20px_rgba(15,23,42,.06)] backdrop-blur-[10px]'
-                    : 'bg-transparent py-4',
+                  : 'bg-transparent py-4',
               ),
         )}
       >
@@ -136,15 +123,7 @@ export function Header({
                  `.nav-logo-img` rule resolved to on the home page. */
               imageClassName={cn(
                 'w-auto [transition:height_.35s_ease,filter_.35s_ease]',
-                // `opaque` pins the logo at 68px in both states: those pages set
-                // `#navbar .nav-logo-img { height: 68px }`, which ties with the
-                // theme's own rule and wins on source order, and the scrolled rule
-                // also resolves to 68px - so it never resizes on scroll.
-                opaque
-                  ? 'h-[68px]'
-                  : pillActive
-                    ? 'h-[50px] md:h-[56px]'
-                    : 'h-[60px] md:h-[72px]',
+                pillActive ? 'h-[50px] md:h-[56px]' : 'h-[60px] md:h-[72px]',
               )}
               showWhite={onDark}
               priority={priorityLogo}

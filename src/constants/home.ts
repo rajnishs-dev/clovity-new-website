@@ -612,7 +612,7 @@ export const CREDENTIALS_CONTENT = {
   subheading:
     'Validated by Atlassian, Inc. 5000, and leading industry bodies - not marketing copy.',
   ctaLabel: 'Talk to an Expert',
-  ctaHref: EXTERNAL_LINKS.aiAppsStudio,
+  ctaHref: ROUTES.discover.contact,
 } as const;
 
 /**
@@ -774,7 +774,7 @@ export const FINAL_CTA_LINKS: CtaLink[] = [
   {
     id: 'talk-expert',
     label: 'Talk to an Expert',
-    href: EXTERNAL_LINKS.aiAppsStudio,
+    href: ROUTES.discover.contact,
     variant: 'ghost-dark',
   },
 ];

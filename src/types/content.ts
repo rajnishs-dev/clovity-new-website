@@ -98,9 +98,37 @@ export interface EventItem extends ContentBase {
   registrationUrl?: string;
 }
 
+/**
+ * One person on a webinar's panel.
+ *
+ * `role` is `''` when the CMS packed no role into the name; `link` is the person's
+ * LinkedIn profile, which every live row supplies.
+ */
+export interface WebinarPerson {
+  name: string;
+  role: string;
+  link?: string;
+}
+
 export interface WebinarItem extends ContentBase {
   kind: 'webinars';
-  presenters?: { name: string; role: string }[];
+  /**
+   * The panel and the moderator, kept SEPARATE because the detail page labels them
+   * separately ("The Who" / "Moderator"). They come from two different Strapi columns
+   * and one of them is empty on half the live rows.
+   */
+  presenters?: WebinarPerson[];
+  moderators?: WebinarPerson[];
+  /** Headshots, in the CMS's own order - which does NOT match `presenters`. */
+  presenterImages?: ContentImage[];
+  /** Co-hosting organisations, e.g. "Exalate, Clovity and Carahsoft". */
+  coHostedBy?: string;
+  /**
+   * The session date as the CMS spells it, e.g. "August 5, 2026" or "6th February
+   * 2025". Rendered verbatim rather than parsed: it is a display string, and one live
+   * value ("6th February 2025") is not a date any parser accepts.
+   */
+  whenLabel?: string;
   onDemand?: boolean;
   durationMinutes?: number;
   registrationUrl?: string;

@@ -77,7 +77,7 @@ export default async function AboutPage() {
       <JsonLd schema={breadcrumbSchema([...ABOUT_HERO.crumbs])} />
 
       {/* Solid white from first paint — the hero behind it is a dark photograph. */}
-      <Header variant="opaque" priorityLogo />
+      <Header variant="pill" priorityLogo />
 
       <PageAnimations>
         <main id="main-content">

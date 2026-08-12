@@ -243,7 +243,7 @@ export const PRIMARY_NAV: NavItem[] = [
         description:
           'Talk to an Atlassian-certified expert about your challenge.',
         ctaLabel: 'Talk to an Expert',
-        href: '#',
+        href: ROUTES.discover.contact,
       },
     },
   },
@@ -275,7 +275,7 @@ export const PRIMARY_NAV: NavItem[] = [
 /** The header/mobile-drawer primary CTA. `#` matches the legacy markup. */
 export const HEADER_CTA = {
   label: 'Talk to an Expert',
-  href: '#',
+  href: ROUTES.discover.contact,
 } as const;
 
 /* ── Footer ─────────────────────────────────────────────────────────────── */

@@ -1,35 +1,34 @@
 import type {
   ClientLogo,
   ContentCollection,
+  ContentItem,
+  ContentKind,
   CredentialRow,
   CustomerStory,
   MarketplaceApp,
   StatItem,
 } from '@/types/content';
 import { CLIENT_LOGOS } from '@/constants/clients';
-import { CONTENT_COLLECTIONS } from '@/constants/content';
+import { CONTENT_COLLECTION_TABS } from '@/constants/content';
 import {
   CREDENTIAL_ROWS,
   CUSTOMER_STORIES,
   MARKETPLACE_APPS,
   RESULT_STATS,
 } from '@/constants/home';
+import { getBlogPosts } from './blog';
+import { getCaseStudyItems } from './case-study';
+import { getEventItems } from './events';
+import { getNewsItems } from './news';
+import { getWebinarItems } from './webinars';
 
 /**
- * The home page's data layer - the seam between UI and backend.
+ * The home page's data layer.
  *
- * Every loader here calls the API and falls back to the bundled static content
- * when the API is not configured or the request fails. `withFallback` makes that
- * a one-liner, and it is what lets the site ship today on static content and
- * switch to the CMS by setting `NEXT_PUBLIC_ENABLE_CMS=true` - with no change to
- * any component, prop or class name.
- *
- * The loaders are async even where they currently resolve instantly, so the page
- * already awaits them and turning on live data does not change the call sites.
- *
- * When the API does come online, these will additionally be the place to set
- * per-collection `revalidate` windows and cache tags for on-demand ISR from the
- * CMS's publish webhook - again without touching a component.
+ * The "What We Learn in the Field" module reads the CMS (see
+ * `getContentCollections`). Everything else on this page - the customer stories, the
+ * client logos, the Marketplace tiles, the result counters, the credential badges - is
+ * bundled content, because no Strapi collection holds it.
  */
 
 export async function getCustomerStories(): Promise<CustomerStory[]> {
@@ -52,16 +51,51 @@ export async function getCredentialRows(): Promise<CredentialRow[]> {
   return CREDENTIAL_ROWS;
 }
 
+/** Cards per tab in the Field Notes rail. The rail shows two at a time and scrolls. */
+const FIELD_NOTES_PER_TAB = 4;
+
 /**
- * The five tabbed collections.
+ * The five tabbed collections, newest first, from the CMS.
  *
- * Fetches all five in parallel rather than in series - five sequential round
- * trips would put the slowest section's latency on the critical path five times
- * over. Any collection whose request fails keeps its static items, so one bad
- * endpoint degrades a single tab instead of the whole module.
+ * REUSES THE LISTING PAGES' LOADERS rather than querying Strapi again. Three things
+ * follow from that, and all three are the reason it is written this way:
+ *
+ *  • Each loader is wrapped in `cache()`, so a request that renders both this module
+ *    and anything else needing the same collection pays for one fetch, not two.
+ *  • Each loader already falls back to its bundled content, so a CMS outage degrades
+ *    this module to the same seeded items `/blog` and `/news` show - never to an empty
+ *    tab, and never inconsistently with the page the "View More" button leads to.
+ *  • The cards' `href`s are the ones the mappers built, so every card links to this
+ *    site's own detail page. They used to point at `clovity.com` or at `#`.
+ *
+ * All five load in parallel: in series, the slowest collection's latency would land on
+ * the critical path five times over.
+ *
+ * Ordering is whatever each loader returns, which is newest-first in every case
+ * (`blog_date:desc`, `startDateTime:desc`, `createdAt:desc`), so the four latest is a
+ * `slice` and not a re-sort.
  */
 export async function getContentCollections(): Promise<ContentCollection[]> {
-  return CONTENT_COLLECTIONS;
+  const [posts, events, webinars, caseStudies, news] = await Promise.all([
+    getBlogPosts(),
+    getEventItems(),
+    getWebinarItems(),
+    getCaseStudyItems(),
+    getNewsItems(),
+  ]);
+
+  const itemsByKind: Record<ContentKind, ContentItem[]> = {
+    blog: posts,
+    events,
+    webinars,
+    'case-study': caseStudies,
+    news,
+  };
+
+  return CONTENT_COLLECTION_TABS.map((tab) => ({
+    ...tab,
+    items: itemsByKind[tab.kind].slice(0, FIELD_NOTES_PER_TAB),
+  }));
 }
 
 /** Everything the home page needs, resolved in parallel. */

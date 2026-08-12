@@ -52,12 +52,14 @@ export const metadata: Metadata = buildMetadata({
 });
 
 /**
- * Static by default. Nothing on this page is per-request, so it prerenders at
- * build time and is served from the edge cache. Once the CMS is live, changing
- * this to `export const revalidate = 300` (or wiring the on-demand webhook) is
- * the only edit needed - the data layer in data/home.ts already fetches
- * through the API-with-fallback seam.
+ * Prerendered, with an hourly refresh.
+ *
+ * This page was fully static until the Field Notes module started reading the CMS. The
+ * window matches every other CMS-backed page; `POST /api/revalidate` is what makes a
+ * publish appear immediately, and this is the net under it.
  */
+export const revalidate = 3600;
+
 export default async function HomePage() {
   const { stories, logos, apps, stats, credentialRows, collections } =
     await getHomePageData();

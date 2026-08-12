@@ -13,6 +13,7 @@ import type {
   JobTrackFilter,
   NewsItem,
   WebinarItem,
+  WebinarPerson,
 } from '@/types/content';
 import {
   excerptFromBlocks,
@@ -380,10 +381,12 @@ export function toEventItem(row: StrapiEvent): EventItem | null {
 }
 
 /**
- * `theWho` / `moderator` → `presenters`.
+ * One `json` people column (`theWho` or `moderator`) → `WebinarPerson[]`.
  *
- * Both are `json` columns holding an array of `{ name, link }` on some rows and the
- * EMPTY STRING on others, so the shape is checked before it is trusted.
+ * THE COLUMN IS NOT ALWAYS AN ARRAY. Across the four live rows it is an array on some,
+ * the EMPTY STRING on one and `null` on another, so the shape is checked before it is
+ * trusted — and the two columns are mapped separately, because the detail page labels
+ * "The Who" and "Moderator" as different things.
  *
  * Each `name` packs the person AND their role into one string, with whichever separator
  * the editor happened to type — "Matthew Graviss — Public Sector CTO at Atlassian" (em
@@ -391,18 +394,14 @@ export function toEventItem(row: StrapiEvent): EventItem | null {
  * Coordinator @ Carahsoft" (comma). The dash split requires surrounding whitespace so a
  * hyphenated name survives it.
  */
-function toWebinarPresenters(
-  ...columns: unknown[]
-): NonNullable<WebinarItem['presenters']> {
-  const people: StrapiWebinarPerson[] = columns
-    .filter((column): column is StrapiWebinarPerson[] => Array.isArray(column))
-    .flat()
+function toWebinarPeople(column: unknown): WebinarPerson[] {
+  if (!Array.isArray(column)) return [];
+
+  return column
     .filter(
       (person): person is StrapiWebinarPerson =>
         typeof person === 'object' && person !== null,
-    );
-
-  return people
+    )
     .map((person) => {
       const raw = person.name?.trim();
       if (!raw) return null;
@@ -412,10 +411,19 @@ function toWebinarPresenters(
       const [name, ...rest] = parts;
       if (!name?.trim()) return null;
 
-      return { name: name.trim(), role: rest.join(', ').trim() };
+      const link = person.link?.trim();
+
+      return {
+        name: name.trim(),
+        role: rest.join(', ').trim(),
+        ...(link ? { link } : {}),
+      };
     })
-    .filter((person): person is { name: string; role: string } => person !== null);
+    .filter((person): person is WebinarPerson => person !== null);
 }
+
+/** Reserved box for a webinar headshot. Live uploads are square-ish, 400-801px. */
+const HEADSHOT_BOX = { fallbackWidth: 400, fallbackHeight: 400 } as const;
 
 /**
  * A YouTube link → an embeddable one.
@@ -448,9 +456,22 @@ export function toWebinarItem(row: StrapiWebinar): WebinarItem | null {
   if (!image) return null;
 
   const content = richTextToBlocks(row.eventDescription);
-  const presenters = toWebinarPresenters(row.theWho, row.moderator);
+  const presenters = toWebinarPeople(row.theWho);
+  const moderators = toWebinarPeople(row.moderator);
   const videoUrl = row.showVideoPlayer ? toEmbedUrl(row.youtubeVideoLink) : null;
   const recording = row.recordingLink?.trim();
+
+  // Headshots. `alt` cannot name the person: the upload order does not match `theWho`
+  // (row 3 lists two panelists but leads with the moderator's photo), so pairing them
+  // by index would caption faces with the wrong names.
+  const presenterImages = (row.peopleImages ?? [])
+    .map((media, index) =>
+      toContentImage(media, {
+        fallbackAlt: `${title} panelist ${index + 1}`,
+        ...HEADSHOT_BOX,
+      }),
+    )
+    .filter((image): image is NonNullable<typeof image> => image !== null);
 
   return {
     kind: 'webinars',
@@ -465,11 +486,18 @@ export function toWebinarItem(row: StrapiWebinar): WebinarItem | null {
       row.publishedAt,
       row.createdAt,
     ),
+    // The banner stays on the model even though the detail page no longer renders it as
+    // a hero - it is the OG/Twitter image and the `articleSchema` image.
     image,
     href: `${ROUTES.resources.webinars}/${row.slug}`,
     // A session with a recording is watchable on demand; one without is not.
     onDemand: Boolean(recording || videoUrl),
     ...(presenters.length ? { presenters } : {}),
+    ...(moderators.length ? { moderators } : {}),
+    ...(presenterImages.length ? { presenterImages } : {}),
+    ...(row.coHostedBy?.trim() ? { coHostedBy: row.coHostedBy.trim() } : {}),
+    // Verbatim, not parsed - see `WebinarItem.whenLabel`.
+    ...(row.createdAtText?.trim() ? { whenLabel: row.createdAtText.trim() } : {}),
     ...(videoUrl ? { videoUrl } : {}),
     ...(content.length ? { content } : {}),
   };

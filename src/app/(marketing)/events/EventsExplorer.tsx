@@ -12,6 +12,7 @@ import {
 import { buttonClass } from '@/components/ui/Button';
 import { SmartLink } from '@/components/ui/Link';
 import { Select, type SelectOption } from '@/components/ui/Select';
+import { formatContentDate } from '@/lib/format';
 import { ROUTES } from '@/constants/routes';
 
 /**
@@ -154,10 +155,10 @@ export function EventsExplorer({ items }: { items: EventItem[] }) {
                   ) : null}
                   <div className="mb-2 flex flex-wrap gap-4">
                     <MetaItem icon="calendar-days">
-                      {new Date(featured.startsAt ?? featured.publishedAt).toLocaleDateString(
-                        'en-US',
-                        { day: '2-digit', month: 'short', year: 'numeric', timeZone: 'UTC' },
-                      )}
+                      {/* `formatContentDate`, not a local `toLocaleDateString`: this
+                          card sits beside the grid cards, which use it, and the two
+                          must not disagree about which day an event is on. */}
+                      {formatContentDate(featured.startsAt ?? featured.publishedAt)}
                     </MetaItem>
                     {featured.location ? (
                       <MetaItem icon="map-pin">{featured.location}</MetaItem>
