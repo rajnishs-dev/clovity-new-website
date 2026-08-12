@@ -22,7 +22,7 @@ const REMOTE_IMAGE_HOSTS = [
  * from three different origins depending on how `clovity-admin` is deployed: the
  * S3 provider (already listed above), the Strapi instance itself, or a CDN in front
  * of it. Reading them out of the env means changing the CMS host is a deploy
- * variable, not a code change — and a missing variable degrades to "no extra host"
+ * variable, not a code change - and a missing variable degrades to "no extra host"
  * rather than breaking the build.
  *
  * Note this runs at config-eval time, so the variables must be present in the
@@ -40,7 +40,7 @@ function cmsImageHosts(): string[] {
     try {
       hosts.add(new URL(candidate).hostname);
     } catch {
-      // A malformed value must not take the build down — the allow-list simply
+      // A malformed value must not take the build down - the allow-list simply
       // does not gain that host, and the image request fails visibly instead.
     }
   }

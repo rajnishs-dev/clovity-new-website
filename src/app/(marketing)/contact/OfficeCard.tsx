@@ -13,10 +13,10 @@ import { CONTACT_OFFICES_CONTENT } from '@/constants/contact';
  * One flip card in the global-offices grid.
  *
  * THREE THINGS FLIP IT, and each covers a different visitor:
- *  • `group-hover`       — a mouse on the desktop grid.
- *  • `data-flipped`      — a tap on a touch device, where there is no hover. This is
+ *  • `group-hover`       - a mouse on the desktop grid.
+ *  • `data-flipped`      - a tap on a touch device, where there is no hover. This is
  *                          the click handler the published page's inline script added.
- *  • `group-focus-within` — a keyboard. The back face holds the office's mailto link,
+ *  • `group-focus-within` - a keyboard. The back face holds the office's mailto link,
  *                          and because the back is rotated away rather than removed,
  *                          that link is tabbable while invisible. Flipping on
  *                          focus-within means the card a keyboard user is reading is
@@ -28,7 +28,7 @@ import { CONTACT_OFFICES_CONTENT } from '@/constants/contact';
  * recovers the keyboard path without that trade.
  *
  * `[transform-style:preserve-3d]` on the inner and `[backface-visibility:hidden]` on
- * both faces are what make this a rotation rather than a cross-fade — drop either and
+ * both faces are what make this a rotation rather than a cross-fade - drop either and
  * the two faces render on top of each other mid-turn.
  */
 

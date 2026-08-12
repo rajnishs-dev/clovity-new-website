@@ -52,7 +52,7 @@ const NAMED_ENTITIES: Record<string, string> = {
   apos: "'",
   nbsp: ' ',
   ndash: '–',
-  mdash: '—',
+  mdash: '-',
   hellip: '…',
   lsquo: '‘',
   rsquo: '’',
@@ -105,8 +105,8 @@ function stripEmphasis(text: string): string {
  *
  * Tags become a SPACE, not nothing, because `<span>A</span><span>B</span>` with no
  * whitespace in the source is real WYSIWYG output and must not become "AB". The cost is
- * a space on the wrong side of punctuation — `<strong>Mahesh Shah</strong>,` flattens to
- * "Mahesh Shah ," — which is why `tidySpacing` runs after.
+ * a space on the wrong side of punctuation - `<strong>Mahesh Shah</strong>,` flattens to
+ * "Mahesh Shah ," - which is why `tidySpacing` runs after.
  */
 function toText(html: string): string {
   return tidySpacing(
@@ -152,8 +152,8 @@ const BULLET_LINE_RE = /^\s*(?:[-*•·]|\d+[.)])\s+/;
 /**
  * An ATX markdown heading, e.g. `## The Challenge`.
  *
- * The case-study bodies mix these into otherwise-HTML content — `##` for section titles
- * and `###` for the numbered sub-sections under them — and without this the marker
+ * The case-study bodies mix these into otherwise-HTML content - `##` for section titles
+ * and `###` for the numbered sub-sections under them - and without this the marker
  * renders as literal `##` at the start of a paragraph.
  */
 const ATX_HEADING_RE = /^(#{1,6})\s+(.*)$/;
@@ -358,7 +358,7 @@ export function richTextToBlocks(value: string | null | undefined): ContentBlock
     .replace(/\r\n?/g, '\n')
     // A TAG THAT SPANS LINES IS FOLDED ONTO ONE LINE FIRST. `looseBlocks` splits on
     // newlines, so a multi-line tag would reach it as two fragments, neither of which
-    // is a complete `<…>` for the stripper to remove — which is exactly how one blog
+    // is a complete `<…>` for the stripper to remove - which is exactly how one blog
     // row leaked a literal `<img src ="…" />` into its prose. Folding first makes the
     // line-based split safe for any tag, not just the `img` that exposed it.
     .replace(/<[^>]*>/g, (tag) => tag.replace(/\s*\n\s*/g, ' '))

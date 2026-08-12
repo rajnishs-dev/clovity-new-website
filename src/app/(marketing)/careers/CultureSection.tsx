@@ -16,17 +16,17 @@ import {
 import { CAREERS_CULTURE_CONTENT } from '@/constants/careers';
 
 /**
- * "Life at Clovity" — photo left, culture copy right.
+ * "Life at Clovity" - photo left, culture copy right.
  *
  * WHAT THE CMS ACTUALLY OWNS HERE IS THE PHOTOGRAPH, and only that. It is worth
  * saying why, because the obvious reading of the content type is wrong.
  *
- * `life-at-clovity` looks like it should supply this whole block — it has
+ * `life-at-clovity` looks like it should supply this whole block - it has
  * `header_normal`, `header_highlighted`, `image` and `info`. But the live instance
  * holds 12 rows arranged as four themed galleries of three
  * ("Clovity's Proud Achievements", "At Clovity Cherished Moments", "Employee
  * Recognition", "More Than Just Works"), where each row is ONE PHOTO and `info` is
- * its caption — "Clovity Team Unites for Team Week Celebrations at Noida HQ, India".
+ * its caption - "Clovity Team Unites for Team Week Celebrations at Noida HQ, India".
  * The header repeats across the three rows of a gallery; it names the gallery, not
  * the row.
  *
@@ -37,7 +37,7 @@ import { CAREERS_CULTURE_CONTENT } from '@/constants/careers';
  * What the collection genuinely has that this block needs is a real photograph of
  * the team, which beats the stock image the published page uses. So: the lead photo
  * of the first gallery (`sectionOrder` then `order`) comes from the CMS, and the
- * headline, paragraph and four bullets stay editorial copy — there is no field in
+ * headline, paragraph and four bullets stay editorial copy - there is no field in
  * `clovity-admin` that means any of them.
  *
  * (If the copy should become editable, the clean fix is a `careers-page` single type
@@ -50,7 +50,7 @@ import { CAREERS_CULTURE_CONTENT } from '@/constants/careers';
  * renders copy-only rather than an empty frame, which is the honest degradation.
  */
 export function CultureSection({
-  /** Build-time snapshot. Refreshed in the browser — see `api/cms.hooks.ts`. */
+  /** Build-time snapshot. Refreshed in the browser - see `api/cms.hooks.ts`. */
   initialHighlight,
 }: {
   initialHighlight: CultureHighlight;

@@ -20,7 +20,7 @@ import { AppImage } from '@/components/ui/Image';
 /**
  * The pill treatment shared by every page: `.logo-pill` in `theme.css`.
  *
- * The 1px border and soft shadow are NOT here, because they are not part of it —
+ * The 1px border and soft shadow are NOT here, because they are not part of it -
  * they come from `.trusted-sec .logo-pill`, an override the home page declares in
  * its own stylesheet. The About page carries the same `.trusted-sec` class but
  * never loads that override, so its pills are bare white. Keeping the override out
@@ -69,7 +69,7 @@ export interface ClientMarqueeProps {
    * Colour the edge fades blend into.
    *
    * Must match the background BEHIND the marquee, because that is the fade's whole
-   * job — hiding the loop seam by dissolving into it. The home page's section is
+   * job - hiding the loop seam by dissolving into it. The home page's section is
    * `#f7f9fc`; the About page's gradient starts at `#f5f9ff`, and using the home
    * value there renders as a pale band down each edge.
    *
@@ -77,7 +77,7 @@ export interface ClientMarqueeProps {
    * Tailwind cannot generate a class it does not see as a literal in the source.
    */
   fadeColor?: string;
-  /** Per-page pill override — see `HOME_LOGO_PILL_CLASS`. */
+  /** Per-page pill override - see `HOME_LOGO_PILL_CLASS`. */
   pillClassName?: string;
 }
 

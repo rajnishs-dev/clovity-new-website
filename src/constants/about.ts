@@ -21,7 +21,7 @@ import {
 /**
  * About page content.
  *
- * Every string here is copied verbatim from the published `about-us.html` — no
+ * Every string here is copied verbatim from the published `about-us.html` - no
  * claim was reworded, softened or added. Where the page states a credential
  * ("Platinum", "four consecutive years", the named agencies), it is reproduced
  * exactly as published, because those are factual claims the company has already
@@ -37,25 +37,13 @@ import {
 /* ── Hero ───────────────────────────────────────────────────────────────── */
 
 export const ABOUT_HERO = {
-  /**
-   * The published hero photograph. `fill`-rendered, so no intrinsic size is
-   * needed and the URL is left exactly as the markup has it.
-   */
-  image: {
-    src: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1800&q=70',
-    alt: '',
-  },
-  objectPosition: 'center 30%',
-  /** Graphite scrim, left-heavy. Shared with the Contact page. */
-  overlay:
-    'linear-gradient(92deg,rgba(8,9,14,.97) 0%,rgba(10,11,18,.73) 30%,rgba(12,13,22,.32) 52%,rgba(12,13,22,.22) 72%,rgba(12,13,22,0) 100%)',
   crumbs: [
     { name: 'Home', href: ROUTES.home },
     { name: 'About Us', href: ROUTES.discover.about },
   ],
   titleLead: 'Built By Atlassian Experts.',
   titleAccent: 'Trusted By Public-Sector Teams.',
-  lead: 'A San Francisco based Atlassian Platinum Solution Partner, helping enterprise and public-sector teams modernize Jira, Confluence, and Bitbucket — securely, and at speed.',
+  lead: 'A San Francisco based Atlassian Platinum Solution Partner, helping enterprise and public-sector teams modernize Jira, Confluence, and Bitbucket - securely, and at speed.',
 } as const;
 
 /* ── Why Clovity ────────────────────────────────────────────────────────── */
@@ -73,7 +61,7 @@ export const ABOUT_WHY_CARDS: PillarCard[] = [
     iconChipClass: 'bg-brand-50 text-brand-600',
     title: 'Atlassian Platinum Depth',
     description:
-      'The highest Atlassian partner tier, earned through delivery — Jira, Confluence, JSM, and Government Cloud migrations handled end to end, not just licensed.',
+      'The highest Atlassian partner tier, earned through delivery - Jira, Confluence, JSM, and Government Cloud migrations handled end to end, not just licensed.',
   },
   {
     id: 'ai-in-delivery',
@@ -81,7 +69,7 @@ export const ABOUT_WHY_CARDS: PillarCard[] = [
     iconChipClass: 'bg-[#f5f3ff] text-[#7c3aed]',
     title: 'AI Built Into Delivery',
     description:
-      'We ship Pulse AI, our own AI copilot for Jira, on the Atlassian Marketplace — so the AI shaping your instance is the same AI we use to run engagements.',
+      'We ship Pulse AI, our own AI copilot for Jira, on the Atlassian Marketplace - so the AI shaping your instance is the same AI we use to run engagements.',
   },
   {
     id: 'public-sector',
@@ -89,7 +77,7 @@ export const ABOUT_WHY_CARDS: PillarCard[] = [
     iconChipClass: 'bg-[#fff7ed] text-accent-500',
     title: 'Public Sector, By Design',
     description:
-      'Secure, audit-ready delivery for federal and state agencies — including the IRS, U.S. Coast Guard, NASA, and California EDD — not a side practice bolted onto commercial work.',
+      'Secure, audit-ready delivery for federal and state agencies - including the IRS, U.S. Coast Guard, NASA, and California EDD - not a side practice bolted onto commercial work.',
   },
 ];
 
@@ -102,7 +90,7 @@ export const ABOUT_TRUSTED_CONTENT = {
   /**
    * The marquee's edge-fade colour.
    *
-   * `#f5f9ff`, the top of this section's own gradient — not the home page's
+   * `#f5f9ff`, the top of this section's own gradient - not the home page's
    * `#f7f9fc`. The fade exists to hide the loop seam by matching the background
    * behind it, so a mismatched value shows as a pale band at each edge.
    */
@@ -117,7 +105,7 @@ export const ABOUT_WHO_CONTENT = {
   headingHighlight: 'Regulated, High-Stakes Teams',
   paragraphs: [
     'We specialize in secure, audit-ready implementations for public-sector and enterprise clients spanning Jira, Confluence, Bitbucket, and beyond.',
-    'Our U.S.-led teams combine technical depth with compliance expertise to power modernization at speed — without asking regulated clients to compromise on either.',
+    'Our U.S.-led teams combine technical depth with compliance expertise to power modernization at speed - without asking regulated clients to compromise on either.',
     'From licensing and migrations to full-stack automation, we help clients unlock long-term value from their Atlassian ecosystem, backed by a Great Place to Work®-certified culture and four consecutive years on the Inc. 5000 list.',
   ],
   /**
@@ -172,7 +160,7 @@ export const ABOUT_VALUES_CONTENT = {
   headingLead: 'The Principles Behind Every ',
   headingHighlight: 'Engagement',
   subheading:
-    'Not a poster on a wall — the standard every delivery team is held to.',
+    'Not a poster on a wall - the standard every delivery team is held to.',
 } as const;
 
 export const ABOUT_VALUES: BentoTile[] = [
@@ -182,7 +170,7 @@ export const ABOUT_VALUES: BentoTile[] = [
     iconChipClass: 'bg-brand-50 text-brand-600',
     title: 'Security & Compliance First',
     description:
-      'Every implementation is built audit-ready from day one — the standard our public-sector and enterprise clients require, not an afterthought we bolt on later.',
+      'Every implementation is built audit-ready from day one - the standard our public-sector and enterprise clients require, not an afterthought we bolt on later.',
   },
   {
     id: 'us-led',
@@ -198,7 +186,7 @@ export const ABOUT_VALUES: BentoTile[] = [
     iconChipClass: 'bg-[#fff7ed] text-accent-500',
     title: 'Atlassian Depth, Not Just Access',
     description:
-      'Platinum-tier certified expertise across Jira, Confluence, JSM, and Government Cloud — earned through delivery, not just a partner badge.',
+      'Platinum-tier certified expertise across Jira, Confluence, JSM, and Government Cloud - earned through delivery, not just a partner badge.',
   },
   {
     id: 'people-first',
@@ -217,7 +205,7 @@ export const ABOUT_MILESTONES_CONTENT = {
   headingLead: 'Milestones That ',
   headingHighlight: 'Mark Our Progress',
   subheading:
-    'Recognition earned along the way — a signal of consistent delivery, not the goal itself.',
+    'Recognition earned along the way - a signal of consistent delivery, not the goal itself.',
 } as const;
 
 export const ABOUT_MILESTONES: MilestoneStep[] = [
@@ -240,14 +228,14 @@ export const ABOUT_MILESTONES: MilestoneStep[] = [
     eyebrow: '4 Years Running',
     title: 'Featured on the Inc. 5000 List',
     description:
-      "Recognized as one of America's fastest-growing private companies, four years in a row — driven by customer success and consistent delivery.",
+      "Recognized as one of America's fastest-growing private companies, four years in a row - driven by customer success and consistent delivery.",
   },
   {
     id: 'great-place-to-work',
     eyebrow: 'Certification',
     title: 'Great Place to Work® Certified',
     description:
-      'Certified for a culture of innovation, inclusivity, and people-first values — the same standard we hold ourselves to with clients.',
+      'Certified for a culture of innovation, inclusivity, and people-first values - the same standard we hold ourselves to with clients.',
   },
   {
     id: 'uspaacc',
@@ -273,7 +261,7 @@ export const ABOUT_CREDENTIALS_CONTENT = {
  *
  * STATIC ON PURPOSE, unlike group two. These are Atlassian's own brand assets,
  * bundled in `src/assets/images` and shared with the home page's credentials
- * collage — they are governed by Atlassian's partner-badge rules, not by editorial
+ * collage - they are governed by Atlassian's partner-badge rules, not by editorial
  * choice, so putting them behind a CMS would let them be replaced with something
  * the programme does not permit. They also carry `tall` on the two specialization
  * SVGs, which the design renders 6px taller and pulled 16px down.
@@ -319,7 +307,7 @@ export const ABOUT_ATLASSIAN_BADGES: BadgeGroup = {
   ],
 };
 
-/** Group two's label and id — the Strapi-backed group. */
+/** Group two's label and id - the Strapi-backed group. */
 export const ABOUT_AWARDS_GROUP = {
   id: 'certifications-diversity',
   label: 'Certifications & Diversity',
@@ -329,7 +317,7 @@ export const ABOUT_AWARDS_GROUP = {
  * Reserved box for a badge image, in the ratio the design paints them.
  *
  * next/image needs a width/height pair for every remote source. These badges are
- * laid out at `height: 90px; width: auto`, so only the RATIO matters — 210×90 is
+ * laid out at `height: 90px; width: auto`, so only the RATIO matters - 210×90 is
  * the pair the home page's credential badges already use, kept identical so a badge
  * that appears on both pages reserves the same space.
  */
@@ -339,7 +327,7 @@ const BADGE_BOX = { width: 210, height: 90 } as const;
  * Fallback badges for the Strapi-backed group.
  *
  * The eight the page publishes today, in published order. Shown when Strapi is not
- * configured, unreachable, or returns nothing — so a CMS problem can never leave
+ * configured, unreachable, or returns nothing - so a CMS problem can never leave
  * this section as a heading over an empty grid.
  */
 export const ABOUT_AWARD_BADGES_FALLBACK: CredentialBadge[] = [
@@ -484,7 +472,7 @@ export const ABOUT_PRESS_LOGOS: PressLogo[] = [
 /* ── Mission ────────────────────────────────────────────────────────────── */
 
 export const ABOUT_MISSION_QUOTE =
-  'Our mission is to make Atlassian a genuine advantage for the teams that can least afford to get it wrong — secure, modernized, and powered by AI, without the risk of doing it alone.';
+  'Our mission is to make Atlassian a genuine advantage for the teams that can least afford to get it wrong - secure, modernized, and powered by AI, without the risk of doing it alone.';
 
 /* ── Work with us ───────────────────────────────────────────────────────── */
 

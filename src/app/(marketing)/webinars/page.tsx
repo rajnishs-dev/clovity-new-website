@@ -3,17 +3,14 @@ import { buildMetadata } from '@/lib/seo';
 import { ROUTES } from '@/constants/routes';
 import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
+import { BannerHero } from '@/components/common';
 import { FinalCta } from '@/components/common/CTA';
-import {
-  RevealScope,
-  LoadMoreGrid,
-  RESOURCE_CTA_LINKS,
- 
-  ResourceHero,
-} from '@/components/common/Resources';
+import { RevealScope, RESOURCE_CTA_LINKS } from '@/components/common/Resources';
 import { SectionHeader } from '@/components/ui/Section';
 import { getWebinarItems } from '@/data/webinars';
 import { WebinarGrid } from './WebinarGrid';
+import { NavState } from './NavState';
+import { webinarHeroBanner } from '@/constants/media';
 
 export const metadata: Metadata = buildMetadata({
   title: 'Webinars - On-Demand Atlassian & Cloud Sessions',
@@ -22,7 +19,7 @@ export const metadata: Metadata = buildMetadata({
   path: ROUTES.resources.webinars,
 });
 
-/** Safety net under the Strapi webhook — see the note in `/blog`. */
+/** Safety net under the Strapi webhook - see the note in `/blog`. */
 export const revalidate = 3600;
 
 export default async function WebinarsPage() {
@@ -30,11 +27,12 @@ export default async function WebinarsPage() {
 
   return (
     <>
+      <NavState />
       <Header variant="pill" />
       <RevealScope />
 
       <main id="main-content">
-        <ResourceHero
+        <BannerHero
           breadcrumb={[
             { name: 'Home', href: ROUTES.home },
             { name: 'Webinars', href: ROUTES.resources.webinars },
@@ -46,7 +44,7 @@ export default async function WebinarsPage() {
             </>
           }
           subheading="Our webinars cover the latest innovations, best practices and solutions to help you drive efficiency and growth."
-          image="https://images.unsplash.com/photo-1587440871875-191322ee64b0?auto=format&fit=crop&w=1800&q=80"
+          image={webinarHeroBanner}
         />
 
         <section className="bg-[#f8fafc] pt-14 pb-[240px] sm:pt-20">

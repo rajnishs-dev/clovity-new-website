@@ -6,14 +6,14 @@ import {
 import { OfficeCard } from './OfficeCard';
 
 /**
- * "Wherever You're Delivering, We're Close By" — the eight-office flip-card grid.
+ * "Wherever You're Delivering, We're Close By" - the eight-office flip-card grid.
  *
  * Four columns at desktop, two below 1020px, one below 560px, so the eight cards read
  * as 2×4 / 4×2 / 8×1.
  *
  * Cards stagger 50ms apart, matching the `transition-delay` the markup sets on each. The
  * reveal helper snaps to 50ms steps and caps at 300ms, so the last card lands with the
- * seventh rather than 50ms later — a difference of one frame at the bottom of a grid
+ * seventh rather than 50ms later - a difference of one frame at the bottom of a grid
  * that is already fully revealed by then.
  *
  * A Server Component; only `OfficeCard` is a client component, and only because a tap

@@ -17,14 +17,14 @@ import { siteConfig } from '@/constants/site';
  * Copied verbatim from the published `careers.html`. Two sections here are FALLBACKS
  * for Strapi-backed content rather than the page's only source of truth:
  *
- *  • `CAREERS_JOBS_FALLBACK`    — the nine sample requisitions the page ships with.
+ *  • `CAREERS_JOBS_FALLBACK`    - the nine sample requisitions the page ships with.
  *                                 Live openings come from the `job` collection.
- *  • `CAREERS_CULTURE_FALLBACK` — the "Life at Clovity" heading, photo and intro.
+ *  • `CAREERS_CULTURE_FALLBACK` - the "Life at Clovity" heading, photo and intro.
  *                                 Live copy comes from `life-at-clovity`.
  *
  * Both exist so the page renders identically when Strapi is unreachable or empty.
- * The published markup even labels the roles as samples — "wire up to a live ATS feed
- * and swap in real req IDs when available" — which is exactly what the CMS wiring
+ * The published markup even labels the roles as samples - "wire up to a live ATS feed
+ * and swap in real req IDs when available" - which is exactly what the CMS wiring
  * does; the samples are kept as the offline state, not deleted.
  */
 
@@ -49,7 +49,7 @@ export const CAREERS_HERO = {
   ],
   titleLead: 'Build the Career That ',
   titleAccent: 'Grows With Every Engagement.',
-  lead: 'Join a Platinum Atlassian Solution Partner where certified consultants, engineers, and architects deliver secure Atlassian, AI, and cloud transformation for enterprise and public-sector teams — and build deep expertise doing it.',
+  lead: 'Join a Platinum Atlassian Solution Partner where certified consultants, engineers, and architects deliver secure Atlassian, AI, and cloud transformation for enterprise and public-sector teams - and build deep expertise doing it.',
   /** Anchor targets for the two hero buttons. */
   openRolesAnchor: '#open-roles',
   cultureAnchor: '#culture',
@@ -70,7 +70,7 @@ export const CAREERS_WHY_CARDS: PillarCard[] = [
     iconChipClass: 'bg-brand-50 text-brand-600',
     title: 'Depth, Not Just a Badge',
     description:
-      'Work inside real Platinum-tier engagements — Jira, Confluence, JSM, and Government Cloud migrations — and leave with certifications that hold their value in the market.',
+      'Work inside real Platinum-tier engagements - Jira, Confluence, JSM, and Government Cloud migrations - and leave with certifications that hold their value in the market.',
   },
   {
     id: 'build-with-ai',
@@ -86,7 +86,7 @@ export const CAREERS_WHY_CARDS: PillarCard[] = [
     iconChipClass: 'bg-[#fff7ed] text-accent-500',
     title: 'Work That Matters',
     description:
-      'Deliver for federal and state agencies — including the IRS, U.S. Coast Guard, NASA, and California EDD — where secure, audit-ready delivery is the whole job, not a side note.',
+      'Deliver for federal and state agencies - including the IRS, U.S. Coast Guard, NASA, and California EDD - where secure, audit-ready delivery is the whole job, not a side note.',
   },
 ];
 
@@ -121,7 +121,7 @@ export const CAREERS_STATS: StatBandItem[] = [
 /**
  * The culture block's copy.
  *
- * STATIC, and deliberately so — see the long note in
+ * STATIC, and deliberately so - see the long note in
  * `app/(marketing)/careers/CultureSection.tsx`. The Strapi `life-at-clovity`
  * collection is a photo gallery: each row is one image with a caption, and its
  * `header_*` fields name the gallery a row belongs to, not the row. Mapping them
@@ -134,7 +134,7 @@ export const CAREERS_CULTURE_CONTENT = {
   headingLead: 'A Culture Built on ',
   headingHighlight: 'Ownership and Craft',
   intro:
-    "We're a security-cleared, U.S.-led team backed by compliant delivery talent working around the clock — every engagement is owned end to end, not handed off in pieces.",
+    "We're a security-cleared, U.S.-led team backed by compliant delivery talent working around the clock - every engagement is owned end to end, not handed off in pieces.",
   bullets: [
     'Certification and enablement support for Atlassian, cloud, and security credentials.',
     'Flexible, remote-friendly work built around delivery outcomes, not desk time.',
@@ -144,7 +144,7 @@ export const CAREERS_CULTURE_CONTENT = {
 } as const;
 
 /**
- * Fallback for the culture block's PHOTOGRAPH — the published page's stock image.
+ * Fallback for the culture block's PHOTOGRAPH - the published page's stock image.
  *
  * Used when Strapi is unreachable or `life-at-clovity` is empty. The heading and
  * intro on this record are never read (the component uses
@@ -183,7 +183,7 @@ export const CAREERS_BENEFITS: BentoTile[] = [
     iconChipClass: 'bg-brand-50 text-brand-600',
     title: 'Certification & Learning Support',
     description:
-      'Structured support toward Atlassian, cloud, and security certifications — the credentials our delivery teams use every day.',
+      'Structured support toward Atlassian, cloud, and security certifications - the credentials our delivery teams use every day.',
   },
   {
     id: 'flexible',
@@ -273,10 +273,10 @@ export const CAREERS_ROLES_CONTENT = {
   headingLead: 'Current Openings Across Our ',
   headingHighlight: 'Delivery Teams',
   subheading:
-    "Filter by team to find where you'd fit — every role reports into a real client engagement.",
+    "Filter by team to find where you'd fit - every role reports into a real client engagement.",
   /** Shown when a filter selects a team with no current openings. */
   emptyMessage:
-    "No open roles in this team right now — send us a general application below and we'll reach out when one opens.",
+    "No open roles in this team right now - send us a general application below and we'll reach out when one opens.",
   generalTitle: "Don't see the right role?",
   generalDescription:
     "We're always meeting strong Atlassian, AI, and delivery talent. Send your resume for general consideration.",
@@ -309,10 +309,10 @@ export type CareersJobPanelId = (typeof CAREERS_JOB_PANELS)[number]['id'];
  * marketing claims is not a migration decision. But two of them are stale and now
  * contradict the rest of this site:
  *
- *   • "CIO's Top Global IoT Solutions provider with a Microsoft Platinum status" —
+ *   • "CIO's Top Global IoT Solutions provider with a Microsoft Platinum status" -
  *     a Microsoft tier and an IoT positioning, on a site whose every other page
  *     leads with Atlassian Platinum. The linked CIO Review listing is from 2019.
- *   • "read more about us in the Yahoo Finance" — that article is the 2019 IoT
+ *   • "read more about us in the Yahoo Finance" - that article is the 2019 IoT
  *     innovation award.
  *
  * Split into segments so the inline links stay real anchors instead of being
@@ -385,7 +385,7 @@ export const CAREERS_GENERAL_APPLICATION_HREF = `mailto:${siteConfig.contact.glo
  * Build the same prefilled mailto the CMS mapper builds, for the fallback roles.
  *
  * Duplicating the format here rather than importing `mappers.ts` keeps a constants
- * file free of a dependency on the service layer — and the fallback roles are static
+ * file free of a dependency on the service layer - and the fallback roles are static
  * data, so the link can be composed once at module scope.
  */
 function fallbackApplyHref(title: string, trackLabel: string): string {
@@ -587,7 +587,7 @@ export const CAREERS_FINAL_CTA = {
   headingLead: 'Ready to build',
   headingTail: "what's next?",
   description:
-    "Explore our open roles, or send us your resume for general consideration — we'll follow up when the right engagement opens.",
+    "Explore our open roles, or send us your resume for general consideration - we'll follow up when the right engagement opens.",
 } as const;
 
 export const CAREERS_FINAL_CTA_LINKS: CtaLink[] = [

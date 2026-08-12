@@ -19,11 +19,11 @@ import {
 /**
  * One open-position card.
  *
- * The card SHELL is unchanged from the approved design — same border, radius,
+ * The card SHELL is unchanged from the approved design - same border, radius,
  * padding, track pill, meta chips and "Apply Now" button. What this adds are the two
  * features carried over from the legacy `/talent` card:
  *
- *  1. THREE EXPANDABLE PANELS — About Us, Job Description, Our Benefits. Only the
+ *  1. THREE EXPANDABLE PANELS - About Us, Job Description, Our Benefits. Only the
  *     middle one is per-role (the CMS field); the other two are the same copy on
  *     every posting, which is why they live in constants.
  *  2. AN OVERFLOW MENU on the right.
@@ -33,7 +33,7 @@ import {
  * re-render the whole list on every toggle; a component per card re-renders one.
  *
  * ── WHY THE PANEL BODY IS RENDERED ONLY WHEN OPEN ──
- * Not for payload — the descriptions are in the RSC payload either way, since the
+ * Not for payload - the descriptions are in the RSC payload either way, since the
  * parent already receives every job as a prop. It is for the DOM: 173 postings, each
  * with headings and bullet lists, is tens of thousands of nodes that nothing is
  * looking at. Mounting on open keeps the page responsive.
@@ -97,7 +97,7 @@ export function JobCard({ job }: JobCardProps) {
     });
   };
 
-  /* Close the menu on an outside click or Escape — the legacy card did the first. */
+  /* Close the menu on an outside click or Escape - the legacy card did the first. */
   useEffect(() => {
     if (!menuOpen) return;
 
@@ -130,7 +130,7 @@ export function JobCard({ job }: JobCardProps) {
    *
    * The URL is read here rather than held in state: this section is prerendered, so
    * `window` does not exist at render time, and reading it in an effect would mean a
-   * cascading render per card — 173 of them — for a value only ever needed on click.
+   * cascading render per card - 173 of them - for a value only ever needed on click.
    */
   const handleCopy = async () => {
     try {

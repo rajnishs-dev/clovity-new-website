@@ -17,9 +17,9 @@ import { Icon } from '../Icon';
  *
  * Cards stagger 0 / 50 / 100ms, matching the `transition-delay: .05s` and `.1s` the
  * markup puts on the second and third. `revealAligned('left')` because the card body
- * is left-aligned at every width — `reveal()` alone would centre it below 768px.
+ * is left-aligned at every width - `reveal()` alone would centre it below 768px.
  *
- * ICON SIZE — the chip is 52px and the glyph is rendered at 27px (~52% of the chip),
+ * ICON SIZE - the chip is 52px and the glyph is rendered at 27px (~52% of the chip),
  * not the 22px the published markup used. That 22px was tuned for a FILLED Font
  * Awesome glyph; a Lucide outline at the same pixel size reads noticeably lighter, so
  * the whole site was re-proportioned to ~52% when it moved to Lucide. Matching the
@@ -59,7 +59,7 @@ export function PillarGrid({ cards, className }: PillarGridProps) {
               card.iconChipClass,
             )}
           >
-            {/* Size is inherited from the chip's text-[27px] — see the note above. */}
+            {/* Size is inherited from the chip's text-[27px] - see the note above. */}
             <Icon name={card.icon} />
           </span>
           <b className="mb-2.5 block text-[19px] font-500 tracking-[-.01em] text-title">

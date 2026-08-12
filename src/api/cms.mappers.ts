@@ -37,8 +37,8 @@ import type {
 /**
  * Strapi rows → the app's content models.
  *
- * The ONLY place that knows Strapi's field names. Everything downstream — the data
- * layer, the sections, the pages — speaks `@/types/content`, so the design cannot be
+ * The ONLY place that knows Strapi's field names. Everything downstream - the data
+ * layer, the sections, the pages - speaks `@/types/content`, so the design cannot be
  * affected by a CMS field rename, and swapping Strapi out later is a change to this
  * file plus `cms.types.ts`.
  *
@@ -47,7 +47,7 @@ import type {
  *    empty. A badge with no logo is a blank card in a grid the design expects to be
  *    full; skipping it keeps the layout honest.
  *  • No editorial defaults are invented. Where the CMS has nothing to say, the
- *    field is omitted and the component decides — it is the component that knows
+ *    field is omitted and the component decides - it is the component that knows
  *    what the published design shows.
  */
 
@@ -86,7 +86,7 @@ interface MediaOptions {
   fallbackHeight?: number;
   /**
    * Prefer a derived size over the original. Strapi only generates formats for
-   * raster images, so this falls through to the original for SVG — desired, not a
+   * raster images, so this falls through to the original for SVG - desired, not a
    * bug to guard against.
    */
   format?: 'thumbnail' | 'small' | 'medium' | 'large';
@@ -94,7 +94,7 @@ interface MediaOptions {
 
 /**
  * Returns `null` for a missing relation so a caller can drop the item rather than
- * render a broken frame — several of these collections mark `logo`/`image` as
+ * render a broken frame - several of these collections mark `logo`/`image` as
  * required in the schema, but a row created before that constraint existed can still
  * come back with `null`.
  */
@@ -123,7 +123,7 @@ export function toContentImage(
 /**
  * Reserved box for a badge image.
  *
- * The design paints these at `height: 90px; width: auto`, so only the RATIO matters —
+ * The design paints these at `height: 90px; width: auto`, so only the RATIO matters -
  * next/image uses it to reserve space and the CSS drives the painted size. 210×90 is
  * the pair the home page's credential badges already use, kept identical so a badge
  * shared between the two pages reserves the same space.
@@ -131,7 +131,7 @@ export function toContentImage(
 const AWARD_BOX = { fallbackWidth: 210, fallbackHeight: 90 } as const;
 
 /**
- * The `award` collection has no group column — just `title`, `logo` and `order` — so
+ * The `award` collection has no group column - just `title`, `logo` and `order` - so
  * it maps to one flat, order-sorted list. The About page's first badge group (the
  * Atlassian partner badges) is bundled brand artwork, not editorial content, and
  * stays in `constants/about.ts`.
@@ -160,7 +160,7 @@ export function toAwardBadges(awards: StrapiAward[]): BadgeGroup['badges'] {
  *
  * Keys are the `track` enumeration values in the Strapi schema. The five tints are
  * the ones the published design uses on its role pills, assigned in the order they
- * appear there. An unrecognised value — an editor adding a sixth track — gets the
+ * appear there. An unrecognised value - an editor adding a sixth track - gets the
  * neutral grey pill rather than no pill, which is why this is a lookup with a default
  * and not an exhaustive `Record` over a union.
  */
@@ -178,8 +178,8 @@ const UNTRACKED_LABEL = 'Open Role';
 /**
  * The prefilled application mailto, matching the published markup's format.
  *
- * `encodeURIComponent` on both parts because a job title containing `&` — which the
- * "Sales & Marketing" track guarantees — silently truncates the subject otherwise:
+ * `encodeURIComponent` on both parts because a job title containing `&` - which the
+ * "Sales & Marketing" track guarantees - silently truncates the subject otherwise:
  * the browser reads everything after the ampersand as a new mailto parameter.
  */
 function applyMailto(title: string, trackLabel: string): string {
@@ -242,8 +242,8 @@ export function toCultureHighlight(row: StrapiLifeAtClovity): CultureHighlight {
       : {}),
     info: row.info,
     image: toContentImage(row.image, {
-      // `info` IS the photo's caption in this collection — "Clovity Team Unites for
-      // Team Week Celebrations at Noida HQ, India" — so it is a far better alt text
+      // `info` IS the photo's caption in this collection - "Clovity Team Unites for
+      // Team Week Celebrations at Noida HQ, India" - so it is a far better alt text
       // than the gallery title in `header_*`, which is shared by three rows.
       fallbackAlt: row.info?.trim() || row.header_normal,
       ...CULTURE_BOX,
@@ -270,7 +270,7 @@ const RESOURCE_BOX = { fallbackWidth: 1100, fallbackHeight: 619 } as const;
 /**
  * First non-empty date wins.
  *
- * Every one of these collections dates its rows differently — `blog_date`, an event's
+ * Every one of these collections dates its rows differently - `blog_date`, an event's
  * `startDateTime`, a webinar's hand-typed `createdAtText`, and `news`, which has no
  * date column at all and only has `createdAt`. Each mapper passes its own preference
  * order, and `publishedAt`/`createdAt` backstop them all because `ContentBase.publishedAt`
@@ -287,7 +287,7 @@ function firstDate(...candidates: Array<string | null | undefined>): string {
  * A human-typed date string → ISO, or `null` when it is not parseable.
  *
  * `webinar.createdAtText` is free text. "January 28, 2026" and "October 14, 2025"
- * parse; "6th February 2025" does NOT — `Date` chokes on the ordinal suffix — and it is
+ * parse; "6th February 2025" does NOT - `Date` chokes on the ordinal suffix - and it is
  * a live value, so a mapper that trusted this would emit `Invalid Date` on that row.
  */
 function parseTypedDate(value: string | null | undefined): string | null {
@@ -316,7 +316,7 @@ export function toBlogPost(row: StrapiBlog): BlogPost | null {
     image,
     href: `${ROUTES.resources.blog}/${row.slug}`,
     // `author` and `category` have no columns in the `blog` content type, so a
-    // CMS-sourced post renders without a byline or a category — both are already
+    // CMS-sourced post renders without a byline or a category - both are already
     // conditional in the detail page's meta row.
     ...(content.length
       ? { content, readingMinutes: readingMinutesFromBlocks(content) }
@@ -375,7 +375,7 @@ export function toEventItem(row: StrapiEvent): EventItem | null {
     // The published site's cards link straight out to `eventLink`; this site has its own
     // detail route, so the outbound link is preserved here rather than in `href`.
     ...(row.eventLink?.trim() ? { registrationUrl: row.eventLink.trim() } : {}),
-    // `category` has no column — the explorer hides its filter and its pill when no
+    // `category` has no column - the explorer hides its filter and its pill when no
     // event carries one, rather than labelling everything "Government".
   };
 }
@@ -385,11 +385,11 @@ export function toEventItem(row: StrapiEvent): EventItem | null {
  *
  * THE COLUMN IS NOT ALWAYS AN ARRAY. Across the four live rows it is an array on some,
  * the EMPTY STRING on one and `null` on another, so the shape is checked before it is
- * trusted — and the two columns are mapped separately, because the detail page labels
+ * trusted - and the two columns are mapped separately, because the detail page labels
  * "The Who" and "Moderator" as different things.
  *
  * Each `name` packs the person AND their role into one string, with whichever separator
- * the editor happened to type — "Matthew Graviss — Public Sector CTO at Atlassian" (em
+ * the editor happened to type - "Matthew Graviss - Public Sector CTO at Atlassian" (em
  * dash), "Cameron Starman – Senior Director…" (en dash), "McKenzie Nieman, Marketing
  * Coordinator @ Carahsoft" (comma). The dash split requires surrounding whitespace so a
  * hyphenated name survives it.
@@ -406,7 +406,7 @@ function toWebinarPeople(column: unknown): WebinarPerson[] {
       const raw = person.name?.trim();
       if (!raw) return null;
 
-      const dash = raw.split(/\s+[—–-]\s+/);
+      const dash = raw.split(/\s+[-–-]\s+/);
       const parts = dash.length > 1 ? dash : raw.split(/,\s+/);
       const [name, ...rest] = parts;
       if (!name?.trim()) return null;
@@ -480,7 +480,7 @@ export function toWebinarItem(row: StrapiWebinar): WebinarItem | null {
     title,
     excerpt: excerptFromBlocks(content),
     // `createdAtText` is what the published page shows as the session date, so it is
-    // preferred over the row's own timestamps — when it parses.
+    // preferred over the row's own timestamps - when it parses.
     publishedAt: firstDate(
       parseTypedDate(row.createdAtText),
       row.publishedAt,
@@ -561,7 +561,7 @@ export interface EnquiryInput {
  * published form asks six questions. Rather than silently discard four of the
  * answers, they are written into `goal` as a labelled block so the whole submission
  * survives in the admin panel. The structured half is ALSO posted to
- * `get-in-touch-lead`, which does have columns for name / company / phone — between
+ * `get-in-touch-lead`, which does have columns for name / company / phone - between
  * the two rows nothing an enquirer typed is lost.
  *
  * If structured columns on `contact-us` are wanted instead, adding them to the

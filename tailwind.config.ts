@@ -64,7 +64,7 @@ const config: Config = {
       /**
        * The About/Careers stat band and the Contact form's two-up rows.
        *
-       * A NAMED screen, not an arbitrary `max-[520px]:` variant — that variant
+       * A NAMED screen, not an arbitrary `max-[520px]:` variant - that variant
        * silently produces NO CSS in this project. Tailwind only generates the
        * `max-*` family when every entry in `screens` is a plain min-width string,
        * and the `to-*` entries above are `{ max: … }` objects, so it is disabled
@@ -294,7 +294,7 @@ const config: Config = {
          * Interior-page hero orbs (`@keyframes abFloat` / `crFloat`).
          *
          * Separate from `floatY` because the travel is 16px, not 10px, and the two
-         * are used side by side on the Careers hero — merging them would change one
+         * are used side by side on the Careers hero - merging them would change one
          * of the two amplitudes.
          */
         heroOrbFloat: {

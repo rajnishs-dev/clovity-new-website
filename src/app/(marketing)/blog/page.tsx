@@ -3,14 +3,12 @@ import { buildMetadata } from '@/lib/seo';
 import { ROUTES } from '@/constants/routes';
 import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
+import { BannerHero } from '@/components/common';
 import { FinalCta } from '@/components/common/CTA';
-import {
-  RevealScope,
-  RESOURCE_CTA_LINKS,
-  ResourceHero,
-} from '@/components/common/Resources';
+import { RevealScope, RESOURCE_CTA_LINKS } from '@/components/common/Resources';
 import { getBlogPosts } from '@/data/blog';
 import { BlogList } from './BlogList';
+import { NavState } from './NavState';
 import {
   blogHeroBanner,
   blogHeroBannerTablet,
@@ -40,11 +38,12 @@ export default async function BlogPage() {
 
   return (
     <>
+      <NavState />
       <Header variant="pill" />
       <RevealScope />
 
       <main id="main-content">
-        <ResourceHero
+        <BannerHero
           breadcrumb={[
             { name: 'Home', href: ROUTES.home },
             { name: 'Blog', href: ROUTES.resources.blog },

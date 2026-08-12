@@ -22,6 +22,7 @@ import {
 } from '@/data/webinars';
 import { WebinarPanel } from '../WebinarPanel';
 import { WebinarSidebar } from '../WebinarSidebar';
+import { NavState } from './NavState';
 
 export const revalidate = 3600;
 
@@ -63,6 +64,7 @@ export default async function WebinarDetailPage({
 
   return (
     <>
+      <NavState />
       <Header variant="pill" />
       <RevealScope />
       <JsonLd

@@ -7,18 +7,20 @@ import type { ImageSource } from '@/types/content';
 import { Icon } from '@/components/ui/Icon';
 import { SmartLink } from '@/components/ui/Link';
 import { JsonLd } from '../JsonLd';
-import { ParallaxImage } from './ParallaxImage';
+import { ParallaxImage } from '../Resources';
 
 /**
- * The split hero shared by every resource listing page (blog, case studies,
- * events, webinars, news) - a dark panel of copy on the left with a
- * diagonal-cut photo on the right, replacing the legacy `.blog-hero` /
- * `.cs-hero` / `.evt-hero` full-bleed banners. No CTA button - breadcrumb,
- * heading and subheading only. Below `md` there isn't room for the split, so
- * the photo runs full-bleed with a left-to-right dark-to-light scrim instead
- * of the solid panel.
+ * The hero shared by every resource listing page (blog, case studies,
+ * events, webinars, news) and by About Us - a full-bleed photo with a
+ * left-to-right dark-to-light scrim and copy on the left. No CTA button -
+ * breadcrumb, heading and subheading only.
+ *
+ * Lives outside `common/Resources` (it used to be `ResourceHero` in there)
+ * because About Us reaching into a folder named for the Resources section
+ * for its own hero read backwards - this component is shared infrastructure,
+ * the same way `PageHero` is for Careers and Contact.
  */
-export interface ResourceHeroProps {
+export interface BannerHeroProps {
   breadcrumb: BreadcrumbItem[];
   heading: ReactNode;
   subheading: ReactNode;
@@ -30,7 +32,7 @@ export interface ResourceHeroProps {
   imageAlt?: string;
 }
 
-export function ResourceHero({
+export function BannerHero({
   breadcrumb,
   heading,
   subheading,
@@ -38,7 +40,7 @@ export function ResourceHero({
   imageTablet,
   imageMobile,
   imageAlt = '',
-}: ResourceHeroProps) {
+}: BannerHeroProps) {
   return (
     <section
       className={cn(
@@ -60,21 +62,13 @@ export function ResourceHero({
         />
       </div>
 
-      {/* Below md: photo runs full-bleed, so a dark-to-light left-to-right
-          scrim keeps the copy readable without hiding the photo. At md+:
-          a solid panel clipped to a diagonal right edge, so the photo shows
-          through beside it instead of under a scrim. */}
       <div
-        className="absolute inset-0 z-[1] bg-[linear-gradient(90deg,rgba(20,22,32,.7)_0%,rgba(20,22,32,.44)_42%,rgba(20,22,32,.18)_72%,rgba(20,22,32,0)_100%)] md:bg-[#141620] md:[clip-path:polygon(0_0,48%_0,40%_100%,0_100%)]"
+        className="absolute inset-0 z-[1] bg-[linear-gradient(90deg,rgba(10,12,20,.85)_0%,rgba(10,12,20,.45)_50%,rgba(10,12,20,0)_100%)]"
         aria-hidden
       />
 
       <div className="relative z-[2] mx-auto w-full max-w-shell px-6">
-        {/* The md+ cap tracks the diagonal's narrowest point (40vw, minus the
-            section's left padding and a safety gap) so the heading can never
-            wrap wide enough to spill past the cut onto the photo; the 420px
-            ceiling just keeps it from ballooning on very wide viewports. */}
-        <div className="max-w-[300px] sm:max-w-[380px] md:max-w-[min(420px,calc(40vw-48px))]">
+        <div className="max-w-[300px] sm:max-w-[380px] md:max-w-[450px]">
           <JsonLd schema={breadcrumbSchema(breadcrumb)} />
           <nav
             aria-label="Breadcrumb"

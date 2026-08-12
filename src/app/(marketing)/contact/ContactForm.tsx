@@ -19,7 +19,7 @@ import {
 /**
  * The contact form card.
  *
- * WHAT THE PUBLISHED PAGE DID AND WHAT THIS DOES DIFFERENTLY —
+ * WHAT THE PUBLISHED PAGE DID AND WHAT THIS DOES DIFFERENTLY -
  * `handleContactForm()` there called `preventDefault()`, hid the form and showed the
  * thank-you panel. Nothing was sent, nothing was validated. The visuals are reproduced
  * exactly; what is new is that a submission now reaches Strapi and that an invalid
@@ -27,7 +27,7 @@ import {
  *
  * FIELDS ARE DRIVEN BY THE CMS. The Strapi `get-in-touch` row for this page decides
  * whether name, company and phone appear and whether each is required. Email, topic and
- * message are always present — they are the enquiry, and hiding one would leave a form
+ * message are always present - they are the enquiry, and hiding one would leave a form
  * that cannot be acted on.
  *
  * The four short fields are PAIRED DYNAMICALLY rather than hard-coded into two rows.
@@ -37,7 +37,7 @@ import {
  * name + email, then company + phone.
  *
  * The submit POSTs to Strapi FROM THE BROWSER, so the request is visible in a visitor's
- * Network tab — see the note on `onSubmit` for what that costs.
+ * Network tab - see the note on `onSubmit` for what that costs.
  */
 
 /* ── Shared field styling, from `.ct-field` ─────────────────────────────── */
@@ -93,7 +93,7 @@ function pairs<T>(items: T[]): T[][] {
 }
 
 export function ContactForm({
-  /** Build-time snapshot. Refreshed in the browser — see `api/cms.hooks.ts`. */
+  /** Build-time snapshot. Refreshed in the browser - see `api/cms.hooks.ts`. */
   initialConfig,
 }: {
   initialConfig: ContactFormConfig;

@@ -15,7 +15,7 @@ import { ROUTES } from '@/constants/routes';
  * their change on the next request instead of waiting out the timer.
  *
  * The time-based windows STAY as a safety net. If the webhook is misconfigured,
- * blocked by a firewall, or fails silently, the site still refreshes on its own —
+ * blocked by a firewall, or fails silently, the site still refreshes on its own -
  * just more slowly. Removing them would make one fragile HTTP call the only thing
  * standing between an edit and a stale site.
  *
@@ -31,7 +31,7 @@ import { ROUTES } from '@/constants/routes';
  * regenerate on demand. So:
  *   • POST only.
  *   • A shared secret is REQUIRED. If `REVALIDATE_SECRET` is unset the endpoint
- *     refuses every request — an unset secret must never degrade to "no auth", which
+ *     refuses every request - an unset secret must never degrade to "no auth", which
  *     is the classic way these endpoints end up public.
  *   • The comparison is timing-safe, so the secret cannot be recovered a byte at a
  *     time by measuring response latency.
@@ -43,7 +43,7 @@ import { ROUTES } from '@/constants/routes';
  * Strapi content-type name → the pages that render it.
  *
  * The resource entries list the LISTING page only. Their detail pages are dynamic
- * segments, and `revalidatePath` needs a concrete path — the webhook payload does carry
+ * segments, and `revalidatePath` needs a concrete path - the webhook payload does carry
  * the entry, but Strapi's shape for it differs by event, so the detail page is left to
  * its own hourly `revalidate` window instead of being guessed at here. Publishing
  * therefore updates a listing immediately and the article within the hour.
@@ -58,7 +58,7 @@ const MODEL_ROUTES: Record<string, readonly string[]> = {
   'get-in-touch': [ROUTES.discover.contact],
 
   // The resource collections. `news` is the singular model name even though the route
-  // is `/api/newses`, and the case studies come from `jsm-resource` — see
+  // is `/api/newses`, and the case studies come from `jsm-resource` - see
   // `CMS_ENDPOINTS` in `src/api/cms.ts` for why that is the right collection.
   //
   // Each also revalidates HOME, because the "What We Learn in the Field" module there
@@ -154,7 +154,7 @@ export async function POST(request: Request) {
     : [...(MODEL_ROUTES[model] ?? [])];
 
   if (paths.length === 0) {
-    // A content type this site does not render — `dynamic-page`, `news-ticker`,
+    // A content type this site does not render - `dynamic-page`, `news-ticker`,
     // `recording`, the lead collections. Not an error: Strapi fires one webhook for
     // everything, and answering 200 keeps it from marking the endpoint as failing
     // and retrying.

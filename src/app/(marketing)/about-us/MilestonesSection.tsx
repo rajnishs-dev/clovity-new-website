@@ -13,16 +13,16 @@ import {
 } from '@/constants/about';
 
 /**
- * "Milestones That Mark Our Progress" — copy on the left, a numbered vertical
+ * "Milestones That Mark Our Progress" - copy on the left, a numbered vertical
  * timeline on the right at a `1fr 1.4fr` split.
  *
  * THE SPINE IS THE PART WORTH READING. `theme.css` draws it with
- * `.tl-step:not(:last-child)::before` — absolutely positioned at `left: 27px`,
+ * `.tl-step:not(:last-child)::before` - absolutely positioned at `left: 27px`,
  * starting at `top: 56px` (immediately under the 56px number chip) and running to the
  * step's bottom edge. Three consequences the Tailwind version has to preserve:
  *
  *  • `left-[27px]`, not `left-7`. 27px is the chip's 56px halved minus the rule's own
- *    2px halved — one pixel off and the line misses the centre of the chip above it.
+ *    2px halved - one pixel off and the line misses the centre of the chip above it.
  *  • it hangs off the STEP, not the container, so its length follows that step's own
  *    height. A single full-height line behind the column would overshoot the last
  *    chip.

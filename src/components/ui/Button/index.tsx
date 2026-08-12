@@ -87,12 +87,12 @@ const VARIANT_CLASS: Record<ButtonVariant, string> = {
   ),
 
   /**
-   * The interior pages' `.btn-white` — the shared pill, not the home page's.
+   * The interior pages' `.btn-white` - the shared pill, not the home page's.
    *
    * `white` above is the HOME page's override (14px radius, weight 800,
    * `#152a6b` text). About / Careers / Contact never load that override, so their
    * white CTA is the base `theme.css` rule: 100px pill, weight 700, `#1e40af`
-   * text, 13px×28px padding. Two different buttons, so two variants — folding them
+   * text, 13px×28px padding. Two different buttons, so two variants - folding them
    * together would silently restyle one of the two.
    *
    * The hover here is the CTA-card-scoped one those pages declare: it stays white

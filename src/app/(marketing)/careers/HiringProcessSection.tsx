@@ -15,17 +15,17 @@ import {
  * "A Straightforward, Five-Step Hiring Process".
  *
  * Five columns at desktop, two below 1024px, one below 560px. Five equal columns is
- * unusually tight, which is why the cards drop to 13.5px body copy — that is the
+ * unusually tight, which is why the cards drop to 13.5px body copy - that is the
  * design's own value, not a compression.
  *
  * THE WATERMARK ORDINAL is the detail that makes these cards work: a 66px display
  * numeral in `#f1f5f9`, positioned 10px ABOVE the card's top edge so it is clipped by
  * `overflow-hidden`. It sits at `z-0` with the icon, title and copy at `z-1` over it,
  * and warms to `#dbeafe` on hover. `select-none` and `aria-hidden` because it is
- * decoration — the step's meaning is its title, and a screen reader announcing "zero
+ * decoration - the step's meaning is its title, and a screen reader announcing "zero
  * one" before "Apply" adds nothing.
  *
- * ICON SIZE — 23px in a 44px chip (~52%), where the published markup said 18px. See
+ * ICON SIZE - 23px in a 44px chip (~52%), where the published markup said 18px. See
  * `components/ui/PillarGrid` for why the ratio changed with the move to Lucide.
  */
 export function HiringProcessSection() {

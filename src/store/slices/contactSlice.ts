@@ -10,7 +10,7 @@ import { newsletterSchema } from '@/lib/validation';
  * *outcome* of a submit, because the result is shown outside the form and must
  * survive a re-render of the form itself.
  *
- * The contact form does NOT use this slice — it holds its own submit state locally,
+ * The contact form does NOT use this slice - it holds its own submit state locally,
  * because that result is shown inside the same card. A `submitContactForm` thunk
  * used to live here for the never-built Express API; nothing ever dispatched it, so
  * it went with that API layer.

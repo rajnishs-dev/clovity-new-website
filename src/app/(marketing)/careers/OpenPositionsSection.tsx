@@ -5,6 +5,7 @@ import { cn } from '@/lib/cn';
 import { revealAligned, revealAttrs } from '@/lib/reveal';
 import type { JobOpening } from '@/types/content';
 import { useJobs } from '@/api/cms.hooks';
+import { LoadMoreGrid } from '@/components/common/Resources';
 import {
   ButtonLink,
   GradientText,
@@ -19,12 +20,12 @@ import {
 import { JobCard } from './JobCard';
 
 /**
- * "Current Openings Across Our Delivery Teams" — the Strapi-backed roles list.
+ * "Current Openings Across Our Delivery Teams" - the Strapi-backed roles list.
  *
  * A CLIENT COMPONENT because the team tabs filter in place. The legacy page did this
  * by writing `style.display` on every card from a click handler; here the filter is
  * state and the list is derived, so a card that is filtered out is not in the DOM
- * rather than hidden — same visual result, and no chance of a hidden card staying
+ * rather than hidden - same visual result, and no chance of a hidden card staying
  * focusable.
  *
  * TABS ARE DERIVED FROM THE DATA, not hard-coded. A fixed tab list breaks in both
@@ -33,12 +34,12 @@ import { JobCard } from './JobCard';
  * bundled roles carry the published page's own team names, so the offline state shows
  * exactly the tabs the design does.
  *
- * Each card owns its own expand/menu state — see `JobCard` for why that matters at
+ * Each card owns its own expand/menu state - see `JobCard` for why that matters at
  * 173 of them.
  */
 
 export interface OpenPositionsSectionProps {
-  /** Build-time snapshot. Refreshed in the browser — see `api/cms.hooks.ts`. */
+  /** Build-time snapshot. Refreshed in the browser - see `api/cms.hooks.ts`. */
   initialJobs: JobOpening[];
 }
 
@@ -47,23 +48,36 @@ export function OpenPositionsSection({
 }: OpenPositionsSectionProps) {
   const { data: jobs, filters } = useJobs(initialJobs);
   const [activeFilter, setActiveFilter] = useState('all');
+  const [positionQuery, setPositionQuery] = useState('');
+  const [locationQuery, setLocationQuery] = useState('');
 
   /**
    * Fall back to "All Roles" if the refreshed list no longer has the selected
-   * track — otherwise closing the last opening in a team leaves the visitor on a
+   * track - otherwise closing the last opening in a team leaves the visitor on a
    * tab that has quietly disappeared, staring at an empty list.
    */
   const selected = filters.some((filter) => filter.id === activeFilter)
     ? activeFilter
     : 'all';
 
-  const visible = useMemo(
-    () =>
-      selected === 'all'
-        ? jobs
-        : jobs.filter((job) => job.track === selected),
-    [jobs, selected],
-  );
+  const searching = positionQuery.trim() !== '' || locationQuery.trim() !== '';
+
+  const visible = useMemo(() => {
+    const trackFiltered =
+      selected === 'all' ? jobs : jobs.filter((job) => job.track === selected);
+
+    const posQuery = positionQuery.trim().toLowerCase();
+    const locQuery = locationQuery.trim().toLowerCase();
+    if (!posQuery && !locQuery) return trackFiltered;
+
+    return trackFiltered.filter((job) => {
+      const matchesPosition =
+        !posQuery || job.title.toLowerCase().includes(posQuery);
+      const matchesLocation =
+        !locQuery || (job.location ?? '').toLowerCase().includes(locQuery);
+      return matchesPosition && matchesLocation;
+    });
+  }, [jobs, selected, positionQuery, locationQuery]);
 
   return (
     <Section
@@ -86,6 +100,44 @@ export function OpenPositionsSection({
         subheadingClassName="mt-3"
         className="mx-auto mb-10 max-w-[680px] md:text-center"
       />
+
+      <div
+        className={cn(
+          'mb-9 flex flex-wrap justify-center gap-3.5',
+          revealAligned('center'),
+        )}
+        {...revealAttrs()}
+      >
+        <div className="relative min-w-[220px] max-w-[320px] flex-1">
+          <input
+            type="text"
+            value={positionQuery}
+            onChange={(event) => setPositionQuery(event.target.value)}
+            placeholder="Search by position…"
+            aria-label="Search by position"
+            className="w-full rounded-xl bg-white py-3 pl-4 pr-11 text-[14px] text-title shadow-[0_0_0_1px_rgba(15,23,42,.08)] outline-none transition-shadow placeholder:text-[#94a3b8] focus:shadow-[0_0_0_1.5px_#2563eb]"
+          />
+          <Icon
+            name="search"
+            className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-[14px] text-[#94a3b8]"
+          />
+        </div>
+
+        <div className="relative min-w-[220px] max-w-[320px] flex-1">
+          <input
+            type="text"
+            value={locationQuery}
+            onChange={(event) => setLocationQuery(event.target.value)}
+            placeholder="Search by location…"
+            aria-label="Search by location"
+            className="w-full rounded-xl bg-white py-3 pl-4 pr-11 text-[14px] text-title shadow-[0_0_0_1px_rgba(15,23,42,.08)] outline-none transition-shadow placeholder:text-[#94a3b8] focus:shadow-[0_0_0_1.5px_#2563eb]"
+          />
+          <Icon
+            name="map-pin"
+            className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-[14px] text-[#94a3b8]"
+          />
+        </div>
+      </div>
 
       {/* Only render the tab row when there is something to filter. */}
       {filters.length > 1 ? (
@@ -121,13 +173,20 @@ export function OpenPositionsSection({
         </div>
       ) : null}
 
-      <div
-        className={cn('flex flex-col gap-4', revealAligned('left'))}
-        {...revealAttrs()}
-      >
-        {visible.map((job) => (
-          <JobCard key={job.id} job={job} />
-        ))}
+      <div className={cn(revealAligned('left'))} {...revealAttrs()}>
+        <LoadMoreGrid
+          // Remounts on tab or search change, so switching teams or typing a new
+          // query always starts back at the first page instead of carrying over a
+          // "load more" count from a different, larger result set.
+          key={`${selected}-${positionQuery}-${locationQuery}`}
+          items={visible.map((job) => (
+            <JobCard key={job.id} job={job} />
+          ))}
+          initialCount={10}
+          step={10}
+          gridClassName="flex flex-col gap-4"
+          loadMoreLabel="Load More Positions"
+        />
       </div>
 
       {visible.length === 0 ? (
@@ -135,7 +194,9 @@ export function OpenPositionsSection({
           role="status"
           className="px-5 py-10 text-center text-[14.5px] text-[#64748b]"
         >
-          {CAREERS_ROLES_CONTENT.emptyMessage}
+          {searching
+            ? 'No positions match your search - try a different title or location.'
+            : CAREERS_ROLES_CONTENT.emptyMessage}
         </p>
       ) : null}
 

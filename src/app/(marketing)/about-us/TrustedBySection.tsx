@@ -12,7 +12,7 @@ import { ABOUT_TRUSTED_CONTENT } from '@/constants/about';
  * Differences from that page, all of them the published design's:
  *  • the section is a `#f5f9ff → #ffffff` vertical gradient rather than flat
  *  • the edge fades match that gradient's top colour, not the home page's `#f7f9fc`
- *  • the pills are bare white — the border and shadow come from a `.trusted-sec
+ *  • the pills are bare white - the border and shadow come from a `.trusted-sec
  *    .logo-pill` override that only the home page's stylesheet declares
  *  • no customer-story cards; this page shows the marquee alone
  *
@@ -21,7 +21,7 @@ import { ABOUT_TRUSTED_CONTENT } from '@/constants/about';
  * logo set changes.
  *
  * Not a `<Section>` because the marquee has to be full-bleed while the header stays
- * inside the 1280px track — one padding value cannot do both.
+ * inside the 1280px track - one padding value cannot do both.
  */
 export function TrustedBySection({ logos }: { logos: ClientLogo[] }) {
   return (

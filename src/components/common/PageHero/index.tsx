@@ -8,28 +8,29 @@ import { AppImage, IMAGE_SIZES } from '@/components/ui/Image';
 import { SmartLink } from '@/components/ui/Link';
 
 /**
- * The dark photo hero shared by About, Careers and Contact.
+ * The dark photo hero shared by Careers and Contact.
  *
- * All three declare the same block in their own page stylesheet under three
- * different prefixes (`.ab-hero`, `.cr-hero`, `.ct-hero`) with the same values:
- * 550px minimum height, 150px top / 56px bottom padding, `#0a0b10` behind the
- * photo, the photo pre-scaled to 1.12 so the parallax has room to travel, and a
- * left-to-right graphite scrim over it. Everything the three pages actually differ
- * on is a prop:
+ * Both declare the same block in their own page stylesheet under two different
+ * prefixes (`.cr-hero`, `.ct-hero`) with the same values: 550px minimum height,
+ * 150px top / 56px bottom padding, `#0a0b10` behind the photo, the photo
+ * pre-scaled to 1.12 so the parallax has room to travel, and a left-to-right
+ * graphite scrim over it. Everything the two pages actually differ on is a prop:
  *
- *  • `overlay` — the scrim gradient. About and Contact share one; Careers holds its
- *    mid-stops slightly more opaque.
- *  • `objectPosition` — which part of the photograph stays in frame (30% / 32% /
- *    40% from the top).
- *  • `orbs` — Careers is the only one of the three that renders them. About defines
- *    orb rules in its stylesheet but its markup never uses them, so rendering them
- *    "for consistency" would add artwork the page does not have.
- *  • `titleClassName` — the max-width and bottom margin on the h1, which differ by
+ *  • `overlay` - the scrim gradient. Careers holds its mid-stops slightly more
+ *    opaque than Contact's.
+ *  • `objectPosition` - which part of the photograph stays in frame (32% / 40%
+ *    from the top).
+ *  • `orbs` - Careers is the only one of the two that renders them.
+ *  • `titleClassName` - the max-width and bottom margin on the h1, which differ by
  *    ~20px per page.
+ *
+ * About Us used to be the third page here, but its hero now runs through
+ * `BannerHero` (the same layout as Blog/Events/Webinars/News/Case Studies)
+ * instead - see `about-us/page.tsx`.
  *
  * A CLIENT COMPONENT, for one reason: the parallax. Each page ran an inline script
  * that drove `transform` from the scroll position, and reproducing it needs a
- * listener. Everything else here would server-render happily, and still does — this
+ * listener. Everything else here would server-render happily, and still does - this
  * is prerendered HTML; the `useEffect` only adds the listener afterwards.
  */
 
@@ -48,10 +49,10 @@ export interface PageHeroProps {
   overlay: string;
   /** Visible trail. The last entry is the current page and is not linked. */
   crumbs: BreadcrumbItem[];
-  /** Classes for the crumb row — the three pages differ only in bottom margin. */
+  /** Classes for the crumb row - the three pages differ only in bottom margin. */
   crumbClassName?: string;
   title: ReactNode;
-  /** Classes for the h1 — carries the per-page max-width and bottom margin. */
+  /** Classes for the h1 - carries the per-page max-width and bottom margin. */
   titleClassName?: string;
   lead: ReactNode;
   leadClassName?: string;
@@ -82,7 +83,7 @@ export function PageHero({
     const section = sectionRef.current;
     const img = mediaRef.current?.querySelector('img');
     if (!section || !img) return;
-    // Same guard the inline script used — no parallax for reduced motion.
+    // Same guard the inline script used - no parallax for reduced motion.
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
     let ticking = false;
@@ -199,7 +200,7 @@ export function PageHero({
 }
 
 /**
- * The `.accent` span inside a hero headline — the light-blue second line.
+ * The `.accent` span inside a hero headline - the light-blue second line.
  *
  * A named export rather than a class string at each call site, because all three
  * heroes use it and it is the one piece of the headline that carries meaning

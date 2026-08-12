@@ -412,8 +412,8 @@ export interface FaqItem {
  *
  * Maps 1:1 onto the Strapi `job` content type, plus two derived fields the design
  * needs and the CMS does not store:
- *  • `trackTagClass` — the pill tint for the track, resolved from a fixed palette.
- *  • `applyHref` — the prefilled mailto the design's "Apply Now" button uses.
+ *  • `trackTagClass` - the pill tint for the track, resolved from a fixed palette.
+ *  • `applyHref` - the prefilled mailto the design's "Apply Now" button uses.
  */
 export interface JobOpening {
   id: string;
@@ -428,7 +428,7 @@ export interface JobOpening {
   /**
    * Employment type chip, e.g. Full-time / Contract.
    *
-   * NOT a Strapi field — the `job` content type has no column for it. It exists so
+   * NOT a Strapi field - the `job` content type has no column for it. It exists so
    * the bundled fallback roles can render the second meta chip the published page
    * shows; CMS-sourced roles fill that slot with `experience` instead.
    */

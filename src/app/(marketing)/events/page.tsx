@@ -3,11 +3,17 @@ import { buildMetadata } from '@/lib/seo';
 import { ROUTES } from '@/constants/routes';
 import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
+import { BannerHero } from '@/components/common';
 import { FinalCta } from '@/components/common/CTA';
 import {
-  RevealScope, RESOURCE_CTA_LINKS, ResourceHero, SplitMediaCta } from '@/components/common/Resources';
+  RevealScope,
+  RESOURCE_CTA_LINKS,
+  SplitMediaCta,
+} from '@/components/common/Resources';
 import { getEventItems } from '@/data/events';
 import { EventsExplorer } from './EventsExplorer';
+import { NavState } from './NavState';
+import { eventsHeroBanner } from '@/constants/media';
 
 export const metadata: Metadata = buildMetadata({
   title: 'Events - Atlassian Tours, Summits & Community',
@@ -16,7 +22,7 @@ export const metadata: Metadata = buildMetadata({
   path: ROUTES.resources.events,
 });
 
-/** Safety net under the Strapi webhook — see the note in `/blog`. */
+/** Safety net under the Strapi webhook - see the note in `/blog`. */
 export const revalidate = 3600;
 
 export default async function EventsPage() {
@@ -24,11 +30,12 @@ export default async function EventsPage() {
 
   return (
     <>
+      <NavState />
       <Header variant="pill" />
       <RevealScope />
 
       <main id="main-content">
-        <ResourceHero
+        <BannerHero
           breadcrumb={[
             { name: 'Home', href: ROUTES.home },
             { name: 'Events', href: ROUTES.resources.events },
@@ -41,7 +48,7 @@ export default async function EventsPage() {
             </>
           }
           subheading="Government tours, Atlassian conferences, and industry events where the Clovity team connects with the public sector and Atlassian community in person."
-          image="https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&w=1800&q=80"
+          image={eventsHeroBanner}
         />
 
         <section className="bg-white py-14 sm:py-20">

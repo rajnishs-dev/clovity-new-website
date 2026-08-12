@@ -3,14 +3,13 @@ import { buildMetadata } from '@/lib/seo';
 import { ROUTES } from '@/constants/routes';
 import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
+import { BannerHero } from '@/components/common';
 import { FinalCta } from '@/components/common/CTA';
-import {
-  RevealScope,
-  RESOURCE_CTA_LINKS,
-  ResourceHero,
-} from '@/components/common/Resources';
+import { RevealScope, RESOURCE_CTA_LINKS } from '@/components/common/Resources';
 import { getNewsItems } from '@/data/news';
 import { NewsList } from './NewsList';
+import { NavState } from './NavState';
+import { newsHeroBanner } from '@/constants/media';
 
 export const metadata: Metadata = buildMetadata({
   title: 'News - Company Updates & Press Releases',
@@ -19,7 +18,7 @@ export const metadata: Metadata = buildMetadata({
   path: ROUTES.resources.news,
 });
 
-/** Safety net under the Strapi webhook — see the note in `/blog`. */
+/** Safety net under the Strapi webhook - see the note in `/blog`. */
 export const revalidate = 3600;
 
 export default async function NewsPage() {
@@ -27,11 +26,12 @@ export default async function NewsPage() {
 
   return (
     <>
+      <NavState />
       <Header variant="pill" />
       <RevealScope />
 
       <main id="main-content">
-        <ResourceHero
+        <BannerHero
           breadcrumb={[
             { name: 'Home', href: ROUTES.home },
             { name: 'News', href: ROUTES.resources.news },
@@ -43,7 +43,7 @@ export default async function NewsPage() {
             </>
           }
           subheading="Announcements, recognitions, and press coverage from the Clovity team."
-          image={`https://images.unsplash.com/photo-1495020689067-958852a7765e?auto=format&fit=crop&w=1800&q=80`}
+          image={newsHeroBanner}
         />
 
         <section className="bg-[#f8fafc] pt-14 pb-[240px] sm:pt-20">

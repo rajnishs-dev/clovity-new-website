@@ -6,7 +6,7 @@ import {
 } from '@/components/ui';
 import { CAREERS_WHY_CARDS, CAREERS_WHY_CONTENT } from '@/constants/careers';
 
-/** "Three Reasons Our Teams Stay and Grow" — the same `.why-grid` the About page uses. */
+/** "Three Reasons Our Teams Stay and Grow" - the same `.why-grid` the About page uses. */
 export function WhySection() {
   return (
     <Section padding="tight" className="bg-white">

@@ -1,7 +1,7 @@
 'use client';
 
 import type { WebinarItem } from '@/types/content';
-import { ResourceCard } from '@/components/common/Resources';
+import { LoadMoreGrid, ResourceCard } from '@/components/common/Resources';
 import { useWebinarItems } from '@/api/cms.hooks';
 
 /**
@@ -18,8 +18,8 @@ export function WebinarGrid({
   const { data: webinars } = useWebinarItems(initialWebinars);
 
   return (
-    <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-      {webinars.map((webinar) => (
+    <LoadMoreGrid
+      items={webinars.map((webinar) => (
         <ResourceCard
           key={webinar.id}
           href={webinar.href}
@@ -31,6 +31,10 @@ export function WebinarGrid({
           ctaLabel="Get Recording"
         />
       ))}
-    </div>
+      initialCount={10}
+      step={10}
+      gridClassName="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3"
+      loadMoreLabel="Load More Webinars"
+    />
   );
 }

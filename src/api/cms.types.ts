@@ -2,8 +2,8 @@
  * Strapi 5 wire shapes for the `clovity-admin` instance.
  *
  * These are the RAW responses, not the app's content models. Everything here is
- * shaped by Strapi's REST conventions — flattened attributes, a `documentId`
- * alongside the numeric `id`, media as a nested object with `formats` — and none
+ * shaped by Strapi's REST conventions - flattened attributes, a `documentId`
+ * alongside the numeric `id`, media as a nested object with `formats` - and none
  * of it leaks past `cms.mappers.ts`. Sections consume `@/types/content`, so if
  * Strapi is ever swapped for another CMS only this file and the mappers change.
  *
@@ -70,7 +70,7 @@ export interface StrapiMedia extends StrapiEntityBase {
 
 /* ── Collections this site reads ────────────────────────────────────────── */
 
-/** `award` — the certification / recognition badges. */
+/** `award` - the certification / recognition badges. */
 export interface StrapiAward extends StrapiEntityBase {
   title: string;
   logo: StrapiMedia | null;
@@ -78,7 +78,7 @@ export interface StrapiAward extends StrapiEntityBase {
 }
 
 /**
- * `job` — a career opening.
+ * `job` - a career opening.
  *
  * `track` is a Strapi enumeration, but it is typed as a plain string here on
  * purpose: an editor adding a value in the admin panel must not make the frontend
@@ -96,7 +96,7 @@ export interface StrapiJob extends StrapiEntityBase {
   slug: string;
 }
 
-/** `life-at-clovity` — culture highlight cards. */
+/** `life-at-clovity` - culture highlight cards. */
 export interface StrapiLifeAtClovity extends StrapiEntityBase {
   header_normal: string;
   header_highlighted: string | null;
@@ -108,7 +108,7 @@ export interface StrapiLifeAtClovity extends StrapiEntityBase {
 }
 
 /**
- * `get-in-touch` — per-page contact form configuration.
+ * `get-in-touch` - per-page contact form configuration.
  *
  * One row per `website_slug`, so the contact page can ask for its own row and let
  * an editor decide which fields show and which are mandatory without a deploy.
@@ -132,7 +132,7 @@ export interface StrapiGetInTouch extends StrapiEntityBase {
 /* ── Resource collections ───────────────────────────────────────────────── */
 
 /**
- * `blog` — a blog post. 504 published rows.
+ * `blog` - a blog post. 504 published rows.
  *
  * `content` is WYSIWYG HTML despite the `richtext` type; `cms.richtext.ts` documents
  * the tag census. Every live row has both an `image` and a `blog_date`, but both stay
@@ -148,7 +148,7 @@ export interface StrapiBlog extends StrapiEntityBase {
 }
 
 /**
- * `news` — a press release or announcement. 56 published rows.
+ * `news` - a press release or announcement. 56 published rows.
  *
  * PLURAL ROUTE IS `newses`, which is why `CMS_ENDPOINTS` writes it down.
  *
@@ -160,7 +160,7 @@ export interface StrapiBlog extends StrapiEntityBase {
  * seven-year-old story to the top of the page. The list is date-ordered, matching
  * `website-t`.
  *
- * `content` has NO date field of its own — `createdAt` is the only chronology.
+ * `content` has NO date field of its own - `createdAt` is the only chronology.
  */
 export interface StrapiNews extends StrapiEntityBase {
   title: string;
@@ -174,9 +174,9 @@ export interface StrapiNews extends StrapiEntityBase {
 }
 
 /**
- * `event` — a conference, tour stop or summit. 64 published rows.
+ * `event` - a conference, tour stop or summit. 64 published rows.
  *
- * `featureImage`, not `featuredImage` — the two sibling collections spell it the other
+ * `featureImage`, not `featuredImage` - the two sibling collections spell it the other
  * way, and getting it wrong yields `undefined` and a dropped card rather than an error.
  *
  * There is NO description column, so an event has no body and no editorial teaser. The
@@ -199,7 +199,7 @@ export interface StrapiEvent extends StrapiEntityBase {
  * One person in a webinar's `theWho` / `moderator` JSON column.
  *
  * `name` holds BOTH the person and their role in one string, separated by an em dash,
- * an en dash or a comma depending on who typed the row — see `toWebinarPresenters`.
+ * an en dash or a comma depending on who typed the row - see `toWebinarPresenters`.
  */
 export interface StrapiWebinarPerson {
   name?: string;
@@ -207,7 +207,7 @@ export interface StrapiWebinarPerson {
 }
 
 /**
- * `webinar` — a live or recorded session. 3 published rows.
+ * `webinar` - a live or recorded session. 3 published rows.
  *
  * `theWho` and `moderator` are `json` columns typed `unknown` on purpose: they hold an
  * ARRAY of `StrapiWebinarPerson` on some rows and the EMPTY STRING on others (verified
@@ -215,7 +215,7 @@ export interface StrapiWebinarPerson {
  *
  * `eventDescription` is plain text with markdown emphasis, not HTML.
  *
- * `createdAtText` is a human-typed date — "January 28, 2026" parses, "6th February
+ * `createdAtText` is a human-typed date - "January 28, 2026" parses, "6th February
  * 2025" does not, hence the fallback chain in the mapper.
  */
 export interface StrapiWebinar extends StrapiEntityBase {
@@ -238,12 +238,12 @@ export interface StrapiWebinar extends StrapiEntityBase {
 }
 
 /**
- * `jsm-resource` — what the published site renders as a CASE STUDY. 3 published rows.
+ * `jsm-resource` - what the published site renders as a CASE STUDY. 3 published rows.
  *
  * NOT the `case-study` collection, which also exists and holds 25 older rows ("JIRA
  * Service Management", "DevOps as a Service") that no page shows. `website-t` reads
  * `jsm-resources` for `/case-study`, and its three rows are exactly the three case
- * studies the design was built around — Forcepoint, Hashgraph and DSH.
+ * studies the design was built around - Forcepoint, Hashgraph and DSH.
  *
  * No client / industry / outcome columns exist, so those fields on `CaseStudyItem` stay
  * unset for CMS rows and their meta chips do not render.
@@ -263,7 +263,7 @@ export interface StrapiJsmResource extends StrapiEntityBase {
  *
  * The content type has exactly two columns (`email`, `goal`), which is why the
  * contact form's other answers are folded into `goal` as a labelled block rather
- * than dropped — see `mappers.composeEnquiryGoal`.
+ * than dropped - see `mappers.composeEnquiryGoal`.
  */
 export interface StrapiContactUsInput {
   email: string;
@@ -271,14 +271,14 @@ export interface StrapiContactUsInput {
 }
 
 /**
- * `recording` POST body — a webinar recording request.
+ * `recording` POST body - a webinar recording request.
  *
  * The collection is called `recordings`; `website-t` posts the same shape to it from its
  * webinar page, and matching it is deliberate so both sites' submissions land as one
  * comparable set of rows.
  *
  * `recordingMonth` and `recordingDocId` are BOTH `required` in the content type, so a
- * body missing either is rejected with a 400 — see the note in `RegisterForm` about where
+ * body missing either is rejected with a 400 - see the note in `RegisterForm` about where
  * `recordingMonth` comes from, because the field `website-t` fills it from is empty on
  * three of the four published webinars.
  */
@@ -292,7 +292,7 @@ export interface StrapiRecordingInput {
   recordingMonth: string;
 }
 
-/** `get-in-touch-lead` POST body — the structured half of an enquiry. */
+/** `get-in-touch-lead` POST body - the structured half of an enquiry. */
 export interface StrapiGetInTouchLeadInput {
   name?: string;
   company_name?: string;

@@ -5,7 +5,7 @@
  * source page had nothing behind them:
  *
  *  • THE FORM SUBMITS. The published handler called `preventDefault()` and revealed the
- *    thank-you panel — no message was ever sent. Submissions now write to Strapi
+ *    thank-you panel - no message was ever sent. Submissions now write to Strapi
  *    (`contact-us` for the enquiry text, `get-in-touch-lead` for the structured
  *    fields), through a Server Action so the write token stays server-side.
  *  • ITS FIELDS ARE CONFIGURABLE. The `get-in-touch` row for the `contact` slug decides
@@ -55,7 +55,7 @@ export const metadata: Metadata = buildMetadata({
  * Regenerated every hour.
  *
  * Longer than About and Careers because the only CMS-backed thing here is the form's
- * field configuration, which changes when someone deliberately reconfigures the form —
+ * field configuration, which changes when someone deliberately reconfigures the form -
  * not on a content schedule. The submission path is a Server Action and is never
  * cached, so a stale page cannot mean a lost enquiry.
  */

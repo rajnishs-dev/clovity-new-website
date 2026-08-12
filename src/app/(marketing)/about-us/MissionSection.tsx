@@ -5,13 +5,13 @@ import { ABOUT_MISSION_QUOTE } from '@/constants/about';
 /**
  * The mission statement, in `theme.css`'s `.quote-band`.
  *
- * A 900px track — narrower than the site's 1280px shell — because a single sentence
+ * A 900px track - narrower than the site's 1280px shell - because a single sentence
  * set at up to 28px needs a shorter measure to stay readable.
  *
  * The opening quotation mark is a real character in a `<span>`, not a `::before`:
  * the published markup writes `&ldquo;` into the DOM, and it is styled at 56px in
  * Georgia, a serif, which is the only place on the site that departs from the two
- * brand faces. That is deliberate — a serif quote mark reads as a quote mark; the
+ * brand faces. That is deliberate - a serif quote mark reads as a quote mark; the
  * geometric sans version reads as stray punctuation.
  *
  * `aria-hidden` on it, though: a screen reader announcing "left double quotation

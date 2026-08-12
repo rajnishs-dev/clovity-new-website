@@ -85,8 +85,8 @@ export interface SectionHeaderProps {
    * Classes for the eyebrow label.
    *
    * Needed because the gap between label and heading is a per-section decision in
-   * the source design — 16px on most section headers, 12px on the About page's
-   * "Trusted By" — and the label is an `inline-block`, so that gap can only be its
+   * the source design - 16px on most section headers, 12px on the About page's
+   * "Trusted By" - and the label is an `inline-block`, so that gap can only be its
    * own bottom margin.
    */
   labelClassName?: string;

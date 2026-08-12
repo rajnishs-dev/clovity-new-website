@@ -8,7 +8,7 @@ import { decodeHtmlEntities } from '@/lib/format';
  * ── WHY NOT `dangerouslySetInnerHTML` ──
  * The source is Strapi's `job_description`, and in the live instance every one of
  * the 173 postings is HTML pasted out of a WYSIWYG. Injecting that string would put
- * markup written by whoever last edited a job ad straight into the page — one
+ * markup written by whoever last edited a job ad straight into the page - one
  * `<img onerror=…>` in a paste from an external document is stored XSS, and it would
  * execute for every visitor. The legacy site does exactly that (its markdown
  * renderer passes HTML through untouched); this does not.
@@ -24,7 +24,7 @@ import { decodeHtmlEntities } from '@/lib/format';
  * Tag names are *read* and then discarded; nothing from the source is ever emitted
  * as markup. The output is always React elements whose children are strings, which
  * React escapes. So the worst a hostile paste can do is render as visible text.
- * Attributes — including `href`, `style` and every `on*` handler — are dropped
+ * Attributes - including `href`, `style` and every `on*` handler - are dropped
  * wholesale, because none of them can be trusted and none is needed to read a job
  * posting.
  *
@@ -32,7 +32,7 @@ import { decodeHtmlEntities } from '@/lib/format';
  * are what make a posting readable, and flattening one to a single paragraph (which
  * is all the card teaser needs) would make the expanded panel unusable.
  *
- * Handles markdown too — Strapi types the column as markdown even though the live
+ * Handles markdown too - Strapi types the column as markdown even though the live
  * content is HTML, so both are covered rather than betting on one.
  */
 
@@ -49,7 +49,7 @@ type Block =
   | { kind: 'paragraph'; spans: Span[] }
   | { kind: 'list'; ordered: boolean; items: Span[][] };
 
-/** Tags whose entire contents are dropped — never prose. */
+/** Tags whose entire contents are dropped - never prose. */
 const VOID_CONTENT = /<(script|style)\b[^>]*>[\s\S]*?<\/\1>/gi;
 
 const BOLD_TAGS = new Set(['strong', 'b']);
@@ -80,8 +80,8 @@ const BREAKS_BLOCK = new Set([
  * Turn rich text into blocks with a single-pass tokeniser.
  *
  * ── WHY A TOKENISER AND NOT A REGEX PER BLOCK ──
- * The obvious approach — one regex matching `<(p|li|ul|h1)…>(.*?)</\1>` and walking
- * the matches — is wrong on nested markup, and wrong in a way that looks fine.
+ * The obvious approach - one regex matching `<(p|li|ul|h1)…>(.*?)</\1>` and walking
+ * the matches - is wrong on nested markup, and wrong in a way that looks fine.
  * Scanning left to right, `<ul>` matches BEFORE the `<li>`s inside it, the scan
  * cursor jumps past `</ul>`, and every bullet in that list is skipped. Measured
  * against the live postings that silently dropped up to 98% of a job description:
@@ -90,7 +90,7 @@ const BREAKS_BLOCK = new Set([
  * the only reason it was caught, and it is worth keeping one around.
  *
  * So: tags are read one at a time and drive a small state machine. Nesting depth
- * does not matter, because nothing is "consumed" — text always lands in whichever
+ * does not matter, because nothing is "consumed" - text always lands in whichever
  * buffer is currently open.
  *
  * Markdown is normalised to the same tags first, so there is one code path.
@@ -246,7 +246,7 @@ function toBlocks(source: string): Block[] {
     }
 
     if (BREAKS_BLOCK.has(name)) {
-      // Inside a list item a `<p>` is a line break, not a new block — flushing the
+      // Inside a list item a `<p>` is a line break, not a new block - flushing the
       // buffer there would strand the item's text outside the bullet.
       if (itemBuffer !== null) pushText(' ');
       else flushBuffer();
@@ -289,7 +289,7 @@ function renderSpans(spans: Span[]): ReactNode {
 }
 
 export interface RichTextProps {
-  /** Raw CMS field — HTML, markdown, or a mix. */
+  /** Raw CMS field - HTML, markdown, or a mix. */
   source: string;
   className?: string;
 }

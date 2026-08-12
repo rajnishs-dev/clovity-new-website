@@ -4,8 +4,8 @@ import { CAREERS_STATS } from '@/constants/careers';
 /**
  * The four-metric navy band.
  *
- * Identical treatment to the About page's — `.cr-stat-band` and `.ab-stat-band` are
- * the same three-stop gradient with the same orange accent — but different metrics:
+ * Identical treatment to the About page's - `.cr-stat-band` and `.ab-stat-band` are
+ * the same three-stop gradient with the same orange accent - but different metrics:
  * this page leads with Platinum and adds the Great Place to Work certification,
  * because those are the two a candidate is weighing.
  */

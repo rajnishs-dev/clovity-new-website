@@ -5,14 +5,14 @@ import type { ContentImage } from '@/types/content';
 import { AppImage, IMAGE_SIZES } from '../Image';
 
 /**
- * `theme.css`'s `.split-media` — the photo-beside-copy layout used by About's
+ * `theme.css`'s `.split-media` - the photo-beside-copy layout used by About's
  * "Who We Are" / "Let's Build What's Next" and Careers' "Life at Clovity".
  *
  * One column below 1024px, two equal columns above, 56px gap, vertically centred.
  *
  * `reverse` reproduces `.split-media--reverse > *:first-child { order: 2 }`, which
  * only applies at `lg`. That detail is load-bearing: the media stays the FIRST child
- * in the DOM either way, so on a phone the photo is always above the copy — which is
+ * in the DOM either way, so on a phone the photo is always above the copy - which is
  * the reading order the design wants. Swapping the JSX order instead would put the
  * photo below the copy on mobile for reversed sections only.
  */
@@ -45,7 +45,7 @@ export function SplitMedia({
 }
 
 /**
- * `.split-media-media` — the rounded, shadowed photo frame.
+ * `.split-media-media` - the rounded, shadowed photo frame.
  *
  * Deliberately NOT a `fill` image. The frame has no height of its own: the original
  * is a bare `<img>` whose natural aspect ratio sets the box, and `height: 100%`

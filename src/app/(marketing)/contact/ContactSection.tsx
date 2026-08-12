@@ -11,11 +11,11 @@ import { ContactForm } from './ContactForm';
 /**
  * The form-and-side-card split.
  *
- * `1.15fr .85fr` above 1020px, one column below — the form gets the extra width
+ * `1.15fr .85fr` above 1020px, one column below - the form gets the extra width
  * because it holds two-up rows and the side card is a single list.
  *
  * The side card is a Server Component: it is static content, so only the form itself
- * ships JavaScript. That is why the two are separate components rather than one — the
+ * ships JavaScript. That is why the two are separate components rather than one - the
  * card's markup would otherwise be dragged into the client bundle for no reason.
  *
  * `items-start` on the grid, not `items-center`: the side card is shorter than the
@@ -53,7 +53,7 @@ export function ContactSection({ config }: { config: ContactFormConfig }) {
               className="relative z-[1] mb-5 flex items-start gap-3.5"
             >
               <span className="flex h-[42px] w-[42px] shrink-0 items-center justify-center rounded-xl border border-white/[.16] bg-white/10 text-[22px] text-[#fdba74]">
-                {/* Size comes from the chip's own text-[22px] — ~52% of 42px. */}
+                {/* Size comes from the chip's own text-[22px] - ~52% of 42px. */}
                 <Icon name={channel.icon} />
               </span>
               <div>

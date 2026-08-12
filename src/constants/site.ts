@@ -66,7 +66,7 @@ export const siteConfig = {
      */
     globalEmail: 'info-global@clovity.com',
     phone: '(925) 264-6360',
-    /** `tel:` form of `phone` — digits only, so the dialler cannot misparse it. */
+    /** `tel:` form of `phone` - digits only, so the dialler cannot misparse it. */
     phoneHref: 'tel:+19252646360',
     headquarters: 'Dublin, California',
   },

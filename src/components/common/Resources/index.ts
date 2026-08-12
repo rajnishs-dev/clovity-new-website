@@ -1,4 +1,3 @@
-export { ResourceHero, type ResourceHeroProps } from './ResourceHero';
 export { ParallaxImage } from './ParallaxImage';
 export { RevealScope } from './RevealScope';
 export {

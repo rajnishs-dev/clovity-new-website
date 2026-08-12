@@ -119,7 +119,7 @@ const HTML_ENTITIES: Record<string, string> = {
   '&lsquo;': '‘',
   '&rdquo;': '”',
   '&ldquo;': '“',
-  '&mdash;': '—',
+  '&mdash;': '-',
   '&ndash;': '–',
   '&hellip;': '…',
   '&bull;': '•',
@@ -133,7 +133,7 @@ const HTML_ENTITIES: Record<string, string> = {
  * implementation means the two can never disagree about what `&rsquo;` looks like.
  *
  * Unknown named entities collapse to a space rather than being left as `&frac12;`
- * literals — in a job posting that is the less wrong of the two.
+ * literals - in a job posting that is the less wrong of the two.
  */
 export function decodeHtmlEntities(source: string): string {
   return source
@@ -152,13 +152,13 @@ export function decodeHtmlEntities(source: string): string {
 /**
  * Strip every mark from a CMS rich-text field, leaving the words.
  *
- * FOR TEASERS — a role card shows a sentence or two where the source field holds a
+ * FOR TEASERS - a role card shows a sentence or two where the source field holds a
  * whole job posting. The expanded panel uses `<RichText>` instead, which keeps the
  * structure.
  *
  * HANDLES BOTH HTML AND MARKDOWN. Strapi's `richtext` type is nominally markdown,
- * but every one of the 173 job postings in the live instance is HTML — pasted out
- * of a WYSIWYG — and 103 of them carry entities like `&nbsp;` and `&amp;`. A
+ * but every one of the 173 job postings in the live instance is HTML - pasted out
+ * of a WYSIWYG - and 103 of them carry entities like `&nbsp;` and `&amp;`. A
  * markdown-only pass left visible tag soup in the teaser.
  *
  * ORDER IS LOAD-BEARING: tags come out here, and entities are decoded afterwards by
@@ -168,13 +168,13 @@ export function decodeHtmlEntities(source: string): string {
 function stripRichTextMarkup(source: string): string {
   return (
     source
-      // Elements whose CONTENT is not prose — drop them wholesale rather than
+      // Elements whose CONTENT is not prose - drop them wholesale rather than
       // leaving CSS or JS in the excerpt.
       .replace(/<(script|style)\b[^>]*>[\s\S]*?<\/\1>/gi, ' ')
       // Markdown fenced code, then inline code.
       .replace(/```[\s\S]*?```/g, ' ')
       .replace(/`([^`]*)`/g, '$1')
-      // Markdown images before links — an image is a link with a leading `!`.
+      // Markdown images before links - an image is a link with a leading `!`.
       .replace(/!\[[^\]]*\]\([^)]*\)/g, ' ')
       .replace(/\[([^\]]*)\]\([^)]*\)/g, '$1')
       // Markdown headings, blockquotes and list markers at line starts.
@@ -187,7 +187,7 @@ function stripRichTextMarkup(source: string): string {
       .replace(/(\*\*|__)(.*?)\1/g, '$2')
       .replace(/(\*|_)(.*?)\1/g, '$2')
       .replace(/~~(.*?)~~/g, '$1')
-      // HTML tags — replaced with a space so `</li><li>` does not fuse two words.
+      // HTML tags - replaced with a space so `</li><li>` does not fuse two words.
       .replace(/<[^>]+>/g, ' ')
   );
 }

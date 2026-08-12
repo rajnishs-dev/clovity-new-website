@@ -2,7 +2,7 @@
  * About page.
  *
  * A faithful port of `about-us.html`: same eleven sections in the same order, same
- * copy, same spacing. What changed is where the content comes from — the
+ * copy, same spacing. What changed is where the content comes from - the
  * "Certifications & Diversity" badge row now reads the Strapi `award` collection, so
  * an editor adding an award in `clovity-admin` sees it here without a deploy. Every
  * other section's copy is bundled, which matches the source page: it had no CMS
@@ -19,11 +19,11 @@ import { ROUTES } from '@/constants/routes';
 import { Footer } from '@/components/layout/Footer';
 import { Header } from '@/components/layout/Header';
 import {
+  BannerHero,
   FinalCta,
   HeroAccent,
   JsonLd,
   PageAnimations,
-  PageHero,
 } from '@/components/common';
 import { CredentialsSection } from './CredentialsSection';
 import { FeaturedInSection } from './FeaturedInSection';
@@ -42,6 +42,7 @@ import {
   ABOUT_FINAL_CTA_LINKS,
   ABOUT_HERO,
 } from '@/constants/about';
+import { aboutHeroBanner } from '@/constants/media';
 import { NavState } from './NavState';
 
 export const metadata: Metadata = buildMetadata({
@@ -62,7 +63,7 @@ export const metadata: Metadata = buildMetadata({
  * Regenerated every five minutes.
  *
  * The award badges come from Strapi over Axios, which does not participate in Next's
- * fetch cache — so without this the page would re-request on every visit. ISR at the
+ * fetch cache - so without this the page would re-request on every visit. ISR at the
  * page level is the right granularity here: the whole page is one cached HTML
  * document, and a published award appears within the window without a deploy.
  */
@@ -76,27 +77,22 @@ export default async function AboutPage() {
       <NavState />
       <JsonLd schema={breadcrumbSchema([...ABOUT_HERO.crumbs])} />
 
-      {/* Solid white from first paint — the hero behind it is a dark photograph. */}
+      {/* Solid white from first paint - the hero behind it is a dark photograph. */}
       <Header variant="pill" priorityLogo />
 
       <PageAnimations>
         <main id="main-content">
-          <PageHero
-            id="about-hero"
-            image={ABOUT_HERO.image}
-            objectPosition={ABOUT_HERO.objectPosition}
-            overlay={ABOUT_HERO.overlay}
-            crumbs={[...ABOUT_HERO.crumbs]}
-            crumbClassName="mb-[22px]"
-            title={
+          <BannerHero
+            breadcrumb={[...ABOUT_HERO.crumbs]}
+            heading={
               <>
                 {ABOUT_HERO.titleLead}
                 <br />
                 <HeroAccent>{ABOUT_HERO.titleAccent}</HeroAccent>
               </>
             }
-            titleClassName="mb-3.5 max-w-[720px]"
-            lead={ABOUT_HERO.lead}
+            subheading={ABOUT_HERO.lead}
+            image={aboutHeroBanner}
           />
 
           <WhySection />
@@ -136,7 +132,7 @@ export default async function AboutPage() {
             ctas={ABOUT_FINAL_CTA_LINKS}
             // `.cta-sec` is `#f8faff` here, and the card sits a step darker than the
             // home page's. `pullUp={false}` because `.cta-card` sets `margin-top: 0`
-            // on this page — it overlaps down into the footer only.
+            // on this page - it overlaps down into the footer only.
             className="bg-[#f8faff]"
             cardClassName="-mt-0 bg-[linear-gradient(135deg,#152a6b_0%,#2557c9_65%,#3568e0_100%)]"
             headingClassName="text-[clamp(28px,3.6vw,44px)] leading-[1.12]"
@@ -147,7 +143,7 @@ export default async function AboutPage() {
       </PageAnimations>
 
       {/*
-        220px, not the Footer's default 260px — `.footer-overlap` is 220px on this
+        220px, not the Footer's default 260px - `.footer-overlap` is 220px on this
         page. The 900px and 640px steps (190px / 150px) are unchanged, so only the
         base value is overridden.
       */}

@@ -41,15 +41,15 @@ import type {
 } from './cms.types';
 
 /**
- * The Strapi CMS (`clovity-admin`) — one axios instance and one flat list of calls,
+ * The Strapi CMS (`clovity-admin`) - one axios instance and one flat list of calls,
  * the same shape as `website-t/src/api/cms.ts`.
  *
  * EVERY CMS ROUTE THIS SITE TALKS TO IS IN `CMS_ENDPOINTS` BELOW, and every request
  * goes through the one instance in this file. No component, page or feature builds a
- * URL — that is what keeps a collection rename a one-line change here.
+ * URL - that is what keeps a collection rename a one-line change here.
  *
  * Five files, and each earns its place:
- *   cms.ts           this file — client, endpoints, queries, calls
+ *   cms.ts           this file - client, endpoints, queries, calls
  *   cms.types.ts     Strapi's wire shapes
  *   cms.mappers.ts   Strapi shapes → the app's own content types
  *   cms.richtext.ts  Strapi richtext (HTML, in practice) → `ContentBlock[]`
@@ -63,9 +63,9 @@ import type {
 /* ── Endpoints ──────────────────────────────────────────────────────────── */
 
 /**
- * Strapi's plural route names are not guessable from the singular content type —
+ * Strapi's plural route names are not guessable from the singular content type -
  * `life-at-clovity` becomes `life-at-clovities`, `contact-us` becomes
- * `contact-uses` — so they are written down once here rather than at each call.
+ * `contact-uses` - so they are written down once here rather than at each call.
  */
 export const CMS_ENDPOINTS = {
   awards: '/api/awards',
@@ -82,7 +82,7 @@ export const CMS_ENDPOINTS = {
   //   • `news` pluralises to `newses`;
   //   • the case studies the site renders live in `jsm-resources`, NOT in the
   //     `case-study` collection. That one exists too, with 25 older rows no page
-  //     shows — `website-t` reads `jsm-resources` for `/case-study`, and its three
+  //     shows - `website-t` reads `jsm-resources` for `/case-study`, and its three
   //     rows are the three case studies this design was built around.
   blogs: '/api/blogs',
   news: '/api/newses',
@@ -92,7 +92,7 @@ export const CMS_ENDPOINTS = {
 } as const;
 
 /**
- * Strapi caps `pagination[pageSize]` at 100 whatever is asked for — requesting 250
+ * Strapi caps `pagination[pageSize]` at 100 whatever is asked for - requesting 250
  * against the live instance returns `{ pageSize: 100 }` and a hundred rows. Any
  * collection that can exceed it must be paged; see `getJobs`.
  */
@@ -101,19 +101,19 @@ const MAX_PAGE_SIZE = 100;
 /* ── Client ─────────────────────────────────────────────────────────────── */
 
 /**
- * ONE instance, used from the server AND the browser — which is what keeps this
+ * ONE instance, used from the server AND the browser - which is what keeps this
  * file as small as `website-t`'s. The only thing that differs between the two is
  * the token:
  *
- *   server   `CMS_API_TOKEN`             — write-capable, never leaves the server.
- *   browser  `NEXT_PUBLIC_CMS_API_TOKEN` — public by definition, should be READ-ONLY.
+ *   server   `CMS_API_TOKEN`             - write-capable, never leaves the server.
+ *   browser  `NEXT_PUBLIC_CMS_API_TOKEN` - public by definition, should be READ-ONLY.
  *
  * The split is enforced by Next, not by discipline: it inlines `NEXT_PUBLIC_*` into
  * the client bundle and leaves every other `process.env` access as `undefined`
  * there. So the private token is simply not reachable from a browser build, and the
  * `typeof window` check below is what picks it up on the server.
  *
- * SET A SEPARATE READ-ONLY TOKEN for the public one — Strapi → Settings → API
+ * SET A SEPARATE READ-ONLY TOKEN for the public one - Strapi → Settings → API
  * Tokens → Create, type "Read-only". Sharing one write-capable token across both
  * lets anyone with dev tools create records.
  */
@@ -152,7 +152,7 @@ export function isCmsConfigured(): boolean {
   return env.strapi.enabled;
 }
 
-/** Test/HMR hook — forces the next call to rebuild the instance. */
+/** Test/HMR hook - forces the next call to rebuild the instance. */
 export function resetCmsClient(): void {
   instance = null;
 }
@@ -236,10 +236,10 @@ async function getAllPages<TEntity>(
  *
  * These THROW on failure. Callers wrap them in `withCmsFallback` (server) or the
  * hooks' try/catch (browser), so a CMS outage shows bundled content rather than an
- * error — see `withCmsFallback` below.
+ * error - see `withCmsFallback` below.
  */
 
-/** Certification / recognition badges — the About page's second badge row. */
+/** Certification / recognition badges - the About page's second badge row. */
 export async function getAwards(
   signal?: AbortSignal,
 ): Promise<BadgeGroup['badges']> {
@@ -272,7 +272,7 @@ export async function getJobs(signal?: AbortSignal): Promise<JobOpening[]> {
   return rows.map(toJobOpening);
 }
 
-/** Culture photos — the Careers page uses the first as its split-media image. */
+/** Culture photos - the Careers page uses the first as its split-media image. */
 export async function getLifeAtClovity(
   signal?: AbortSignal,
 ): Promise<CultureHighlight[]> {
@@ -291,7 +291,7 @@ export async function getLifeAtClovity(
 /**
  * Contact form configuration for one page, by `website_slug`.
  *
- * Resolves to `null` — a success, not a failure — when no row exists for the slug.
+ * Resolves to `null` - a success, not a failure - when no row exists for the slug.
  * That is the ordinary state before anyone creates one, and the form then falls back
  * to the field set the published design shows.
  */
@@ -319,7 +319,7 @@ export async function getInTouch(
  *
  * ONE request, not every page. `blog` has 504 published rows and the 100-row cap means
  * walking it costs six round trips at build time for every one of the five collections
- * — and the list pages reveal 5 cards with a "Load More" that steps 4 at a time, so
+ * - and the list pages reveal 5 cards with a "Load More" that steps 4 at a time, so
  * nothing past the first hundred is reachable by clicking anyway.
  *
  * Detail pages are unaffected: each fetches its own row by slug, so a post outside the
@@ -332,7 +332,7 @@ const RESOURCE_PAGE_SIZE = MAX_PAGE_SIZE;
  * Fetch one row by its `slug` column.
  *
  * Strapi 5 addresses single entries by `documentId`, not by slug, so a detail page has
- * to filter a list instead of hitting `/api/blogs/:slug` — the same thing `website-t`
+ * to filter a list instead of hitting `/api/blogs/:slug` - the same thing `website-t`
  * does. `pageSize: 1` because `slug` is unique in every one of these schemas.
  */
 async function getBySlug<TEntity>(
@@ -398,8 +398,8 @@ export async function getBlogBySlug(
 /**
  * News, newest first.
  *
- * Sorted on `createdAt` alone: the collection has no date column, and `isFeatured` — the
- * obvious candidate for pinning a lead story — is set on three rows that are all
+ * Sorted on `createdAt` alone: the collection has no date column, and `isFeatured` - the
+ * obvious candidate for pinning a lead story - is set on three rows that are all
  * 2018-2019 press releases. Date order is what `website-t` uses and what puts the
  * current announcement in the page's featured slot.
  */
@@ -420,7 +420,7 @@ export async function getNewsBySlug(
   return row ? toNewsItem(row) : null;
 }
 
-/** Events, most recent first — the explorer splits upcoming from past itself. */
+/** Events, most recent first - the explorer splits upcoming from past itself. */
 export async function getEvents(signal?: AbortSignal): Promise<EventItem[]> {
   const body = await getList<StrapiEvent>(
     CMS_ENDPOINTS.events,
@@ -442,7 +442,7 @@ export async function getEventBySlug(
   return row ? toEventItem(row) : null;
 }
 
-/** Webinars — the active session first, then newest, matching the published site. */
+/** Webinars - the active session first, then newest, matching the published site. */
 export async function getWebinars(signal?: AbortSignal): Promise<WebinarItem[]> {
   const body = await getList<StrapiWebinar>(
     CMS_ENDPOINTS.webinars,
@@ -468,7 +468,7 @@ export async function getWebinarBySlug(
   return row ? toWebinarItem(row) : null;
 }
 
-/** Case studies — the `jsm-resource` collection. See `CMS_ENDPOINTS` for why. */
+/** Case studies - the `jsm-resource` collection. See `CMS_ENDPOINTS` for why. */
 export async function getCaseStudies(
   signal?: AbortSignal,
 ): Promise<CaseStudyItem[]> {
@@ -536,7 +536,7 @@ export async function postEnquiry(
   try {
     await post(CMS_ENDPOINTS.getInTouchLeads, lead);
   } catch {
-    // Best-effort — see the note above.
+    // Best-effort - see the note above.
   }
 }
 
@@ -564,8 +564,8 @@ export async function postRecordingRequest(
  *
  * This is what keeps the design intact no matter what the CMS does: the section asks
  * for its data, gets live rows when Strapi is reachable, and gets the same-shaped
- * constants from `src/constants` when it is not. The rendered markup — and therefore
- * the layout — is identical either way.
+ * constants from `src/constants` when it is not. The rendered markup - and therefore
+ * the layout - is identical either way.
  *
  * An empty list counts as "no data" and falls back too. A published site showing a
  * heading over an empty grid is worse than showing the seeded content, and an empty

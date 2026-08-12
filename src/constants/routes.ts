@@ -52,9 +52,9 @@ export const EXTERNAL_LINKS = {
    * Pages that exist on the production site but not yet in this app.
    *
    * `/case-study` and `/life-at-clovity` are linked from the careers cards' "About
-   * Us" and "Our Benefits" copy. Routing them internally would 404 — `/case-study`
+   * Us" and "Our Benefits" copy. Routing them internally would 404 - `/case-study`
    * is declared in ROUTES but has no page yet, and `/life-at-clovity` has no route
-   * at all — so they point at the live pages until those are migrated.
+   * at all - so they point at the live pages until those are migrated.
    */
   legacyCaseStudy: 'https://www.clovity.com/case-study',
   legacyLifeAtClovity: 'https://www.clovity.com/life-at-clovity',

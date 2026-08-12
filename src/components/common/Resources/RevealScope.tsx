@@ -9,7 +9,7 @@ import { useScrollReveal } from '@/hooks/useScrollReveal';
  * `reveal()`/`revealAttrs()` (see `lib/reveal.ts`) render an element at
  * `opacity-0` until something flips `data-shown="true"` on it - on the home
  * page that "something" is `<HomeAnimations>`. Every resource page (blog,
- * case studies, events, webinars, news) uses `ResourceHero`, `FeaturedResourceCard`
+ * case studies, events, webinars, news) uses `BannerHero`, `FeaturedResourceCard`
  * and `<FinalCta>`, all of which use `reveal()` - without this mounted
  * somewhere in the tree, all three stay invisible forever, not just
  * unanimated. `useScrollReveal` queries `document` globally rather than a

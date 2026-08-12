@@ -5,8 +5,8 @@
  * static wired to Strapi:
  *
  *  • OPEN POSITIONS reads the `job` collection. The published markup carries a comment
- *    on its role list — "wire up to a live ATS feed and swap in real req IDs when
- *    available" — and `clovity-admin` already has that collection; the legacy
+ *    on its role list - "wire up to a live ATS feed and swap in real req IDs when
+ *    available" - and `clovity-admin` already has that collection; the legacy
  *    frontend's `/talent` page read it. The nine sample roles are kept as the offline
  *    fallback rather than deleted.
  *  • LIFE AT CLOVITY reads `life-at-clovity` for its heading, photo and intro.
@@ -108,7 +108,7 @@ export default async function CareersPage() {
                 </ButtonLink>
                 {/*
                   The published markup overrides `.btn-secondary`'s brand border and
-                  text with an inline `style` — white text on a 30%-white border, so
+                  text with an inline `style` - white text on a 30%-white border, so
                   the button reads against the dark photo. Inline here too, because an
                   inline style is what the original used and a class could not have
                   won against it if any were added later.

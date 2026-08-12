@@ -110,7 +110,7 @@ export type ContactFormValues = z.infer<typeof contactSchema>;
  * each is mandatory. A fixed schema would either reject a submission for a field the
  * page is not showing, or accept an empty value an editor marked required.
  *
- * `message` and `email` are always required — they are the enquiry — and the design
+ * `message` and `email` are always required - they are the enquiry - and the design
  * marks both accordingly.
  */
 export interface EnquiryFieldRules {
@@ -174,7 +174,7 @@ export function buildEnquirySchema(rules: EnquiryFieldRules) {
 /**
  * Field values the enquiry form holds.
  *
- * Derived from the permissive build so one type covers every configuration — the
+ * Derived from the permissive build so one type covers every configuration - the
  * required/optional distinction is a validation concern, not a shape concern, and
  * a per-config type would make the form component generic for no benefit.
  */

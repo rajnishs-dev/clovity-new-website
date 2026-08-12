@@ -90,8 +90,8 @@ export function CaseStudyList({
                 />
               )),
             ].filter(Boolean)}
-            initialCount={3}
-            step={2}
+            initialCount={10}
+            step={10}
             gridClassName="grid grid-cols-1 gap-6 sm:grid-cols-2"
             loadMoreLabel="Load More Case Studies"
           />

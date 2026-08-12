@@ -197,7 +197,7 @@ export const ICONS = {
 
   // Hiring and people development
   'graduation-cap': GraduationCap,
-  // "Flexible & remote-friendly" — a laptop, which is what Font Awesome's
+  // "Flexible & remote-friendly" - a laptop, which is what Font Awesome's
   // `house-laptop` composite conveyed.
   'remote-work': Laptop,
   'heart-pulse': HeartPulse,
@@ -207,13 +207,13 @@ export const ICONS = {
   // Small controls
   plus: Plus,
   refresh: RefreshCw,
-  // The role card's overflow menu — the legacy card drew this as a literal "..."
+  // The role card's overflow menu - the legacy card drew this as a literal "..."
   // text node, which no screen reader could announce as a control.
   ellipsis: Ellipsis,
   copy: Copy,
   link: Link2,
 
-  // Brand marks — see `brands.tsx` for why these are inline SVG, not Lucide.
+  // Brand marks - see `brands.tsx` for why these are inline SVG, not Lucide.
   atlassian: AtlassianGlyph,
   jira: JiraGlyph,
   confluence: ConfluenceGlyph,

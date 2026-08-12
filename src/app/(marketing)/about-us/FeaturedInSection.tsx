@@ -4,7 +4,7 @@ import { AppImage, Container, LABEL_CLASS } from '@/components/ui';
 import { ABOUT_PRESS_LABEL, ABOUT_PRESS_LOGOS } from '@/constants/about';
 
 /**
- * "Featured In" — the press-logo strip.
+ * "Featured In" - the press-logo strip.
  *
  * Not a `<Section>`: the padding is asymmetric (`py-14 sm:py-16` with the bottom
  * zeroed at both breakpoints) because the mission quote below it supplies the gap.

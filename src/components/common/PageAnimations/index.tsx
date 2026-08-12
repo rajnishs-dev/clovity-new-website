@@ -21,7 +21,7 @@ import { useSmoothAnchors } from '@/hooks/useSmoothAnchors';
  * They would each no-op, but GSAP would still be pulled into the bundle of three
  * pages that have no use for it.
  *
- * Renders its children in a fragment — nothing here needs a DOM node, unlike the
+ * Renders its children in a fragment - nothing here needs a DOM node, unlike the
  * home page's GSAP context which must be scoped to an element.
  */
 export function PageAnimations({ children }: { children: ReactNode }) {

@@ -10,7 +10,7 @@ import {
 } from '@/constants/careers';
 
 /**
- * "What You Get For Doing Great Work" — the four-tile bento grid.
+ * "What You Get For Doing Great Work" - the four-tile bento grid.
  *
  * `#eaf8ff` here, not the About page's `#f8fafc`: this page alternates its banded
  * sections between that pale blue and white, which is what keeps the roles list

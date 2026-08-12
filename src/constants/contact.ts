@@ -39,7 +39,7 @@ export const CONTACT_HERO = {
   ],
   titleLead: "Let's Talk.",
   titleAccent: "We'll Bring the Right Team.",
-  lead: "Whether it's a Jira migration, an AI rollout, or a public-sector modernization project — share the details and we'll get back to you within one business day.",
+  lead: "Whether it's a Jira migration, an AI rollout, or a public-sector modernization project - share the details and we'll get back to you within one business day.",
 } as const;
 
 /* ── Form ───────────────────────────────────────────────────────────────── */
@@ -48,7 +48,7 @@ export const CONTACT_HERO = {
  * The `website_slug` this page's Strapi `get-in-touch` row is keyed by.
  *
  * `website_slug` is unique in that content type, so this is the identifier an editor
- * uses to attach a configuration to this page — and what distinguishes leads from
+ * uses to attach a configuration to this page - and what distinguishes leads from
  * here in the admin panel.
  */
 export const CONTACT_FORM_SLUG = 'contact';
@@ -56,12 +56,12 @@ export const CONTACT_FORM_SLUG = 'contact';
 export const CONTACT_FORM_CONTENT = {
   heading: 'Send Us a Message',
   description:
-    'Fill this out and the right specialist will follow up — no ticket queue, no auto-responder loop.',
+    'Fill this out and the right specialist will follow up - no ticket queue, no auto-responder loop.',
   submitLabel: 'Send Message',
   submittingLabel: 'Sending…',
   successTitle: 'Message Sent',
   successBody:
-    'Thanks for reaching out — a specialist will get back to you within one business day.',
+    'Thanks for reaching out - a specialist will get back to you within one business day.',
   /** Shown when the submission itself fails, which the static page could not do. */
   errorFallback:
     'We could not send your message. Please try again, or email us directly.',
@@ -94,11 +94,11 @@ export const CONTACT_TOPICS = [
  * Field rules when Strapi has no row for this page.
  *
  * Matches the published form exactly: name, email and company required, phone
- * optional. Topic and message are always required and are not configurable — they are
+ * optional. Topic and message are always required and are not configurable - they are
  * the enquiry itself.
  */
 export const CONTACT_FORM_FALLBACK: ContactFormConfig = {
-  emailSubject: 'Contact enquiry — clovity.com',
+  emailSubject: 'Contact enquiry - clovity.com',
   showFullName: true,
   requireFullName: true,
   showCompany: true,
@@ -137,7 +137,7 @@ export const CONTACT_CHANNELS: ContactChannel[] = [
   {
     id: 'hq',
     label: 'Global HQ',
-    // No href — a city name is not actionable, and the published markup renders it as
+    // No href - a city name is not actionable, and the published markup renders it as
     // plain text for exactly that reason.
     value: siteConfig.contact.headquarters,
     icon: 'map-pin',
@@ -160,7 +160,7 @@ export const CONTACT_OFFICES_CONTENT = {
  * Flag image box.
  *
  * The flag is painted into a fixed 64px circle with `object-cover`, so the declared
- * pair only satisfies next/image's requirement for a remote source — it does not drive
+ * pair only satisfies next/image's requirement for a remote source - it does not drive
  * layout. `w160` is the CDN size the published markup requests.
  */
 const FLAG_BOX = { width: 160, height: 120 } as const;

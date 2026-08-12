@@ -104,7 +104,7 @@ export interface FinalCtaProps {
    * Classes for the gradient card itself.
    *
    * The interior pages (About / Careers / Contact) declare their own `.cta-card`
-   * gradient — `#152a6b → #2557c9 → #3568e0`, a step darker than the home page's —
+   * gradient - `#152a6b → #2557c9 → #3568e0`, a step darker than the home page's -
    * and their own heading clamp. Those are page-level stylesheet values in the
    * published markup, not a shared token, so they arrive as overrides here rather
    * than changing the default and shifting the home page with it.
@@ -114,7 +114,7 @@ export interface FinalCtaProps {
   /**
    * Pull the card up out of the preceding section (the home page's `-mt-[180px]`).
    *
-   * Off for the interior pages, whose `.cta-card` sets `margin-top: 0` — the
+   * Off for the interior pages, whose `.cta-card` sets `margin-top: 0` - the
    * section above them is padded normally and there is nothing to tuck into. It
    * still overlaps DOWNWARD into the footer either way; that is the `-mb-[180px]`
    * below, which is not optional because the footer reserves matching space.

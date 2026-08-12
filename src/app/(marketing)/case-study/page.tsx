@@ -3,17 +3,18 @@ import { buildMetadata } from '@/lib/seo';
 import { ROUTES } from '@/constants/routes';
 import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
+import { BannerHero } from '@/components/common';
 import { FinalCta } from '@/components/common/CTA';
 import {
   RevealScope,
   RESOURCE_CTA_LINKS,
-  ResourceHero,
   SplitMediaCta,
 } from '@/components/common/Resources';
 import { Icon } from '@/components/ui/Icon';
 import { Section, SectionHeader } from '@/components/ui/Section';
 import { getCaseStudyItems } from '@/data/case-study';
 import { CaseStudyList } from './CaseStudyList';
+import { NavState } from './NavState';
 import { caseStudyHeroBanner } from '@/constants/media';
 
 export const metadata: Metadata = buildMetadata({
@@ -29,7 +30,7 @@ const TRUST_CHIPS = [
   'U.S. Data Compliance',
 ];
 
-/** Safety net under the Strapi webhook — see the note in `/blog`. */
+/** Safety net under the Strapi webhook - see the note in `/blog`. */
 export const revalidate = 3600;
 
 export default async function CaseStudyPage() {
@@ -37,11 +38,12 @@ export default async function CaseStudyPage() {
 
   return (
     <>
+      <NavState />
       <Header variant="pill" />
       <RevealScope />
 
       <main id="main-content">
-        <ResourceHero
+        <BannerHero
           breadcrumb={[
             { name: 'Home', href: ROUTES.home },
             { name: 'Case Studies', href: ROUTES.resources.caseStudy },

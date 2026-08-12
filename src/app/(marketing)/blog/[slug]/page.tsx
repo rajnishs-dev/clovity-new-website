@@ -23,6 +23,7 @@ import {
   getBlogSlugs,
   getOtherBlogPosts,
 } from '@/data/blog';
+import { NavState } from './NavState';
 
 export const revalidate = 3600;
 
@@ -76,6 +77,7 @@ export default async function BlogDetailPage({
 
   return (
     <>
+      <NavState />
       <Header variant="pill" />
       <RevealScope />
       <JsonLd

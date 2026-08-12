@@ -28,11 +28,11 @@ const publicSchema = z.object({
    * ── Strapi (clovity-admin) ──
    *
    * The site's only backend. `NEXT_PUBLIC_API_BASE_URL` and
-   * `NEXT_PUBLIC_ENABLE_CMS` used to sit here for a second one — a Node/Express
-   * admin panel — that was never built; neither was ever set, so every call through
+   * `NEXT_PUBLIC_ENABLE_CMS` used to sit here for a second one - a Node/Express
+   * admin panel - that was never built; neither was ever set, so every call through
    * it short-circuited. Both are gone along with that layer.
    *
-   * Not `.url()` — an empty string is the valid "CMS off" state, and a URL
+   * Not `.url()` - an empty string is the valid "CMS off" state, and a URL
    * refinement on a default of `''` would fail the whole boot for every
    * environment that has not wired Strapi up yet.
    */
@@ -46,17 +46,17 @@ const publicSchema = z.object({
    * Anything this file touches gets inlined into the CLIENT bundle, because
    * `constants/site.ts` and `store/index.ts` import it and both reach client
    * components. Reading `process.env.NEXT_PUBLIC_CMS_API_TOKEN` here put a
-   * write-capable Strapi token into a public JS chunk — verified by grepping the
+   * write-capable Strapi token into a public JS chunk - verified by grepping the
    * built chunks for it. Next inlines `NEXT_PUBLIC_*` as a build-time text
    * substitution, so it happens even inside a function that never runs in the
    * browser.
    *
-   * Both tokens now live in `api/cms.ts` — the private one is only reachable
+   * Both tokens now live in `api/cms.ts` - the private one is only reachable
    * there on the server. See the note on `authToken()`.
    */
   /**
    * Origin that serves Strapi's uploaded media, when it differs from the API
-   * origin — the S3 upload provider in `clovity-admin` returns absolute URLs, but
+   * origin - the S3 upload provider in `clovity-admin` returns absolute URLs, but
    * the local provider returns `/uploads/…` paths that need a base.
    */
   NEXT_PUBLIC_CMS_MEDIA_URL: z
@@ -97,12 +97,12 @@ export const env = {
    */
   strapi: {
     url: parsedPublic.data.NEXT_PUBLIC_CMS_API_URL,
-    // No `token` — see the note in the schema above. Both are read in `api/cms.ts`.
+    // No `token` - see the note in the schema above. Both are read in `api/cms.ts`.
     /** Falls back to the API origin, which is where Strapi serves /uploads. */
     mediaUrl:
       parsedPublic.data.NEXT_PUBLIC_CMS_MEDIA_URL ||
       parsedPublic.data.NEXT_PUBLIC_CMS_API_URL,
-    /** A configured URL IS the switch — the same rule the legacy frontend used. */
+    /** A configured URL IS the switch - the same rule the legacy frontend used. */
     enabled: parsedPublic.data.NEXT_PUBLIC_CMS_API_URL.length > 0,
   },
 
@@ -119,7 +119,7 @@ export function serverEnv() {
     throw new Error('serverEnv() must not be called from client code.');
   }
   return {
-    /** Shared secret for the Strapi publish webhook — see app/api/revalidate. */
+    /** Shared secret for the Strapi publish webhook - see app/api/revalidate. */
     revalidateSecret: process.env.REVALIDATE_SECRET ?? '',
   } as const;
 }

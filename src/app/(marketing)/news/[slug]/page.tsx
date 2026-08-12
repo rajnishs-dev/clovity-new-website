@@ -23,6 +23,7 @@ import {
   getNewsSlugs,
   getOtherNewsItems,
 } from '@/data/news';
+import { NavState } from './NavState';
 
 export const revalidate = 3600;
 
@@ -68,6 +69,7 @@ export default async function NewsDetailPage({
 
   return (
     <>
+      <NavState />
       <Header variant="pill" />
       <RevealScope />
       <JsonLd

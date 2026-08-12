@@ -16,22 +16,22 @@ import {
 } from '@/constants/about';
 
 /**
- * "Certifications & Awards" — two labelled rows of badge cards.
+ * "Certifications & Awards" - two labelled rows of badge cards.
  *
  * Group one is the four Atlassian partner badges (bundled brand assets). Group two
  * is Strapi-backed: the `award` collection, ordered by its `order` column, falling
  * back to the eight badges the page publishes today. Both render through the same
- * card, so a CMS-supplied badge and a bundled one are indistinguishable on screen —
+ * card, so a CMS-supplied badge and a bundled one are indistinguishable on screen -
  * which is the point of the fallback.
  *
- * A CLIENT COMPONENT so the badge row refetches in the browser on every page load —
+ * A CLIENT COMPONENT so the badge row refetches in the browser on every page load -
  * an award published in Strapi appears immediately rather than waiting out the
  * page's cache window. The prop it receives is the build-time snapshot, which is
  * what keeps the badges in the crawlable HTML; see `api/cms.hooks.ts`.
  *
  * CARD WIDTH IS A FLEX BASIS, NOT A GRID. `.cred-badge-grid` is a wrapping flex row
  * and the cards are a fixed 190px, so the number per row is whatever fits inside the
- * 980px track — 5 at desktop, wrapping to 3 for the second row of an 8-badge group.
+ * 980px track - 5 at desktop, wrapping to 3 for the second row of an 8-badge group.
  * Below 900px the width becomes a percentage (`33.333% - 11px`, i.e. three up minus
  * two thirds of the 16px gap) and below 640px `50% - 8px` for two up. Reimplementing
  * this as a grid would change how an odd-numbered group wraps.
@@ -81,7 +81,7 @@ function BadgeCard({
 }
 
 export interface AboutCredentialsSectionProps {
-  /** Group one — bundled Atlassian partner badges. Never from the CMS. */
+  /** Group one - bundled Atlassian partner badges. Never from the CMS. */
   atlassianBadges: BadgeGroup;
   /** Group two, as fetched during static generation. Refreshed in the browser. */
   initialAwardBadges: BadgeGroup['badges'];

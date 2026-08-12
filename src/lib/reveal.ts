@@ -89,15 +89,15 @@ export function reveal(
 /**
  * `reveal()` with the element's text alignment stated explicitly.
  *
- * WHY THIS IS NEEDED — `reveal()` emits `text-center md:text-left` as part of its
+ * WHY THIS IS NEEDED - `reveal()` emits `text-center md:text-left` as part of its
  * base string, so applying it to a block silently changes that block's alignment:
  * centred on small screens, left-aligned from 768px up. For anything whose design
  * specifies a single alignment (a centred section header, a left-aligned card body)
  * that is a visual change coming from a motion utility, which is not a decision the
  * motion utility should be making.
  *
- * Rather than edit `reveal()` — the home page's sections were written against its
- * current output and changing it would shift that page — this composes on top and
+ * Rather than edit `reveal()` - the home page's sections were written against its
+ * current output and changing it would shift that page - this composes on top and
  * lets tailwind-merge resolve the conflict, so the alignment a caller asks for is
  * the alignment that renders at every width.
  *

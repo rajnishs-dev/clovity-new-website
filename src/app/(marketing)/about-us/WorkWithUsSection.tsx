@@ -14,15 +14,15 @@ import {
 import { ABOUT_WORK_WITH_US } from '@/constants/about';
 
 /**
- * "Let's Build What's Next, Together" — the reversed `.split-media`, photo on the
+ * "Let's Build What's Next, Together" - the reversed `.split-media`, photo on the
  * right.
  *
  * `reverse` moves the photo to the right column at `lg` while leaving it first in the
  * DOM, so on a phone it still sits above the copy. See `SplitMedia` for why that
  * matters.
  *
- * Reveal directions are the mirror of the "Who We Are" section — media from the
- * right, copy from the left — which is what makes the two split sections read as a
+ * Reveal directions are the mirror of the "Who We Are" section - media from the
+ * right, copy from the left - which is what makes the two split sections read as a
  * pair rather than a repeat.
  */
 export function WorkWithUsSection() {

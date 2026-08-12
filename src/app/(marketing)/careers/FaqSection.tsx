@@ -6,7 +6,7 @@ import { JsonLd } from '@/components/common/JsonLd';
 import { CAREERS_FAQ, CAREERS_FAQ_CONTENT } from '@/constants/careers';
 
 /**
- * "Frequently Asked Questions" — five disclosures.
+ * "Frequently Asked Questions" - five disclosures.
  *
  * NATIVE `<details>` / `<summary>`, not the shared `<Accordion>`. Three reasons, in
  * order of weight:
@@ -14,13 +14,13 @@ import { CAREERS_FAQ, CAREERS_FAQ_CONTENT } from '@/constants/careers';
  *  1. The design lets several answers be open at once. `Accordion` closes the others
  *     by default, and its `allowMultiple` variant still routes through React state.
  *  2. `<details>` needs no JavaScript at all, so this whole section stays a Server
- *     Component and works before hydration — on a page whose other interactive
+ *     Component and works before hydration - on a page whose other interactive
  *     element (the roles filter) already ships a client bundle, that is worth keeping.
  *  3. `Accordion` renders a chevron that rotates 180°; this design uses a plus that
  *     rotates 45° into a cross and inverts its chip. Bending one into the other would
  *     leave two variants of the same component with nothing shared.
  *
- * The plus is `group-open:rotate-45` — Tailwind compiles that to `.group[open] &`,
+ * The plus is `group-open:rotate-45` - Tailwind compiles that to `.group[open] &`,
  * which is exactly the `[open] .faq-ic` selector the stylesheet used.
  *
  * The marker is suppressed twice on purpose: `list-none` covers browsers honouring

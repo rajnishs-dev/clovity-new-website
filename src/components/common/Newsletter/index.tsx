@@ -69,7 +69,7 @@ export function Newsletter({
 
   const onSubmit = async (values: NewsletterFormValues) => {
     // The "CMS not configured" case is handled inside the thunk, which reports success
-    // without writing — so there is no branch here.
+    // without writing - so there is no branch here.
     const result = await dispatch(
       subscribeToNewsletter({ email: values.email, source }),
     );

@@ -7,7 +7,7 @@ import {
 import { ABOUT_VALUES, ABOUT_VALUES_CONTENT } from '@/constants/about';
 
 /**
- * "The Principles Behind Every Engagement" — the four-tile bento grid.
+ * "The Principles Behind Every Engagement" - the four-tile bento grid.
  *
  * `.val-sec` is `#f8fafc` with a 1px `#eef2f7` rule top and bottom. Those rules are
  * what separate this section from the white ones either side of it, so they are part

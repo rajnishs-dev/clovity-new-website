@@ -21,7 +21,7 @@ import {
  *    CDN paths are generated in `constants/clients.ts`, the same source the home
  *    page's marquee uses.
  *
- * `withCmsFallback` means a CMS failure — or an empty collection — renders the
+ * `withCmsFallback` means a CMS failure - or an empty collection - renders the
  * published badges instead of a heading over an empty grid, so the layout is the
  * designed one whatever Strapi does.
  */
@@ -29,7 +29,7 @@ import {
 /**
  * The Strapi-backed "Certifications & Diversity" badge group.
  *
- * The group's id and label are the page's, not the CMS's — the `award` content type
+ * The group's id and label are the page's, not the CMS's - the `award` content type
  * stores `title`, `logo` and `order` and has no notion of grouping, so what Strapi
  * supplies is the badge list and what this file supplies is where it goes.
  */

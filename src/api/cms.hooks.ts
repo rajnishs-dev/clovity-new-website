@@ -37,7 +37,7 @@ import {
 import { toJobTrackFilters } from './cms.mappers';
 
 /**
- * Client-side CMS hooks — the browser fetches its own data, the way `website-t`
+ * Client-side CMS hooks - the browser fetches its own data, the way `website-t`
  * does.
  *
  * ── WHY THERE IS STILL AN `initial` ARGUMENT ──
@@ -46,7 +46,7 @@ import { toJobTrackFilters } from './cms.mappers';
  * lands. Each half does something the other cannot:
  *
  *   • the initial data is IN THE HTML, so the content is there for crawlers, for
- *     anyone with JS blocked, and on first paint — no spinner, no layout jump;
+ *     anyone with JS blocked, and on first paint - no spinner, no layout jump;
  *   • the client fetch means an editor's publish shows up on the next page load
  *     rather than after the cache window.
  *
@@ -66,7 +66,7 @@ import { toJobTrackFilters } from './cms.mappers';
 
 export type CmsFetchStatus = 'idle' | 'loading' | 'error';
 
-/** What every hook returns. `data` is never empty — it falls back to `initial`. */
+/** What every hook returns. `data` is never empty - it falls back to `initial`. */
 export interface CmsResource<TData> {
   data: TData;
   status: CmsFetchStatus;
@@ -103,7 +103,7 @@ function useCmsResource<TData>(
         setStatus('idle');
       } catch {
         if (cancelled || controller.signal.aborted) return;
-        // Keep the data already on screen — see the note above.
+        // Keep the data already on screen - see the note above.
         setStatus('error');
       }
     })();
@@ -119,7 +119,7 @@ function useCmsResource<TData>(
   return { data, status };
 }
 
-/** About — the Strapi-backed badge row. */
+/** About - the Strapi-backed badge row. */
 export function useAwards(
   initial: BadgeGroup['badges'],
 ): CmsResource<BadgeGroup['badges']> {
@@ -130,7 +130,7 @@ export interface JobsResource extends CmsResource<JobOpening[]> {
   filters: JobTrackFilter[];
 }
 
-/** Careers — open positions, with the filter tabs derived from them. */
+/** Careers - open positions, with the filter tabs derived from them. */
 export function useJobs(initial: JobOpening[]): JobsResource {
   const { data, status } = useCmsResource(
     (signal) => getJobs(signal),
@@ -145,7 +145,7 @@ export function useJobs(initial: JobOpening[]): JobsResource {
   return { data, status, filters };
 }
 
-/** Careers — the culture block's photograph. */
+/** Careers - the culture block's photograph. */
 export function useLifeAtClovity(
   initial: CultureHighlight,
 ): CmsResource<CultureHighlight> {
@@ -160,7 +160,7 @@ export function useLifeAtClovity(
   );
 }
 
-/** Contact — which form fields show, and which are required. */
+/** Contact - which form fields show, and which are required. */
 export function useInTouch(
   websiteSlug: string,
   initial: ContactFormConfig,
@@ -214,7 +214,7 @@ export function useCaseStudies(
 /**
  * One article, fetched by slug.
  *
- * `initial` may be `undefined` — an article outside the bundled fallback has nothing to
+ * `initial` may be `undefined` - an article outside the bundled fallback has nothing to
  * show until the request lands, which is the trade-off of fetching in the browser. The
  * `key` includes the slug so navigating between two articles refetches.
  */

@@ -26,6 +26,7 @@ import {
   getOtherCaseStudies,
 } from '@/data/case-study';
 import { resolveCategoryMeta } from '../categoryMeta';
+import { NavState } from './NavState';
 
 export const revalidate = 3600;
 
@@ -71,6 +72,7 @@ export default async function CaseStudyDetailPage({
 
   return (
     <>
+      <NavState />
       <Header variant="pill" />
       <RevealScope />
       <JsonLd

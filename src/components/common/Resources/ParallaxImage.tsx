@@ -57,7 +57,7 @@ export function ParallaxImage({
   }, [reducedMotion]);
 
   const hasBreakpoints = Boolean(tabletSrc || mobileSrc);
-  const imageClassName = 'object-cover object-[center_30%]';
+  const imageClassName = 'object-cover object-[center_0%]';
 
   if (!hasBreakpoints) {
     return (

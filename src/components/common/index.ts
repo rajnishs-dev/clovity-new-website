@@ -1,5 +1,6 @@
 export { Logo, type LogoProps } from './Logo';
 export { JsonLd, type JsonLdProps } from './JsonLd';
+export { BannerHero, type BannerHeroProps } from './BannerHero';
 export {
   CtaGroup,
   FinalCta,

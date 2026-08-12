@@ -50,6 +50,13 @@ export { default as blogHeroBanner } from '@/assets/images/resources/blog-banner
 export { default as blogHeroBannerTablet } from '@/assets/images/resources/blog-banner-Tab.png';
 export { default as blogHeroBannerMobile } from '@/assets/images/resources/blog-banner-mob.png';
 export { default as caseStudyHeroBanner } from '@/assets/images/resources/case-study-banner.png';
+export { default as eventsHeroBanner } from '@/assets/images/resources/events-banner.png';
+export { default as webinarHeroBanner } from '@/assets/images/resources/webinar-banner.png';
+export { default as newsHeroBanner } from '@/assets/images/resources/news-banner.png';
+
+/* ── Discover hero banners ───────────────────────────────────────────────── */
+/** About Us's hero photo - rendered through the shared `BannerHero` layout. */
+export { default as aboutHeroBanner } from '@/assets/images/discover/about-us-banner.png';
 
 /* ── Marketplace app logos ──────────────────────────────────────────────── */
 export { default as appTimeTracking } from '@/assets/images/mp-time-tracking-logo.png';

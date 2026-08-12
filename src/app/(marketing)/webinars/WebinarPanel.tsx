@@ -21,7 +21,7 @@ const LABEL_CLASS =
 
 /** `name` and `role` are stored as one string; rejoin them the way the CMS wrote it. */
 function fullName(person: WebinarPerson): string {
-  return person.role ? `${person.name} — ${person.role}` : person.name;
+  return person.role ? `${person.name} - ${person.role}` : person.name;
 }
 
 function PeopleList({ people }: { people: WebinarPerson[] }) {

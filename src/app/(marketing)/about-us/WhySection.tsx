@@ -2,7 +2,7 @@ import { GradientText, PillarGrid, Section, SectionHeader } from '@/components/u
 import { ABOUT_WHY_CARDS, ABOUT_WHY_CONTENT } from '@/constants/about';
 
 /**
- * "Three Things That Set Us Apart" — the three-pillar value prop.
+ * "Three Things That Set Us Apart" - the three-pillar value prop.
  *
  * `padding="tight"` is `py-12 sm:py-16`, which is what this page uses throughout
  * (the home page's sections are one step looser at `py-16 sm:py-20`).

@@ -10,7 +10,7 @@ import { CONTACT_FORM_FALLBACK, CONTACT_FORM_SLUG } from '@/constants/contact';
  * appear and whether each is mandatory, so a change to what the form asks for is an
  * edit in `clovity-admin` rather than a deploy.
  *
- * `getInTouch()` resolves to `null` — a success, not a failure — when no
+ * `getInTouch()` resolves to `null` - a success, not a failure - when no
  * row exists for the slug, which is the ordinary state before anyone has created one.
  * The `??` below turns that into the published field set, so the form always has rules
  * to validate against.

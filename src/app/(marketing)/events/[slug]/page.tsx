@@ -24,6 +24,7 @@ import {
   getEventSlugs,
   getOtherEvents,
 } from '@/data/events';
+import { NavState } from './NavState';
 
 export const revalidate = 3600;
 
@@ -68,6 +69,7 @@ export default async function EventDetailPage({
 
   return (
     <>
+      <NavState />
       <Header variant="pill" />
       <RevealScope />
       <JsonLd

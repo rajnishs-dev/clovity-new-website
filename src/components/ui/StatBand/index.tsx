@@ -3,7 +3,7 @@ import { revealAligned, revealAttrs } from '@/lib/reveal';
 import type { StatBandItem } from '@/types/content';
 
 /**
- * `theme.css`'s `.stat-band` — the four-cell metric strip on a dark gradient.
+ * `theme.css`'s `.stat-band` - the four-cell metric strip on a dark gradient.
  *
  * Used by About and Careers, which wrap it in the same navy gradient section
  * (`#0b1730 → #152a6b → #1d3a8a`) and pass `background: transparent` on the grid
@@ -17,12 +17,12 @@ import type { StatBandItem } from '@/types/content';
  *   • ≤520px  one column; right borders off, bottom borders on, last cell bare
  *
  * `to-520` is a NAMED screen in `tailwind.config.ts`, not an arbitrary
- * `max-[520px]` variant. The arbitrary form compiles to nothing here — Tailwind
+ * `max-[520px]` variant. The arbitrary form compiles to nothing here - Tailwind
  * only emits the `max-*` family when every `screens` entry is a plain min-width
- * string, and this config's `to-*` entries are `{ max: … }` objects — so the band
+ * string, and this config's `to-*` entries are `{ max: … }` objects - so the band
  * silently kept four columns on a phone. See the comment on that screen.
  *
- * `value` is a string, not a number — the design's cells read "Platinum", "24×7",
+ * `value` is a string, not a number - the design's cells read "Platinum", "24×7",
  * "SF" and "GPTW". There is no counter to animate, which is also why this does not
  * reach for `useCountUp` the way the home page's results band does.
  */

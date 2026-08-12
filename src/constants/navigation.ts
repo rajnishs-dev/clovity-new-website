@@ -181,11 +181,11 @@ const DISCOVER_LINKS: NavLink[] = [
 /* ── Resources mega panel: "What's New" rail ───────────────────────────── */
 
 /**
- * The two "What's New" feature cards in the Resources mega panel — always the
+ * The two "What's New" feature cards in the Resources mega panel - always the
  * single most recent event and the single most recent blog post, read
  * straight from the same static data the `/events` and `/blog` pages render,
  * rather than a hand-maintained pair of URLs that drift out of date (the
- * legacy markup linked to `clovity.com` — the old production site — instead
+ * legacy markup linked to `clovity.com` - the old production site - instead
  * of this app's own pages).
  */
 const [latestEvent] = getAllEvents();
