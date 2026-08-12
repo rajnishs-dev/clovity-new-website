@@ -6,6 +6,7 @@ import { Icon } from '@/components/ui/Icon';
 import {
   CategoryPill,
   FeaturedResourceCard,
+  LoadMoreGrid,
   MetaItem,
   ResourceCard,
 } from '@/components/common/Resources';

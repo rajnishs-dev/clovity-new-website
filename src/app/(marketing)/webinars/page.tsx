@@ -5,7 +5,12 @@ import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
 import { FinalCta } from '@/components/common/CTA';
 import {
-  RevealScope, RESOURCE_CTA_LINKS, ResourceHero } from '@/components/common/Resources';
+  RevealScope,
+  LoadMoreGrid,
+  RESOURCE_CTA_LINKS,
+ 
+  ResourceHero,
+} from '@/components/common/Resources';
 import { SectionHeader } from '@/components/ui/Section';
 import { getWebinarItems } from '@/data/webinars';
 import { WebinarGrid } from './WebinarGrid';

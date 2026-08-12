@@ -11,6 +11,11 @@ import {
 } from '@/components/common/Resources';
 import { getBlogPosts } from '@/data/blog';
 import { BlogList } from './BlogList';
+import {
+  blogHeroBanner,
+  blogHeroBannerTablet,
+  blogHeroBannerMobile,
+} from '@/constants/media';
 
 export const metadata: Metadata = buildMetadata({
   title: 'Blog - Atlassian, AI & Cloud Insights',
@@ -51,7 +56,9 @@ export default async function BlogPage() {
             </>
           }
           subheading="Discover fresh perspectives and powerful ideas that spark innovation and drive success daily."
-          image={`https://images.unsplash.com/photo-1497032628192-86f99bcd76bc?auto=format&fit=crop&w=1800&q=80`}
+          image={blogHeroBanner}
+          imageTablet={blogHeroBannerTablet}
+          imageMobile={blogHeroBannerMobile}
         />
 
         <section className="bg-[#f8fafc] pt-14 pb-[240px] sm:pt-20">
