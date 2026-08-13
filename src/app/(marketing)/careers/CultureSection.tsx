@@ -18,36 +18,14 @@ import { CAREERS_CULTURE_CONTENT } from '@/constants/careers';
 /**
  * "Life at Clovity" - photo left, culture copy right.
  *
- * WHAT THE CMS ACTUALLY OWNS HERE IS THE PHOTOGRAPH, and only that. It is worth
- * saying why, because the obvious reading of the content type is wrong.
+ * The CMS (`life-at-clovity`) only supplies the lead photograph here: its rows are
+ * per-photo gallery captions, not fields for this section's headline/copy, so wiring
+ * those in would print a gallery caption where the design wants a culture pitch. The
+ * lead photo of the first gallery comes from the CMS; headline, paragraph and bullets
+ * stay editorial copy.
  *
- * `life-at-clovity` looks like it should supply this whole block - it has
- * `header_normal`, `header_highlighted`, `image` and `info`. But the live instance
- * holds 12 rows arranged as four themed galleries of three
- * ("Clovity's Proud Achievements", "At Clovity Cherished Moments", "Employee
- * Recognition", "More Than Just Works"), where each row is ONE PHOTO and `info` is
- * its caption - "Clovity Team Unites for Team Week Celebrations at Noida HQ, India".
- * The header repeats across the three rows of a gallery; it names the gallery, not
- * the row.
- *
- * So wiring `header_*` to this section's headline and `info` to its opening
- * paragraph would print a gallery title and a photo caption where the design has a
- * culture pitch. The section would be "dynamic" and read as broken.
- *
- * What the collection genuinely has that this block needs is a real photograph of
- * the team, which beats the stock image the published page uses. So: the lead photo
- * of the first gallery (`sectionOrder` then `order`) comes from the CMS, and the
- * headline, paragraph and four bullets stay editorial copy - there is no field in
- * `clovity-admin` that means any of them.
- *
- * (If the copy should become editable, the clean fix is a `careers-page` single type
- * in Strapi with `heading` / `intro` / `bullets` fields. That is a schema change in
- * `clovity-admin`, which is outside this app.)
- *
- * `id="culture"` is the hero's "Life at Clovity" button target.
- *
- * `image` may be `null` if a row's media relation is missing; the section then
- * renders copy-only rather than an empty frame, which is the honest degradation.
+ * `id="culture"` is the hero's "Life at Clovity" button target. `image` may be `null`
+ * if the media relation is missing, in which case the section renders copy-only.
  */
 export function CultureSection({
   /** Build-time snapshot. Refreshed in the browser - see `api/cms.hooks.ts`. */

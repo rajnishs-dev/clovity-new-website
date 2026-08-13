@@ -4,18 +4,14 @@ import { AppImage, Container, LABEL_CLASS } from '@/components/ui';
 import { ABOUT_PRESS_LABEL, ABOUT_PRESS_LOGOS } from '@/constants/about';
 
 /**
- * "Featured In" - the press-logo strip.
+ * Not a `<Section>`: padding is asymmetric (bottom zeroed) because the
+ * mission quote below supplies the gap, and `Section`'s tokens are symmetric.
  *
- * Not a `<Section>`: the padding is asymmetric (`py-14 sm:py-16` with the bottom
- * zeroed at both breakpoints) because the mission quote below it supplies the gap.
- * `Section`'s padding tokens are symmetric by design, so this states its own.
+ * Logos are greyscale at 75% opacity, full colour on hover - keeps six
+ * differently-coloured mastheads from competing with the section.
  *
- * Logos are greyscale at 75% opacity and come to full colour on hover, which is the
- * treatment that keeps six differently-coloured mastheads from competing with the
- * section around them.
- *
- * No `sizes` prop: these are fixed 130×50 boxes, so Next emits a two-candidate
- * `1x`/`2x` srcset rather than one entry per configured width.
+ * No `sizes` prop: these are fixed 130x50 boxes, so Next emits a 1x/2x
+ * srcset instead of one entry per configured width.
  */
 export function FeaturedInSection() {
   return (
@@ -39,7 +35,7 @@ export function FeaturedInSection() {
             <span
               key={logo.id}
               className={cn(
-                'group flex h-[78px] items-center justify-center rounded-[14px] border border-line-soft bg-soft px-[22px] py-4',
+                'group flex h-[78px] items-center justify-center rounded-[10px] border border-line-soft bg-soft px-[22px] py-4',
                 '[transition:transform_.25s,box-shadow_.25s,border-color_.25s]',
                 'hover:-translate-y-[3px] hover:border-brand-200 hover:shadow-[0_12px_26px_rgba(15,23,42,.08)]',
               )}

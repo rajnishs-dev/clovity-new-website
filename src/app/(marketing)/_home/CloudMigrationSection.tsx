@@ -16,26 +16,12 @@ import {
 import { MIGRATION_CONTENT } from '@/constants/home';
 
 /**
- * Section 5 - "Data Center Is Ending. Your Momentum Isn't.", as Tailwind
- * utilities.
+ * Three-column flow: source instance -> four dashed steps -> Atlassian Cloud.
+ * The spine is an inline SVG with two stacked paths - a static dotted track and
+ * a `#pulseGrad`-stroked segment animating `stroke-dashoffset` - both sharing a
+ * hand-tuned `d` so the curve lands between the step icons.
  *
- * The signature graphic is a three-column flow: source instance → four dashed
- * steps → Atlassian Cloud / AGC. The spine is an inline SVG with two stacked
- * paths - a static dotted track and a `#pulseGrad`-stroked segment whose
- * `stroke-dashoffset` runs on a loop (`animate-mf-line`). Both keep their exact
- * original `d` value; the curve was hand-tuned to land between the four step icons.
- *
- * Below 1020px the three columns become one, the spine is hidden (it would run
- * across nothing) and the steps wrap two-up - the legacy behaviour, kept.
- *
- * BACKGROUND - this used to composite a tinted data-centre photo. The original
- * dropped it: `.mig-sec` now paints only a soft three-stop gradient, and nothing in
- * the site references `data-center-bg` any more, so the photo is gone here too and
- * the asset is unused.
- *
- * The section also carries `bg-[#eaf8ff]` in the legacy markup. That sets only
- * `background-color`, which the opaque gradient covers completely - so it is a
- * no-op and is not reproduced. The gradient is the visible background.
+ * Below 1020px the columns stack, the spine hides, and steps wrap two-up.
  */
 
 /** Tone classes for the destination benefit icons (legacy `.ic-*`). */
@@ -115,16 +101,8 @@ export function CloudMigrationSection({
                   key={source.id}
                   className="flex items-center gap-2.5 text-[13.5px] font-700 text-ink"
                 >
-                  {/*
-                    No chip behind these - the glyph sits on the card in its
-                    product's brand colour, and the background tint and radius are
-                    deliberately gone.
-
-                    The 22px BOX stays, though. It is not decoration: it is the
-                    tallest thing in the row, so it sets the row height. Dropping it
-                    let each row collapse to the 20.3px text line box and made the
-                    section 9px shorter than the original.
-                  */}
+                  {/* The 22px box isn't decoration - it's the tallest thing in
+                      the row, so it sets the row height. */}
                   <span className="flex h-[22px] w-[22px] shrink-0 items-center justify-center">
                     <Icon name={source.icon} size={18} style={source.iconStyle} />
                   </span>{' '}
@@ -181,17 +159,9 @@ export function CloudMigrationSection({
 
           {/* Destination */}
           <div className="rounded-[10px] border border-[#dbe7ff] bg-[linear-gradient(180deg,#fff,#f5f9ff)] p-[22px] text-left shadow-[0_14px_34px_-12px_rgba(15,23,42,.14)] to-1020:mx-auto to-1020:w-full to-1020:max-w-[420px]">
-            {/*
-              The head is a flex row - chip beside the title - because the original
-              reuses `.mflow-src-head` here, the same wrapper the source card uses.
-
-              THE TWO BOTTOM MARGINS ARE LOAD-BEARING, which is not obvious. They are
-              left over from when this block stacked, and the instinct is to drop them
-              as dead style in a centre-aligned flex row. A flex row does not ignore
-              them: they are part of each item's margin box, so they enlarge the line's
-              cross size. Together they make the head 56px instead of 42px. Removing
-              them cost exactly 14px and left the section short on mobile.
-            */}
+            {/* The two `mb-3.5` on this row are load-bearing: in a flex row they
+                still enlarge the line's cross size, taking the head from 42px to
+                56px. Removing them shorts the section by 14px on mobile. */}
             <div className="mb-3.5 flex items-center gap-3">
               <span className="mb-3.5 flex h-[42px] w-[42px] shrink-0 items-center justify-center rounded-[14px] bg-grad-brand-orange text-[22px] text-white shadow-[0_8px_18px_rgba(37,99,235,.32)]">
                 <Icon name="cloud" />

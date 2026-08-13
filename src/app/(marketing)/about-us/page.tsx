@@ -1,16 +1,9 @@
 /**
- * About page.
+ * Eleven sections. The "Certifications & Diversity" badge row reads the
+ * Strapi `award` collection; every other section's copy is bundled.
  *
- * A faithful port of `about-us.html`: same eleven sections in the same order, same
- * copy, same spacing. What changed is where the content comes from - the
- * "Certifications & Diversity" badge row now reads the Strapi `award` collection, so
- * an editor adding an award in `clovity-admin` sees it here without a deploy. Every
- * other section's copy is bundled, which matches the source page: it had no CMS
- * behind any of it.
- *
- * The page stays a Server Component. Only four things reach the browser as
- * JavaScript: the header (scroll state), the hero (parallax), `PageAnimations` (the
- * reveal observer) and `NavState` (one dispatch).
+ * Stays a Server Component - only the header, hero, `PageAnimations` and
+ * `NavState` reach the browser as JavaScript.
  */
 import type { Metadata } from 'next';
 import { buildMetadata } from '@/lib/seo';
@@ -42,7 +35,11 @@ import {
   ABOUT_FINAL_CTA_LINKS,
   ABOUT_HERO,
 } from '@/constants/about';
-import { aboutHeroBanner } from '@/constants/media';
+import {
+  aboutHeroBanner,
+  aboutHeroBannerTablet,
+  aboutHeroBannerMobile,
+} from '@/constants/media';
 import { NavState } from './NavState';
 
 export const metadata: Metadata = buildMetadata({
@@ -60,12 +57,9 @@ export const metadata: Metadata = buildMetadata({
 });
 
 /**
- * Regenerated every five minutes.
- *
- * The award badges come from Strapi over Axios, which does not participate in Next's
- * fetch cache - so without this the page would re-request on every visit. ISR at the
- * page level is the right granularity here: the whole page is one cached HTML
- * document, and a published award appears within the window without a deploy.
+ * Regenerated every five minutes: the award badges come from Strapi over
+ * Axios, which doesn't participate in Next's fetch cache, so page-level ISR
+ * is what lets a published award appear without a deploy.
  */
 export const revalidate = 300;
 
@@ -93,6 +87,8 @@ export default async function AboutPage() {
             }
             subheading={ABOUT_HERO.lead}
             image={aboutHeroBanner}
+            imageTablet={aboutHeroBannerTablet}
+            imageMobile={aboutHeroBannerMobile}
           />
 
           <WhySection />
@@ -133,7 +129,7 @@ export default async function AboutPage() {
             // `.cta-sec` is `#f8faff` here, and the card sits a step darker than the
             // home page's. `pullUp={false}` because `.cta-card` sets `margin-top: 0`
             // on this page - it overlaps down into the footer only.
-            className="bg-[#f8faff]"
+            className="bg-[#eaf8ff]"
             cardClassName="-mt-0 bg-[linear-gradient(135deg,#152a6b_0%,#2557c9_65%,#3568e0_100%)]"
             headingClassName="text-[clamp(28px,3.6vw,44px)] leading-[1.12]"
             pullUp={false}
@@ -142,11 +138,8 @@ export default async function AboutPage() {
         </main>
       </PageAnimations>
 
-      {/*
-        220px, not the Footer's default 260px - `.footer-overlap` is 220px on this
-        page. The 900px and 640px steps (190px / 150px) are unchanged, so only the
-        base value is overridden.
-      */}
+      {/* 220px, not the Footer's default 260px; the 900px/640px steps are
+          unchanged - only the base value is overridden. */}
       <Footer overlap className="pt-[220px]" />
     </>
   );

@@ -4,23 +4,18 @@ import { cn } from '@/lib/cn';
 /**
  * next/image wrapper carrying the project's defaults.
  *
- * Why every `<img>` in the migration goes through this:
- *  • animated GIFs must be `unoptimized`; the optimizer would flatten them to a
- *    single frame. The Clovity logo is a 2.4MB animated GIF, so this matters.
- *  • a static import (`import logo from '@/assets/images/…'`) supplies intrinsic
- *    width/height, which removes the layout shift the legacy `<img>` tags caused.
+ * Animated GIFs must be `unoptimized`, since the optimizer flattens them to a
+ * single frame (the Clovity logo is a 2.4MB animated GIF).
  *
- * WHEN TO PASS `sizes` - this is the decision that actually moves bytes:
- *  • FLUID images (fill mode, or a width that tracks the viewport) need `sizes`.
- *    Without it the browser assumes 100vw and downloads a far larger candidate
- *    than it will display. Use one of the IMAGE_SIZES presets.
- *  • FIXED-SIZE images (logo pills, app tiles, badges, stat icons) should NOT
- *    pass `sizes`. Next then emits a two-candidate `1x`/`2x` srcset instead of one
- *    entry per configured width - on this page that is the difference between 2
- *    and ~19 candidates across 46 marquee logos.
+ * `sizes` is the choice that actually moves bytes: FLUID images (fill mode,
+ * or a width that tracks the viewport) need it via an `IMAGE_SIZES` preset,
+ * or the browser assumes 100vw and downloads an oversized candidate.
+ * FIXED-SIZE images (logos, badges, icons) should omit `sizes` entirely so
+ * Next emits a 1x/2x srcset instead of one entry per configured width - the
+ * difference between 2 and ~19 candidates across 46 marquee logos.
  *
- * `quality` is left to Next's default (75). Anything else must be listed in
- * `images.qualities` in next.config.ts or the optimizer answers 400.
+ * `quality` stays at Next's default (75) - anything else must be listed in
+ * `images.qualities` in next.config.ts or the optimizer 400s.
  */
 
 /**

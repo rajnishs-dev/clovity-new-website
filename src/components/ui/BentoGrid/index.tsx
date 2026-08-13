@@ -7,23 +7,16 @@ import { Icon } from '../Icon';
  * `theme.css`'s `.bento-grid` / `.bento-tile` - About's "Our Values" and Careers'
  * "Benefits & Perks".
  *
- * WHY FOUR COLUMNS AND `col-span-2`, rather than two columns -
- * that is what the original declares, and it is not equivalent. The track is
- * `repeat(4,1fr)` with every tile spanning two, so two tiles sit per row; at ≤900px
- * the track becomes `repeat(2,1fr)` and a two-span tile fills the row, giving one per
- * row; at ≤560px the track is a single column and the span drops to 1. Rewriting it
- * as `grid-cols-2 → grid-cols-1` would lose the ≤900px step entirely, where the
- * design goes to full-width tiles while still above the phone breakpoint.
+ * Four columns with `col-span-2`, not two columns: at ≤900px the track drops to
+ * `repeat(2,1fr)` so a two-span tile fills the row (one per row), and only at
+ * ≤560px does it become a single column with span-1. A plain `grid-cols-2 →
+ * grid-cols-1` collapse would skip that ≤900px step.
  *
- * `auto-rows-[minmax(160px,auto)]` is what keeps a short tile from collapsing next to
- * a tall one, so the two tiles in a row match height.
+ * One reveal on the grid, not per tile, matches the legacy single `sr` - four
+ * reveals would ripple instead of firing together.
  *
- * The GRID carries one reveal, not each tile - matching the single `sr` the markup
- * puts on the container. Four separate reveals would fire at four different scroll
- * positions and read as a ripple the design does not have.
- *
- * ICON SIZE - 26px in a 50px chip (~52%), where the published markup said 20px. See
- * `PillarGrid` for why the ratio changed with the move from Font Awesome to Lucide.
+ * Icon at 26px in a 50px chip (~52%) - see `PillarGrid` for why the ratio changed
+ * with the move from Font Awesome to Lucide.
  */
 export interface BentoGridProps {
   tiles: BentoTile[];
@@ -45,7 +38,7 @@ export function BentoGrid({ tiles, className }: BentoGridProps) {
         <div
           key={tile.id}
           className={cn(
-            'col-span-2 flex flex-col rounded-[20px] border border-line-soft bg-white p-7 to-560:col-span-1',
+            'col-span-2 flex flex-col rounded-[10px] border border-line-soft bg-white p-7 to-560:col-span-1',
             '[transition:transform_.3s_cubic-bezier(.34,1.56,.64,1),box-shadow_.3s_ease,border-color_.3s_ease]',
             'hover:-translate-y-[5px] hover:border-brand-200 hover:shadow-lift',
           )}
@@ -56,7 +49,7 @@ export function BentoGrid({ tiles, className }: BentoGridProps) {
               tile.iconChipClass,
             )}
           >
-            <Icon name={tile.icon} />
+            <Icon name={tile.icon} size={40} />
           </span>
           <b className="mb-2 block text-[18px] font-500 tracking-[-.01em] text-title">
             {tile.title}

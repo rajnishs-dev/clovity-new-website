@@ -11,6 +11,8 @@ import type {
 import { ROUTES } from '@/constants/routes';
 import { siteConfig } from '@/constants/site';
 import {
+  aboutWhoWeArePhoto,
+  aboutWorkWithUsPhoto,
   badgeCloudSpecialization,
   badgeItsmSpecialization,
   badgeMarketplacePartner,
@@ -58,7 +60,7 @@ export const ABOUT_WHY_CARDS: PillarCard[] = [
   {
     id: 'platinum-depth',
     icon: 'atlassian',
-    iconChipClass: 'bg-brand-50 text-brand-600',
+    iconChipClass: 'text-brand-600',
     title: 'Atlassian Platinum Depth',
     description:
       'The highest Atlassian partner tier, earned through delivery - Jira, Confluence, JSM, and Government Cloud migrations handled end to end, not just licensed.',
@@ -66,7 +68,7 @@ export const ABOUT_WHY_CARDS: PillarCard[] = [
   {
     id: 'ai-in-delivery',
     icon: 'robot',
-    iconChipClass: 'bg-[#f5f3ff] text-[#7c3aed]',
+    iconChipClass: 'text-[#7c3aed]',
     title: 'AI Built Into Delivery',
     description:
       'We ship Pulse AI, our own AI copilot for Jira, on the Atlassian Marketplace - so the AI shaping your instance is the same AI we use to run engagements.',
@@ -74,7 +76,7 @@ export const ABOUT_WHY_CARDS: PillarCard[] = [
   {
     id: 'public-sector',
     icon: 'landmark',
-    iconChipClass: 'bg-[#fff7ed] text-accent-500',
+    iconChipClass: 'text-accent-500',
     title: 'Public Sector, By Design',
     description:
       'Secure, audit-ready delivery for federal and state agencies - including the IRS, U.S. Coast Guard, NASA, and California EDD - not a side practice bolted onto commercial work.',
@@ -108,20 +110,9 @@ export const ABOUT_WHO_CONTENT = {
     'Our U.S.-led teams combine technical depth with compliance expertise to power modernization at speed - without asking regulated clients to compromise on either.',
     'From licensing and migrations to full-stack automation, we help clients unlock long-term value from their Atlassian ecosystem, backed by a Great Place to Work®-certified culture and four consecutive years on the Inc. 5000 list.',
   ],
-  /**
-   * `h=800` is appended to the published URL.
-   *
-   * The original is a bare `<img>` with no dimensions, so the browser lays it out
-   * at its natural aspect. next/image requires a width/height pair for a remote
-   * source, and a declared pair that disagrees with what the CDN serves would
-   * change the frame's height. Pinning the request to 1200×800 makes the declared
-   * ratio exact rather than a guess.
-   */
   image: {
-    src: 'https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=1200&h=800&q=70',
+    src: aboutWhoWeArePhoto,
     alt: 'Clovity team reviewing an Atlassian implementation',
-    width: 1200,
-    height: 800,
   },
 } as const;
 
@@ -167,7 +158,7 @@ export const ABOUT_VALUES: BentoTile[] = [
   {
     id: 'security-first',
     icon: 'shield-half',
-    iconChipClass: 'bg-brand-50 text-brand-600',
+    iconChipClass: 'text-brand-600',
     title: 'Security & Compliance First',
     description:
       'Every implementation is built audit-ready from day one - the standard our public-sector and enterprise clients require, not an afterthought we bolt on later.',
@@ -175,7 +166,7 @@ export const ABOUT_VALUES: BentoTile[] = [
   {
     id: 'us-led',
     icon: 'flag',
-    iconChipClass: 'bg-[#f5f3ff] text-[#7c3aed]',
+    iconChipClass: 'text-[#7c3aed]',
     title: 'U.S.-Led, Globally Delivered',
     description:
       'Security-cleared U.S. architects lead every engagement, backed by compliant delivery teams that keep progress moving around the clock.',
@@ -183,7 +174,7 @@ export const ABOUT_VALUES: BentoTile[] = [
   {
     id: 'atlassian-depth',
     icon: 'atlassian',
-    iconChipClass: 'bg-[#fff7ed] text-accent-500',
+    iconChipClass: 'text-accent-500',
     title: 'Atlassian Depth, Not Just Access',
     description:
       'Platinum-tier certified expertise across Jira, Confluence, JSM, and Government Cloud - earned through delivery, not just a partner badge.',
@@ -191,7 +182,7 @@ export const ABOUT_VALUES: BentoTile[] = [
   {
     id: 'people-first',
     icon: 'people-group',
-    iconChipClass: 'bg-[#f0fdf4] text-brand-green',
+    iconChipClass: 'text-brand-green',
     title: 'A People-First Culture',
     description:
       'Great Place to Work® certified because how we treat our own team shows up directly in how we treat clients.',
@@ -484,12 +475,9 @@ export const ABOUT_WORK_WITH_US = {
     "Whether you're modernizing legacy Jira infrastructure, migrating to Atlassian Government Cloud, or rolling out AI-powered workflows, our delivery team can help you get there.",
   ctaLabel: 'Talk to an Expert',
   ctaHref: `mailto:${siteConfig.contact.globalEmail}`,
-  /** See `ABOUT_WHO_CONTENT.image` for why `h=800` is appended. */
   image: {
-    src: 'https://images.unsplash.com/photo-1552581234-26160f608093?auto=format&fit=crop&w=1200&h=800&q=70',
+    src: aboutWorkWithUsPhoto,
     alt: 'Clovity architects planning an Atlassian migration',
-    width: 1200,
-    height: 800,
   },
 } as const;
 

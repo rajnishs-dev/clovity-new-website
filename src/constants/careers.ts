@@ -5,7 +5,6 @@ import type {
   FaqItem,
   HiringStep,
   JobOpening,
-  PillarCard,
   StatBandItem,
 } from '@/types/content';
 import { EXTERNAL_LINKS, ROUTES } from '@/constants/routes';
@@ -57,38 +56,18 @@ export const CAREERS_HERO = {
 
 /* ── Why build your career here ─────────────────────────────────────────── */
 
+/**
+ * Ported from the legacy `/talent` page's intro banner - the copy that used to
+ * sit directly above the job list. Job-seeker-facing, unlike About's "Why
+ * Clovity" pillar cards (client-facing), which is why this page no longer
+ * reuses that same card layout.
+ */
 export const CAREERS_WHY_CONTENT = {
-  label: 'Why Clovity',
-  headingLead: 'Three Reasons Our Teams ',
-  headingHighlight: 'Stay and Grow',
+  headingLead: 'We Are Catalyzing Edge to Digital ',
+  headingHighlight: 'Transformations',
+  description:
+    "We're always on the lookout for fresh talent. If you think you've got what it takes to thrive in a competitive, fast-paced and intellectually stimulating environment, then Clovity is the place for you.",
 } as const;
-
-export const CAREERS_WHY_CARDS: PillarCard[] = [
-  {
-    id: 'depth',
-    icon: 'atlassian',
-    iconChipClass: 'bg-brand-50 text-brand-600',
-    title: 'Depth, Not Just a Badge',
-    description:
-      'Work inside real Platinum-tier engagements - Jira, Confluence, JSM, and Government Cloud migrations - and leave with certifications that hold their value in the market.',
-  },
-  {
-    id: 'build-with-ai',
-    icon: 'robot',
-    iconChipClass: 'bg-[#f5f3ff] text-[#7c3aed]',
-    title: 'Build With AI, Daily',
-    description:
-      'Ship and use Pulse AI, our own Atlassian Marketplace copilot, so the AI you build shows up in the tools you and every client use.',
-  },
-  {
-    id: 'work-that-matters',
-    icon: 'landmark',
-    iconChipClass: 'bg-[#fff7ed] text-accent-500',
-    title: 'Work That Matters',
-    description:
-      'Deliver for federal and state agencies - including the IRS, U.S. Coast Guard, NASA, and California EDD - where secure, audit-ready delivery is the whole job, not a side note.',
-  },
-];
 
 /* ── Stat band ──────────────────────────────────────────────────────────── */
 
@@ -180,7 +159,7 @@ export const CAREERS_BENEFITS: BentoTile[] = [
   {
     id: 'certification',
     icon: 'graduation-cap',
-    iconChipClass: 'bg-brand-50 text-brand-600',
+    iconChipClass: 'text-brand-600',
     title: 'Certification & Learning Support',
     description:
       'Structured support toward Atlassian, cloud, and security certifications - the credentials our delivery teams use every day.',
@@ -188,7 +167,7 @@ export const CAREERS_BENEFITS: BentoTile[] = [
   {
     id: 'flexible',
     icon: 'remote-work',
-    iconChipClass: 'bg-[#f5f3ff] text-[#7c3aed]',
+    iconChipClass: 'text-[#7c3aed]',
     title: 'Flexible & Remote-Friendly',
     description:
       'Distributed, U.S.-led teams with flexible schedules built around delivery milestones, not fixed hours.',
@@ -196,7 +175,7 @@ export const CAREERS_BENEFITS: BentoTile[] = [
   {
     id: 'health',
     icon: 'heart-pulse',
-    iconChipClass: 'bg-[#fff7ed] text-accent-500',
+    iconChipClass: 'text-accent-500',
     title: 'Health & Wellness Coverage',
     description:
       'Health coverage and wellness support designed to keep our teams performing on multi-year public-sector engagements.',
@@ -204,7 +183,7 @@ export const CAREERS_BENEFITS: BentoTile[] = [
   {
     id: 'recognition',
     icon: 'people-group',
-    iconChipClass: 'bg-[#f0fdf4] text-brand-green',
+    iconChipClass: 'text-brand-green',
     title: 'Recognition-Driven Culture',
     description:
       'Great Place to Work® certified because how we treat our own team shows up directly in how we treat clients.',
@@ -224,7 +203,7 @@ export const CAREERS_HIRING_STEPS: HiringStep[] = [
     id: 'apply',
     ordinal: '01',
     icon: 'send',
-    iconChipClass: 'bg-brand-50 text-brand-600',
+    iconChipClass: 'text-brand-600',
     title: 'Apply',
     description:
       'Send your resume for an open role, or reach out directly if nothing posted fits yet.',
@@ -233,7 +212,7 @@ export const CAREERS_HIRING_STEPS: HiringStep[] = [
     id: 'recruiter-screen',
     ordinal: '02',
     icon: 'phone-call',
-    iconChipClass: 'bg-[#f5f3ff] text-[#7c3aed]',
+    iconChipClass: 'text-[#7c3aed]',
     title: 'Recruiter Screen',
     description:
       "A short call to align on experience, expectations, and the role's scope.",
@@ -242,7 +221,7 @@ export const CAREERS_HIRING_STEPS: HiringStep[] = [
     id: 'technical-interview',
     ordinal: '03',
     icon: 'comments',
-    iconChipClass: 'bg-[#fff7ed] text-accent-500',
+    iconChipClass: 'text-accent-500',
     title: 'Technical Interview',
     description:
       "A working conversation with the delivery team you'd actually join.",
@@ -251,7 +230,7 @@ export const CAREERS_HIRING_STEPS: HiringStep[] = [
     id: 'offer',
     ordinal: '04',
     icon: 'file-signature',
-    iconChipClass: 'bg-[#f0fdf4] text-brand-green',
+    iconChipClass: 'text-brand-green',
     title: 'Offer',
     description: 'References and final alignment, followed by a formal offer.',
   },
@@ -259,7 +238,7 @@ export const CAREERS_HIRING_STEPS: HiringStep[] = [
     id: 'onboard',
     ordinal: '05',
     icon: 'door-open',
-    iconChipClass: 'bg-[#fdf2f8] text-[#db2777]',
+    iconChipClass: 'text-[#db2777]',
     title: 'Onboard',
     description:
       'Structured onboarding into your team, tooling, and first engagement.',
@@ -397,11 +376,11 @@ function fallbackApplyHref(title: string, trackLabel: string): string {
 }
 
 /** Tints for the fallback roles' track pills, matching the published markup. */
-const TAG_BLUE = 'bg-brand-50 text-brand-600';
-const TAG_VIOLET = 'bg-[#f5f3ff] text-[#7c3aed]';
-const TAG_ORANGE = 'bg-[#fff7ed] text-[#c2410c]';
-const TAG_GREEN = 'bg-[#f0fdf4] text-brand-green';
-const TAG_GREY = 'bg-[#f1f5f9] text-[#334155]';
+const TAG_BLUE = 'text-brand-600';
+const TAG_VIOLET = 'text-[#7c3aed]';
+const TAG_ORANGE = 'text-[#c2410c]';
+const TAG_GREEN = 'text-brand-green';
+const TAG_GREY = 'text-[#334155]';
 
 interface FallbackRoleSeed {
   id: string;

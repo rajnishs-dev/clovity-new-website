@@ -68,7 +68,7 @@ export function BannerHero({
       />
 
       <div className="relative z-[2] mx-auto w-full max-w-shell px-6">
-        <div className="max-w-[300px] sm:max-w-[380px] md:max-w-[450px]">
+        <div className="max-w-[300px] sm:max-w-[380px] md:max-w-[480px]">
           <JsonLd schema={breadcrumbSchema(breadcrumb)} />
           <nav
             aria-label="Breadcrumb"
@@ -106,7 +106,7 @@ export function BannerHero({
 
           <h1
             className={cn(
-              'mb-4 text-[clamp(30px,5vw,44px)] font-normal leading-[1.15] tracking-[-0.03em] text-white',
+              'mb-4 text-[clamp(30px,5vw,46px)] font-normal leading-[1.15] tracking-[-0.03em] text-white',
               reveal('up', 100),
               'text-left',
             )}

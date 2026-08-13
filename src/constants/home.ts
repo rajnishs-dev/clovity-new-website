@@ -260,9 +260,9 @@ export const AI_DELIVERY_CAPABILITIES: FeatureCard[] = [
     title: 'AI-Powered Insights',
     description: 'Predictive insights and recommendations, right inside Jira.',
     icon: 'brain',
-    // Previously baked into a dedicated CSS class rather than passed as data,
-    // which meant this one card could not be reordered or CMS-managed. It is
-    // now an ordinary background like the other five.
+    // Previously a dedicated CSS class instead of data, which meant this card
+    // alone couldn't be reordered or CMS-managed - now an ordinary field like
+    // the other five.
     backgroundImage: aiPoweredSummary,
   },
   {

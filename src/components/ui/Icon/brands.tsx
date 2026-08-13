@@ -3,39 +3,28 @@ import type { ComponentType, SVGProps } from 'react';
 /**
  * Brand marks, as inline SVG.
  *
- * WHY THESE ARE HAND-ROLLED - Lucide has no brand icons. It never shipped
- * Atlassian, Jira or Confluence, and the ones it did have (`Linkedin`, `Github`,
- * `Youtube`, `Slack`, `Twitter`) were removed upstream over trademark concerns and
- * do not exist in the installed v1.28. So "use Lucide everywhere" cannot cover the
- * eight brand marks this site renders, and a stroked Lucide lookalike would be
- * both wrong and legally worse than the real mark.
+ * Hand-rolled because Lucide has no brand icons - it never shipped Atlassian,
+ * Jira or Confluence, and dropped Linkedin/Github/Youtube/Slack/Twitter
+ * upstream over trademark concerns.
  *
- * Path data is Font Awesome Free 6.5.1, which licenses its icons under CC BY 4.0
- * (https://fontawesome.com/license/free). Inlining the paths keeps the glyph shapes
- * byte-identical to what the site rendered before while removing the 1.4 MB webfont
- * package from the bundle entirely.
+ * Path data is Font Awesome Free 6.5.1 (CC BY 4.0,
+ * https://fontawesome.com/license/free), inlined to keep the glyphs
+ * byte-identical while dropping the 1.4 MB webfont from the bundle.
  *
  * ATTRIBUTION: Icons in this file are derived from Font Awesome Free
  * (https://fontawesome.com), Copyright 2023 Fonticons, Inc., CC BY 4.0.
  *
- * EVERY GLYPH IS NORMALISED ONTO A 24×24 VIEWBOX, which is Lucide's grid. The
- * source viewBoxes are not square and not consistent (LinkedIn 448×512, YouTube
- * 576×512, Jira 496×512), so the mark is scaled to fit and centred by a `transform`
- * rather than being stretched to a square.
- *
- * The first attempt instead kept the native viewBox and derived `width` from
- * `height` in JS to preserve the ratio. That broke the moment a caller passed a CSS
- * length: `Icon` defaults `size` to `1em`, `parseFloat('1em')` is `1`, and every
- * brand mark rendered as a 1×1 pixel dot. Normalising the geometry means `width` and
- * `height` can both just be `size`, so `em`, `rem`, `%` and plain numbers all work
- * exactly as they do for a Lucide icon.
+ * Every glyph is normalised onto Lucide's 24×24 viewBox (source boxes are
+ * inconsistent, e.g. LinkedIn 448×512) via a `transform`, scaled and centred
+ * rather than stretched. This matters because `size` defaults to `1em`:
+ * keeping the native viewBox and deriving `width` from `height` in JS made
+ * `parseFloat('1em')` resolve to `1`, rendering every brand mark as a 1×1
+ * dot. Normalising means `width`/`height` can both just be `size`.
  */
 
 /**
- * The props every glyph in the registry accepts.
- *
- * Deliberately shaped to match Lucide's own `LucideProps` so a Lucide component and
- * a brand component are interchangeable in `ICONS` with no cast at the call site.
+ * Matches Lucide's `LucideProps` shape so a Lucide component and a brand
+ * component are interchangeable in `ICONS` with no cast at the call site.
  */
 export interface GlyphProps extends Omit<SVGProps<SVGSVGElement>, 'ref'> {
   size?: number | string;
@@ -147,9 +136,7 @@ export const GitHubGlyph = makeBrand(
 
 /**
  * A geometric "C" monogram - the Cherwell row in the migration-sources list.
- *
- * Lucide has no letterform icons, and this is a product mark rather than a UI
- * affordance, so it belongs with the brand glyphs.
+ * Lucide has no letterforms, and this is a product mark, not a UI affordance.
  */
 export const CherwellGlyph = makeBrand(
   'CherwellGlyph',

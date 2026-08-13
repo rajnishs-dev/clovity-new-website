@@ -5,34 +5,24 @@ import type { CredentialBadge, CredentialRow } from '@/types/content';
 import { AppImage } from '@/components/ui/Image';
 
 /**
- * The `md`-and-below stand-in for `CredentialsSection`'s three flex-wrap
- * rows: one draggable, auto-scrolling strip built on `useAutoScrollMarquee`.
+ * `md`-and-below stand-in for `CredentialsSection`'s flex-wrap rows: a real
+ * `overflow-x-auto` track where `useAutoScrollMarquee` only nudges
+ * `scrollLeft` while idle, so dragging is native scrolling throughout.
  *
- * Unlike `ClientMarquee` (a pure CSS `translateX` loop with no user input),
- * this track is a real `overflow-x-auto` element - the hook only nudges
- * `scrollLeft` forward while idle, so swiping it is native browser scrolling
- * the whole time: drag left to move the strip left, drag right to move it
- * right, exactly as any other horizontal scroller behaves.
- *
- * `isSvg` and the card treatment are intentionally re-declared here rather
- * than imported from `CredentialsSection` - that file imports this one for
- * the mobile strip, so importing back would be a cycle.
+ * `isSvg` and the card treatment are re-declared here rather than imported
+ * from `CredentialsSection`, which imports this file - importing back would
+ * be a cycle.
  */
 function isSvg(source: CredentialBadge['image']['src']): boolean {
   const path = typeof source === 'string' ? source : source.src;
   return path.toLowerCase().includes('.svg');
 }
 
-/**
- * Marquee-only card treatment. Every badge gets the same rounded white box in
- * the strip - including the four bare Atlassian partner badges, which render
- * unwrapped in the desktop rows - and none of them carry the desktop card's
- * drop shadow: constant sideways motion turned it into a smear rather than
- * depth, so a plain border stands in for it instead.
- */
+/** Marquee-only card treatment: no drop shadow (motion turned it into a
+ *  smear), a plain border stands in instead. */
 function MarqueeCard({ badge }: { badge: CredentialBadge }) {
   return (
-    <div className="flex h-[100px] w-[140px] items-center justify-center rounded-2xl border border-line-soft bg-white p-4">
+    <div className="flex h-[100px] w-[140px] items-center justify-center rounded-[10px] border border-line-soft bg-white p-4">
       <AppImage
         src={badge.image.src}
         alt={badge.image.alt}

@@ -91,22 +91,14 @@ export type { IconName };
 /**
  * The icon registry: one semantic name per glyph.
  *
- * WHY A NAME REGISTRY AND NOT COMPONENT IMPORTS IN THE DATA FILES -
- * the icon for a nav link or a service card is *content*, and in phase 2 that
- * content comes out of Postgres via the CMS. A database can store the string
- * `"cloud-upload"`; it cannot store a React component. So the data layer keeps
- * naming icons with strings, exactly as it did with Font Awesome classes, and this
- * map is the single place that turns a name into something renderable.
+ * A name registry (not component imports in data files) because icon choice
+ * is content, and in phase 2 that content comes from the CMS - a database
+ * can store the string `"cloud-upload"`, not a React component.
  *
- * The difference from the Font Awesome strings it replaces is that `IconName` is a
- * closed union. `"fa-solid fa-clod-arrow-up"` was a silent no-op - a typo rendered
- * an empty box and nothing complained. A bad `IconName` is a compile error, and
- * `resolveIcon` handles the runtime case where a CMS sends a name this build does
- * not know about.
- *
- * The `satisfies Record<IconName, Glyph>` below is load-bearing: it makes this map
- * exhaustive over the union in `types/icon.ts`, so a name can never be declared
- * without a glyph behind it.
+ * `IconName` is a closed union, so a bad name is a compile error instead of
+ * the silent no-op a Font Awesome typo used to be; `resolveIcon` covers the
+ * runtime case of a CMS name this build doesn't know. `satisfies
+ * Record<IconName, Glyph>` makes this map exhaustive over that union.
  */
 export const ICONS = {
   // Arrows and chevrons

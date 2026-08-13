@@ -7,16 +7,12 @@ import { Icon } from '@/components/ui/Icon';
 import { ROUTES } from '@/constants/routes';
 
 /**
- * Route error boundary.
+ * Route error boundary. Must be a client component - Next needs to catch a
+ * render error and hand it the `reset` callback.
  *
- * Must be a client component - Next.js needs to catch a render error and hand it
- * the `reset` callback.
- *
- * `error.digest` is shown rather than `error.message`: in production Next
- * replaces the message with a generic string and the digest is the only value
- * that correlates to the real server-side stack in the logs. Printing a raw
- * message here would risk leaking internals to a visitor and would still not help
- * anyone debug.
+ * `error.digest` is shown rather than `error.message`: production replaces
+ * the message with a generic string, and the digest is what correlates to
+ * the real stack in server logs.
  */
 export default function RootError({
   error,

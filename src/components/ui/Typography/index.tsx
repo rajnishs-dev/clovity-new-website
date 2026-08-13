@@ -34,7 +34,7 @@ export const SUBHEADING_CLASS =
 
 /** `.s-label` - the small uppercase eyebrow above a heading. */
 export const LABEL_CLASS =
-  'inline-block text-[14px] font-500 uppercase tracking-[.14em] text-brand-600';
+  'inline-block text-[14px] font-500 uppercase tracking-[.14em] text-brand-600 mb-4';
 
 export type TypographyVariant =
   | 'display'

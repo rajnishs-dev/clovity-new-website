@@ -3,45 +3,40 @@ import { revealAligned, revealAttrs } from '@/lib/reveal';
 import type { StatBandItem } from '@/types/content';
 
 /**
- * `theme.css`'s `.stat-band` - the four-cell metric strip on a dark gradient.
+ * `theme.css`'s `.stat-band` - the four-cell metric strip (About, Careers).
  *
- * Used by About and Careers, which wrap it in the same navy gradient section
- * (`#0b1730 → #152a6b → #1d3a8a`) and pass `background: transparent` on the grid
- * itself so the section's gradient shows through instead of the band's own `#0f172a`.
- * That inline override is reproduced here as `bg-transparent`.
+ * Paints its own white card rather than staying transparent over a dark
+ * gradient like the original `.stat-band` did - that read poorly against
+ * this site's light sections.
  *
- * THE THREE BREAKPOINTS ARE THE DESIGN'S, not a simplification:
- *   • ≥900px  four columns, cells divided by right borders
- *   • ≤900px  two columns; the FIRST TWO cells gain a bottom border, because they
- *             are now a row with cells under them
- *   • ≤520px  one column; right borders off, bottom borders on, last cell bare
+ * Breakpoints are the design's: ≥900px four columns with right-border
+ * dividers; ≤900px two columns, first two cells gain a bottom border; ≤520px
+ * one column, right borders off, bottom borders on.
  *
- * `to-520` is a NAMED screen in `tailwind.config.ts`, not an arbitrary
- * `max-[520px]` variant. The arbitrary form compiles to nothing here - Tailwind
- * only emits the `max-*` family when every `screens` entry is a plain min-width
- * string, and this config's `to-*` entries are `{ max: … }` objects - so the band
- * silently kept four columns on a phone. See the comment on that screen.
+ * `to-520` must be the named screen from `tailwind.config.ts`, not
+ * `max-[520px]`: Tailwind only emits the `max-*` family when every `screens`
+ * entry is a plain min-width string, and this config's `to-*` entries are
+ * `{ max: … }` objects - the arbitrary form compiles to nothing.
  *
- * `value` is a string, not a number - the design's cells read "Platinum", "24×7",
- * "SF" and "GPTW". There is no counter to animate, which is also why this does not
- * reach for `useCountUp` the way the home page's results band does.
+ * `value` is a string (cells read "Platinum", "24×7") - there's no counter to
+ * animate, unlike the home page's results band.
  */
 export interface StatBandProps {
   items: StatBandItem[];
   className?: string;
-  /** Tint applied to `accent` values. The two pages both use `#fdba74`. */
+  /** Tint applied to `accent` values. The two pages both use `text-orange`. */
   accentClassName?: string;
 }
 
 export function StatBand({
   items,
   className,
-  accentClassName = 'text-[#fdba74]',
+  accentClassName = 'text-orange',
 }: StatBandProps) {
   return (
     <div
       className={cn(
-        'grid grid-cols-4 overflow-hidden rounded-3xl bg-transparent to-900:grid-cols-2 to-520:grid-cols-1',
+        'grid grid-cols-4 overflow-hidden rounded-[10px] border border-line-soft bg-white to-900:grid-cols-2 to-520:grid-cols-1',
         revealAligned('center'),
         className,
       )}
@@ -51,18 +46,18 @@ export function StatBand({
         <div
           key={item.id}
           className={cn(
-            'relative border-r border-white/[.08] px-6 py-10 text-center last:border-r-0',
+            'relative border-r border-line-soft px-6 py-10 text-center last:border-r-0',
             // Two-column layout: only the first row needs a rule under it.
             index < 2 && 'to-900:border-b',
             'to-520:border-b to-520:border-r-0 to-520:last:border-b-0',
           )}
         >
-          <div className="text-[clamp(32px,4vw,48px)] font-500 leading-none tracking-[-.02em] text-white">
+          <div className="text-[clamp(32px,4vw,48px)] font-500 leading-none tracking-[-.02em] text-title">
             <span className={cn(item.accent && accentClassName)}>
               {item.value}
             </span>
           </div>
-          <div className="mt-2 text-[13px] font-600 text-faint">
+          <div className="mt-2 text-[13px] font-600 text-muted">
             {item.label}
           </div>
         </div>

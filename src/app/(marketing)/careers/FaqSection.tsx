@@ -6,30 +6,16 @@ import { JsonLd } from '@/components/common/JsonLd';
 import { CAREERS_FAQ, CAREERS_FAQ_CONTENT } from '@/constants/careers';
 
 /**
- * "Frequently Asked Questions" - five disclosures.
+ * "Frequently Asked Questions" - five disclosures using native `<details>`/`<summary>`,
+ * not the shared `<Accordion>`: the design allows several answers open at once,
+ * `<details>` needs no JS so the section stays a Server Component, and the plus-to-cross
+ * rotation doesn't map onto `Accordion`'s chevron.
  *
- * NATIVE `<details>` / `<summary>`, not the shared `<Accordion>`. Three reasons, in
- * order of weight:
+ * The marker is suppressed twice on purpose - `list-none` for browsers honouring
+ * `::marker`, the webkit selector for Safari, which doesn't - dropping either leaves a
+ * stray triangle in one engine.
  *
- *  1. The design lets several answers be open at once. `Accordion` closes the others
- *     by default, and its `allowMultiple` variant still routes through React state.
- *  2. `<details>` needs no JavaScript at all, so this whole section stays a Server
- *     Component and works before hydration - on a page whose other interactive
- *     element (the roles filter) already ships a client bundle, that is worth keeping.
- *  3. `Accordion` renders a chevron that rotates 180°; this design uses a plus that
- *     rotates 45° into a cross and inverts its chip. Bending one into the other would
- *     leave two variants of the same component with nothing shared.
- *
- * The plus is `group-open:rotate-45` - Tailwind compiles that to `.group[open] &`,
- * which is exactly the `[open] .faq-ic` selector the stylesheet used.
- *
- * The marker is suppressed twice on purpose: `list-none` covers browsers honouring
- * `::marker`, and `[&::-webkit-details-marker]:hidden` covers Safari, which does not.
- * Dropping either leaves a stray triangle in one engine.
- *
- * FAQPage JSON-LD is emitted alongside. It is not in the published markup, but it is
- * what makes these five answers eligible as a rich result, and it cannot drift from
- * what is rendered because both read the same array.
+ * FAQPage JSON-LD is emitted from the same array, so it can't drift from what's rendered.
  */
 export function FaqSection() {
   return (
@@ -56,7 +42,7 @@ export function FaqSection() {
             <details
               key={entry.id}
               className={cn(
-                'group mb-3.5 rounded-2xl border border-line-soft px-4 py-1',
+                'group mb-3.5 rounded-[10px] border border-line-soft px-4 py-1',
                 '[transition:border-color_.2s,box-shadow_.2s]',
                 'open:border-brand-200 open:shadow-[0_12px_30px_rgba(15,23,42,.06)]',
               )}

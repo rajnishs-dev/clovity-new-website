@@ -7,24 +7,14 @@ import type { StatItem } from '@/types/content';
 import { AppImage } from '@/components/ui/Image';
 
 /**
- * One metric in the results band, as Tailwind utilities.
+ * Own component because `useCountUp` can't be called in a loop, and each
+ * tile needs its own IntersectionObserver so it only counts when in view.
  *
- * Its own component because `useCountUp` is a hook and cannot be called in a loop,
- * and because each tile needs its own IntersectionObserver so a stat only counts
- * when it actually comes into view.
+ * `isolate` keeps the hover flood's scaled `before:` circle inside this
+ * card's stacking context instead of painting over neighbours.
  *
- * The hover flood is a `before:` circle sized to the icon that scales to 14× to
- * wash the whole card - the legacy `.res2-stat::before`. Each tile has its own
- * accent, which the original expressed as five `:nth-child(N)` rules; here the
- * index picks from an array, so reordering or adding a stat cannot silently
- * reassign colours.
- *
- * `isolate` matters: without it the scaled flood would escape the card's stacking
- * context and paint over its neighbours.
- *
- * The icons are SVG and passed `unoptimized` - Next's optimizer rejects SVG unless
- * `dangerouslyAllowSVG` is set, and there is nothing to gain by rasterising a 5KB
- * vector.
+ * SVG icons pass `unoptimized`: Next's optimizer rejects SVG without
+ * `dangerouslyAllowSVG`, and there's nothing to gain rasterizing a vector.
  */
 
 /** Icon backgrounds and matching hover floods, in tile order. */
@@ -48,25 +38,10 @@ export function StatTile({ stat, index }: { stat: StatItem; index: number }) {
   const accent = ACCENT[index] ?? FALLBACK_ACCENT;
 
   /**
-   * Responsive dividers between tiles once the grid stops being one row.
-   *
-   * The original expressed this with four overlapping `nth-child` rules across two
-   * max-width blocks:
-   *
-   *   @media (max-width: 640px)   // 2 columns
-   *     :nth-child(2n)   → padding-left 24px + left border
-   *     :nth-child(n+3)  → padding-top  24px + top border
-   *     :nth-child(n+4)  → padding-top  0    + no top border
-   *   @media (max-width: 480px)   // 1 column
-   *     :nth-child(n+2)  → padding-top  24px + top border
-   *
-   * Translated to index checks, which is both clearer and immune to a wrapper
-   * element shifting the child count. `to-480` is declared after `to-640` in the
-   * screens config, so it wins where the two overlap - exactly as the source order
-   * of the original media queries did.
-   *
-   * Missing this was worth 12px of extra height per tile boundary on mobile: the
-   * section came out 12px taller than the original across four boundaries.
+   * Responsive dividers between tiles, expressed as index checks rather than
+   * `nth-child` - clearer, and immune to a wrapper shifting the child count.
+   * `to-480` wins over `to-640` where they overlap because it's declared
+   * later in the screens config.
    */
   const n = index + 1;
   const dividers = cn(
@@ -78,10 +53,8 @@ export function StatTile({ stat, index }: { stat: StatItem; index: number }) {
   return (
     <div
       className={cn(
-        // No `border-none` here: preflight already leaves every border at width 0
-        // with style `solid`, which is what lets the responsive `border-t`/`border-l`
-        // above actually draw. `border-none` would set style `none` and the added
-        // widths would render nothing.
+        // No `border-none`: preflight leaves borders at width 0 / style solid,
+        // which is what lets the responsive `border-t`/`border-l` above draw.
         'group relative isolate transition-[transform,box-shadow] duration-[250ms] shadow-[0_10px_26px_rgba(5,10,35,0.14)] flex flex-col items-start overflow-hidden rounded-[10px] bg-white p-7 px-6',
         dividers,
         '[transition:transform_.25s,box-shadow_.25s] hover:-translate-y-[3px] hover:shadow-card-hover',

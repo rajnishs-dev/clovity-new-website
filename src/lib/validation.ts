@@ -31,18 +31,13 @@ export const newsletterSchema = z.object({
 export type NewsletterFormValues = z.infer<typeof newsletterSchema>;
 
 /**
- * The webinar "Get the Recording" form.
+ * The webinar "Get the Recording" form. All four fields are required,
+ * mirroring the published page - Strapi only requires `firstName`/`email`,
+ * but a half-filled lead isn't worth more than a complete one.
  *
- * The four fields, and the fact that all four are required, mirror the published
- * webinar page - the Strapi `recording` collection only marks `firstName` and `email`
- * required, but the form has always asked for the last name and country too, and a
- * half-filled lead is not worth more than a complete one.
- *
- * ONLY THE FOUR TYPED FIELDS BELONG HERE. The webinar's slug is passed to the action
- * separately rather than being a fifth key in this schema: as a schema field it is
- * validated on the client, where nothing renders an error for it, so a missing value
- * failed validation invisibly and the submit handler never ran - a dead button with no
- * message. Every field this schema names now has a visible input and a visible error.
+ * The webinar's slug is passed to the action separately, not as a schema
+ * field: as a schema field it failed validation invisibly (no input renders
+ * its error), producing a dead submit button with no message.
  */
 export const webinarRegistrationSchema = z.object({
   firstName: z
@@ -98,20 +93,13 @@ export const contactSchema = z.object({
 export type ContactFormValues = z.infer<typeof contactSchema>;
 
 /**
- * The Contact page's enquiry form.
+ * The Contact page's enquiry form. Separate from `contactSchema` above, which
+ * requires a `consent` boolean the published form doesn't render.
  *
- * Separate from `contactSchema` above, which models the future admin API's payload
- * and requires an explicit `consent` boolean. The published contact form has no
- * consent checkbox and asks for a topic instead, so validating it against that
- * schema would fail every submission on a field the form does not render.
- *
- * BUILT FROM THE CMS CONFIG, not fixed: the Strapi `get-in-touch` row for this page
- * decides whether the name, company and phone fields are shown at all and whether
- * each is mandatory. A fixed schema would either reject a submission for a field the
- * page is not showing, or accept an empty value an editor marked required.
- *
- * `message` and `email` are always required - they are the enquiry - and the design
- * marks both accordingly.
+ * Built from the CMS config, not fixed: the Strapi `get-in-touch` row decides
+ * whether name/company/phone are shown and required, so a fixed schema would
+ * either reject a field the page hides or accept one an editor marked
+ * required. `message` and `email` are always required.
  */
 export interface EnquiryFieldRules {
   showFullName: boolean;

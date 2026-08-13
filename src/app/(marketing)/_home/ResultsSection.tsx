@@ -6,19 +6,10 @@ import { RESULTS_CONTENT } from '@/constants/home';
 import { StatTile } from './StatTile';
 
 /**
- * Section 7 - Customer results, as Tailwind utilities.
+ * Five metrics across, stepping to 3/2/1 columns at 1020/640/480px.
  *
- * Five metrics across, stepping to 3 at 1020px, 2 at 640px and 1 at 480px - the
- * original's breakpoints. The heading uses its own slightly different scale from
- * `.s-heading` (same clamp, but this block set it independently), so it is spelled
- * out rather than borrowed.
- *
- * This wrapper stays a Server Component; only the tiles are client components,
- * because only they need the count-up observer. That keeps the section's copy out
- * of the JS bundle.
- *
- * All five figures are the legacy site's own published numbers - none was adjusted,
- * rounded or added.
+ * This wrapper stays a Server Component; only the tiles are client
+ * components, since only they need the count-up observer.
  */
 export interface ResultsSectionProps {
   stats: StatItem[];

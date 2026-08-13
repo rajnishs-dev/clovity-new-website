@@ -8,10 +8,8 @@ import { cn } from '@/lib/cn';
  *   'cloud'     ← .tag-chip the section pattern library's wrapped pill cloud
  *   'assurance' ← .aspill   the migration assurance strip
  *
- * The legacy CSS styled the icon with a descendant selector
- * (`.a-chip i { color: #2563eb; font-size: 12px }`). The icon is passed in by the
- * caller, so `[&_i]:` arbitrary variants reproduce that reach without wrapping it
- * in an extra element - which would have changed the DOM.
+ * Icon color reproduces the legacy descendant selector (`.a-chip i {...}`)
+ * via `[&_i]:` arbitrary variants, since the icon is passed in by the caller.
  */
 export type ChipVariant = 'a' | 'cloud' | 'assurance';
 

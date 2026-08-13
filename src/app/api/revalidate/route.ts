@@ -5,48 +5,24 @@ import { serverEnv } from '@/constants/env';
 import { ROUTES } from '@/constants/routes';
 
 /**
- * On-demand revalidation webhook for `clovity-admin` (Strapi).
+ * On-demand revalidation webhook for `clovity-admin` (Strapi): lets an editor's publish
+ * appear immediately instead of waiting out a page's time-based `revalidate` window (5
+ * min for About/Careers, 1 hour elsewhere). Those windows stay as a safety net in case
+ * the webhook is misconfigured or fails silently.
  *
- * ── WHAT IT SOLVES ──
- * The CMS-backed pages are statically generated and carry a time-based
- * `revalidate` window (5 minutes for About and Careers, 1 hour for Contact and every
- * resource page). That window is a floor on how long a publish takes to appear. This
- * endpoint lets Strapi say "this changed, rebuild that page now", so an editor sees
- * their change on the next request instead of waiting out the timer.
+ * Strapi setup: Settings → Webhooks → new webhook, POST to `/api/revalidate` with header
+ * `x-revalidate-secret: <REVALIDATE_SECRET>`, on Entry publish/unpublish/update/delete
+ * and Media create/update/delete.
  *
- * The time-based windows STAY as a safety net. If the webhook is misconfigured,
- * blocked by a firewall, or fails silently, the site still refreshes on its own -
- * just more slowly. Removing them would make one fragile HTTP call the only thing
- * standing between an edit and a stale site.
- *
- * ── HOW TO WIRE IT UP IN STRAPI ──
- * Settings → Webhooks → Create new webhook
- *   URL      POST https://<site>/api/revalidate
- *   Header   x-revalidate-secret: <the REVALIDATE_SECRET value from .env.local>
- *   Events   Entry: publish, unpublish, update, delete
- *            Media: create, update, delete   (a replaced logo or photo)
- *
- * ── SECURITY ──
- * Revalidation is cheap but not free, and an open endpoint is a way to make a site
- * regenerate on demand. So:
- *   • POST only.
- *   • A shared secret is REQUIRED. If `REVALIDATE_SECRET` is unset the endpoint
- *     refuses every request - an unset secret must never degrade to "no auth", which
- *     is the classic way these endpoints end up public.
- *   • The comparison is timing-safe, so the secret cannot be recovered a byte at a
- *     time by measuring response latency.
- *   • The response says which paths were revalidated and nothing about the payload,
- *     so it cannot be used to probe what is in the CMS.
+ * Security: POST only; a shared secret is required (an unset `REVALIDATE_SECRET` refuses
+ * every request rather than degrading to no auth); the comparison is timing-safe; the
+ * response only lists revalidated paths, never payload content.
  */
 
 /**
- * Strapi content-type name → the pages that render it.
- *
- * The resource entries list the LISTING page only. Their detail pages are dynamic
- * segments, and `revalidatePath` needs a concrete path - the webhook payload does carry
- * the entry, but Strapi's shape for it differs by event, so the detail page is left to
- * its own hourly `revalidate` window instead of being guessed at here. Publishing
- * therefore updates a listing immediately and the article within the hour.
+ * Strapi content-type name → the pages that render it. Only the listing page is listed
+ * for resource entries; detail pages are dynamic segments and `revalidatePath` needs a
+ * concrete path, so they're left to their own hourly window instead of being guessed at.
  */
 const MODEL_ROUTES: Record<string, readonly string[]> = {
   // About: the "Certifications & Diversity" badge row.
@@ -57,13 +33,9 @@ const MODEL_ROUTES: Record<string, readonly string[]> = {
   // Contact: which form fields show and whether each is required.
   'get-in-touch': [ROUTES.discover.contact],
 
-  // The resource collections. `news` is the singular model name even though the route
-  // is `/api/newses`, and the case studies come from `jsm-resource` - see
-  // `CMS_ENDPOINTS` in `src/api/cms.ts` for why that is the right collection.
-  //
-  // Each also revalidates HOME, because the "What We Learn in the Field" module there
-  // renders the four latest of every one of these collections. Miss that and a publish
-  // updates the listing page while the home page keeps showing the previous four.
+  // The resource collections. `news`'s route is `/api/newses`; case studies come from
+  // `jsm-resource` - see `CMS_ENDPOINTS` in `src/api/cms.ts`. Each also revalidates
+  // HOME, since its "field notes" module shows the four latest of every one of these.
   blog: [ROUTES.resources.blog, ROUTES.home],
   news: [ROUTES.resources.news, ROUTES.home],
   event: [ROUTES.resources.events, ROUTES.home],
@@ -72,11 +44,9 @@ const MODEL_ROUTES: Record<string, readonly string[]> = {
 };
 
 /**
- * Every CMS-backed page.
- *
- * Used for media events, which carry no model: a replaced upload could be an award
- * badge, a culture photo or a blog post's hero, and Strapi does not say which entry
- * references it. Revalidating all of them is cheaper than getting it wrong.
+ * Every CMS-backed page - used for media events, which carry no model (a replaced
+ * upload could be an award badge, culture photo, or blog hero, and Strapi doesn't say
+ * which). Revalidating everything is cheaper than guessing wrong.
  */
 const ALL_CMS_ROUTES = [
   ROUTES.home,
@@ -170,11 +140,9 @@ export async function POST(request: Request) {
 }
 
 /**
- * A GET returns 405 rather than 404.
- *
- * Opening the URL in a browser is the first thing anyone does when a webhook is not
- * firing, and "405 Method Not Allowed" tells them the route exists and their problem
- * is elsewhere. A 404 sends them looking for a deploy issue that is not there.
+ * A GET returns 405 rather than 404: opening the URL in a browser is the first thing
+ * anyone does when a webhook isn't firing, and 405 says the route exists and the
+ * problem is elsewhere, while a 404 sends them looking for a deploy issue that isn't there.
  */
 export function GET() {
   return NextResponse.json(

@@ -9,31 +9,21 @@ export type { Glyph, GlyphProps } from './brands';
 /**
  * The one icon component. Lucide for UI glyphs, inline SVG for brand marks.
  *
- * MIGRATION NOTE - this replaced a Font Awesome webfont. Two things that mattered:
+ * Replaced a Font Awesome webfont: sizing via `font-size` + `content` on a
+ * `::before` made an icon's box depend on the webfont loading; an SVG has
+ * intrinsic geometry instead.
  *
- * 1. WHY THE SWITCH FIXED A REAL BUG. Font Awesome sized glyphs with `font-size`
- *    and drew them from `content` on a `::before`. That made an icon's box depend on
- *    a webfont loading, a `content` declaration surviving minification, and a
- *    `font-family` cascade the app did not control. An SVG has intrinsic geometry -
- *    it is either in the DOM or it is not.
+ * `size` defaults to `1em` because every call site already expressed icon
+ * size as a font-size (`text-[11px]`, etc.) under the old webfont, so keeping
+ * that default meant none of them had to be rewritten. Pass `size` when an
+ * icon should NOT track the surrounding text.
  *
- * 2. WHY `size` DEFAULTS TO `1em`. Every call site that had an opinion about icon
- *    size expressed it as a font-size - `text-[11px]`, `text-xs`,
- *    `style={{ fontSize: '10px' }}` - because that is how a webfont glyph is sized.
- *    Defaulting the SVG to `1em` means those existing declarations keep working
- *    verbatim instead of having to be found and rewritten as `size` props, so the
- *    conversion does not silently resize a hundred icons. Pass `size` explicitly
- *    when an icon should NOT track the surrounding text.
- *
- * SIZING AN ICON INSIDE A CHIP - the size belongs on the CHIP, as its `text-[Npx]`,
- * and the icon inherits it. Do not also put a `text-*` class on the `<Icon>`: it
- * wins over the chip and the chip's number becomes a lie.
- *
- * Aim for a glyph around **52% of the chip's width**. The inherited numbers from the
- * Font Awesome era are all far below that - 31–48% - because a filled webfont glyph
- * carries much more visual mass than a Lucide outline at the same pixel size, so
- * every chip on the site rendered a thin, undersized mark until those values were
- * corrected. `tools/verify-icons.mjs` reports the ratio.
+ * Size an icon inside a chip on the CHIP's `text-[Npx]`, not on `<Icon>`
+ * itself (a `text-*` there wins and the chip's number becomes a lie). Aim for
+ * ~52% of the chip's width - Lucide's outline reads thinner than the old
+ * filled webfont glyphs at the same pixel size, so the inherited Font
+ * Awesome-era ratios (31–48%) undersize every chip. `tools/verify-icons.mjs`
+ * checks the ratio.
  */
 export interface IconProps {
   /** A registered icon name. See `registry.ts`. */
@@ -92,11 +82,8 @@ export function ArrowIcon({ className }: { className?: string }) {
 }
 
 /**
- * The "opens in a new tab" mark used on external mega-menu links.
- *
- * Now Lucide's `ExternalLink` rather than Font Awesome's
- * `arrow-up-right-from-square`. Same meaning, and it reads more clearly at the 10px
- * the mega menu renders it at.
+ * The "opens in a new tab" mark on external mega-menu links - Lucide's
+ * `ExternalLink` in place of Font Awesome's `arrow-up-right-from-square`.
  */
 export function ExternalIcon({ className }: { className?: string }) {
   return <Icon name="external-link" className={cn('text-[10px]', className)} />;

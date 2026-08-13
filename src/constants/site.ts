@@ -105,7 +105,6 @@ export const siteConfig = {
   legalLinks: [
     { id: 'privacy', label: 'Privacy Policy', href: '#' },
     { id: 'terms', label: 'Terms of Service', href: '#' },
-    { id: 'cookies', label: 'Cookie Policy', href: '#' },
   ],
 } as const;
 

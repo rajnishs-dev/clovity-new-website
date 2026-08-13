@@ -6,21 +6,16 @@ import { useReducedMotion } from './useReducedMotion';
 /**
  * Idle auto-scroll for a marquee the user can also drag/swipe by hand.
  *
- * The track is a real `overflow-x-auto` element rather than a CSS
- * `translateX` animation, specifically so touch/mouse dragging is native
- * browser scrolling: swipe left moves the content left (increasing
- * `scrollLeft`), swipe right moves it right, with no custom gesture code.
- * `requestAnimationFrame` only nudges `scrollLeft` forward while nothing is
- * pressed - `pausedRef` flips on `pointerdown` and back on release, so a drag
- * in progress is never fought by the auto-advance.
+ * The track is a real `overflow-x-auto` element rather than a CSS `translateX`
+ * animation, so dragging is native scrolling with no custom gesture code.
+ * `requestAnimationFrame` only nudges `scrollLeft` while nothing is pressed -
+ * `pausedRef` flips on `pointerdown`/release so a drag is never fought by the
+ * auto-advance.
  *
- * Looping is the classic doubled-content trick: the track renders its items
- * twice back to back, and once `scrollLeft` passes the first copy's width
- * (`scrollWidth / 2`) it wraps by subtracting that width. Because the second
- * copy is pixel-identical to the first, the wrap is invisible forward. It is
- * not invisible backward - dragging past the start just stops at 0, same as
- * any ordinary scroll container - which is an acceptable trade for not
- * tripling the DOM.
+ * Looping uses the doubled-content trick: items render twice back to back, and
+ * `scrollLeft` wraps by subtracting `scrollWidth / 2` once it passes the first
+ * copy. The wrap is invisible going forward; dragging past the start just
+ * stops at 0, an acceptable trade for not tripling the DOM.
  */
 export interface UseAutoScrollMarqueeOptions {
   /** Px/second the track advances while idle. */

@@ -2,11 +2,7 @@ import { cn } from '@/lib/cn';
 import type { IconName } from '@/types/icon';
 import { Icon } from '@/components/ui/Icon';
 
-/**
- * Shared mega-menu utilities, so the full-width panel and the narrow dropdown
- * cannot drift apart. Replaces the legacy `.mega-item` / `.mega-title` /
- * `.mega-desc` / `.mega-col*` rules.
- */
+/** Shared mega-menu utilities, so the full-width panel and the narrow dropdown cannot drift apart. */
 
 /** `.mega-wrap` - the white panel itself (shared by both panel shapes). */
 export const MEGA_PANEL_BASE = 'rounded-mega bg-white z-[200]';
@@ -14,16 +10,9 @@ export const MEGA_PANEL_BASE = 'rounded-mega bg-white z-[200]';
 /**
  * `.mega-item` - a leaf link row. `group` drives the chip and arrow hover states.
  *
- * DELIBERATE DEVIATION FROM THE LEGACY CSS. `theme.css` sets `.mega-item` to
- * `display: block` and `.mega-icon` to `display: none`, so the original renders no
- * icon beside a mega-menu link even though every one of them is in the markup. This
- * is a flex row instead, so the chips are visible - requested explicitly, and the
- * one place in the header where the port is not pixel-identical to the original.
- *
- * The chip design is not invented: an earlier revision of `theme.css` styled
- * `.mega-icon` as a 42px rounded square, `#eff6ff` on `#2563eb`, inverting to
- * `#2563eb` on white on hover. That is reproduced below at 36px, which is what the
- * current tighter row padding (11px in columns, down from 14px) has room for.
+ * Deliberate deviation from the legacy CSS: `.mega-icon` there is
+ * `display: none`, hiding every icon; this renders as a flex row instead so
+ * the chips are visible - the one place the port isn't pixel-identical.
  */
 export function megaItemClass(options?: {
   /** Items inside a `.mega-col` use tighter padding than the dropdown's. */
@@ -32,12 +21,9 @@ export function megaItemClass(options?: {
   highlight?: boolean;
 }): string {
   return cn(
-    // NAMED group, and that matters. `group-hover:` compiles to `.group:hover &`,
-    // so it fires for ANY hovered ancestor carrying the class - and every mega item
-    // sits inside the nav-item wrapper, which is also a group (it drives the chevron
-    // rotation). With bare `group` on both, hovering the "Expertise" trigger put
-    // every chip and arrow in the open panel into its hover state at once. Naming
-    // the groups scopes each one to its own row.
+    // Named group (not bare `group`): the nav-item wrapper is also a group
+    // (chevron rotation), and bare `group` on both put every chip/arrow into
+    // hover state at once when the trigger was hovered.
     'group/mega flex items-start gap-3 rounded-xl no-underline transition-[background] duration-150',
     options?.inColumn ? 'px-1 py-[11px]' : 'px-3.5 py-3',
     'hover:bg-[#f0f6ff]',
@@ -47,11 +33,8 @@ export function megaItemClass(options?: {
 }
 
 /**
- * The icon chip beside a mega-menu link title.
- *
- * `group-hover:` inverts it in step with the row background, which is what the
- * legacy `.mega-item:hover .mega-icon` rule did. `active` pins that inverted state
- * on the current page's row so it reads as selected without needing a hover.
+ * The icon chip beside a mega-menu link title. `active` pins the inverted
+ * (hover) state on the current page's row so it reads as selected without needing a hover.
  */
 export function MegaIconChip({
   icon,
@@ -87,14 +70,7 @@ export const MEGA_DESC_CLASS =
 export const MEGA_COL_TITLE_CLASS =
   'mb-[18px] px-1 text-[21px] font-600 tracking-[-0.01em] text-ink';
 
-/**
- * `.mega-col` - a titled column with a divider on its left edge.
- *
- * The legacy CSS reached the first and second columns with `:first-child` and
- * `:nth-child(2)`. Columns are mapped from data here, so the index is already in
- * hand and the classes are applied directly - clearer than an nth-child selector
- * and immune to a stray wrapper element shifting the count.
- */
+/** `.mega-col` - a titled column with a divider on its left edge, applied by index rather than an nth-child selector. */
 export function megaColumnClass(index: number): string {
   return cn(
     'border-l border-line-faint pl-7',
@@ -115,21 +91,10 @@ export const MEGA_RAIL_CLASS =
 /**
  * The diagonal "opens this" arrow beside every mega-menu title.
  *
- * MIGRATION NOTE - this is a real DOM change, and the only one in the conversion.
- * The original drew it as a `::after` pseudo-element using `mask-image` with an
- * inline `data:image/svg+xml` URI plus `background-color: currentColor`, so the
- * glyph inherited the text colour.
- *
- * That cannot be expressed as a Tailwind arbitrary value in any readable way: the
- * data URI contains spaces, quotes and angle brackets, all of which have to be
- * escaped inside a class name, and Tailwind ships no `mask-image` scale to put it
- * in instead. Rendering the same two paths as an inline SVG with
- * `stroke="currentColor"` keeps the colour inheritance, the hover tint and the
- * 2px/-2px hover nudge identical, and is legible.
- *
- * Geometry matches: the original masked an 18×19 viewBox into a 10×11 box with
- * `mask-size: contain`, which is what `preserveAspectRatio="xMidYMid meet"` - the
- * SVG default - does here.
+ * A real DOM change (the only one in this conversion): the legacy version
+ * was a `::after` mask-image pseudo-element, which can't be expressed as a
+ * readable Tailwind arbitrary value. An inline SVG with `stroke="currentColor"`
+ * keeps the same colour inheritance and hover behaviour.
  */
 export function MegaArrow() {
   return (

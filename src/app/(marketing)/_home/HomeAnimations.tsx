@@ -7,28 +7,15 @@ import { useScrollReveal } from '@/hooks/useScrollReveal';
 import { useSmoothAnchors } from '@/hooks/useSmoothAnchors';
 
 /**
- * All page-level motion for the home page, in one place.
+ * All page-level motion for the home page, in one place, so every tween
+ * lives in a single `gsap.context()` reverted on unmount - previously
+ * ScrollTriggers survived client-side navigation and kept firing against
+ * detached nodes.
  *
- * The legacy page spread this across four inline `<script>` blocks and a shared
- * `site.js`. Consolidating it fixes three real problems:
+ * Tween values are copied unchanged from the original for identical motion.
+ * Selectors not present on the page are skipped rather than throwing.
  *
- *  1. The counters were animated twice - once by `site.js` with a 16ms
- *     `setInterval` and again by a GSAP ScrollTrigger - both writing to the same
- *     element. Only one implementation runs now (`useCountUp`).
- *  2. Nothing was ever cleaned up, so every ScrollTrigger survived a
- *     client-side navigation and kept firing against detached nodes. Every tween
- *     here lives in a `gsap.context()` that is reverted on unmount.
- *  3. The 2–3s `setTimeout` "safety nets" that force-revealed anything still at
- *     opacity 0 are gone: `immediateRender: false` plus context cleanup means
- *     content cannot get stuck invisible in the first place.
- *
- * Tween definitions - targets, from/to values, durations, eases, stagger and
- * trigger elements - are copied unchanged from the original, so the motion is
- * identical. Selectors whose elements are not on the page are skipped by the
- * hook rather than throwing.
- *
- * Renders nothing: it is a behaviour-only component wrapping the page in a
- * single element that scopes the GSAP context.
+ * Renders nothing: it only scopes the GSAP context around the page.
  */
 export function HomeAnimations({ children }: { children: React.ReactNode }) {
   const reducedMotion = useReducedMotion();

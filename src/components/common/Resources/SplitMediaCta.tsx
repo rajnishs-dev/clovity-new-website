@@ -8,11 +8,7 @@ import { ArrowIcon } from '@/components/ui/Icon';
 import { LABEL_CLASS } from '@/components/ui/Typography';
 import { SmartLink } from '@/components/ui/Link';
 
-/**
- * The photo + copy + CTA split section used near the bottom of the case-study
- * and events listings - the legacy `.split-media` pattern ("Ready to become
- * our next success story?" / "Want Clovity at your next event?").
- */
+/** The photo + copy + CTA split section used near the bottom of case-study and events listings. */
 export interface SplitMediaCtaProps {
   image: ImageSource;
   imageAlt: string;
@@ -40,7 +36,7 @@ export function SplitMediaCta({
         <div className="grid grid-cols-1 items-center gap-10 lg:grid-cols-2 lg:gap-16">
           <div
             className={cn(
-              'relative h-[280px] overflow-hidden rounded-[8px] bg-slate-100 sm:h-[360px]',
+              'relative h-[280px] overflow-hidden rounded-[10px] bg-slate-100 sm:h-[360px]',
               reveal('left'),
             )}
             {...revealAttrs()}

@@ -73,7 +73,7 @@ export function SplitMediaFrame({
   return (
     <div
       className={cn(
-        'relative overflow-hidden rounded-2xl shadow-[0_24px_60px_rgba(15,23,42,.14)]',
+        'relative overflow-hidden rounded-[10px] shadow-[0_24px_60px_rgba(15,23,42,.14)]',
         revealing && reveal(revealFrom),
         className,
       )}

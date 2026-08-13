@@ -6,11 +6,9 @@ import { CoverImage } from '@/components/ui/Image';
 import { CardLink } from '@/components/ui/Card';
 
 /**
- * The oversized lead card at the top of every resource listing - the legacy
- * `.feat-post` / `.cs-featured` / `.evt-featured`. Image on one side, copy on
- * the other at `lg` and up. Below `lg` the caller sizes it as a regular grid
- * cell (no `lg:col-span-*`), so it stacks like an ordinary `ResourceCard` -
- * image on top, excerpt visible - and falls in line with the rest of the grid.
+ * The oversized lead card at the top of every resource listing. Image on one
+ * side, copy on the other at `lg` and up; below `lg` it stacks like an
+ * ordinary `ResourceCard`.
  */
 export interface FeaturedResourceCardProps {
   href: string;
@@ -42,7 +40,7 @@ export function FeaturedResourceCard({
       forceExternal={external}
       revealFrom="up"
       className={cn(
-        'grid grid-cols-1 overflow-hidden rounded-[8px] text-left lg:grid-cols-[0.95fr_1fr]',
+        'grid grid-cols-1 overflow-hidden rounded-[10px] text-left lg:grid-cols-[0.95fr_1fr]',
         className,
       )}
     >

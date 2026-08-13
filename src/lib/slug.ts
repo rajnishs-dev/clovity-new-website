@@ -1,20 +1,19 @@
 /**
  * Slug safety for prerendered dynamic routes.
  *
- * WHY THIS EXISTS - `generateStaticParams` turns each slug into a DIRECTORY under
- * `.next/server/app`, so a slug the filesystem rejects fails the whole build, not just
- * its own page. The live CMS has such slugs: of 630 published rows across the five
- * resource collections, twenty have slugs outside `[a-z0-9-]`, and two contain a COLON -
+ * `generateStaticParams` turns each slug into a DIRECTORY under
+ * `.next/server/app`, so one slug the filesystem rejects fails the whole
+ * build. Of 630 published CMS rows, twenty have slugs outside `[a-z0-9-]`, and
+ * two contain a colon, e.g.:
  *
  *   Your-Cloud,-Your-Rules:-Making-the-Smart-Choice-After-Atlassian-Data-Center-EOL
- *   clovity-unveils-the-most-powerful-iot-solution-"csensornet":-a-fully-end-to-end-...
  *
- * - which Windows will not accept in a path. The build died on `mkdir` before this.
+ * - which Windows rejects in a path; the build died on `mkdir` before this.
  *
- * WHAT IT DOES NOT DO: rewrite the slug. The slug is how the row is addressed in Strapi
- * (`filters[slug][$eq]`), so a sanitised copy would no longer find its own content. These
- * pages are excluded from PRERENDERING only; `dynamicParams` still renders them on
- * request, and they are still listed in the sitemap.
+ * This does NOT rewrite the slug - it's how the row is addressed in Strapi
+ * (`filters[slug][$eq]`), so a sanitised copy couldn't find its own content.
+ * Affected pages are excluded from PRERENDERING only; `dynamicParams` still
+ * renders them on request, and they stay in the sitemap.
  */
 
 /**

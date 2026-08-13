@@ -3,25 +3,19 @@ import { cn } from './cn';
 /**
  * Scroll-reveal, as Tailwind utilities.
  *
- * The legacy site did this with three CSS classes (`.sr`, `.sr-l`, `.sr-r`) plus
- * a fourth (`.in`) that JavaScript added on intersection, and a `data-delay`
- * attribute the script turned into a `setTimeout`.
+ * The legacy site used CSS classes (`.sr`, `.sr-l`, `.sr-r`, `.in`) toggled by
+ * JS plus a `data-delay` → `setTimeout`. Here the hidden/revealed states are
+ * both Tailwind utilities on the same element, switched by a `data-shown`
+ * variant:
  *
- * Here the hidden and revealed states are both Tailwind utilities on the same
- * element, switched by a `data-shown` attribute variant. Two things this buys:
+ *  1. No JS-to-CSS class contract to keep in sync - `data-[shown=true]:` is
+ *     self-contained, unlike the old `.in` class.
+ *  2. The element stays server-rendered, unlike a `<Reveal>` client component
+ *     that would push every revealed section into the client bundle.
  *
- *  1. No JS-to-CSS class contract. The old `.in` class only meant something
- *     because a stylesheet defined it; rename either side and the animation
- *     silently dies. `data-[shown=true]:` is self-contained.
- *  2. The element stays server-rendered. A `<Reveal>` client component would
- *     have pushed every revealed section into the client bundle; setting one
- *     attribute from a single document-level hook does not.
- *
- * Stagger is now `transition-delay` rather than a delayed class toggle. Same
- * visual result - the element sits at opacity 0 either way - with no timers to
- * leak on unmount.
- *
- * Values are the legacy ones exactly: 28px offset, 700ms, CSS `ease`.
+ * Stagger is `transition-delay`, not a delayed class toggle, so there's no
+ * timer to leak on unmount. Values match the legacy ones: 28px offset, 700ms,
+ * CSS `ease`.
  */
 
 export type RevealDirection = 'up' | 'left' | 'right';
@@ -89,20 +83,14 @@ export function reveal(
 /**
  * `reveal()` with the element's text alignment stated explicitly.
  *
- * WHY THIS IS NEEDED - `reveal()` emits `text-center md:text-left` as part of its
- * base string, so applying it to a block silently changes that block's alignment:
- * centred on small screens, left-aligned from 768px up. For anything whose design
- * specifies a single alignment (a centred section header, a left-aligned card body)
- * that is a visual change coming from a motion utility, which is not a decision the
- * motion utility should be making.
+ * `reveal()` bakes in `text-center md:text-left`, which silently changes
+ * alignment for anything with a single specified alignment - a decision a
+ * motion utility shouldn't be making. Rather than edit `reveal()` (the home
+ * page depends on its current output), this composes on top and lets
+ * tailwind-merge resolve the conflict.
  *
- * Rather than edit `reveal()` - the home page's sections were written against its
- * current output and changing it would shift that page - this composes on top and
- * lets tailwind-merge resolve the conflict, so the alignment a caller asks for is
- * the alignment that renders at every width.
- *
- * Use this on interior pages. Both alignments are declared at both breakpoints on
- * purpose: naming only the base would leave `reveal()`'s `md:text-left` in play.
+ * Both alignments are declared at both breakpoints on purpose - naming only
+ * the base would leave `reveal()`'s `md:text-left` in play.
  */
 const ALIGNMENT: Record<'left' | 'center', string> = {
   left: 'text-left md:text-left',
@@ -118,15 +106,12 @@ export function revealAligned(
 }
 
 /**
- * Marks the element for the reveal observer.
+ * Marks the element for the reveal observer. OPTIONAL - `useScrollReveal` also
+ * matches the `transition-reveal` class `reveal()` emits, so this is kept only
+ * as a readable "this animates in" signal in JSX.
  *
- * OPTIONAL. `useScrollReveal` also matches the `transition-reveal` class that
- * `reveal()` always emits, so the classes on their own are enough. This is kept
- * because it reads as an explicit "this element animates in" signal in JSX.
- *
- * It used to be mandatory, and that was a design mistake: a caller who applied
- * `reveal()` but forgot this left the element stuck at `opacity: 0` with nothing
- * to recover it - no error, no warning, just invisible content.
+ * Used to be mandatory; that was a mistake - a caller who forgot it left the
+ * element stuck at `opacity: 0` with no error and no recovery.
  */
 export function revealAttrs(): { 'data-reveal': '' } {
   return { 'data-reveal': '' };

@@ -9,7 +9,11 @@ import { RevealScope, RESOURCE_CTA_LINKS } from '@/components/common/Resources';
 import { getNewsItems } from '@/data/news';
 import { NewsList } from './NewsList';
 import { NavState } from './NavState';
-import { newsHeroBanner } from '@/constants/media';
+import {
+  newsHeroBanner,
+  newsHeroBannerTablet,
+  newsHeroBannerMobile,
+} from '@/constants/media';
 
 export const metadata: Metadata = buildMetadata({
   title: 'News - Company Updates & Press Releases',
@@ -44,6 +48,8 @@ export default async function NewsPage() {
           }
           subheading="Announcements, recognitions, and press coverage from the Clovity team."
           image={newsHeroBanner}
+          imageTablet={newsHeroBannerTablet}
+          imageMobile={newsHeroBannerMobile}
         />
 
         <section className="bg-[#f8fafc] pt-14 pb-[240px] sm:pt-20">

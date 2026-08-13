@@ -5,16 +5,12 @@ import { cn } from '@/lib/cn';
 import { Icon } from '../Icon';
 
 /**
- * Accordion with correct disclosure semantics: each trigger is a real button
- * carrying `aria-expanded` and `aria-controls`, and each panel is a `region`
- * labelled by its trigger.
+ * Accordion with real disclosure semantics: each trigger is a button with
+ * `aria-expanded`/`aria-controls`; each panel is a `region` labelled by it.
+ * The legacy version toggled a class with no ARIA at all.
  *
- * The legacy mobile nav accordion toggled a `.open` class from a click handler
- * with no ARIA at all - a screen-reader user had no way to know a section was
- * collapsed. Same visuals, correct semantics.
- *
- * `allowMultiple={false}` (the default) reproduces the legacy behaviour of
- * closing every other section when one opens.
+ * `allowMultiple={false}` (default) closes other sections when one opens,
+ * matching the legacy behaviour.
  */
 export interface AccordionItem {
   id: string;

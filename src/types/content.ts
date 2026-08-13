@@ -460,8 +460,10 @@ export interface CultureHighlight {
 /**
  * A flip-card office on the Contact page.
  *
- * `accent` selects the back face's gradient and the flag chip tint from the four
- * pairs the design defines; it is not a free-form colour.
+ * `accent` tints the back face's text/border colour; it is not a free-form
+ * colour. Both faces render the same `image` - the front plain, the back
+ * under a dark scrim with the address on top - matching `website-t`'s
+ * `FlipCard`.
  */
 export interface OfficeLocation {
   id: string;
@@ -469,9 +471,8 @@ export interface OfficeLocation {
   tag: string;
   /** Front face: the city line. */
   city: string;
-  flag: ContentImage;
-  /** Chip glyph over the flag. */
-  icon: IconName;
+  /** The office/city photo shown on both faces. */
+  image: ContentImage;
   accent: 'blue' | 'violet' | 'orange' | 'green';
   /** Back face heading. */
   title: string;

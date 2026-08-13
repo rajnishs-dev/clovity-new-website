@@ -5,18 +5,13 @@ import { useCallback, useEffect, useState } from 'react';
 /**
  * Index rotator behind the public-sector card stack.
  *
- * Matches the legacy behaviour exactly: 5000ms autoplay, arrows jump and then
- * restart the timer, hover pauses and leaving resumes, and reduced motion
- * disables rotation entirely (which in the original left both cards visible in
- * normal block flow - the `enabled` flag reproduces that by never adding the
- * `gcs-slider` class).
+ * Matches the legacy 5000ms autoplay/arrow-reset/hover-pause behaviour. Reduced
+ * motion disables rotation entirely (the `enabled` flag never adds the
+ * `gcs-slider` class) rather than just stopping it. Also pauses when the tab is
+ * hidden, so a background tab doesn't fast-forward through slides on wake.
  *
- * Added: the timer also pauses when the tab is hidden, so a backgrounded tab is
- * not burning a 5s interval and a wake-up does not fast-forward through slides.
- *
- * `count` is read directly rather than mirrored into a ref. Writing a ref during
- * render is a React anti-pattern (and a lint error); passing `count` through the
- * callback dependencies is both correct and simpler.
+ * `count` is read directly rather than mirrored into a ref - writing a ref
+ * during render is a React anti-pattern (and a lint error).
  */
 export interface AutoRotateOptions {
   count: number;

@@ -13,7 +13,12 @@ import {
 import { getEventItems } from '@/data/events';
 import { EventsExplorer } from './EventsExplorer';
 import { NavState } from './NavState';
-import { eventsHeroBanner } from '@/constants/media';
+import {
+  eventsHeroBanner,
+  eventsHeroBannerTablet,
+  eventsHeroBannerMobile,
+  eventsCtaPhoto,
+} from '@/constants/media';
 
 export const metadata: Metadata = buildMetadata({
   title: 'Events - Atlassian Tours, Summits & Community',
@@ -49,6 +54,8 @@ export default async function EventsPage() {
           }
           subheading="Government tours, Atlassian conferences, and industry events where the Clovity team connects with the public sector and Atlassian community in person."
           image={eventsHeroBanner}
+          imageTablet={eventsHeroBannerTablet}
+          imageMobile={eventsHeroBannerMobile}
         />
 
         <section className="bg-white py-14 sm:py-20">
@@ -58,8 +65,8 @@ export default async function EventsPage() {
         </section>
 
         <SplitMediaCta
-          image="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=1200&q=70"
-          imageAlt="Clovity team collaborating at an industry event"
+          image={eventsCtaPhoto}
+          imageAlt="Clovity team shaking hands with a partner"
           label="Partner With Us"
           heading={
             <>

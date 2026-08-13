@@ -20,14 +20,12 @@ export default function manifest(): MetadataRoute.Manifest {
     lang: siteConfig.language,
     categories: ['business', 'productivity', 'developer'],
     /**
-     * `icons` is deliberately empty. The legacy site had no favicon or app icon,
-     * and the only brand marks on hand are two animated GIFs - not an icon
-     * source. Listing files that do not exist would put 404s in the manifest,
-     * which is worse than omitting them.
+     * `icons` is deliberately empty: only `favicon.ico` exists, and listing
+     * PNGs that don't exist would put 404s in the manifest.
      *
-     * TO COMPLETE: add /public/icon-192.png and /public/icon-512.png, then list
-     * them here (192 as `maskable`, 512 as `any`) and add the matching `icons`
-     * block in app/layout.tsx.
+     * TO COMPLETE: add /public/icon-192.png and /public/icon-512.png, then
+     * list them here (192 as `maskable`, 512 as `any`) and add the matching
+     * `icons` block in app/layout.tsx.
      */
     icons: [],
   };

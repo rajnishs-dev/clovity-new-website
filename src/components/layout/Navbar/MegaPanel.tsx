@@ -16,18 +16,10 @@ import {
 } from './megaStyles';
 
 /**
- * The full-width mega panel (Expertise, Resources), as Tailwind utilities.
- *
- * `position: fixed` with a viewport-relative `top` is what the legacy CSS did,
- * and it is why the hover-intent bridge in `useHoverIntent` exists - the panel
- * sits below its trigger with a gap the cursor has to cross.
- *
- * `top` shifts from 104px to 88px once the header is scrolled, so the panel stays
- * tucked under the shrunken pill.
- *
- * The per-link icon chips ARE rendered here, which the legacy site does not do - it
- * ships them in the markup and then hides them with `.mega-icon { display: none }`.
- * See `megaItemClass` in `megaStyles.tsx` for why that was changed.
+ * The full-width mega panel (Expertise, Resources). `position: fixed` sits
+ * below its trigger with a gap the cursor has to cross - hence
+ * `useHoverIntent`'s bridge. `top` shifts from 104px to 88px once the header
+ * is scrolled, staying tucked under the shrunken pill.
  */
 export interface MegaPanelProps {
   group: NavGroupId;
@@ -118,7 +110,7 @@ export function MegaPanel({
 
         {rail.kind === 'cta' ? (
           <div className={MEGA_RAIL_CLASS}>
-            <div className="rounded-2xl border border-[#dbeafe] bg-[linear-gradient(160deg,#eff6ff_0%,#fef1e8_100%)] p-4">
+            <div className="rounded-[10px] border border-[#dbeafe] bg-[linear-gradient(160deg,#eff6ff_0%,#fef1e8_100%)] p-4">
               <div className="mb-3.5 flex h-10 w-10 items-center justify-center rounded-[10px] bg-brand-600 text-[17px] text-white">
                 <Icon name={rail.card.icon} />
               </div>
@@ -152,7 +144,7 @@ export function MegaPanel({
                   )}
                   {...(card.external ? { forceExternal: true } : {})}
                 >
-                  <div className="h-[92px] w-[150px] shrink-0 overflow-hidden rounded-2xl bg-line-faint">
+                  <div className="h-[92px] w-[150px] shrink-0 overflow-hidden rounded-[10px] bg-line-faint">
                     {/* Fixed 92×92 thumb - no `sizes`, so Next emits 1x/2x. */}
                     <AppImage
                       src={card.imageUrl}

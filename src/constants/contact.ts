@@ -6,6 +6,15 @@ import type {
 } from '@/types/content';
 import { ROUTES } from '@/constants/routes';
 import { siteConfig } from '@/constants/site';
+import {
+  officeBoulder,
+  officeHqAndChicago,
+  officeLondon,
+  officeLosAngeles,
+  officeNoida,
+  officeOkemos,
+  officeTokyo,
+} from '@/constants/media';
 
 /**
  * Contact page content.
@@ -25,14 +34,6 @@ import { siteConfig } from '@/constants/site';
 /* ── Hero ───────────────────────────────────────────────────────────────── */
 
 export const CONTACT_HERO = {
-  image: {
-    src: 'https://images.unsplash.com/photo-1521791136064-7986c2920216?auto=format&fit=crop&w=1800&q=80',
-    alt: '',
-  },
-  objectPosition: 'center 40%',
-  /** Same graphite scrim as the About page. */
-  overlay:
-    'linear-gradient(92deg,rgba(8,9,14,.97) 0%,rgba(10,11,18,.73) 30%,rgba(12,13,22,.32) 52%,rgba(12,13,22,.22) 72%,rgba(12,13,22,0) 100%)',
   crumbs: [
     { name: 'Home', href: ROUTES.home },
     { name: 'Contact', href: ROUTES.discover.contact },
@@ -152,32 +153,14 @@ export const CONTACT_OFFICES_CONTENT = {
   headingHighlight: "We're Close By",
   subheading:
     'Hover or tap a card to flip it and see the full address and contact for that office.',
-  /** Front-face affordance, shown under the city name. */
-  flipHint: 'Tap for address',
 } as const;
-
-/**
- * Flag image box.
- *
- * The flag is painted into a fixed 64px circle with `object-cover`, so the declared
- * pair only satisfies next/image's requirement for a remote source - it does not drive
- * layout. `w160` is the CDN size the published markup requests.
- */
-const FLAG_BOX = { width: 160, height: 120 } as const;
-
-const flag = (code: string, country: string) => ({
-  src: `https://flagcdn.com/w160/${code}.png`,
-  alt: `${country} flag`,
-  ...FLAG_BOX,
-});
 
 export const CONTACT_OFFICES: OfficeLocation[] = [
   {
     id: 'dublin-ca',
     tag: 'Global HQ',
     city: 'Dublin, California',
-    flag: flag('us', 'United States'),
-    icon: 'building',
+    image: { src: officeHqAndChicago, alt: 'Dublin, California skyline' },
     accent: 'blue',
     title: 'Global HQ & US Delivery Center',
     addressLines: ['11501 Dublin Blvd, #200', 'Dublin, California 94568'],
@@ -187,8 +170,7 @@ export const CONTACT_OFFICES: OfficeLocation[] = [
     id: 'noida-in',
     tag: 'Delivery Center',
     city: 'Noida, India',
-    flag: flag('in', 'India'),
-    icon: 'code',
+    image: { src: officeNoida, alt: 'Noida, India skyline' },
     accent: 'orange',
     title: 'India Delivery Center',
     addressLines: [
@@ -201,8 +183,7 @@ export const CONTACT_OFFICES: OfficeLocation[] = [
     id: 'los-angeles-ca',
     tag: 'Sales Office',
     city: 'Los Angeles, CA',
-    flag: flag('us', 'United States'),
-    icon: 'briefcase',
+    image: { src: officeLosAngeles, alt: 'Los Angeles, California skyline' },
     accent: 'violet',
     title: 'Southern California Sales',
     addressLines: ['633 West Fifth Street', 'Los Angeles, California 90071'],
@@ -212,8 +193,7 @@ export const CONTACT_OFFICES: OfficeLocation[] = [
     id: 'chicago-il',
     tag: 'Sales Office',
     city: 'Chicago, IL',
-    flag: flag('us', 'United States'),
-    icon: 'briefcase',
+    image: { src: officeHqAndChicago, alt: 'Chicago, Illinois skyline' },
     accent: 'green',
     title: 'Mid-West & East Coast Sales',
     addressLines: ['111 W. Jackson, Suite 1700', 'Chicago, Illinois 60604'],
@@ -223,8 +203,7 @@ export const CONTACT_OFFICES: OfficeLocation[] = [
     id: 'boulder-co',
     tag: 'Sales Office',
     city: 'Boulder, CO',
-    flag: flag('us', 'United States'),
-    icon: 'briefcase',
+    image: { src: officeBoulder, alt: 'Boulder, Colorado skyline' },
     accent: 'blue',
     title: 'Western Sales',
     addressLines: ['1942 Broadway St, STE 314C', 'Boulder, Colorado 80302'],
@@ -234,8 +213,7 @@ export const CONTACT_OFFICES: OfficeLocation[] = [
     id: 'okemos-mi',
     tag: 'Sales Office',
     city: 'Okemos, MI',
-    flag: flag('us', 'United States'),
-    icon: 'briefcase',
+    image: { src: officeOkemos, alt: 'Okemos, Michigan skyline' },
     accent: 'orange',
     title: 'Eastern Sales',
     addressLines: ['2222 W. Grand River Ave, STE A', 'Okemos, Michigan 48864'],
@@ -245,8 +223,7 @@ export const CONTACT_OFFICES: OfficeLocation[] = [
     id: 'london-uk',
     tag: 'EMEA & UK',
     city: 'London, UK',
-    flag: flag('gb', 'United Kingdom'),
-    icon: 'globe',
+    image: { src: officeLondon, alt: 'London, United Kingdom skyline' },
     accent: 'violet',
     title: 'EMEA & UK Sales',
     addressLines: ['One Canada Square', 'Canary Wharf, London E14 5DY'],
@@ -256,8 +233,7 @@ export const CONTACT_OFFICES: OfficeLocation[] = [
     id: 'tokyo-jp',
     tag: 'APAC',
     city: 'Tokyo, Japan',
-    flag: flag('jp', 'Japan'),
-    icon: 'earth-asia',
+    image: { src: officeTokyo, alt: 'Tokyo, Japan skyline' },
     accent: 'green',
     title: 'Japan Office',
     addressLines: [

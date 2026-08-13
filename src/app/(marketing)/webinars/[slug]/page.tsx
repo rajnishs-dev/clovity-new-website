@@ -89,12 +89,8 @@ export default async function WebinarDetailPage({
                   { name: 'Webinars', href: ROUTES.resources.webinars },
                 ]}
                 currentLabel={webinar.title}
-                /*
-                  No `image` on purpose. A webinar's hero is its panel, not its banner -
-                  the banner is already the card art on `/webinars` and the OG image for
-                  this page, so repeating it above the panel would push everything that
-                  matters below the fold.
-                */
+                /* No `image` on purpose - a webinar's hero is its panel, not its
+                   banner, which already serves as card art and the OG image here. */
                 title={webinar.title}
                 meta={<WebinarPanel webinar={webinar} />}
               />

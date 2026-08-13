@@ -11,25 +11,11 @@ import { CoverImage } from '@/components/ui/Image';
 import { SmartLink } from '@/components/ui/Link';
 
 /**
- * The heading row plus the horizontal card rail beneath it, as Tailwind utilities.
+ * Head and track share one component because the arrows need the track's
+ * scroll state from the same hook.
  *
- * Head and track are one component because the heading and the arrow pair are
- * siblings inside a `justify-between` flex row while the track sits below - and the
- * arrows need the track's scroll state, so all three share one hook.
- *
- * Card structure: the image fills the card and the dark caption panel is translated
- * 100% down, sliding up on hover (`group-hover:translate-y-0`). That hover-only
- * reveal is a real accessibility problem in the original - the title existed only
- * inside a panel shown on `:hover`, so keyboard and touch users got an unlabelled
- * image link. Fixed with an `aria-label` on the anchor; the visual behaviour is
- * untouched.
- *
- * `[-webkit-line-clamp]` is applied through Tailwind's `line-clamp-2`, which sets
- * the display, orient and clamp properties together.
- *
- * Dates are ISO in the data and formatted at render, so the CMS can supply real
- * timestamps instead of the pre-formatted display strings the original hard-coded.
- * `<time dateTime>` also makes them machine-readable.
+ * The caption panel only reveals on hover, which would leave keyboard/touch
+ * users with an unlabelled image link - fixed via `aria-label` on the anchor.
  */
 const CARD_GAP = 20;
 
@@ -88,17 +74,10 @@ export function ContentCardRail({
         </div>
       </div>
 
-      {/*
-        Only `-mr-1.5` on this wrapper, not `-mx-1.5`. The track's `px-1.5`
-        exists so a card's hover border/shadow has room before the scroll
-        container's own clipping - but browsers don't render a scroll
-        container's START padding at `scrollLeft: 0` (only the END padding is
-        respected), so a matching `-ml-1.5` here would pull the first card
-        6px past the section's actual gutter instead of cancelling anything.
-        Dropping the left margin lines the first card back up with the
-        heading above it; the right margin still cancels `px-1.5` on the end,
-        where it does render.
-      */}
+      {/* Only `-mr-1.5`, not `-mx-1.5`: browsers don't render a scroll
+          container's START padding at scrollLeft 0, so a matching `-ml-1.5`
+          would overshoot the first card past the gutter instead of
+          cancelling anything. */}
       <div className={cn('relative -mr-1.5', reveal())} {...revealAttrs()}>
         <div
           ref={trackRef}
@@ -112,7 +91,7 @@ export function ContentCardRail({
               key={item.id}
               href={item.href}
               aria-label={item.title}
-              className="group relative block h-[240px] md:h-[255px] flex-[0_0_calc((100%-20px)/2)] overflow-hidden rounded-[14px] border border-line bg-white text-inherit no-underline [scroll-snap-align:start] [transition:box-shadow_.3s,border-color_.3s] hover:border-blue-200 to-640:flex-[0_0_100%]"
+              className="group relative block h-[240px] md:h-[255px] flex-[0_0_calc((100%-20px)/2)] overflow-hidden rounded-[10px] border border-line bg-white text-inherit no-underline [scroll-snap-align:start] [transition:box-shadow_.3s,border-color_.3s] hover:border-blue-200 to-640:flex-[0_0_100%]"
               {...(item.external ? { forceExternal: true } : {})}
             >
               <div className="absolute inset-0 h-full overflow-hidden bg-slate-100">

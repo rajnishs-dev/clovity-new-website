@@ -7,16 +7,11 @@ import type { ImageSource } from '@/types/content';
 import { AppImage } from '@/components/ui/Image';
 
 /**
- * The hero photo's scroll parallax - ported from the legacy
- * `blog.html`/`case-study.html`/`events.html` inline scripts: the background
- * drifts down at 0.3x scroll speed.
- *
- * A `ref` + a raw scroll listener rather than a scroll-linked CSS variable,
- * because the transform has to react to the element's own position (it needs
- * `getBoundingClientRect().top`), not just a global scroll offset - this
- * component works no matter where its hero sits on the page.
- * `requestAnimationFrame`-throttled, and skipped entirely under
- * `prefers-reduced-motion`, same as the rest of this app's motion.
+ * The hero photo's scroll parallax: the background drifts at 0.3x scroll
+ * speed. Uses a ref + scroll listener (not a scroll-linked CSS variable)
+ * since the transform needs the element's own `getBoundingClientRect().top`,
+ * not just a global scroll offset. RAF-throttled and skipped under
+ * `prefers-reduced-motion`.
  */
 export function ParallaxImage({
   src,

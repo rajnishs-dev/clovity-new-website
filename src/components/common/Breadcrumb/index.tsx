@@ -6,15 +6,9 @@ import { SmartLink } from '@/components/ui/Link';
 import { JsonLd } from '../JsonLd';
 
 /**
- * Breadcrumb trail plus its BreadcrumbList JSON-LD.
- *
- * Emitting both from one component is the point: a visible trail without the
- * structured data gives up the rich-result breadcrumb in search, and structured
- * data without a visible trail is the kind of mismatch Google discounts. They
- * cannot drift apart if the same array feeds both.
- *
- * The last crumb is the current page: rendered as plain text with
- * `aria-current="page"`, not a link to itself.
+ * Breadcrumb trail plus its BreadcrumbList JSON-LD - emitted from one
+ * component so the two can't drift apart. The last crumb is the current
+ * page: plain text with `aria-current="page"`, not a link to itself.
  */
 export interface BreadcrumbProps {
   items: BreadcrumbItem[];

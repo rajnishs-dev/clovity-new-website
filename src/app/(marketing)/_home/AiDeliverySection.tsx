@@ -14,28 +14,17 @@ import {
 import { AI_DELIVERY_CONTENT } from '@/constants/home';
 
 /**
- * Section 3 - "AI Is Not a Feature We Add.", as Tailwind utilities.
- *
- * A horizontal scroll-snap rail: arrows on desktop, dots below 900px, matching the
- * original's media queries. Step distance is one card width plus the gap, and the
- * arrows disable at each end using the same thresholds the legacy script used.
+ * Horizontal scroll-snap rail: arrows on desktop, dots below 900px.
  *
  * `[scrollbar-width:none]` + `[&::-webkit-scrollbar]:hidden` hides the native
- * scrollbar. Tailwind ships no utility for either - the first is a Firefox-only
- * property and the second is a pseudo-element - so arbitrary property and
- * arbitrary variant are the correct tools rather than a stylesheet.
+ * scrollbar - no single Tailwind utility covers both engines, so these are
+ * arbitrary property/variant instead of a stylesheet.
  *
- * Card art comes through `--card-photo` because the background composites a
- * darkening scrim over the photo in one `background-image`, which two utilities
- * cannot do (the second would replace the first). The gradient half is a config
- * token (`bg-deliver-card`); only the hashed asset URL is inline.
- *
- * Improvement over the original: the rail is a labelled `role="group"` with
- * `aria-roledescription="carousel"`, arrows announce their purpose, and dots expose
- * `aria-current` - none of which the legacy version had.
+ * `--card-photo` composites a darkening scrim over the photo in one
+ * `background-image`, since two stacked background utilities can't do that.
  */
 
-const CARD_GAP = 22; // matches the legacy `stepDeliver` offset
+const CARD_GAP = 22; // must match the rail's scroll step distance
 
 /** Resolve a static import or URL string into a CSS `url()` value. */
 function toCssUrl(source: ImageSource): string {

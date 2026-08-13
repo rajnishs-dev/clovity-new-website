@@ -9,24 +9,18 @@ const DEFAULT_LOCALE = 'en-US';
 /**
  * The zone every CONTENT DATE is rendered in. Not the visitor's, and not UTC.
  *
- * WHY A FIXED ZONE AT ALL: rendering in the visitor's zone would make the same post
- * show two different days to two readers, and would differ between the server render
- * and the browser - a hydration mismatch.
+ * A fixed zone avoids both a hydration mismatch (server vs. browser) and the
+ * same post showing different days to different readers.
  *
- * WHY THIS ZONE AND NOT UTC: Strapi stores these fields as instants, but editorially
- * they are DAYS someone picked in a date picker - and that picker runs in the editors'
- * browser, in Noida. Strapi converts the pick to UTC on the way in, so a date chosen as
- * "11 Feb" is stored as `2026-02-10T18:30:00Z`. Formatted in UTC that reads 10 Feb: one
- * day earlier than the editor chose, on every such row.
+ * UTC specifically is wrong here: Strapi stores these fields as instants, but
+ * editorially they are DAYS picked in a date picker running in Noida (IST). A
+ * date chosen as "11 Feb" is stored as `2026-02-10T18:30:00Z`, which UTC reads
+ * as 10 Feb - one day early. Measured against the live CMS, 179 of 504 blog
+ * rows (36%) and 2 of 64 event rows land on the wrong calendar day in UTC.
  *
- * It is not a marginal case. Measured against the live CMS: 179 of 504 blog rows (36%)
- * and 2 of 64 event rows land on a different calendar day in UTC than in IST, and the
- * fingerprints are unmistakable - two events at exactly `18:30:00Z` (midnight IST) and
- * blog clusters at `06:30Z` / `07:30Z` / `05:30Z` (12:00 / 13:00 / 11:00 IST).
- *
- * THE DURABLE FIX IS IN THE CMS, not here: a Strapi `date` field carries no time and no
- * zone, so it cannot drift. Until `blog_date` and `startDateTime` become date-only
- * columns, this constant is what reproduces the day the editor actually chose.
+ * The durable fix is in the CMS - a Strapi `date` field carries no time/zone
+ * and can't drift - so this constant is a stopgap until `blog_date` and
+ * `startDateTime` become date-only columns.
  */
 const CONTENT_TIME_ZONE = 'Asia/Kolkata';
 

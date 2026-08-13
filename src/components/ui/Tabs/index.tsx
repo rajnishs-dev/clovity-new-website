@@ -25,13 +25,10 @@ export interface TabItem {
    */
   className?: string;
   /**
-   * Extra DOM attributes for this tab only.
-   *
-   * This exists because a class alone is not always enough: the scroll-reveal
-   * treatment needs both its utilities *and* a `data-reveal` attribute for the
-   * observer to find the element. Without a way to pass the attribute, callers
-   * could apply the classes and silently leave every tab stuck at opacity 0 -
-   * which is exactly what happened.
+   * Extra DOM attributes for this tab only - a class alone isn't enough,
+   * since scroll-reveal needs both its utilities AND a `data-reveal`
+   * attribute for the observer to find the element (without this, tabs got
+   * stuck at opacity 0).
    */
   attrs?: Record<string, string>;
 }

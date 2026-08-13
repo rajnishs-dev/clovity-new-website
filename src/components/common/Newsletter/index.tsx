@@ -13,26 +13,10 @@ import { buttonClass } from '@/components/ui/Button';
 import { Icon } from '@/components/ui/Icon';
 
 /**
- * Footer newsletter form, as Tailwind utilities.
- *
- * MIGRATION NOTE - the input's focus ring used to be inline
- * `onfocus="this.style.borderColor='#2563eb'"` on top of an inline `style`
- * attribute. Because inline styles beat classes, a Tailwind `focus:` variant could
- * not have won against it, so the previous port reproduced it with React state.
- * With the inline style gone, `focus:border-brand-600` does the job - the state,
- * the two handlers and the re-render on every focus all disappear.
- *
- * WHERE THE ADDRESS GOES: `subscribeToNewsletter` posts it to Strapi's `subscribe`
- * collection FROM THE BROWSER, so `POST https://cms.clovity.com/api/subscribes` is
- * visible in a visitor's Network tab - the same collection and the same hop the published
- * footer uses. With no CMS configured the thunk reports success without writing, which is
- * what the legacy handler did (it only called `preventDefault()` and revealed the
- * thank-you line). What is genuinely new is validation: an invalid address gets a message
- * instead of a silent "success".
- *
- * The confirmation auto-clears and a validation message dismisses on click-away, both
- * matching the published footer - see the effects below for why the first one matters more
- * than it looks.
+ * Footer newsletter form. `subscribeToNewsletter` posts directly to Strapi's
+ * `subscribe` collection from the browser (visible in the Network tab); with
+ * no CMS configured the thunk reports success without writing, matching the
+ * legacy handler. New here: an invalid address gets a message instead of a silent "success".
  */
 export interface NewsletterProps {
   /** Recorded with the subscription so signup sources can be attributed. */
@@ -79,12 +63,9 @@ export function Newsletter({
   };
 
   /**
-   * The confirmation clears itself after five seconds, matching the published footer.
-   *
-   * Not cosmetic. This state lives in Redux, which survives client-side navigation and is
-   * shared by every `<Newsletter>` on the page - so without this, subscribing once left
-   * "Thank you for subscribing!" sitting under an empty input on every subsequent page,
-   * and a second copy of the form rendered the message it never sent.
+   * The confirmation clears itself after five seconds. Not cosmetic: this
+   * state lives in Redux, shared by every `<Newsletter>` on the page, so
+   * without this it would linger under an empty input after navigation.
    */
   useEffect(() => {
     if (status !== 'succeeded') return;

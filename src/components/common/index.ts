@@ -12,9 +12,4 @@ export { Search, type SearchProps } from './Search';
 export { Breadcrumb, type BreadcrumbProps } from './Breadcrumb';
 export * from './Resources';
 export { PageAnimations } from './PageAnimations';
-export {
-  CareersHeroOrbs,
-  HeroAccent,
-  PageHero,
-  type PageHeroProps,
-} from './PageHero';
+export { HeroAccent } from './PageHero';

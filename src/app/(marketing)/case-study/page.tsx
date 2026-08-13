@@ -15,7 +15,12 @@ import { Section, SectionHeader } from '@/components/ui/Section';
 import { getCaseStudyItems } from '@/data/case-study';
 import { CaseStudyList } from './CaseStudyList';
 import { NavState } from './NavState';
-import { caseStudyHeroBanner } from '@/constants/media';
+import {
+  caseStudyHeroBanner,
+  caseStudyHeroBannerTablet,
+  caseStudyHeroBannerMobile,
+  caseStudyCtaPhoto,
+} from '@/constants/media';
 
 export const metadata: Metadata = buildMetadata({
   title: 'Case Studies - Atlassian & AI Transformations',
@@ -56,6 +61,8 @@ export default async function CaseStudyPage() {
           }
           subheading="See how Clovity helps enterprises and government agencies modernize service management, migrate to Atlassian Cloud, and scale with AI - told through the clients we've delivered for."
           image={caseStudyHeroBanner}
+          imageTablet={caseStudyHeroBannerTablet}
+          imageMobile={caseStudyHeroBannerMobile}
         />
 
         <section className="bg-white py-14 sm:py-20">
@@ -87,8 +94,8 @@ export default async function CaseStudyPage() {
         </Section>
 
         <SplitMediaCta
-          image="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&w=1200&q=70"
-          imageAlt="Team reviewing project results and dashboards"
+          image={caseStudyCtaPhoto}
+          imageAlt="Team celebrating a project win in the office"
           label="Start Your Transformation"
           heading={
             <>

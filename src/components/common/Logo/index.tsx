@@ -1,25 +1,14 @@
-import logoBlack from '@/assets/images/clovity-logo-black.gif';
-import logoWhite from '@/assets/images/clovity-logo-white.gif';
+import logoBlack from '@/assets/logos/clovity-logo-black.gif';
+import logoWhite from '@/assets/logos/clovity-logo-white.gif';
 import { cn } from '@/lib/cn';
 import { ROUTES } from '@/constants/routes';
 import { AppImage } from '@/components/ui/Image';
 import { SmartLink } from '@/components/ui/Link';
 
 /**
- * The Clovity wordmark.
- *
- * Both GIFs stay mounted and one is hidden, exactly as the legacy header did -
- * swapping a `src` in JS would flash a missing image on the first scroll, whereas
- * toggling visibility on an already-decoded frame is instant.
- *
- * MIGRATION NOTE - which mark shows used to be decided by CSS in `home.css`
- * (`#navbar.scrolled .nav-logo-white { display: none }`). That meant the logo's
- * behaviour lived in a page stylesheet rather than in the logo, and interior pages
- * - which never loaded that block - would have rendered both marks stacked. It is
- * now the `showWhite` prop, so the component is correct wherever it is used.
- *
- * `animated` forces `unoptimized`: these are animated GIFs, and the image
- * optimizer would flatten them to a single frame.
+ * The Clovity wordmark. Both GIFs stay mounted and one is hidden via
+ * visibility - swapping `src` would flash a missing image on first scroll.
+ * `animated` forces `unoptimized`, since the image optimizer would flatten a GIF to one frame.
  */
 export interface LogoProps {
   /** True while the header is transparent over dark artwork. */
@@ -39,11 +28,7 @@ function LogoImages({
 }: Required<Pick<LogoProps, 'showWhite' | 'priority'>> & {
   imageClassName?: string;
 }) {
-  /**
-   * No width/height: a static import already carries the file's intrinsic
-   * dimensions, so next/image derives the correct aspect ratio. Display size
-   * stays a class concern.
-   */
+  // No width/height: the static import already carries intrinsic dimensions.
   const shared = { alt: 'Clovity', animated: true, priority } as const;
 
   return (

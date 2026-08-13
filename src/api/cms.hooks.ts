@@ -17,6 +17,8 @@ import type {
   WebinarItem,
 } from '@/types/content';
 import { FIELD_NOTES_PER_TAB } from '@/constants/content';
+import { buildWhatsNewCards } from '@/constants/navigation';
+import type { NavFeatureCard } from '@/types/navigation';
 import {
   getAwards,
   getBlogBySlug,
@@ -169,6 +171,32 @@ export function useInTouch(
     async (signal) => (await getInTouch(websiteSlug, signal)) ?? initial,
     initial,
     `get-in-touch:${websiteSlug}`,
+  );
+}
+
+/**
+ * Header - the Resources mega panel's "What's New" rail.
+ *
+ * `initial` is the pair built at import time from the bundled fallback data
+ * (see `buildWhatsNewCards` / `WHATS_NEW_CARDS` in `constants/navigation.ts`),
+ * so the panel never has nothing to show. Once the browser's own request for
+ * the live `event` and `blog` collections lands, the rail swaps to whichever
+ * event and post are actually newest in the CMS.
+ */
+export function useWhatsNewCards(
+  initial: NavFeatureCard[],
+): CmsResource<NavFeatureCard[]> {
+  return useCmsResource(
+    async (signal) => {
+      const [events, blogs] = await Promise.all([
+        getEvents(signal),
+        getBlogs(signal),
+      ]);
+      const cards = buildWhatsNewCards(events[0], blogs[0]);
+      return cards.length > 0 ? cards : initial;
+    },
+    initial,
+    'whats-new',
   );
 }
 

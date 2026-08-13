@@ -28,12 +28,9 @@ import { NavState } from './NavState';
 export const revalidate = 3600;
 
 /**
- * Prerender the posts the list page can reach.
- *
- * `dynamicParams` stays at its default of `true`, which is what makes the rest of the
- * 504-post archive work: a slug that is not in this list is rendered on the first
- * request and then cached, rather than 404ing. Prerendering all of them instead would
- * mean fetching every post at build time for pages almost nobody opens.
+ * Prerenders only the posts the list page can reach; `dynamicParams` defaults to `true`
+ * so other slugs render on first request and cache instead of 404ing, avoiding fetching
+ * every post at build time.
  */
 export async function generateStaticParams() {
   return (await getBlogSlugs()).map((slug) => ({ slug }));
@@ -70,10 +67,11 @@ export default async function BlogDetailPage({
   if (!post) notFound();
 
   const url = `${siteConfig.url}${ROUTES.resources.blog}/${post.slug}`;
-  const [related, topPosts] = await Promise.all([
+  const [related, allPosts] = await Promise.all([
     getOtherBlogPosts(post.slug, 3),
-    getBlogPosts().then((posts) => posts.slice(0, 3)),
+    getBlogPosts(),
   ]);
+  const topPosts = allPosts.slice(0, 3);
 
   return (
     <>
@@ -129,6 +127,7 @@ export default async function BlogDetailPage({
               searchPlaceholder="Search articles…"
               topLabel="Top Blogs"
               items={topPosts}
+              searchItems={allPosts}
               className="lg:sticky lg:top-[130px]"
             />
           </div>

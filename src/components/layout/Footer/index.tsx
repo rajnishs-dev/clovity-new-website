@@ -1,4 +1,4 @@
-import logoWhite from '@/assets/images/clovity-logo-white.gif';
+import logoWhite from '@/assets/logos/clovity-logo-white.gif';
 import { cn } from '@/lib/cn';
 import { FOOTER_COLUMNS, FOOTER_SOCIALS } from '@/constants/navigation';
 import { ROUTES } from '@/constants/routes';
@@ -9,25 +9,7 @@ import { SmartLink } from '@/components/ui/Link';
 import { Newsletter } from '@/components/common/Newsletter';
 import { FooterLinkColumn } from './FooterLinkColumn';
 
-/**
- * Site footer, as Tailwind utilities.
- *
- * A Server Component: the grid, brand copy and legal bar are static, so none of
- * it needs to reach the browser as JavaScript. Only the active-link columns and
- * the newsletter form are client components.
- *
- * `overlap` reproduces the legacy `.footer-overlap` padding (260px, stepping down
- * at 900px and 640px). It exists purely to make room for the final CTA card, which
- * tucks itself up into the footer with negative margins - so pages without that
- * CTA leave it off rather than carrying dead space.
- *
- * MIGRATION NOTE - the social icons and legal links previously set their hover
- * state with inline `onmouseover` / `onmouseout` attributes plus an inline
- * `style`. Because inline styles beat classes, Tailwind `hover:` variants could
- * not have overridden them; converting meant removing the inline style entirely.
- * The timings below are the ones those elements' own Tailwind classes implied
- * (`transition-all` / `transition-colors` = 150ms, cubic-bezier(.4,0,.2,1)).
- */
+
 export interface FooterProps {
   overlap?: boolean;
   className?: string;
@@ -92,8 +74,7 @@ export function Footer({ overlap = false, className }: FooterProps) {
         {/* Legal bar */}
         <div className="flex flex-col items-center justify-between gap-4 py-6 sm:flex-row">
           <p className="text-[14.5px] text-faint">
-            © {siteConfig.copyrightYear} {siteConfig.legalName} All rights
-            reserved.
+            © {new Date().getFullYear()} Clovity. All Rights Reserved
           </p>
           <nav aria-label="Legal" className="flex gap-6">
             {siteConfig.legalLinks.map((link) => (

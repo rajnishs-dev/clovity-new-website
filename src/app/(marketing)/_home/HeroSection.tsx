@@ -2,32 +2,21 @@ import { HERO_CONTENT } from '@/constants/home';
 import { HERO_VIDEO_SRC, heroVideoPoster } from '@/constants/media';
 
 /**
- * Section 1 - the hero banner, as Tailwind utilities.
- *
- * A Server Component: video, scrim and copy are static markup, so none of this
+ * Server Component: video, scrim and copy are static markup, so none of this
  * ships as JavaScript.
  *
- * The entrance is `animate-hero-rise-*` - a CSS animation, not GSAP. A React
- * effect cannot reproduce the original's GSAP timeline without a visible flicker:
- * the server-rendered headline paints first, and the effect (even
- * `useLayoutEffect`) only runs after hydration, so the text would appear, blink
- * out, then fade in. The keyframes carry the original timeline's exact numbers
- * (h1: 0.4s delay / 0.55s / 20px; sub: 0.75s delay / 0.4s / 14px, both on
- * `power2.out` = cubic-bezier(.215,.61,.355,1)) and `both` fill mode replaces the
- * original's 2s "safety net" timeout.
+ * The entrance uses a CSS animation (`animate-hero-rise-*`), not GSAP: a
+ * React effect only runs after hydration, so the headline would flash empty
+ * then pop in. Keyframe timings match the original values (h1: 0.4s delay /
+ * 0.55s / 20px; sub: 0.75s delay / 0.4s / 14px, both `power2.out`).
  *
- * `min-h-[100svh]` - small-viewport height, so the hero is not clipped by mobile
- * browser chrome the way `100vh` would be.
+ * `min-h-[100svh]` avoids the hero being clipped by mobile browser chrome the
+ * way `100vh` would be.
  *
- * Video decisions:
- *  • served from /public, not bundled - an 8.8MB asset must be range-requestable
- *    so the browser can stream rather than buffer it whole
- *  • `poster` is a bundled, optimizable still that paints immediately and stands
- *    in permanently for anyone on a data saver or with autoplay blocked
- *  • `preload="metadata"` - the original let the browser default to `auto`, which
- *    starts downloading megabytes before the visitor has scrolled an inch
- *  • `muted` + `playsInline` are what make autoplay legal on iOS and Chrome
- *  • `aria-hidden` because it is decorative, as the original marked it
+ * Video: served from /public so it's range-requestable for streaming;
+ * `poster` stands in when autoplay is blocked or on data saver;
+ * `preload="metadata"` avoids downloading megabytes before scroll; `muted` +
+ * `playsInline` make autoplay legal on iOS/Chrome.
  */
 export function HeroSection() {
   return (

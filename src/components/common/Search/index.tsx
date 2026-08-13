@@ -10,14 +10,8 @@ import { rememberQuery, setQuery } from '@/store/slices/searchSlice';
 import { Icon } from '@/components/ui/Icon';
 
 /**
- * Site search input.
- *
- * The legacy site had no search UI. This is built now - as a real `role="search"`
- * landmark with a labelled input and a submit button - so switching it on later
- * is a route plus an endpoint, not a new component and a new state shape.
- *
- * Submitting navigates to `/search?q=…` rather than filtering in place, so a
- * result set is linkable and the back button behaves.
+ * Site search input. Submitting navigates to `/search?q=…` rather than
+ * filtering in place, so a result set is linkable and the back button behaves.
  */
 export interface SearchProps {
   className?: string;

@@ -18,24 +18,14 @@ import { HIGHLIGHTS_CONTENT } from '@/constants/home';
 import { ContentCardRail } from './ContentCardRail';
 
 /**
- * Section 7.5 - "What We Learn in the Field, We Publish.", as Tailwind utilities.
+ * Picking a content type swaps the card rail, column heading, subheading and
+ * "View More" destination.
  *
- * Five content types; picking one swaps the card rail, the column heading, the
- * subheading and the "View More" destination - exactly as the legacy script did.
+ * The dot-grid backdrop is a `before:` layer with a masked radial-gradient
+ * pattern; `mask-image` has no Tailwind utility, so it's an arbitrary property.
  *
- * The section's dot-grid backdrop is a `before:` layer with a radial-gradient
- * pattern, masked so it fades out away from the top-left corner. `mask-image` has
- * no Tailwind utility, so it is an arbitrary property.
- *
- * Three things changed for the better while the visuals stayed the same:
- *  1. The cards were built with `innerHTML` and a hand-rolled `escapeHtml()`, so
- *     they did not exist until JS ran and were invisible to crawlers. They are
- *     server-rendered now, and React does the escaping.
- *  2. The tabs were plain buttons toggling a class - no `role`, no arrow-key
- *     navigation, no link between a tab and the content it controlled. They are a
- *     proper WAI-ARIA tablist now.
- *  3. Remounting the rail on tab change (`key`) resets its scroll position and
- *     re-measures the arrows - what the original did imperatively.
+ * Remounting the rail on tab change (`key`) resets its scroll position and
+ * re-measures the arrows.
  */
 const TAB_ID_PREFIX = 'field-notes';
 
@@ -54,10 +44,8 @@ export function FieldNotesSection({
   collections: initialCollections,
 }: FieldNotesSectionProps) {
   /**
-   * FETCHED TWICE, on purpose. The page fetches all five collections on the server, so
-   * the cards are in the HTML for crawlers; this refetches them in the browser, which is
-   * what puts the five `GET https://cms.clovity.com/api/…` requests in a visitor's
-   * Network tab and picks up a publish without waiting out the revalidate window.
+   * Refetched client-side on purpose, on top of the server fetch: this is
+   * what picks up a fresh publish without waiting out the revalidate window.
    */
   const { data: collections } = useContentCollections(initialCollections);
 
@@ -112,13 +100,9 @@ export function FieldNotesSection({
               activeTabClassName={TAB_ACTIVE_CLASS}
               items={collections.map((collection, index) => ({
                 id: collection.kind,
-                /**
-                 * The reveal lives per item, not on `tabClassName`, for two
-                 * reasons: the original staggered these tabs (`data-delay` 0,
-                 * .05, .1, .15, .2), and `reveal()`'s classes are useless without
-                 * the matching `data-reveal` attribute - which only a per-item
-                 * `attrs` can carry.
-                 */
+                /** Per-item, not on `tabClassName`: `reveal()`'s classes need
+                 *  a matching `data-reveal` attribute, which only a per-item
+                 *  `attrs` can carry. */
                 className: reveal('up', index * 50),
                 attrs: revealAttrs(),
                 label: (

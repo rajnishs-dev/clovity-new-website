@@ -1,33 +1,22 @@
 'use client';
 
 import { cn } from '@/lib/cn';
+import { useWhatsNewCards } from '@/api/cms.hooks';
 import { PRIMARY_NAV } from '@/constants/navigation';
 import { useHoverIntent } from '@/hooks/useHoverIntent';
 import { useAppSelector } from '@/store/hooks';
 import { isNavLinkActive } from '@/store/slices/navigationSlice';
-import type { NavGroupId } from '@/types/navigation';
+import type { NavGroupId, NavPanelRail } from '@/types/navigation';
 import { Icon } from '@/components/ui/Icon';
 import { SmartLink } from '@/components/ui/Link';
 import { DropdownPanel } from './DropdownPanel';
 import { MegaPanel } from './MegaPanel';
 
 /**
- * Desktop navigation.
- *
- * Reproduces the legacy hover behaviour exactly - including the 250ms close delay
- * that lets the cursor cross the gap between a nav link and its fixed-position
- * panel (see `useHoverIntent`) - and adds the keyboard support the original never
- * had: a real `<button>` trigger with `aria-expanded`/`aria-controls`, click,
- * Enter, Space, Escape, and close-on-focus-out.
- *
- * MIGRATION NOTE - the nav link's colour was previously decided by two competing
- * stylesheets: `theme.css` set the dark default, and `home.css` overrode it with
- * `#navbar:not(.scrolled) .nav-link { color: rgba(255,255,255,.88) }` so the links
- * read white over the dark hero. That override only worked because of import
- * order, which made the header impossible to reason about in isolation.
- *
- * Now `onDark` is a prop. The home page passes it; interior pages do not. The
- * rendered colours are the same, but the reason is local and explicit.
+ * Desktop navigation. Reproduces the legacy hover behaviour (the 250ms close
+ * delay letting the cursor cross the gap to a panel, see `useHoverIntent`)
+ * and adds keyboard support the original never had. `onDark` replaces what
+ * used to be a stylesheet-import-order dependency for nav-link colour.
  */
 export interface NavbarProps {
   className?: string;
@@ -39,12 +28,8 @@ export interface NavbarProps {
 
 /**
  * `.nav-link` - 16px/400 with the brand underline that grows in on hover.
- *
- * The current page is marked by the underline ONLY; its label keeps the same
- * colour as every other link. The legacy `.nav-link.active` rule also recoloured
- * the text to #1d4ed8, which read as a permanently hovered item over the dark
- * hero - so that part is deliberately dropped. `aria-current="page"` carries the
- * same information for anyone who cannot see the underline.
+ * The current page is marked by the underline only, not a text colour change
+ * (dropped from the legacy rule, which read as a permanently hovered item over the dark hero).
  */
 function navLinkClass(onDark: boolean, active: boolean): string {
   return cn(
@@ -60,10 +45,21 @@ function navLinkClass(onDark: boolean, active: boolean): string {
   );
 }
 
+/** The Resources item's rail as authored - its "What's New" cards are the build-time fallback. */
+const RESOURCES_ITEM = PRIMARY_NAV.find(
+  (item): item is Extract<typeof item, { kind: 'mega-full' }> =>
+    item.id === 'resources',
+);
+const RESOURCES_FALLBACK_CARDS =
+  RESOURCES_ITEM?.rail.kind === 'feature' ? RESOURCES_ITEM.rail.cards : [];
+
 export function Navbar({ className, onDark, scrolled }: NavbarProps) {
   const { openId, open, scheduleClose, closeNow } =
     useHoverIntent<NavGroupId>();
   const navigation = useAppSelector((state) => state.navigation);
+  // Replaces the bundled fallback pair with whichever event/post is actually
+  // newest in the CMS - see `useWhatsNewCards`.
+  const whatsNew = useWhatsNewCards(RESOURCES_FALLBACK_CARDS);
 
   return (
     <div className={cn('hidden items-center gap-1 lg:flex', className)}>
@@ -93,13 +89,8 @@ export function Navbar({ className, onDark, scrolled }: NavbarProps) {
         return (
           <div
             key={item.id}
-            // `group/nav` drives the chevron rotation that `.nav-item:hover
-            // .nav-chevron` used to handle. `self-stretch` keeps every item the
-            // full row height so both panel shapes open at the same offset.
-            //
-            // The group is NAMED because the mega items inside the panel are groups
-            // too; an unnamed `group-hover:` on either would match both. See
-            // `megaItemClass`.
+            // Named group/nav (not bare `group`): mega items inside the panel
+            // are groups too, and an unnamed `group-hover:` would match both.
             className="group/nav relative flex items-center self-stretch px-1"
             onMouseEnter={() => open(item.id)}
             onMouseLeave={() => scheduleClose(item.id)}
@@ -136,7 +127,11 @@ export function Navbar({ className, onDark, scrolled }: NavbarProps) {
               <MegaPanel
                 group={item.id}
                 columns={item.columns}
-                rail={item.rail}
+                rail={
+                  item.id === 'resources' && item.rail.kind === 'feature'
+                    ? ({ ...item.rail, cards: whatsNew.data } as NavPanelRail)
+                    : item.rail
+                }
                 panelId={panelId}
                 open={isOpen}
                 scrolled={scrolled}

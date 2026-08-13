@@ -62,10 +62,11 @@ export default async function NewsDetailPage({
   if (!item) notFound();
 
   const url = `${siteConfig.url}${ROUTES.resources.news}/${item.slug}`;
-  const [related, topNews] = await Promise.all([
+  const [related, allNews] = await Promise.all([
     getOtherNewsItems(item.slug, 3),
-    getNewsItems().then((items) => items.slice(0, 3)),
+    getNewsItems(),
   ]);
+  const topNews = allNews.slice(0, 3);
 
   return (
     <>
@@ -116,6 +117,7 @@ export default async function NewsDetailPage({
               searchPlaceholder="Search news…"
               topLabel="Top News"
               items={topNews}
+              searchItems={allNews}
               className="lg:sticky lg:top-[130px]"
             />
           </div>

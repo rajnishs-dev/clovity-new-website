@@ -6,23 +6,14 @@ import { Icon } from '@/components/ui/Icon';
 import { buttonClass } from '@/components/ui/Button';
 
 /**
- * Reveals a static list in batches behind a "Load More" button - the legacy
- * `#load-more-btn` behaviour on `blog.html` / `news.html` (which just toggled
- * `display` on already-rendered cards), rebuilt as real client state instead
- * of a `data-page` attribute scan.
+ * Reveals a static list in batches behind a "Load More" button. Deliberately
+ * not URL-driven pagination - every item is already bundled static content,
+ * so `<Pagination>` stays reserved for a real paginated API response.
  *
- * Deliberately not URL-driven pagination: every item the list will ever hold
- * is already on the page (it's bundled static content), so there is nothing a
- * `?page=` link would make more crawlable - `<Pagination>` stays reserved for
- * a real paginated API response.
- *
- * `items` is an array of ALREADY-RENDERED cards (each with its own `key`), not
- * raw data plus a render callback. A Server Component parent can hand a Client
- * Component pre-rendered JSX as `children`/props - that's just a serialized
- * element tree - but it cannot hand it a render *function*, since closures
- * aren't serializable across the server/client boundary. Rendering each card
- * server-side and only slicing the resulting array client-side keeps every
- * page's `page.tsx` a plain Server Component.
+ * `items` is an array of already-rendered cards, not raw data plus a render
+ * callback: a Server Component parent can hand this Client Component
+ * pre-rendered JSX, but not a render function, since closures aren't
+ * serializable across the server/client boundary.
  */
 export function LoadMoreGrid({
   items,

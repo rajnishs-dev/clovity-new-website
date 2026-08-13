@@ -16,7 +16,7 @@ export interface SkeletonProps {
 const RADIUS_CLASS = {
   sm: 'rounded',
   md: 'rounded-[10px]',
-  lg: 'rounded-[20px]',
+  lg: 'rounded-[10px]',
   full: 'rounded-full',
 } as const;
 

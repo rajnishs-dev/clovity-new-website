@@ -5,6 +5,7 @@ import type {
   NavLink,
   SocialLink,
 } from '@/types/navigation';
+import type { BlogPost, EventItem } from '@/types/content';
 import { formatContentDate } from '@/lib/format';
 import { resolveImageSrc } from '@/lib/image';
 import { getAllBlogPosts } from '@/data/blog';
@@ -182,45 +183,57 @@ const DISCOVER_LINKS: NavLink[] = [
 
 /**
  * The two "What's New" feature cards in the Resources mega panel - always the
- * single most recent event and the single most recent blog post, read
- * straight from the same static data the `/events` and `/blog` pages render,
- * rather than a hand-maintained pair of URLs that drift out of date (the
- * legacy markup linked to `clovity.com` - the old production site - instead
- * of this app's own pages).
+ * single most recent event and the single most recent blog post.
+ *
+ * Exported so `useWhatsNewCards` (`api/cms.hooks.ts`) can rebuild the same
+ * card shape client-side once the live CMS lists land - the header renders
+ * this bundled build-time pair first (also what a CMS outage falls back to),
+ * then swaps in whichever event/post is actually newest in Strapi.
  */
+export function buildWhatsNewCards(
+  latestEvent: EventItem | undefined,
+  latestBlog: BlogPost | undefined,
+): NavFeatureCard[] {
+  return [
+    ...(latestEvent
+      ? [
+          {
+            id: latestEvent.id,
+            tag: `Event · ${formatContentDate(latestEvent.publishedAt)}`,
+            title: latestEvent.title,
+            href: latestEvent.href,
+            imageUrl: resolveImageSrc(latestEvent.image.src),
+            imageAlt: latestEvent.image.alt,
+            ctaLabel: 'Read the full story',
+            ...(latestEvent.external ? { external: true } : {}),
+          },
+        ]
+      : []),
+    ...(latestBlog
+      ? [
+          {
+            id: latestBlog.id,
+            tag: `Blog · ${formatContentDate(latestBlog.publishedAt)}`,
+            title: latestBlog.title,
+            href: latestBlog.href,
+            imageUrl: resolveImageSrc(latestBlog.image.src),
+            imageAlt: latestBlog.image.alt,
+            ctaLabel: 'Read the full story',
+            ...(latestBlog.external ? { external: true } : {}),
+          },
+        ]
+      : []),
+  ];
+}
+
 const [latestEvent] = getAllEvents();
 const [latestBlog] = getAllBlogPosts();
 
-const WHATS_NEW_CARDS: NavFeatureCard[] = [
-  ...(latestEvent
-    ? [
-        {
-          id: latestEvent.id,
-          tag: `Event · ${formatContentDate(latestEvent.publishedAt)}`,
-          title: latestEvent.title,
-          href: latestEvent.href,
-          imageUrl: resolveImageSrc(latestEvent.image.src),
-          imageAlt: latestEvent.image.alt,
-          ctaLabel: 'Read the full story',
-          ...(latestEvent.external ? { external: true } : {}),
-        },
-      ]
-    : []),
-  ...(latestBlog
-    ? [
-        {
-          id: latestBlog.id,
-          tag: `Blog · ${formatContentDate(latestBlog.publishedAt)}`,
-          title: latestBlog.title,
-          href: latestBlog.href,
-          imageUrl: resolveImageSrc(latestBlog.image.src),
-          imageAlt: latestBlog.image.alt,
-          ctaLabel: 'Read the full story',
-          ...(latestBlog.external ? { external: true } : {}),
-        },
-      ]
-    : []),
-];
+/** Build-time fallback - see `buildWhatsNewCards` above. */
+const WHATS_NEW_CARDS: NavFeatureCard[] = buildWhatsNewCards(
+  latestEvent,
+  latestBlog,
+);
 
 /* ── Assembled primary nav ──────────────────────────────────────────────── */
 

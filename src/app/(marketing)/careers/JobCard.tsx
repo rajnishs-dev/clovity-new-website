@@ -17,31 +17,19 @@ import {
 } from '@/constants/careers';
 
 /**
- * One open-position card.
+ * One open-position card, with two features carried over from the legacy `/talent`
+ * card: three expandable panels (About Us / Job Description / Our Benefits - only the
+ * middle is per-role, the other two are the same copy on every posting) and an
+ * overflow menu.
  *
- * The card SHELL is unchanged from the approved design - same border, radius,
- * padding, track pill, meta chips and "Apply Now" button. What this adds are the two
- * features carried over from the legacy `/talent` card:
+ * Each card owns its own open/closed state rather than the parent: there are 173 of
+ * these, and shared state would re-render the whole list on every toggle. Panel bodies
+ * mount only when open, since 173 postings' worth of headings and bullet lists is tens
+ * of thousands of DOM nodes nothing is looking at.
  *
- *  1. THREE EXPANDABLE PANELS - About Us, Job Description, Our Benefits. Only the
- *     middle one is per-role (the CMS field); the other two are the same copy on
- *     every posting, which is why they live in constants.
- *  2. AN OVERFLOW MENU on the right.
- *
- * ── WHY EACH CARD OWNS ITS STATE ──
- * There are 173 of these. Holding open/closed for all of them in the parent would
- * re-render the whole list on every toggle; a component per card re-renders one.
- *
- * ── WHY THE PANEL BODY IS RENDERED ONLY WHEN OPEN ──
- * Not for payload - the descriptions are in the RSC payload either way, since the
- * parent already receives every job as a prop. It is for the DOM: 173 postings, each
- * with headings and bullet lists, is tens of thousands of nodes that nothing is
- * looking at. Mounting on open keeps the page responsive.
- *
- * ── THE CHECK/CROSS ICON IS THE LEGACY AFFORDANCE, KEPT ──
- * A tick when collapsed, a cross when expanded. It reads as "toggle" rather than
- * "done", which is unusual, but it is what the card being copied does. `aria-expanded`
- * on the button carries the real state for anyone not looking at the glyph.
+ * The check/cross toggle icon (tick collapsed, cross expanded) reads as "toggle" rather
+ * than "done" - unusual, but matches the card being copied; `aria-expanded` carries the
+ * real state.
  */
 
 /** A run of text in the boilerplate panels, optionally linked. */
@@ -175,7 +163,7 @@ export function JobCard({ job }: JobCardProps) {
     <article
       id={anchorId}
       className={cn(
-        'scroll-mt-28 rounded-[18px] border border-line-soft bg-white px-7 py-[26px]',
+        'scroll-mt-28 rounded-[10px] border border-line-soft bg-white px-7 py-[26px]',
         '[transition:transform_.25s,box-shadow_.25s,border-color_.25s]',
         'hover:-translate-y-[3px] hover:border-brand-200 hover:shadow-[0_16px_36px_rgba(15,23,42,.08)]',
       )}

@@ -7,21 +7,11 @@ import { CoverImage } from '@/components/ui/Image';
 import { SmartLink } from '@/components/ui/Link';
 import { JsonLd } from '../JsonLd';
 
-/**
- * The light hero at the top of every detail page's article column - the
- * legacy `.post-hero`: breadcrumb, a large rounded cover image, the title, and
- * a meta row (date plus whatever else the resource kind carries: reading
- * time, location, presenters…).
- */
+/** The light hero at the top of every detail page's article column: breadcrumb, cover image, title, and a meta row. */
 export interface DetailHeroProps {
   breadcrumb: BreadcrumbItem[];
   currentLabel: string;
-  /**
-   * OPTIONAL, for one caller: the webinar detail page. Its design puts the panel -
-   * co-hosts, headshots, "The Who" / "Moderator" / "The When" - directly under the
-   * title where the banner would be, so passing no image is how that page opts out.
-   * Blog, news, events and case studies all pass one.
-   */
+  /** Optional: the webinar detail page omits this to show its co-host panel where the banner would be. */
   image?: ContentImage;
   title: string;
   meta: ReactNode;
@@ -66,7 +56,7 @@ export function DetailHero({
       </nav>
 
       {image ? (
-        <div className="relative mb-6 aspect-[16/9] w-full overflow-hidden rounded-[8px] shadow-[0_24px_56px_-16px_rgba(15,23,42,.18)]">
+        <div className="relative mb-6 aspect-[16/9] w-full overflow-hidden rounded-[10px] shadow-[0_24px_56px_-16px_rgba(15,23,42,.18)]">
           <CoverImage
             src={image.src}
             alt={image.alt}

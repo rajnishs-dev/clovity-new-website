@@ -12,20 +12,12 @@ import {
 import { FDE_CONTENT, FDE_PROOF_CARDS } from '@/constants/home';
 
 /**
- * Section 4.5 - Forward-Deployed Engineers, as Tailwind utilities.
+ * Copy left, photo with three floating proof cards right. Cards' entrance
+ * stagger and sparkline draw are GSAP (see `HomeAnimations`); idle glow uses
+ * `motion-safe:` to respect a reduced-motion preference.
  *
- * Copy left, photo with three floating proof cards right. The cards' entrance
- * stagger and the sparkline draw stay GSAP (see `HomeAnimations`); their idle glow
- * is `animate-fde-glow`, behind `motion-safe:` so it only runs for visitors who
- * have not asked for reduced motion - the legacy equivalent was a
- * `@media (prefers-reduced-motion: no-preference)` block.
- *
- * Below 560px the cards leave the absolute flow and stack under the photo
- * (`to-560:static`), because three overlapping panels on a phone cover the image
- * they are annotating.
- *
- * The photo is a remote Unsplash URL in the original and stays remote - it is stock
- * art, not a brand asset, so bundling it would add ~200KB to the repo for no gain.
+ * The photo stays a remote Unsplash URL - it's stock art, not a brand asset,
+ * so bundling it would add ~200KB to the repo for no gain.
  */
 
 /** Per-card position. Order matches `FDE_PROOF_CARDS`. */
@@ -52,10 +44,9 @@ export function ForwardDeployedSection() {
         <div className="grid items-center gap-8 lg:gap-10 lg:grid-cols-[1.05fr_1fr]">
           {/* Left: copy */}
           <div
-            // `reveal()` bakes in `md:text-left` - this column has to stay
-            // centered through the whole stacked range (up to `lg`, where
-            // the grid actually goes two-column), so `md:text-center` has to
-            // come after it to win, with `lg:text-left` taking back over.
+            // `reveal()` bakes in `md:text-left`, so `md:text-center` must
+            // come after it to win through the stacked range, with
+            // `lg:text-left` taking back over at the two-column breakpoint.
             className={cn(reveal('left'), 'md:text-center lg:text-left')}
             {...revealAttrs()}
           >
@@ -86,7 +77,7 @@ export function ForwardDeployedSection() {
           <div className={reveal('right')} {...revealAttrs()}>
             {/* `before:` is the soft brand glow behind the photo. */}
             <div className="relative mt-2 px-3.5 pb-[46px] pt-[18px] before:absolute before:inset-0 before:z-0 before:rounded-[40px] before:bg-[radial-gradient(65%_65%_at_65%_25%,rgba(37,99,235,.12),transparent_70%)] before:content-[''] to-560:p-0">
-              <div className="relative z-[1] overflow-hidden rounded-[20px] border border-white/60 shadow-[0_30px_60px_-24px_rgba(15,23,42,.28)]">
+              <div className="relative z-[1] overflow-hidden rounded-[10px] border border-white/60 shadow-[0_30px_60px_-24px_rgba(15,23,42,.28)]">
                 <AppImage
                   src={FDE_CONTENT.photo.src}
                   alt={FDE_CONTENT.photo.alt}
@@ -101,7 +92,7 @@ export function ForwardDeployedSection() {
                 <div
                   key={card.id}
                   className={cn(
-                    'absolute z-[2] w-[196px] rounded-[14px] bg-white p-3 px-3.5 shadow-float',
+                    'absolute z-[2] w-[196px] rounded-[10px] bg-white p-3 px-3.5 shadow-float',
                     'motion-safe:animate-fde-glow',
                     CARD_POSITION[cardIndex],
                     CARD_DELAY[cardIndex],

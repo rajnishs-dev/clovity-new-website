@@ -22,20 +22,15 @@ import { JobCard } from './JobCard';
 /**
  * "Current Openings Across Our Delivery Teams" - the Strapi-backed roles list.
  *
- * A CLIENT COMPONENT because the team tabs filter in place. The legacy page did this
- * by writing `style.display` on every card from a click handler; here the filter is
- * state and the list is derived, so a card that is filtered out is not in the DOM
- * rather than hidden - same visual result, and no chance of a hidden card staying
- * focusable.
+ * A client component because the team tabs filter in place: the list is derived from
+ * filter state, so a filtered-out card is removed from the DOM rather than hidden, and
+ * can't stay focusable.
  *
- * TABS ARE DERIVED FROM THE DATA, not hard-coded. A fixed tab list breaks in both
- * directions: a tab for a track with no openings filters to an empty list, and a track
- * an editor adds in `clovity-admin` gets no tab at all. When Strapi is unreachable the
- * bundled roles carry the published page's own team names, so the offline state shows
- * exactly the tabs the design does.
+ * Tabs are derived from the data, not hard-coded, so a track with no openings doesn't
+ * get an empty tab and a track added in `clovity-admin` isn't missing one; the offline
+ * fallback roles carry the published page's own team names.
  *
- * Each card owns its own expand/menu state - see `JobCard` for why that matters at
- * 173 of them.
+ * Each card owns its own expand/menu state - see `JobCard`.
  */
 
 export interface OpenPositionsSectionProps {
@@ -202,7 +197,7 @@ export function OpenPositionsSection({
 
       <div
         className={cn(
-          'mt-7 flex flex-wrap items-center justify-between gap-6 rounded-[18px] border border-brand-100 bg-[linear-gradient(160deg,#eff6ff_0%,#fef1e8_100%)] px-[30px] py-7',
+          'mt-7 flex flex-wrap items-center justify-between gap-6 rounded-[10px] border border-brand-100 bg-white px-[30px] py-7',
           'to-900:justify-start',
           revealAligned('left'),
         )}

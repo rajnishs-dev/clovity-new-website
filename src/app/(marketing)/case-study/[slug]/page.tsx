@@ -65,10 +65,11 @@ export default async function CaseStudyDetailPage({
 
   const url = `${siteConfig.url}${ROUTES.resources.caseStudy}/${caseStudy.slug}`;
   const categoryMeta = resolveCategoryMeta(caseStudy.category);
-  const [related, topCaseStudies] = await Promise.all([
+  const [related, allCaseStudies] = await Promise.all([
     getOtherCaseStudies(caseStudy.slug, 3),
-    getCaseStudyItems().then((items) => items.slice(0, 3)),
+    getCaseStudyItems(),
   ]);
+  const topCaseStudies = allCaseStudies.slice(0, 3);
 
   return (
     <>
@@ -130,6 +131,7 @@ export default async function CaseStudyDetailPage({
               searchPlaceholder="Search case studies…"
               topLabel="Top Case Studies"
               items={topCaseStudies}
+              searchItems={allCaseStudies}
               className="lg:sticky lg:top-[130px]"
             />
           </div>

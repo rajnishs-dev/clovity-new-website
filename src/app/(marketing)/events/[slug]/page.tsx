@@ -62,10 +62,11 @@ export default async function EventDetailPage({
   if (!event) notFound();
 
   const url = `${siteConfig.url}${ROUTES.resources.events}/${event.slug}`;
-  const [related, topEvents] = await Promise.all([
+  const [related, allEvents] = await Promise.all([
     getOtherEvents(event.slug, 3),
-    getEventItems().then((items) => items.slice(0, 3)),
+    getEventItems(),
   ]);
+  const topEvents = allEvents.slice(0, 3);
 
   return (
     <>
@@ -117,6 +118,7 @@ export default async function EventDetailPage({
               searchPlaceholder="Search events…"
               topLabel="Top Events"
               items={topEvents}
+              searchItems={allEvents}
               className="lg:sticky lg:top-[130px]"
             />
           </div>

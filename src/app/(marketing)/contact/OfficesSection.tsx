@@ -6,18 +6,13 @@ import {
 import { OfficeCard } from './OfficeCard';
 
 /**
- * "Wherever You're Delivering, We're Close By" - the eight-office flip-card grid.
+ * "Wherever You're Delivering, We're Close By" - the eight-office flip-card grid. Three
+ * columns at desktop, two below 1020px, one below 560px.
  *
- * Four columns at desktop, two below 1020px, one below 560px, so the eight cards read
- * as 2×4 / 4×2 / 8×1.
+ * Cards stagger 50ms apart, matching the published `transition-delay`; the reveal helper
+ * caps at 300ms, so the last card lands with the seventh rather than later.
  *
- * Cards stagger 50ms apart, matching the `transition-delay` the markup sets on each. The
- * reveal helper snaps to 50ms steps and caps at 300ms, so the last card lands with the
- * seventh rather than 50ms later - a difference of one frame at the bottom of a grid
- * that is already fully revealed by then.
- *
- * A Server Component; only `OfficeCard` is a client component, and only because a tap
- * has to toggle the flip on touch devices.
+ * A Server Component - only `OfficeCard` is a client component, needed for tap-to-flip.
  */
 
 /** 50ms per card, matching the published `transition-delay` ladder. */
@@ -25,7 +20,7 @@ const STAGGER_STEP_MS = 50;
 
 export function OfficesSection() {
   return (
-    <Section className="border-y border-line-faint bg-soft">
+    <Section className="border-y border-line-faint bg-[#eaf8ff]">
       <SectionHeader
         label={CONTACT_OFFICES_CONTENT.label}
         labelClassName="mb-4"
@@ -42,7 +37,7 @@ export function OfficesSection() {
         className="mx-auto mb-12 max-w-[640px] md:text-center"
       />
 
-      <div className="grid grid-cols-4 gap-5 to-1020:grid-cols-2 to-560:grid-cols-1">
+      <div className="grid grid-cols-3 gap-5 to-1020:grid-cols-2 to-560:grid-cols-1">
         {CONTACT_OFFICES.map((office, index) => (
           <OfficeCard
             key={office.id}

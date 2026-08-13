@@ -9,21 +9,13 @@ import { getNewsItems } from '@/data/news';
 import { getWebinarItems } from '@/data/webinars';
 
 /**
- * XML sitemap.
+ * Static routes come from `SITEMAP_ROUTES`; detail pages are listed from the
+ * CMS, each with its own `lastModified` from the row's `updatedAt`. Static
+ * routes use build time for `lastModified`, which is honest for prerendered
+ * marketing pages.
  *
- * Static routes come from `SITEMAP_ROUTES`, so adding a page means adding one
- * entry there instead of remembering to touch a separate file. That list already
- * carries the five resource LISTING routes; what follows adds their detail pages.
- *
- * DETAIL ROUTES ARE LISTED FROM THE CMS, each with its own `lastModified` from the row's
- * `updatedAt`. Until the CMS was wired up these pages were absent entirely, leaving
- * several hundred articles discoverable only by crawling links.
- *
- * Static routes still use build time for `lastModified`, which is honest for prerendered
- * marketing pages - they genuinely change when the site is rebuilt.
- *
- * A CMS OUTAGE DOES NOT EMPTY THIS: every loader falls back to bundled content, so the
- * worst case is a short sitemap, never a broken one.
+ * A CMS outage doesn't empty this: every loader falls back to bundled
+ * content, so the worst case is a short sitemap, never a broken one.
  */
 export const revalidate = 3600;
 
@@ -32,10 +24,8 @@ const DETAIL_CHANGE_FREQUENCY = 'monthly' as const;
 const DETAIL_PRIORITY = 0.6;
 
 /**
- * `lastModified` for one item.
- *
- * Guarded because `new Date('')` is an Invalid Date, which serialises to an empty
- * attribute and makes the whole document invalid - and an empty date is reachable, since
+ * Guarded because `new Date('')` is an Invalid Date, which serializes to an
+ * empty attribute and invalidates the whole document - reachable since
  * `publishedAt` is only as good as the CMS row behind it.
  */
 function lastModifiedOf(item: ContentBase, fallback: Date): Date {

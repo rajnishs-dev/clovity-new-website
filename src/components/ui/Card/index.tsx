@@ -4,13 +4,13 @@ import { reveal, revealAttrs, type RevealDirection } from '@/lib/reveal';
 import { SmartLink } from '../Link';
 
 /**
- * Card shells, as Tailwind utilities.
+ * Card shells, as Tailwind utilities. Replaces `.card` / `.app-card` /
+ * `.exp-card`.
  *
- * Replaces the legacy `.card` / `.app-card` / `.exp-card` rules. The lift is the
- * original's exact spring - `cubic-bezier(.34,1.56,.64,1)` over 300ms - expressed
- * as an arbitrary `[transition:…]` property because the three transitioned
- * properties had different easings, which `transition-*` + `ease-*` utilities
- * cannot express (they apply one easing to all).
+ * The hover lift uses the original's spring easing -
+ * `cubic-bezier(.34,1.56,.64,1)` over 300ms - as an arbitrary `[transition:…]`
+ * property because the three transitioned properties use different easings,
+ * which `transition-*` + `ease-*` utilities can't express.
  *
  *   'default'   ← .card       20px radius
  *   'app'       ← .app-card   10px radius (the Marketplace tiles)
@@ -25,7 +25,7 @@ const LIFT =
 
 const VARIANT_CLASS: Record<CardVariant, string> = {
   default: cn(
-    'rounded-[20px] border border-line-soft bg-white',
+    'rounded-[10px] border border-line-soft bg-white',
     LIFT,
     'hover:shadow-lift-soft',
   ),
@@ -35,12 +35,11 @@ const VARIANT_CLASS: Record<CardVariant, string> = {
     'hover:shadow-lift',
   ),
   /**
-   * The gradient underline is an `after:` pseudo-element that scales in from the
-   * left on hover - kept as a pseudo-element rather than a real node so the card's
-   * DOM stays as it was, and so the bar cannot be reached by the tab order.
+   * Gradient underline as an `after:` pseudo-element (not a real node) so it
+   * can't be tab-focused and the card's DOM matches the original.
    */
   expertise: cn(
-    'group relative block overflow-hidden rounded-[20px] border border-line-soft bg-white p-8 text-inherit no-underline',
+    'group relative block overflow-hidden rounded-[10px] border border-line-soft bg-white p-8 text-inherit no-underline',
     LIFT,
     'hover:shadow-lift',
     'after:absolute after:inset-x-0 after:bottom-0 after:h-[3px] after:origin-left after:scale-x-0 after:bg-gradient-to-r after:from-brand-600 after:to-orange after:transition-transform after:duration-[350ms] after:ease-native after:content-[""]',

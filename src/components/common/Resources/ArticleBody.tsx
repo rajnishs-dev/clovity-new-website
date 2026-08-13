@@ -1,10 +1,6 @@
 import type { ContentBlock } from '@/types/content';
 
-/**
- * Renders a detail page's `ContentBlock[]` body - the legacy `.post-prose`
- * article typography, expressed as Tailwind utilities per block type instead
- * of a `dangerouslySetInnerHTML` blob.
- */
+/** Renders a detail page's `ContentBlock[]` body as Tailwind utilities per block type, instead of a `dangerouslySetInnerHTML` blob. */
 export function ArticleBody({ blocks }: { blocks: ContentBlock[] }) {
   return (
     <div className="text-[16.5px] leading-[1.7] text-black">
@@ -49,19 +45,12 @@ export function ArticleBody({ blocks }: { blocks: ContentBlock[] }) {
               </ul>
             );
           /**
-           * A RAW `<img>`, NOT `next/image`, and this is deliberate.
-           *
-           * These URLs are pasted into the CMS by editors, and the live bodies prove how
-           * uncontrolled that is: six distinct hosts across the published posts
-           * (`clovity-website.s3…`, `ww1.prweb.com`, two Giphy CDNs, `cioreview.com`,
-           * `globalspec.com`), some served over `http`, and eleven tags with no
-           * dimensions at all. `next/image` THROWS on a host that is not in
-           * `next.config.ts`, so routing these through it would mean an editor pasting
-           * from a new domain takes the whole article page down - and no allow-list can
-           * be kept ahead of that.
-           *
-           * The trade is losing optimization on body images only. Every curated image on
-           * the site - heroes, cards, badges - still goes through `next/image`.
+           * A raw `<img>`, not `next/image`, deliberately: these src URLs are
+           * pasted into the CMS by editors from arbitrary hosts, and
+           * `next/image` throws on any host not allow-listed in
+           * `next.config.ts` - an editor pasting from a new domain would take
+           * down the whole article page. Curated images elsewhere still use
+           * `next/image`.
            */
           case 'image':
             return (
@@ -74,7 +63,7 @@ export function ArticleBody({ blocks }: { blocks: ContentBlock[] }) {
                 {...(block.height ? { height: block.height } : {})}
                 loading="lazy"
                 decoding="async"
-                className="mb-6 h-auto max-w-full rounded-[8px]"
+                className="mb-6 h-auto max-w-full rounded-[10px]"
               />
             );
           case 'quote':

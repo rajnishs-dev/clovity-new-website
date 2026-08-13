@@ -10,7 +10,11 @@ import { SectionHeader } from '@/components/ui/Section';
 import { getWebinarItems } from '@/data/webinars';
 import { WebinarGrid } from './WebinarGrid';
 import { NavState } from './NavState';
-import { webinarHeroBanner } from '@/constants/media';
+import {
+  webinarHeroBanner,
+  webinarHeroBannerTablet,
+  webinarHeroBannerMobile,
+} from '@/constants/media';
 
 export const metadata: Metadata = buildMetadata({
   title: 'Webinars - On-Demand Atlassian & Cloud Sessions',
@@ -45,6 +49,8 @@ export default async function WebinarsPage() {
           }
           subheading="Our webinars cover the latest innovations, best practices and solutions to help you drive efficiency and growth."
           image={webinarHeroBanner}
+          imageTablet={webinarHeroBannerTablet}
+          imageMobile={webinarHeroBannerMobile}
         />
 
         <section className="bg-[#f8fafc] pt-14 pb-[240px] sm:pt-20">

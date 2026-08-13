@@ -16,21 +16,11 @@ import { TRUSTED_BY_CONTENT } from '@/constants/home';
 import { ClientMarquee, HOME_LOGO_PILL_CLASS } from '@/components/common/ClientMarquee';
 
 /**
- * Section 2 - Trusted By: intro copy, three customer-story cards, logo marquee.
+ * Story cards use their own treatment rather than the shared `<Card>`, since
+ * their lift/shadow/border pair differs from `.card`.
  *
- * The story cards are their own treatment rather than the shared `<Card>`: the
- * legacy `.csp-card` uses a 3px lift and a different shadow/border pair from
- * `.card`, so folding them together would change one of them.
- *
- * `group` on the card drives the arrow nudge that `.csp-card:hover .csp-link i`
- * used to do - the arrow no longer depends on a stylesheet knowing its class name.
- *
- * Below `md` the grid becomes a one-card-at-a-time scroll-snap rail (same
- * `useSnapCarousel` hook the AI Delivery and Expert Insights rails use), with
- * dots for navigation since there's no room for arrows at that width.
- *
- * Data comes in as props so the page can swap static constants for CMS responses
- * without this component changing.
+ * Below `md` the grid becomes a one-card-at-a-time scroll-snap rail via the
+ * same `useSnapCarousel` hook the AI Delivery and Expert Insights rails use.
  */
 const CARD_GAP = 20; // matches `gap-5`
 
@@ -48,9 +38,8 @@ export function TrustedBySection({ stories, logos }: TrustedBySectionProps) {
   return (
     <section className="relative overflow-hidden bg-white py-12 lg:py-16">
       <div
-        // `reveal()` bakes in `md:text-left` (it's meant for content that
-        // re-aligns on desktop) - this heading stays centered at every
-        // breakpoint, so `md:text-center` has to come after it to win.
+        // `reveal()` bakes in `md:text-left`; this heading stays centered at
+        // every breakpoint, so `md:text-center` has to come after it to win.
         className={cn(
           'relative mx-auto mb-8 lg:mb-10 max-w-shell px-6 text-center',
           reveal(),

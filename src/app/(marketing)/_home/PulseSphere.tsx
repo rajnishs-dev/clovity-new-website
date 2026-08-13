@@ -5,41 +5,12 @@ import { useReducedMotion } from '@/hooks/useReducedMotion';
 import { appPulseAi } from '@/constants/media';
 
 /**
- * The rotating dot-sphere with an EKG trace, behind the Pulse AI copy.
+ * Rotating dot-sphere with an EKG trace behind the Pulse AI copy:
+ * Fibonacci-distributed points rotated around Y and depth-sorted each frame,
+ * with a fixed waveform whose bright head sweeps across continuously.
  *
- * Fibonacci-distributed points rotated around Y and depth-sorted each frame so the
- * near face reads bigger and brighter, with a fixed P/QRS/T waveform whose bright
- * head sweeps across continuously. Every constant (280 points, R = W × 0.42, AMP 46,
- * SWEEP_FRAMES 170, TRAIL 130, angular step 0.006) is the original's.
- *
- * THE LOGO AND ITS TAGLINE ARE STATIC AND ALWAYS VISIBLE. Only the sphere and the
- * sweeping trace move, and they move *behind* the mark.
- *
- * This is a correction of two mistakes in the first port:
- *  • The tagline was missing outright. The original draws "AI copilot for Jira"
- *    under the logo with `ctx.fillText`; that call was simply not carried over, so
- *    the mark appeared with no label.
- *  • The logo was put on a fade-in / hold / fade-out loop that the original never
- *    had. The original's comment is explicit - it "fades in once, then stays on
- *    screen while the pulse trace keeps sweeping behind it". The looping fade made
- *    the product mark blink in and out.
- *
- * The one-time 60-frame fade-in is dropped too, by request: the mark is drawn at
- * full opacity from the first frame, so nothing about it animates. The settled
- * appearance is identical.
- *
- * Three things the original got wrong, still fixed here:
- *  1. `requestAnimationFrame` was never cancelled. On a client-side navigation
- *     the loop kept running against a detached canvas forever. It is cancelled on
- *     unmount now.
- *  2. Reduced motion drew exactly one frame and stopped - leaving a half-drawn
- *     sweep on screen. It now renders the settled state (sphere, dim trace, and
- *     the logo with its tagline) as a deliberate still.
- *  3. The animation ran even when scrolled far out of view, burning a frame
- *     budget for nothing. An IntersectionObserver pauses it off-screen.
- *
- * `aria-hidden` on the wrapper: it is decoration, and its content is already
- * stated in the adjacent copy.
+ * The logo and its tagline are static and always fully visible - only the
+ * sphere and sweeping trace move, and only behind the mark.
  */
 
 const POINT_COUNT = 280;
@@ -62,10 +33,8 @@ interface SpherePoint {
 }
 
 /**
- * Fibonacci sphere. Deterministic: the legacy version used `Math.random()` for
- * dot size and the "big" flag, which meant a different sphere every reload - and
- * would break server/client determinism here. A hash of the index gives the same
- * visual scatter, reproducibly.
+ * Fibonacci sphere, deterministic via a hash of the index rather than
+ * `Math.random()`, so server and client render the same scatter.
  */
 function buildPoints(): SpherePoint[] {
   const golden = Math.PI * (3 - Math.sqrt(5));
@@ -219,11 +188,7 @@ export function PulseSphere() {
         }
       }
 
-      /**
-       * The Pulse AI mark and its tagline, drawn last so the sphere and trace pass
-       * behind them. Fully opaque on every frame - this is the one part of the
-       * canvas that does not animate.
-       */
+      // Drawn last so the sphere and trace pass behind the mark; always opaque.
       if (logoReady && logo.naturalHeight > 0) {
         const logoW = LOGO_HEIGHT * (logo.naturalWidth / logo.naturalHeight);
         ctx.save();
@@ -252,11 +217,9 @@ export function PulseSphere() {
 
     if (reducedMotion) {
       /**
-       * Settled still: sphere, dim trace, and the mark with its tagline. No sweep.
-       *
-       * Redrawn on load as well, because there is no animation loop here to pick the
-       * image up once it decodes - a single early draw would leave the logo out of
-       * the still permanently.
+       * Settled still: sphere, dim trace, mark with tagline, no sweep.
+       * Redrawn on load too, since there's no animation loop to pick up the
+       * image once it decodes.
        */
       drawScene(null);
       logo.onload = () => {
@@ -310,13 +273,10 @@ export function PulseSphere() {
   }, [reducedMotion]);
 
   /**
-   * Positioning, as Tailwind utilities (legacy `.sphere-wrap`).
-   *
-   * The sphere deliberately bleeds off the section's right edge and sits behind
-   * the copy: 460px at mobile widths, 600px from 768px up, and pulled further
-   * right as it grows. Below 768px it drops out of the absolute flow entirely and
-   * becomes a centred block *after* the copy (`order-2`), because on a narrow
-   * screen a decorative canvas overlapping the headline is just noise.
+   * The sphere deliberately bleeds off the section's right edge and sits
+   * behind the copy. Below 1024px it drops out of the absolute flow and
+   * becomes a centred block after the copy (`order-2`), since a decorative
+   * canvas overlapping the headline is just noise there.
    */
   return (
     <div
@@ -324,8 +284,6 @@ export function PulseSphere() {
       className={[
         'pointer-events-none absolute right-[-90px] top-1/2 z-0 h-[460px] w-[460px] -translate-y-1/2',
         'md:right-[-120px] md:h-[570px] md:w-[570px]',
-        // Below `lg` there isn't room beside the copy any more, so the sphere
-        // drops out of the absolute flow and becomes a centred block after it.
         'to-1024:static to-1024:order-2 to-1024:mx-auto to-1024:mt-2 to-1024:translate-y-0 to-1024:h-[460px] to-1024:w-[460px]',
         'to-640:right-[-90px] to-640:h-[360px] to-640:w-[360px]',
       ].join(' ')}

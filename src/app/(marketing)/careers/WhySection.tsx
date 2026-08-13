@@ -1,27 +1,35 @@
-import {
-  GradientText,
-  PillarGrid,
-  Section,
-  SectionHeader,
-} from '@/components/ui';
-import { CAREERS_WHY_CARDS, CAREERS_WHY_CONTENT } from '@/constants/careers';
+import { GradientText, Section, SectionHeader } from '@/components/ui';
+import { buttonClass } from '@/components/ui/Button';
+import { ArrowIcon } from '@/components/ui/Icon';
+import { SmartLink } from '@/components/ui/Link';
+import { CAREERS_HERO, CAREERS_WHY_CONTENT } from '@/constants/careers';
 
-/** "Three Reasons Our Teams Stay and Grow" - the same `.why-grid` the About page uses. */
+/**
+ * The legacy `/talent` page's intro banner, ported in place of the 3-card
+ * "Why Clovity" grid About still uses - job-seeker copy calls for a different
+ * layout than a client-facing feature grid.
+ */
 export function WhySection() {
   return (
     <Section padding="tight" className="bg-white">
       <SectionHeader
-        label={CAREERS_WHY_CONTENT.label}
-        labelClassName="mb-4"
         heading={
           <>
             {CAREERS_WHY_CONTENT.headingLead}
             <GradientText>{CAREERS_WHY_CONTENT.headingHighlight}</GradientText>
           </>
         }
-        className="mx-auto mb-8 max-w-[680px] md:text-center"
+        subheading={CAREERS_WHY_CONTENT.description}
+        className="mx-auto max-w-[820px]"
       />
-      <PillarGrid cards={CAREERS_WHY_CARDS} />
+      <div className="mt-6 flex justify-center">
+        <SmartLink
+          href={CAREERS_HERO.openRolesAnchor}
+          className={buttonClass('primary')}
+        >
+          View Open Positions <ArrowIcon />
+        </SmartLink>
+      </div>
     </Section>
   );
 }

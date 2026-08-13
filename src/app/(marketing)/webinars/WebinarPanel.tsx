@@ -3,17 +3,13 @@ import { AppImage } from '@/components/ui/Image';
 import { SmartLink } from '@/components/ui/Link';
 
 /**
- * The webinar detail page's panel: who is on it, who moderates, and when.
+ * The webinar detail page's panel: who is on it, who moderates, and when. It sits
+ * directly under the title in place of the 16:9 banner other detail pages show - the
+ * banner already does its job as card art on `/webinars` and as the OG image.
  *
- * It sits directly under the title, in place of the 16:9 banner every other detail page
- * shows. That is the published design: a webinar's useful "hero" is the panel, and the
- * banner is already doing its job as the card art on `/webinars` and as the OG image.
- *
- * Every value comes from the CMS - `coHostedBy`, `peopleImages`, `theWho`, `moderator`
- * and `createdAtText` - and every row here disappears when its column is empty. That is
- * not defensive coding for its own sake: of the four published webinars, one has no
- * moderator at all, one stores the moderator as an empty string, and one carries an
- * `eventHeader` the others leave null.
+ * Every value comes from the CMS, and each row disappears when its column is empty: of
+ * the four published webinars, one has no moderator, one stores it as an empty string,
+ * and one carries an `eventHeader` the others leave null.
  */
 
 const LABEL_CLASS =
@@ -76,7 +72,7 @@ export function WebinarPanel({ webinar }: { webinar: WebinarItem }) {
               /* Fixed box, cropped: the uploads are square-ish but not uniform - 713×692
                  alongside 801×801 and 400×400 - and a row of headshots that each ended
                  up a different height would read as a mistake. */
-              className="h-[150px] w-[150px] rounded-[6px] object-cover sm:h-[170px] sm:w-[170px]"
+              className="h-[150px] w-[150px] rounded-[10px] object-cover sm:h-[170px] sm:w-[170px]"
             />
           ))}
         </div>

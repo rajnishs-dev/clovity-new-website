@@ -14,7 +14,9 @@ import { buttonClass } from '@/components/ui/Button';
 import { SmartLink } from '@/components/ui/Link';
 import { Select, type SelectOption } from '@/components/ui/Select';
 import { useEventItems } from '@/api/cms.hooks';
+import { useDebouncedValue } from '@/hooks/useDebouncedValue';
 import { formatContentDate } from '@/lib/format';
+import { matchesQuery } from '@/lib/search';
 import { ROUTES } from '@/constants/routes';
 
 /**
@@ -67,16 +69,15 @@ export function EventsExplorer({ items: initialItems }: { items: EventItem[] }) 
   const [category, setCategory] = useState<CategoryFilter>('all');
   const [status, setStatus] = useState<StatusFilter>('all');
   const [query, setQuery] = useState('');
+  // The input stays responsive on every keystroke; only the (expensive-ish,
+  // 60+ item) filtering below waits for a pause - see `useDebouncedValue`.
+  const debouncedQuery = useDebouncedValue(query, 300);
 
   /**
-   * The category filter only exists when the events HAVE categories.
-   *
-   * The Strapi `event` content type has no category column, so live events carry none -
-   * and a "Government Tours" option that filters 64 events down to zero reads as a
-   * broken page, not as an empty category. Derived from the data for the same reason the
-   * careers page derives its track tabs from the openings it is about to render.
-   *
-   * The bundled fallback events DO set a category, so the filter appears with them.
+   * The category filter only exists when the events have categories: the Strapi `event`
+   * type has no category column, so a "Government Tours" option filtering 64 events to
+   * zero would read as broken rather than empty. Derived from the data, same as careers'
+   * track tabs. The bundled fallback events do set a category, so the filter shows there.
    */
   const hasCategories = useMemo(
     () => items.some((item) => item.category),
@@ -84,17 +85,12 @@ export function EventsExplorer({ items: initialItems }: { items: EventItem[] }) 
   );
 
   const filtered = useMemo(() => {
-    const q = query.trim().toLowerCase();
     return items.filter((item) => {
       const matchesCategory = category === 'all' || item.category === category;
       const matchesStatus = status === 'all' || eventStatus(item) === status;
-      const matchesQuery =
-        !q ||
-        item.title.toLowerCase().includes(q) ||
-        (item.location ?? '').toLowerCase().includes(q);
-      return matchesCategory && matchesStatus && matchesQuery;
+      return matchesCategory && matchesStatus && matchesQuery(debouncedQuery, item.title);
     });
-  }, [items, category, status, query]);
+  }, [items, category, status, debouncedQuery]);
 
   const [featured, ...rest] = filtered;
 
@@ -124,7 +120,7 @@ export function EventsExplorer({ items: initialItems }: { items: EventItem[] }) 
             type="text"
             value={query}
             onChange={(event) => setQuery(event.target.value)}
-            placeholder="Search by name or city…"
+            placeholder="Search by name…"
             aria-label="Search events"
             className="w-full rounded-xl bg-white py-3 pl-4 pr-11 text-[14px] text-title shadow-[0_0_0_1px_rgba(15,23,42,.08)] outline-none transition-shadow placeholder:text-[#94a3b8] focus:shadow-[0_0_0_1.5px_#2563eb]"
           />
@@ -144,7 +140,7 @@ export function EventsExplorer({ items: initialItems }: { items: EventItem[] }) 
           // Remounts on filter change, so switching category/status/search always
           // starts back at the first page instead of carrying over a "load more"
           // count from a different, larger filtered list.
-          key={`${category}-${status}-${query}`}
+          key={`${category}-${status}-${debouncedQuery}`}
           items={[
             featured ? (
               <FeaturedResourceCard
@@ -210,7 +206,7 @@ export function EventsExplorer({ items: initialItems }: { items: EventItem[] }) 
       ) : null}
 
       {filtered.length === 0 ? (
-        <div className="rounded-[8px] border border-dashed border-[#dbe4f0] bg-[#f8fafc] px-6 py-14 text-center">
+        <div className="rounded-[10px] border border-dashed border-[#dbe4f0] bg-[#f8fafc] px-6 py-14 text-center">
           <Icon name="alert-circle" className="mb-4 text-[32px] text-[#bfdbfe]" />
           <h4 className="mb-2 text-[18px] font-500 text-title">
             No events match your filters

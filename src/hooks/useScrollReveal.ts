@@ -23,17 +23,11 @@ import { useEffect } from 'react';
  *   • reduced motion reveals immediately instead of animating
  */
 /**
- * Matches a revealed element either way it was marked.
- *
- * `[data-reveal]` is the explicit opt-in. `.transition-reveal` is the class every
- * `reveal()` string contains, and it is matched too so the classes alone are
- * sufficient - because relying on the caller to add *both* a class string and a
- * separate attribute is a foot-gun that already fired: the Field Notes tab list
- * got the utilities without the attribute and sat at `opacity: 0` permanently,
- * invisible to the observer and to the 2.5s fallback alike.
- *
- * `revealAttrs()` is still available and still worth using as a readable signal
- * in JSX, but it is no longer load-bearing.
+ * Matches `[data-reveal]` (explicit opt-in) or `.transition-reveal` (the class
+ * every `reveal()` string emits) - the classes alone are sufficient, because
+ * requiring both once left the Field Notes tab list stuck at `opacity: 0`
+ * permanently when only the class was added. `revealAttrs()` still exists as a
+ * readable signal in JSX but is no longer load-bearing.
  */
 const REVEAL_SELECTOR = '[data-reveal], .transition-reveal';
 
@@ -74,17 +68,9 @@ export function useScrollReveal(enabled = true, reducedMotion = false): void {
     observeAll(document);
 
     /**
-     * Blanket reveal after 2.5s - the legacy site's safety net, kept.
-     *
-     * The original armed `setTimeout(… 2500)` on every load and then forced every
-     * `.sr` element visible with `!important`. So the reveal animation only ever
-     * played for content that entered the viewport in the first 2.5 seconds; after
-     * that everything was simply shown.
-     *
-     * Reproducing it is both faithful and the right call defensively: without it, a
-     * missed IntersectionObserver callback - a fast programmatic scroll is enough to
-     * cause one - leaves content stuck at opacity 0 with no way to recover. Content
-     * being visible always wins over content being animated.
+     * Blanket reveal after 2.5s - the legacy site's safety net, kept: without it,
+     * a missed IntersectionObserver callback (a fast programmatic scroll is
+     * enough to cause one) leaves content stuck at opacity 0 with no recovery.
      */
     const fallback = setTimeout(() => {
       document.querySelectorAll<HTMLElement>(REVEAL_SELECTOR).forEach(show);

@@ -12,39 +12,15 @@ import { MobileMenu } from '../MobileMenu';
 import { Navbar } from '../Navbar';
 
 /**
- * Site header, as Tailwind utilities.
- *
- * MIGRATION NOTE - this component absorbed the single messiest part of the legacy
- * CSS. `#navbar` was styled twice: `theme.css` gave it the solid white bar that
- * interior pages use, and `home.css` re-declared the same id to make it a
- * transparent pill floating over the dark hero. Which one applied depended purely
- * on stylesheet import order, and the two blocks had to be read together to know
- * what any given page rendered.
- *
- * That is now a `variant` prop:
- *   • `floating` - transparent pill over dark artwork; gains a white pill on
- *     scroll and slides 14px → 10px from the top. The home page, and every
- *     resource listing page (blog/case-study/events/webinars/news), all of
- *     which open on a dark photo hero.
- *   • `pill`     - the same rounded white pill `floating` settles into on
- *     scroll, but present from first paint and unchanged by scrolling. For
- *     pages whose banner is NOT dark - a transparent header would have no
- *     contrast against a light hero, so those pages skip straight to the
- *     "scrolled" look. Every resource DETAIL page uses this.
- *   • `solid`    - transparent bar that fades to frosted white on scroll, with
- *     16px → 10px vertical padding. Plain interior pages with no hero at all.
- *
- * All three are rendered from one place, so the behaviour is readable without
- * cross-referencing multiple files.
+ * Site header. Replaces what used to be two competing `#navbar` stylesheet
+ * rules (a solid bar vs. a transparent floating pill, selected by import
+ * order) with an explicit `variant` prop - see `HeaderProps`.
  */
 
 /**
- * Exact transforms the legacy `openMobileMenu()` applied to the bars.
- *
- * One intentional deviation: `closeMobileMenu()` set `hb3.style.width = '16px'`,
- * which did not match the markup's own initial `w-6` (24px) - so the third bar
- * silently shrank after the first open/close cycle. First paint is the contract,
- * so close restores 24px.
+ * Transforms for the open hamburger. One intentional deviation from legacy:
+ * the third bar restores to the markup's own 24px on close, not the legacy
+ * 16px, which silently shrank it after the first open/close cycle.
  */
 const HAMBURGER_OPEN = {
   hb1: { transform: 'rotate(45deg) translate(4px, 5px)' },
@@ -54,14 +30,12 @@ const HAMBURGER_OPEN = {
 
 export interface HeaderProps {
   /**
-   * `floating` for pages whose hero sits behind the header and is dark (the home
-   * page); `pill` for every other page with a hero - it is white from first paint, so
-   * it reads over dark photography and light banners alike; `solid` for a plain
-   * interior page with no hero at all.
-   *
-   * NOTE ON `solid`: no page passes it today, so it is only reachable as the default
-   * below. It stays because a page with no hero is the one case `pill` gets wrong -
-   * a rounded pill floating over plain white background has nothing to float over.
+   * `floating`: transparent pill over a dark hero, settling to white on
+   * scroll (home page, resource listing pages). `pill`: the same white pill,
+   * but present from first paint - for pages with a hero that isn't dark
+   * (resource detail pages). `solid`: fades to frosted white on scroll, for
+   * pages with no hero; unreachable today but kept since `pill` would have
+   * nothing to float over.
    */
   variant?: 'floating' | 'pill' | 'solid';
   /** Fetch the logo with priority - it is the LCP-adjacent element. */

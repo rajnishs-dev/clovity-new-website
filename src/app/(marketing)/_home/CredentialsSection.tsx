@@ -14,29 +14,15 @@ import { CREDENTIALS_CONTENT } from '@/constants/home';
 import { CredentialsMarquee } from './CredentialsMarquee';
 
 /**
- * Section 4.5b - "Credentials Earned, Not Claimed.", as Tailwind utilities.
+ * Badge rows are data (`CredentialRow`) rather than one wrapping row, because
+ * at the collapsed single-column width all seven badges would otherwise fit
+ * on one line, which isn't the design's arrangement.
  *
- * Two columns: copy and a CTA on the left, a badge collage on the right, split
- * `1fr 1.5fr`. Below 1100px it becomes one centred column.
+ * `pb-[240px]` reserves room for the final CTA card, which overlaps upward
+ * via negative margins and is this section's sibling.
  *
- * The collage is three rows. The first holds the four Atlassian partner badges bare
- * on the background at a wider 34px gap; the other two hold the certification badges
- * in uniform 130×120 white cards, four then three. The rows are data (see
- * `CredentialRow`) rather than one wrapping row, because once the layout collapses
- * to a single column the right side is wide enough to fit all seven cards on one
- * line, which is not the arrangement the design specifies.
- *
- * `pb-[240px]` is not this section's own spacing - it reserves room for the final
- * CTA card, which overlaps upward with negative margins. It stays on the section for
- * the same reason the original put it there: the CTA is a sibling, so nothing else
- * can create that space.
- *
- * The section is white and borderless: `.cred` paints `--bg-soft` with rules above
- * and below, and `.cred-dark` - which every instance also carries - overrides all
- * three.
- *
- * `unoptimized` on the SVG badges: Next's optimizer rejects SVG without
- * `dangerouslyAllowSVG`, and a vector badge gains nothing from rasterisation.
+ * `unoptimized` on SVG badges: Next's optimizer rejects SVG without
+ * `dangerouslyAllowSVG`, and a vector gains nothing from rasterization.
  */
 export interface CredentialsSectionProps {
   rows: CredentialRow[];
@@ -48,21 +34,9 @@ function isSvg(source: CredentialBadge['image']['src']): boolean {
 }
 
 /**
- * A bare partner badge.
- *
- * WHICH DIMENSION IS INLINE AND WHICH IS A CLASS IS LOAD-BEARING.
- *
- * The original sets `height: 100px` inline on each of these, and an inline style
- * outranks a media query - so the `≤640px` rule that would drop them to 56px never
- * applies, and they stay 100px tall on mobile. That is reproduced.
- *
- * `max-width` is the opposite: it comes from the stylesheet (150px, tightening to
- * 100px below 640px), so it MUST be a responsive class here. Baking it in as an
- * inline style froze the badges at 150px, and on a 390px screen they stopped fitting
- * two to a row - the section came out 154px too tall.
- *
- * Only the Marketplace Partner lockup carries an inline `max-width` in the original,
- * and its 160px correctly overrides both breakpoints.
+ * Height is a fixed class (not responsive) so badges stay 100px tall on
+ * mobile; `max-width` must stay a responsive class, or badges freeze at
+ * 150px and stop fitting two per row on narrow screens.
  */
 function PlainBadge({ badge }: { badge: CredentialBadge }) {
   return (
@@ -82,7 +56,7 @@ function PlainBadge({ badge }: { badge: CredentialBadge }) {
 /** A certification badge in its white card. */
 function CardBadge({ badge }: { badge: CredentialBadge }) {
   return (
-    <div className="flex h-[120px] w-[130px] items-center justify-center rounded-2xl bg-white p-4 shadow-badge [transition:transform_.25s,box-shadow_.25s] hover:-translate-y-[3px] hover:shadow-badge-hover to-640:h-24 to-640:w-[120px] to-640:p-2.5">
+    <div className="flex h-[120px] w-[130px] items-center justify-center rounded-[10px] bg-white p-4 shadow-badge [transition:transform_.25s,box-shadow_.25s] hover:-translate-y-[3px] hover:shadow-badge-hover to-640:h-24 to-640:w-[120px] to-640:p-2.5">
       <AppImage
         src={badge.image.src}
         alt={badge.image.alt}
@@ -127,13 +101,9 @@ export function CredentialsSection({ rows }: CredentialsSectionProps) {
             >
               {CREDENTIALS_CONTENT.subheading}
             </p>
-            {/*
-              Visible at `lg`+ only. Below that the grid collapses to one
-              column and the CTA has to fall after the badge collage instead -
-              see the second copy below. Keeping this one in place (rather than
-              pulling the CTA out into its own grid row) means the `items-center`
-              row-height math above stays exactly what it was.
-            */}
+            {/* Visible at lg+ only; below that the CTA falls after the badge
+                collage instead (second copy below), which keeps the
+                items-center row-height math here unchanged. */}
             <SmartLink
               href={CREDENTIALS_CONTENT.ctaHref}
               className={cn(buttonClass('primary', 'md', 'mt-7'), 'to-1100:hidden')}
@@ -149,12 +119,8 @@ export function CredentialsSection({ rows }: CredentialsSectionProps) {
             )}
             {...revealAttrs()}
           >
-            {/*
-              Below `md` the collage becomes a single auto-scrolling marquee
-              (`CredentialsMarquee`) - three flex-wrap rows have no room to
-              breathe at that width, so the rows themselves are hidden rather
-              than reflowed.
-            */}
+            {/* Below md the collage becomes a single auto-scrolling marquee -
+                the flex-wrap rows have no room to breathe at that width. */}
             <div className="flex w-full flex-col items-center gap-6 to-767:hidden">
               {rows.map((row) => (
                 <div
@@ -166,7 +132,7 @@ export function CredentialsSection({ rows }: CredentialsSectionProps) {
                     // later in the file - so the narrow gap wins for the plain row too,
                     // which also carries `.cred-row`.
                     row.variant === 'plain' ? 'gap-[34px]' : 'gap-5',
-                    'to-640:gap-3.5',
+                    'to-640:gap-3.5', // both variants tie at a 14px gap below 640px
                   )}
                 >
                   {row.badges.map((badge) =>
@@ -183,12 +149,9 @@ export function CredentialsSection({ rows }: CredentialsSectionProps) {
             <CredentialsMarquee rows={rows} />
           </div>
 
-          {/*
-            Same CTA, `lg`-hidden twin of the one above - see that comment.
-            `justify-self-center`: a grid item is blockified regardless of its
-            own `display`, so without it this would stretch to the column's
-            full width instead of staying a content-sized pill.
-          */}
+          {/* Same CTA, lg-hidden twin of the one above. `justify-self-center`
+              keeps it a content-sized pill instead of stretching to the
+              column's full width. */}
           <SmartLink
             href={CREDENTIALS_CONTENT.ctaHref}
             className={cn(

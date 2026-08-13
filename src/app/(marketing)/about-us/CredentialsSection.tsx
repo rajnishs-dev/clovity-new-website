@@ -16,29 +16,19 @@ import {
 } from '@/constants/about';
 
 /**
- * "Certifications & Awards" - two labelled rows of badge cards.
+ * Group one is the bundled Atlassian partner badges; group two is
+ * Strapi-backed (`award` collection), falling back to the badges the page
+ * publishes today.
  *
- * Group one is the four Atlassian partner badges (bundled brand assets). Group two
- * is Strapi-backed: the `award` collection, ordered by its `order` column, falling
- * back to the eight badges the page publishes today. Both render through the same
- * card, so a CMS-supplied badge and a bundled one are indistinguishable on screen -
- * which is the point of the fallback.
+ * A Client Component so the badge row refetches in the browser: an award
+ * published in Strapi appears without waiting out the page's cache window.
  *
- * A CLIENT COMPONENT so the badge row refetches in the browser on every page load -
- * an award published in Strapi appears immediately rather than waiting out the
- * page's cache window. The prop it receives is the build-time snapshot, which is
- * what keeps the badges in the crawlable HTML; see `api/cms.hooks.ts`.
+ * Card width is a flex basis, not a grid - `.cred-badge-grid` wraps whatever
+ * fits inside the 980px track, which is what lets an odd-numbered group wrap
+ * correctly; a grid would change that.
  *
- * CARD WIDTH IS A FLEX BASIS, NOT A GRID. `.cred-badge-grid` is a wrapping flex row
- * and the cards are a fixed 190px, so the number per row is whatever fits inside the
- * 980px track - 5 at desktop, wrapping to 3 for the second row of an 8-badge group.
- * Below 900px the width becomes a percentage (`33.333% - 11px`, i.e. three up minus
- * two thirds of the 16px gap) and below 640px `50% - 8px` for two up. Reimplementing
- * this as a grid would change how an odd-numbered group wraps.
- *
- * `unoptimized` for SVG: Next's optimizer rejects SVG unless
- * `dangerouslyAllowSVG` is set, and a vector badge gains nothing from rasterisation.
- * Same rule as the home page's credential collage.
+ * `unoptimized` for SVG: Next's optimizer rejects SVG without
+ * `dangerouslyAllowSVG`, and a vector badge gains nothing from rasterization.
  */
 
 function isSvg(source: ContentImage['src']): boolean {
@@ -54,7 +44,7 @@ function BadgeCard({
   return (
     <div
       className={cn(
-        'relative flex w-[190px] flex-col items-center justify-center gap-2.5 overflow-hidden rounded-2xl border border-line-soft bg-white p-[18px] shadow-[0_1px_2px_rgba(15,23,42,.04)]',
+        'relative flex w-[190px] flex-col items-center justify-center gap-2.5 overflow-hidden rounded-[10px] border border-line-soft bg-white p-[18px] shadow-[0_1px_2px_rgba(15,23,42,.04)]',
         '[transition:transform_.25s,box-shadow_.25s,border-color_.25s]',
         'hover:scale-[1.06] hover:shadow-[0_14px_32px_rgba(15,23,42,.1)]',
         'to-900:w-[calc(33.333%_-_11px)]',
@@ -103,7 +93,7 @@ export function CredentialsSection({
   ];
 
   return (
-    <Section padding="tight" className="border-y border-line-faint bg-soft">
+    <Section padding="tight" className="border-y border-line-faint bg-[#eaf8ff]">
       <SectionHeader
         label={ABOUT_CREDENTIALS_CONTENT.label}
         labelClassName="mb-4"

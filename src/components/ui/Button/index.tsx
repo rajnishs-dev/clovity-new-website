@@ -6,22 +6,15 @@ import { SmartLink } from '../Link';
 /**
  * The button system, as Tailwind utilities.
  *
- * These variants replace the legacy `.btn-primary` / `.btn-secondary` /
- * `.btn-white` / `.btn-ghost-dark` rules. Every value is the original's:
- * 13px×28px padding, 14.5px / weight 500, 2px border, 100px pill radius, and the
- * −1px hover lift with a brand-tinted shadow.
+ * Replaces the legacy `.btn-primary` / `.btn-secondary` / `.btn-white` /
+ * `.btn-ghost-dark` rules; values match the original exactly (13px×28px
+ * padding, 14.5px/500, 2px border, 100px pill radius, −1px hover lift).
  *
- * Two things worth knowing:
- *
- *  • `[transition:…]` arbitrary property, not `transition-colors`. The originals
- *    set different durations per property (background .25s, transform .2s), which
- *    no combination of `transition-*` + `duration-*` utilities can express -
- *    those apply one duration to every property. The arbitrary property keeps the
- *    per-property timing exact.
- *
- *  • `size="md"` adds nothing. It is the design's own size, already in the base
- *    string; `sm` and `lg` override through `cn`/tailwind-merge, so there is one
- *    definition of the default rather than two that can drift.
+ * Uses `[transition:…]` arbitrary properties rather than `transition-colors`
+ * because the originals vary duration per property - no `transition-*` +
+ * `duration-*` combination can express that. `size="md"` is a no-op; it's
+ * already the base string, so there's one definition of the default instead
+ * of two that can drift.
  */
 
 export type ButtonVariant =
@@ -87,18 +80,11 @@ const VARIANT_CLASS: Record<ButtonVariant, string> = {
   ),
 
   /**
-   * The interior pages' `.btn-white` - the shared pill, not the home page's.
-   *
-   * `white` above is the HOME page's override (14px radius, weight 800,
-   * `#152a6b` text). About / Careers / Contact never load that override, so their
-   * white CTA is the base `theme.css` rule: 100px pill, weight 700, `#1e40af`
-   * text, 13px×28px padding. Two different buttons, so two variants - folding them
-   * together would silently restyle one of the two.
-   *
-   * The hover here is the CTA-card-scoped one those pages declare: it stays white
-   * (the shared rule would flip it to orange), lifts 3px and casts a neutral
-   * shadow. This variant is only used inside that card, which is what makes the
-   * scoped hover the correct one to bake in.
+   * The interior pages' `.btn-white` (not the home page's `white` above).
+   * About/Careers/Contact never load the home page's override, so their white
+   * CTA is the base `theme.css` pill: 100px radius, weight 700, `#1e40af`
+   * text. Hover stays white and lifts 3px, matching the CTA-card-scoped hover
+   * those pages declare (the shared rule would otherwise flip it orange).
    */
   whitePill: cn(
     PILL_BASE,

@@ -2,14 +2,12 @@ import { GradientText, PillarGrid, Section, SectionHeader } from '@/components/u
 import { ABOUT_WHY_CARDS, ABOUT_WHY_CONTENT } from '@/constants/about';
 
 /**
- * "Three Things That Set Us Apart" - the three-pillar value prop.
+ * `padding="tight"` matches this page throughout (the home page's sections
+ * are one step looser).
  *
- * `padding="tight"` is `py-12 sm:py-16`, which is what this page uses throughout
- * (the home page's sections are one step looser at `py-16 sm:py-20`).
- *
- * `md:text-center` on the header is not redundant: `SectionHeader` composes
- * `reveal()`, whose base string ends in `md:text-left`, so a centred header needs
- * the centring restated at `md` to win the cascade.
+ * `md:text-center` isn't redundant: `SectionHeader` composes `reveal()`,
+ * whose base string ends in `md:text-left`, so centering must be restated at
+ * `md` to win the cascade.
  */
 export function WhySection() {
   return (

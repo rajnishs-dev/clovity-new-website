@@ -1,17 +1,9 @@
 import type { Metadata, Viewport } from 'next';
 
 /**
- * One stylesheet, and that is the whole CSS surface of the app: Tailwind's three
- * layers plus the four things that genuinely cannot be utility classes (see the
- * file header in `globals.css`).
- *
- * There used to be a second one - a self-hosted Font Awesome 6.5.1 - and a long
- * comment here about how its load order had to be the reverse of the legacy site's
- * so that `.fa-solid`'s single-class rules would not outrank the Tailwind utilities
- * sitting on the same element. All of that is gone: icons are SVG components now
- * (`components/ui/Icon`), so an icon's geometry no longer depends on a webfont
- * arriving, a `content` declaration surviving minification, or a cascade race
- * between two stylesheets.
+ * One stylesheet, and that's the whole CSS surface: Tailwind's three layers
+ * plus the few things that genuinely can't be utility classes (see the file
+ * header in `globals.css`).
  */
 import '@/styles/globals.css';
 
@@ -39,15 +31,12 @@ export const metadata: Metadata = {
     ? { index: true, follow: true }
     : { index: false, follow: false },
   /**
-   * No `icons` block on purpose. The legacy site shipped no favicon, and the
-   * only brand marks available are two animated GIFs - not usable as an icon
-   * source without design input. Declaring `/favicon.ico` here would put a
-   * guaranteed 404 in every page's <head>.
+   * No `icons` block - `src/app/favicon.ico` uses Next's file-convention icon,
+   * which wires itself into every page's <head> with no config.
    *
-   * TO COMPLETE: drop `favicon.ico`, `apple-touch-icon.png`, `icon-192.png` and
-   * `icon-512.png` into /public, then add them here and in manifest.ts. Next.js
-   * also supports the `src/app/favicon.ico` file convention, which wires itself
-   * up with no config.
+   * TO COMPLETE: only a 16x16/32x32 `.ico` exists, no `apple-touch-icon.png`,
+   * `icon-192.png` or `icon-512.png`. Add them here and in manifest.ts once
+   * those exist.
    */
   manifest: '/manifest.webmanifest',
   ...(env.googleSiteVerification
@@ -71,12 +60,8 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    /*
-     * `scroll-smooth` was `html { scroll-behavior: smooth }` in the legacy theme;
-     * the body utilities were its `body { color; background; font-size;
-     * font-weight; -webkit-font-smoothing }` block. Both are now utilities on the
-     * elements they apply to rather than element selectors in a stylesheet.
-     */
+    // `scroll-smooth` and the body utilities below are utilities on the
+    // elements they apply to, rather than element selectors in a stylesheet.
     <html
       lang={siteConfig.language}
       className={`${spaceGrotesk.variable} scroll-smooth`}

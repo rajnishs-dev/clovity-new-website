@@ -7,20 +7,12 @@ import type { FooterColumn } from '@/types/navigation';
 import { SmartLink } from '@/components/ui/Link';
 
 /**
- * One footer link column.
- *
- * `FOOTER_LINK_CLASS` replaces the legacy `.footer-link` rule. The
- * `padding-left` in its transition list is intentional and inherited: the
- * original declared `transition: color .2s, padding-left .2s` even though nothing
- * ever changed the padding, so it is kept to leave the computed
- * `transition-property` identical.
- *
- * Split into its own client component so the rest of the footer stays a Server
- * Component - only the `.active` highlight needs store access.
- *
- * `prefetch={false}`: these are bulk navigation links on every page. Prefetching
- * all ~17 would fire a burst of requests for routes the visitor will not open.
+ * One footer link column. Split into its own client component so the rest of
+ * the footer stays a Server Component - only the `.active` highlight needs
+ * store access. `prefetch={false}`: these ~17 bulk nav links shouldn't fire a
+ * burst of prefetch requests for routes the visitor won't open.
  */
+// `padding-left` in the transition list is unused but intentional, kept to match the legacy computed style.
 export const FOOTER_LINK_CLASS =
   'block py-1.5 text-[15px] leading-[1.2] text-white no-underline [transition:color_.2s,padding-left_.2s] hover:text-brand-500';
 

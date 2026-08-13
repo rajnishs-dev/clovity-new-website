@@ -15,17 +15,10 @@ import { Logo } from '@/components/common/Logo';
 import { createFocusTrap, getFocusableElements } from '@/lib/a11y';
 
 /**
- * Mobile navigation drawer, as Tailwind utilities.
- *
- * The slide is `translate-x-full → translate-x-0` over 350ms on
- * `cubic-bezier(.4,0,.2,1)` - the legacy `#mobile-menu` transition, and the same
- * curve as Tailwind's `ease-in-out`, so no custom token is needed. The panel stays
- * mounted so the slide-out is actually visible; unmounting would cut it off.
- *
- * Accessibility, all of it new: `role="dialog"`, focus trap, focus return to the
- * toggle, Escape to close, `aria-expanded`/`aria-controls` on the accordion
- * triggers, and `inert` when closed - the legacy version sat permanently in the
- * DOM at `translateX(100%)`, so every link in it stayed tabbable while hidden.
+ * Mobile navigation drawer. Stays mounted (translated off-screen) so the
+ * slide transition is visible; unmounting would cut it off. Accessibility -
+ * `role="dialog"`, focus trap, focus return, Escape to close, `inert` when
+ * closed - is all new versus the legacy menu, which stayed tabbable while hidden.
  */
 
 /** Flat link lists per group. */
@@ -79,11 +72,7 @@ export function MobileMenu({ open, onClose, toggleRef }: MobileMenuProps) {
 
   useLockBodyScroll(open);
 
-  /**
-   * A closed drawer shows no expanded section. Derived rather than reset through
-   * an effect - resetting state in an effect causes a cascading render and is
-   * what `react-hooks/set-state-in-effect` exists to prevent.
-   */
+  // Derived, not reset via an effect, to avoid the cascading render `react-hooks/set-state-in-effect` warns about.
   const activeSection = open ? expanded : null;
 
   const sections: AccordionSection[] = [
@@ -123,12 +112,8 @@ export function MobileMenu({ open, onClose, toggleRef }: MobileMenuProps) {
     setExpanded((current) => (current === group ? null : group));
   };
 
-  /**
-   * Tapping any link closes the drawer, so it never covers the page it just
-   * navigated to. Handled on the click - a user event - rather than by watching
-   * `usePathname` in an effect, which would also fire for navigations that have
-   * nothing to do with this menu.
-   */
+  // Handled on click rather than by watching `usePathname` in an effect,
+  // which would also fire for unrelated navigations.
   const handleNavigate = () => {
     setExpanded(null);
     onClose();

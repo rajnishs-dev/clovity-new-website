@@ -16,31 +16,20 @@ import { AGC_CONTENT, PUBLIC_SECTOR_CONTENT } from '@/constants/home';
 import { publicSectorBg } from '@/constants/media';
 
 /**
- * Section 2.5 - Public Sector + Atlassian Government Cloud, as Tailwind
- * utilities.
+ * Both panels share one grid cell (`[grid-area:1/1]`) so the stack is always
+ * as tall as the taller card. Autoplay is 5s; arrows jump and restart the
+ * timer; hover pauses. Reduced motion drops the stacking transforms so both
+ * panels render in normal flow.
  *
- * Two panels share one grid cell (`[grid-area:1/1]`), so the stack is always as
- * tall as the taller card and the shorter one cannot make the section jump when it
- * rotates to the front. Autoplay is 5s, arrows jump and restart the timer, hover
- * pauses - all matching the original.
+ * Divider/padding rules use the mapped index rather than `nth-child`, since
+ * the index can't be thrown off by a wrapper appearing later.
  *
- * Reduced motion drops the stacking transforms entirely, which is what the legacy
- * script did by bailing out before adding `.gcs-slider`: both panels then render in
- * normal flow, fully visible, with no rotation.
+ * Background is set inline because the URL is a build-hashed asset path,
+ * which no static Tailwind class can name.
  *
- * The `nth-child` selectors the original used to strip dividers off the first row
- * (`.gfg-item:nth-child(-n+2)`) and to stop the last step's padding
- * (`.agc-step:nth-child(n+3)`) are now index checks. The data is mapped here, so
- * the index is already in hand - and unlike nth-child, it cannot be thrown off by
- * a wrapper element appearing later.
- *
- * The section background is set inline because the URL is a build-hashed asset
- * path, which no static Tailwind class can name. Size, position and repeat stay
- * utilities.
- *
- * Accessibility note - deliberately NOT adding `aria-hidden` to the panel behind.
- * The rotation is a visual affordance; hiding half the section's content from
- * screen readers to mirror a decorative z-order would remove real information.
+ * Deliberately no `aria-hidden` on the panel behind - the rotation is a
+ * visual affordance, and hiding half the section's content from screen
+ * readers would remove real information.
  */
 export interface PublicSectorSectionProps {
   facts: FactItem[];
@@ -80,12 +69,8 @@ export function PublicSectorSection({
     >
       <div className="relative z-10 mx-auto max-w-shell px-6 py-12 pl-0 lg:py-16 to-900:pl-6">
         <div className="flex justify-end to-900:justify-center">
-          {/*
-            Below `to-900` this column no longer sits beside the background
-            art, so it re-centers instead of hugging full width - `max-w-full`
-            would fill the row and make `justify-center` on the row above a
-            no-op.
-          */}
+          {/* Below `to-900` this column re-centers instead of hugging full
+              width - `max-w-full` would make `justify-center` above a no-op. */}
           <div className="w-full max-w-[860px] flex-[0_1_860px] to-900:max-w-[620px]">
             <div className="relative">
               <h2 className={cn(HEADING_CLASS, 'to-1024:text-center')}>

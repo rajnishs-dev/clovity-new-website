@@ -5,14 +5,7 @@ import type { CtaLink } from '@/types/content';
 import { ArrowIcon, Icon } from '@/components/ui/Icon';
 import { ButtonLink, type ButtonVariant } from '@/components/ui/Button';
 
-/**
- * A row of CTA buttons driven by data.
- *
- * Every CTA on the site is a `<CtaLink>` record, so a CMS-managed button - new
- * label, new destination, different variant - needs no component change. The
- * trailing arrow is added automatically for the variants that carry one in the
- * original design.
- */
+/** A row of CTA buttons driven by `CtaLink` data, with the trailing arrow added automatically per variant. */
 const VARIANT_MAP: Record<CtaLink['variant'], ButtonVariant> = {
   primary: 'primary',
   secondary: 'secondary',
@@ -29,13 +22,7 @@ const ARROW_VARIANTS = new Set<CtaLink['variant']>([
   'white-pill',
 ]);
 
-/**
- * The trailing glyph for one CTA.
- *
- * `cta.icon` wins when set, which is how the interior pages get their
- * `arrow-up-right` without a second component. `text-xs` matches the `text-xs` the
- * markup puts on every one of these arrows.
- */
+/** The trailing glyph for one CTA - `cta.icon` wins when set, else the default arrow. */
 function trailingGlyph(cta: CtaLink) {
   if (!ARROW_VARIANTS.has(cta.variant)) return undefined;
   return cta.icon ? (
@@ -82,17 +69,10 @@ export function CtaGroup({
 }
 
 /**
- * The final CTA card that overlaps into the footer, as Tailwind utilities.
- *
- * The negative vertical margins (−180px top and bottom) are what pull the card up
- * out of the credentials section and down into the footer, so it straddles the
- * seam. They only work because the footer reserves matching space via its
- * `overlap` prop and the credentials section carries the bottom padding - three
- * pieces that have to agree, which is why each one says so in a comment.
- *
- * The three orbs and the dot grid are decorative `<span>`s rather than
- * pseudo-elements because there are more of them than an element has pseudo-slots,
- * and each carries its own radial gradient.
+ * The final CTA card that overlaps into the footer. The negative vertical
+ * margins pull it up over the section above and down into the footer, which
+ * only works because the footer reserves matching space via its `overlap`
+ * prop - the two have to agree.
  */
 export interface FinalCtaProps {
   heading: ReactNode;
@@ -100,32 +80,12 @@ export interface FinalCtaProps {
   ctas: CtaLink[];
   id?: string;
   className?: string;
-  /**
-   * Classes for the gradient card itself.
-   *
-   * The interior pages (About / Careers / Contact) declare their own `.cta-card`
-   * gradient - `#152a6b → #2557c9 → #3568e0`, a step darker than the home page's -
-   * and their own heading clamp. Those are page-level stylesheet values in the
-   * published markup, not a shared token, so they arrive as overrides here rather
-   * than changing the default and shifting the home page with it.
-   */
+  /** Classes for the gradient card itself - interior pages override with their own (slightly darker) gradient. */
   cardClassName?: string;
   headingClassName?: string;
-  /**
-   * Pull the card up out of the preceding section (the home page's `-mt-[180px]`).
-   *
-   * Off for the interior pages, whose `.cta-card` sets `margin-top: 0` - the
-   * section above them is padded normally and there is nothing to tuck into. It
-   * still overlaps DOWNWARD into the footer either way; that is the `-mb-[180px]`
-   * below, which is not optional because the footer reserves matching space.
-   */
+  /** Pull the card up into the preceding section (home page only; interior pages have nothing to tuck into). */
   pullUp?: boolean;
-  /**
-   * The hand-drawn arrow-and-sparkle flourish under the heading.
-   *
-   * Home page only. The interior pages' CTA cards have no such mark, and rendering
-   * one would be inventing artwork the design does not have.
-   */
+  /** The hand-drawn arrow-and-sparkle flourish under the heading (home page only). */
   flourish?: boolean;
 }
 
@@ -143,14 +103,14 @@ export function FinalCta({
   return (
     <section
       id={id}
-      className={cn('mx-5 overflow-visible bg-transparent', className)}
+      className={cn('px-5 overflow-visible bg-transparent', className)}
     >
       <div
         className={cn(
-          'relative mx-auto -mb-[180px] flex max-w-shell flex-wrap items-center justify-between gap-12 overflow-hidden rounded-[32px] bg-grad-cta px-14 py-[60px] shadow-cta',
+          'relative mx-auto -mb-[180px] flex max-w-shell flex-wrap items-center justify-between gap-12 overflow-hidden rounded-[10px] bg-grad-cta px-14 py-[60px] shadow-cta',
           pullUp && '-mt-[180px]',
           'to-900:justify-center to-900:px-9 to-900:py-12 to-900:text-center',
-          'to-640:-mb-[100px] to-640:rounded-[24px]',
+          'to-640:-mb-[100px]',
           reveal(),
           cardClassName,
         )}

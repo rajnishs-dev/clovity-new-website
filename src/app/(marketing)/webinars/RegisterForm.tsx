@@ -12,24 +12,16 @@ import { buttonClass } from '@/components/ui/Button';
 import { isCmsConfigured, postRecordingRequest } from '@/api/cms';
 
 /**
- * "Register Now!" - the webinar recording request form, ported from the published
- * webinar page.
+ * "Register Now!" - the webinar recording request form, ported from the published page.
  *
- * SAME FORM, SAME COLLECTION, SAME HOP: the four fields, their copy, their
- * required-ness, the `recordings` row they produce AND the browser-side POST that
- * produces it all match `website-t`, so the request shows up in a visitor's Network tab
- * as `POST https://cms.clovity.com/api/recordings`.
+ * Same fields and `recordings` collection, same browser-side POST as `website-t`, so the
+ * request carries `NEXT_PUBLIC_CMS_API_TOKEN` (Next inlines it into this chunk) and is
+ * visible in a visitor's Network tab. The token needs `create` on `recording`, and
+ * anyone reading the bundle can use it directly - the alternative was a Server Action,
+ * which hides the token but shows a POST to this page instead of Strapi.
  *
- * WHAT THAT COSTS, stated where the code is: the POST carries
- * `NEXT_PUBLIC_CMS_API_TOKEN`, which Next inlines into this chunk. That token therefore
- * needs `create` on `recording` - and anyone reading the bundle can use it to write rows
- * directly. It is the trade `website-t` already makes; the alternative was a Server
- * Action, where the token stays on the server but the Network tab shows a POST to this
- * page's URL instead of to Strapi.
- *
- * ONE DIFFERENCE that is not about the hop: success is shown IN PLACE rather than by
- * navigating to `/success`. The visitor is mid-article in a sidebar; throwing them to
- * another route to read one sentence loses their place.
+ * Success is shown in place rather than by navigating to `/success`, since the visitor
+ * is mid-article in a sidebar and losing their place to read one sentence is worse.
  */
 
 const FIELD_CLASS =
@@ -129,7 +121,7 @@ export function RegisterForm({
     return (
       <div
         role="status"
-        className="rounded-[8px] border border-line-soft bg-white p-5 shadow-xs"
+        className="rounded-[10px] border border-line-soft bg-white p-5 shadow-xs"
       >
         <h3 className="mb-2 text-[19px] font-500 text-title">
           You&apos;re registered
@@ -144,7 +136,7 @@ export function RegisterForm({
   }
 
   return (
-    <div className="rounded-[8px] border border-line-soft bg-white p-5 shadow-xs">
+    <div className="rounded-[10px] border border-line-soft bg-white p-5 shadow-xs">
       <h3 className="mb-2 text-[24px] font-600 leading-[1.2] text-navy">
         Register Now!
       </h3>

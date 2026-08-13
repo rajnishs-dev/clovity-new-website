@@ -1,13 +1,7 @@
 /**
- * Shared SVG gradient definitions.
- *
- * `#pulseGrad` is referenced by `.mf-line-glow { stroke: url(#pulseGrad) }` in
- * home.css, so the definition has to exist in the document for the migration
- * flow's animated path to render its gradient at all. `#ringGrad` is kept
- * because the legacy page defined both and interior sections reference it.
- *
- * A zero-size absolutely-positioned SVG is the standard way to host defs: it
- * contributes no layout box and no paint.
+ * Shared SVG gradient defs, referenced elsewhere via `url(#pulseGrad)` /
+ * `url(#ringGrad)` - the defs must exist in the document for those to paint.
+ * Zero-size and absolutely positioned so it contributes no layout box.
  */
 export function SvgGradientDefs() {
   return (

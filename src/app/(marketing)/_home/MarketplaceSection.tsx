@@ -15,23 +15,16 @@ import {
 import { MARKETPLACE_CONTENT } from '@/constants/home';
 
 /**
- * Section 6 - Marketplace apps, as Tailwind utilities.
+ * `APP_CARD_CLASS` is spelled out rather than reused from `<Card variant="app">`
+ * because these cards are anchors whose content layout differs per instance.
  *
- * `APP_CARD_CLASS` is the legacy `.app-card`: a 10px-radius card with the same
- * spring lift as `.card` but a tighter radius. It is spelled out here rather than
- * reusing `<Card variant="app">` because these cards are anchors whose content
- * layout differs per instance, and the class string is the part that needs sharing.
+ * Star ratings render from `rating` with an `aria-label` carrying the actual
+ * score, rather than five hard-coded glyphs with no text alternative.
  *
- * Star ratings render from `rating` rather than five hard-coded glyphs, and carry an
- * `aria-label` with the actual score - the legacy markup drew five identical stars
- * with no text alternative, so a screen reader announced nothing at all. The visible
- * output for a 5.0 app is identical.
- *
- * Below `md` the tile grid becomes a one-card-at-a-time scroll-snap rail (same
- * `useSnapCarousel` hook the other card rails use), with dots for navigation.
- * `to-767:` utilities win over the `sm:grid-cols-2` ones in the 640–767px
- * overlap because max-width variants are declared after min-width ones in
- * `tailwind.config.ts` - same mechanism `TrustedBySection` uses.
+ * Below `md` the tile grid becomes a one-card scroll-snap rail via the same
+ * `useSnapCarousel` hook the other rails use. `to-767:` wins over `sm:` in
+ * the 640-767px overlap because max-width variants are declared after
+ * min-width ones in `tailwind.config.ts` (see `TrustedBySection`).
  */
 const CARD_GAP = 20; // matches `gap-5`
 const APP_CARD_CLASS =
@@ -87,10 +80,9 @@ export function MarketplaceSection({ apps }: MarketplaceSectionProps) {
         <div className="grid gap-8 lg:gap-10 lg:grid-cols-[460px_1fr]">
           {/* Left column */}
           <div
-            // `reveal()` bakes in `md:text-left`, which would otherwise beat
-            // `lg:text-left` below - the column has to stay centered through
-            // the 768–1024px range too, since the grid doesn't go two-column
-            // until `lg`.
+            // `reveal()` bakes in `md:text-left`; this column stays centered
+            // through the 768-1024px range too, since the grid doesn't go
+            // two-column until `lg`.
             className={cn(reveal('left'), 'md:text-center lg:text-left')}
             {...revealAttrs()}
           >
@@ -174,7 +166,7 @@ export function MarketplaceSection({ apps }: MarketplaceSectionProps) {
                     alt={app.logo.alt}
                     width={44}
                     height={44}
-                    className="h-11 w-11 rounded-[4px] object-cover"
+                    className="h-11 w-11 rounded-[10px] object-cover"
                   />
                   <span className="rounded-md bg-atlassian px-2 py-1 text-[10px] font-800 text-white">
                     {app.badge}
@@ -229,12 +221,8 @@ export function MarketplaceSection({ apps }: MarketplaceSectionProps) {
             </div>
           )}
 
-          {/*
-            Same link, `lg`-hidden twin of the one above - see that comment.
-            `justify-self-center`: a grid item is blockified regardless of its
-            own `display`, so without it this would stretch to the full
-            column width instead of staying a content-sized card.
-          */}
+          {/* Same link, lg-hidden twin of the one above. `justify-self-center`
+              keeps it content-sized instead of stretching to full column width. */}
           <SmartLink
             href={MARKETPLACE_CONTENT.exploreHref}
             className={cn(

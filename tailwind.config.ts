@@ -367,7 +367,6 @@ const config: Config = {
         'grad-tint': 'linear-gradient(135deg,#eff6ff,#fef1e8)',
         'grad-cta':
           'linear-gradient(135deg,#23408a 0%,#3a6fde 65%,#5b89eb 100%)',
-        'grad-spine': 'linear-gradient(180deg,#2563eb,#e2e8f0)',
         /** `.mig-sec` - the cloud-migration section's backdrop. */
 
         /**

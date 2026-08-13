@@ -7,12 +7,8 @@ import { CoverImage } from '@/components/ui/Image';
 import { CardLink } from '@/components/ui/Card';
 
 /**
- * The grid card shared by every resource listing - the legacy `.blog-card` /
- * `.cs-card` / `.evt-card`, unified since they differed only in the pill/meta
- * row above the title.
- *
- * `compact` drops the excerpt and CTA, for the "Related" rail at the bottom of
- * detail pages (the legacy `.rp-card`).
+ * The grid card shared by every resource listing. `compact` drops the
+ * excerpt and CTA, for the "Related" rail at the bottom of detail pages.
  */
 export interface ResourceCardProps {
   href: string;
@@ -47,7 +43,7 @@ export function ResourceCard({
     <CardLink
       href={href}
       forceExternal={external}
-      className={cn('flex h-full flex-col overflow-hidden rounded-[8px]', className)}
+      className={cn('flex h-full flex-col overflow-hidden rounded-[10px]', className)}
     >
       <div className="group relative h-[240px] overflow-hidden bg-slate-100 md:h-[255px]">
         <CoverImage

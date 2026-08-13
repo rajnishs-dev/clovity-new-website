@@ -19,25 +19,19 @@ import {
 /**
  * The contact form card.
  *
- * WHAT THE PUBLISHED PAGE DID AND WHAT THIS DOES DIFFERENTLY -
- * `handleContactForm()` there called `preventDefault()`, hid the form and showed the
- * thank-you panel. Nothing was sent, nothing was validated. The visuals are reproduced
- * exactly; what is new is that a submission now reaches Strapi and that an invalid
- * entry gets a message instead of a silent success.
+ * The published page's handler just called `preventDefault()` and showed the thank-you
+ * panel - nothing was sent or validated. This reproduces the visuals but actually posts
+ * to Strapi and validates first.
  *
- * FIELDS ARE DRIVEN BY THE CMS. The Strapi `get-in-touch` row for this page decides
- * whether name, company and phone appear and whether each is required. Email, topic and
- * message are always present - they are the enquiry, and hiding one would leave a form
- * that cannot be acted on.
+ * Fields are driven by the CMS: the `get-in-touch` row decides whether name, company and
+ * phone appear and whether each is required. Email, topic and message are always shown.
  *
- * The four short fields are PAIRED DYNAMICALLY rather than hard-coded into two rows.
- * `.ct-row-2` is a two-column grid, so if an editor hides one field a fixed row would
- * render one input beside an empty half. Chunking the visible ones keeps every row
- * full, and with all four shown it produces the published pairing exactly:
- * name + email, then company + phone.
+ * The four short fields are paired dynamically rather than hard-coded into two rows,
+ * since `.ct-row-2` is a two-column grid and a fixed row would leave a lone input beside
+ * an empty half if the CMS hides one.
  *
- * The submit POSTs to Strapi FROM THE BROWSER, so the request is visible in a visitor's
- * Network tab - see the note on `onSubmit` for what that costs.
+ * The submit POSTs to Strapi from the browser, so the request is visible in a visitor's
+ * Network tab - see the note on `onSubmit` for the trade-off.
  */
 
 /* ── Shared field styling, from `.ct-field` ─────────────────────────────── */
@@ -124,16 +118,11 @@ export function ContactForm({
   });
 
   /**
-   * A BROWSER-SIDE write, so the request shows up in a visitor's Network tab as
-   * `POST https://cms.clovity.com/api/contact-uses` (plus the `get-in-touch-lead` row).
-   *
-   * TWO THINGS THE SERVER ACTION USED TO DO that cannot be done from here, and are worth
-   * knowing rather than discovering:
-   *  • It re-validated against the `get-in-touch` config it fetched ITSELF, so a caller
-   *    could not relax the field rules by asking. Here the rules come from `config`,
-   *    which arrives as a prop - a hand-crafted POST bypasses them entirely.
-   *  • It kept `CMS_API_TOKEN` on the server. This POST carries the public token, which
-   *    therefore needs `create` on those collections.
+   * A browser-side write (`POST .../contact-uses` plus the `get-in-touch-lead` row), so
+   * it's visible in the Network tab. Two things the old Server Action did that this
+   * can't: it re-validated against the config it fetched itself (a hand-crafted POST
+   * here bypasses `config`'s rules), and it kept `CMS_API_TOKEN` server-side (this POST
+   * uses the public token, which needs `create` on these collections).
    */
   const onSubmit = async (values: EnquiryFormValues) => {
     setFormError(null);
@@ -356,7 +345,7 @@ export function ContactForm({
           type="submit"
           disabled={isSubmitting}
           aria-busy={isSubmitting || undefined}
-          className={buttonClass('primary', 'md', 'w-full justify-center')}
+          className={buttonClass('primary', 'md', 'justify-center')}
         >
           {isSubmitting
             ? CONTACT_FORM_CONTENT.submittingLabel

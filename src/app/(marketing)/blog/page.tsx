@@ -25,14 +25,7 @@ export const metadata: Metadata = buildMetadata({
 /** Safety net under the Strapi webhook - see the note in `/api/revalidate`. */
 export const revalidate = 3600;
 
-/**
- * `/blog`.
- *
- * The page fetches the posts on the SERVER and hands them to `<BlogList>`, which refetches
- * in the browser. That split is what gives both things at once: the posts are in the HTML
- * for crawlers, and the CMS request is visible in a visitor's Network tab. See the note in
- * `BlogList` for why neither half is redundant.
- */
+/** `/blog` — fetches server-side and hands off to `<BlogList>`, which refetches client-side; see the note there for why. */
 export default async function BlogPage() {
   const posts = await getBlogPosts();
 

@@ -1,10 +1,16 @@
 import type { Metadata } from 'next';
-import { ButtonLink } from '@/components/ui/Button';
-import { chipClass } from '@/components/ui/Chip';
-import { Container } from '@/components/ui/Container';
-import { Icon } from '@/components/ui/Icon';
-import { SmartLink } from '@/components/ui/Link';
+import {
+  AppImage,
+  ButtonLink,
+  chipClass,
+  Container,
+  HEADING_CLASS,
+  LABEL_CLASS,
+  SmartLink,
+} from '@/components/ui';
+import { notFoundIllustration } from '@/constants/media';
 import { ROUTES } from '@/constants/routes';
+import { cn } from '@/lib/cn';
 import { buildMetadata } from '@/lib/seo';
 
 /**
@@ -38,33 +44,42 @@ export default function NotFound() {
   return (
     <main
       id="main-content"
-      className="flex min-h-[70svh] items-center justify-center py-20"
+      className="relative flex min-h-[85svh] flex-col items-center bg-grad-tint pb-20"
     >
-      <Container width="prose" className="text-center">
-        <span className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-brand-50 text-[22px] text-brand-600">
-          <Icon name="compass" />
-        </span>
-
-        <p className="s-label mb-3">Error 404</p>
-        <h1 className="s-heading mb-4">We couldn’t find that page.</h1>
-        <p className="s-sub mb-8">
-          The link may be out of date, or the page may have moved during our
-          site update. Here are a few places worth trying.
-        </p>
-
-        <div className="mb-10 flex flex-wrap items-center justify-center gap-3">
-          {SUGGESTIONS.map((suggestion) => (
-            <SmartLink
-              key={suggestion.href}
-              href={suggestion.href}
-              className={chipClass('cloud')}
-            >
-              {suggestion.label}
-            </SmartLink>
-          ))}
+      <Container className="flex flex-col items-center pt-0 text-center">
+        <div className="mb-6 w-full max-w-[540px]">
+          <AppImage
+            src={notFoundIllustration}
+            alt=""
+            preload
+            className="h-auto w-full"
+          />
         </div>
 
-        <ButtonLink href={ROUTES.home}>Back to home</ButtonLink>
+        <div className="mx-auto max-w-[760px]">
+          <p className={cn(LABEL_CLASS, 'mb-3')}>Error 404</p>
+          <h1 className={cn(HEADING_CLASS, 'mb-4')}>
+            We couldn’t find that page.
+          </h1>
+          <p className="mb-6 text-[16px] leading-[1.65] text-body">
+            The link may be out of date, or the page may have moved during
+            our site update. Here are a few places worth trying.
+          </p>
+
+          <div className="mb-6 flex flex-wrap items-center justify-center gap-3">
+            {SUGGESTIONS.map((suggestion) => (
+              <SmartLink
+                key={suggestion.href}
+                href={suggestion.href}
+                className={chipClass('cloud')}
+              >
+                {suggestion.label}
+              </SmartLink>
+            ))}
+          </div>
+
+          <ButtonLink href={ROUTES.home}>Back to home</ButtonLink>
+        </div>
       </Container>
     </main>
   );
