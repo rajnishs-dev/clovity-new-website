@@ -107,7 +107,7 @@ export function FinalCta({
     >
       <div
         className={cn(
-          'relative mx-auto -mb-[180px] flex max-w-shell flex-wrap items-center justify-between gap-12 overflow-hidden rounded-[10px] bg-grad-cta px-14 py-[60px] shadow-cta',
+          'relative mx-auto -mb-[180px] flex max-w-shell flex-wrap items-center justify-between gap-6 overflow-hidden rounded-[10px] bg-grad-cta px-14 py-[60px] shadow-cta',
           pullUp && '-mt-[180px]',
           'to-900:justify-center to-900:px-9 to-900:py-12 to-900:text-center',
           'to-640:-mb-[100px]',

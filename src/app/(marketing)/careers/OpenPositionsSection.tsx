@@ -213,7 +213,7 @@ export function OpenPositionsSection({
         </div>
         <ButtonLink
           href={CAREERS_GENERAL_APPLICATION_HREF}
-          className="to-900:w-full to-900:justify-center"
+          className="to-900:justify-center"
           trailingIcon={<Icon name="send" className="text-xs" />}
         >
           {CAREERS_ROLES_CONTENT.generalCtaLabel}

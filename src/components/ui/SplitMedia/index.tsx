@@ -34,7 +34,7 @@ export function SplitMedia({
   return (
     <div
       className={cn(
-        'grid items-center gap-14 lg:grid-cols-2',
+        'grid items-center gap-10 md:grid-cols-2',
         className,
       )}
     >

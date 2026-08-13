@@ -309,7 +309,7 @@ export function JobCard({ job }: JobCardProps) {
 
       <ButtonLink
         href={job.applyHref}
-        className="px-[22px] py-[11px] text-[13.5px] to-900:w-full to-900:justify-center"
+        className="px-[22px] py-[11px] text-[13.5px] to-900:justify-center"
         trailingIcon={<ArrowIcon />}
         aria-label={`Apply for ${job.title}`}
       >
