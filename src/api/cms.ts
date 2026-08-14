@@ -28,6 +28,7 @@ import type {
   StrapiAward,
   StrapiBlog,
   StrapiContactUsInput,
+  StrapiDynamicPage,
   StrapiEvent,
   StrapiGetInTouch,
   StrapiGetInTouchLeadInput,
@@ -72,6 +73,8 @@ export const CMS_ENDPOINTS = {
   jobs: '/api/jobs',
   lifeAtClovity: '/api/life-at-clovities',
   getInTouch: '/api/get-in-touches',
+  // Editor-authored microsite pages, keyed by `slug` - see `getDynamicPageBySlug`.
+  dynamicPages: '/api/dynamic-pages',
   contactUs: '/api/contact-uses',
   getInTouchLeads: '/api/get-in-touch-leads',
   subscribes: '/api/subscribes',
@@ -310,6 +313,25 @@ export async function getInTouch(
   );
   const row = body.data?.[0];
   return row ? toContactFormConfig(row) : null;
+}
+
+/**
+ * An editor-authored microsite page, by `slug`.
+ *
+ * Returns the raw `website` HTML for the caller to drop into an iframe, or `null`
+ * when no `dynamic-page` row exists for the slug - the same shape `website-t`'s
+ * `[slug]` route reads, so a page created for one site renders identically on both.
+ */
+export async function getDynamicPageBySlug(
+  slug: string,
+  signal?: AbortSignal,
+): Promise<string | null> {
+  const row = await getBySlug<StrapiDynamicPage>(
+    CMS_ENDPOINTS.dynamicPages,
+    slug,
+    signal,
+  );
+  return row?.website ?? null;
 }
 
 /* ── Reads: the resource collections ────────────────────────────────────── */

@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <title>Clovity Cloud Atlassian</title>
+
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap");
+      @import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css");
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Poppins", sans-serif;
+        background-color: #ddd;
+        font-size: 14px;
+        margin: 0;
+      }
+
+      .container {
+        background-color: #fff;
+        padding: 20px 20px 20px 20px;
+        width: 40%;
+        max-width: 900px;
+        margin: 20px auto;
+        border-radius: 10px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      }
+
+      .top-banner img {
+        width: 100%;
+        height: auto;
+        border-radius: 8px;
+      }
+
+      form {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        margin-top: 20px;
+      }
+
+      form input {
+        padding: 12px;
+        border: none;
+        background-color: #efefef;
+        border-radius: 5px;
+        font-size: 14px;
+      }
+
+      form input:focus {
+        outline: none;
+        background-color: #e0e0e0;
+      }
+
+      form button {
+        border: none;
+        width: 30%;
+        padding: 12px;
+        background-color: #2e90cf;
+        border-radius: 5px;
+        color: #fff;
+        cursor: pointer;
+        font-size: 16px;
+        font-weight: 600;
+        transition: background-color 0.3s ease;
+      }
+
+      form button:hover {
+        background-color: #2275b3;
+      }
+
+      .error {
+        font-size: 12px;
+        color: #ff3030;
+        text-align: left;
+      }
+
+      input.error {
+        border: 1px solid #ff3030;
+      }
+
+      .text-success {
+        font-size: 16px;
+        padding-top: 25px;
+        color: green;
+      }
+
+      .captcha-container {
+        text-align: center;
+        width: 304px;
+        margin: 0 auto;
+        padding: 10px 0;
+      }
+
+      @media (max-width: 768px) {
+        .container {
+          padding: 20px 15px;
+        }
+
+        form input,
+        form button {
+          font-size: 15px;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .container {
+          padding: 20px 10px;
+        }
+
+        .top-banner img {
+          height: auto;
+        }
+
+        form {
+          gap: 12px;
+        }
+
+        form button {
+          padding: 12px;
+          font-size: 15px;
+        }
+      }
+
+      /* Force width to 50% on small (mobile) screens */
+      @media (max-width: 480px) {
+        .container {
+          width: 100%;
+        }
+      }
+      .event-info {
+        margin-top: 20px;
+        padding: 15px;
+        background-color: #f8f9fa;
+        border-radius: 8px;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        font-size: 14px;
+      }
+
+      .event-info h2 {
+        font-size: 18px;
+        margin-bottom: 5px;
+        font-weight: normal;
+        color: rgb(26, 27, 27);
+      }
+
+      .event-info p {
+        margin: 3px 0;
+      }
+
+      .view-details {
+        display: inline-block;
+        margin-top: 8px;
+        color: #007bff;
+        font-weight: 500;
+        text-decoration: none;
+        text-align: center;
+      }
+
+      .view-details:hover {
+        text-decoration: underline;
+      }
+    </style>
+
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+  </head>
+  <body>
+    <div class="container">
+      <div class="top-banner">
+        <img src="/clovity-cloud-atlassian.jpeg" alt="ProcureCon CS Logo" />
+      </div>
+      <div class="event-info">
+        <h2 style="text-align: center">Cloud, Cocktails & Conversations:</h2>
+        <p><strong>Atlassian Networking Reception</strong></p>
+        <p><strong>Date:</strong> Tuesday, June 10, 2025</p>
+        <p><strong>Time:</strong> 4:00pm–8:00pm ET</p>
+        <p><strong>Duration:</strong> 4 Hours</p>
+        <p style="text-align: center">
+          <a href="/cloud-event-atlassian-invitation.html" target="_blank" class="view-details">View Event Details</a>
+        </p>
+      </div>
+
+      <form id="meetupForm" method="post">
+        <input
+          type="text"
+          placeholder="Full Name"
+          id="full_name"
+          name="full_name"
+          required
+          data-error="Please enter your name"
+        />
+        <input type="text" placeholder="Organization" required id="company_name" name="company_name" />
+        <input type="text" placeholder="Job Title" required id="job_title" name="job_title" />
+        <input type="text" placeholder="Work Email" required id="work_email" name="work_email" />
+        <input
+          type="text"
+          placeholder="Phone Number (760-756-7568 or 760.756.7568)"
+          required
+          id="contact_number"
+          name="contact_number"
+        />
+        <div id="msgSubmit" class="text-success hidden"></div>
+
+        <div style="text-align: center">
+          <button type="submit" id="submitBtn">Submit</button>
+        </div>
+      </form>
+    </div>
+
+    <script src="/atlassian-assets/js/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/jquery.validate.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/additional-methods.min.js"></script>
+
+    <script>
+      (function ($) {
+        $.validator.addMethod(
+          "excludeDomains",
+          function (value, element) {
+            const excluded = ["yahoo.com", "gmail.com", "hotmail.com", "aol.com", "mailinator.com", "outlook.com"];
+            const domain = value.split("@")[1];
+            return this.optional(element) || excluded.indexOf(domain) === -1;
+          },
+          "Please enter your work email address."
+        );
+
+        $.validator.addMethod(
+          "phoneUS",
+          function (phone_number, element) {
+            phone_number = phone_number.replace(/\s+/g, "");
+            return this.optional(element) || /^(\d{3}-\d{3}-\d{4}|\d{3}\.\d{3}\.\d{4})$/.test(phone_number);
+          },
+          "Please enter a valid phone number format (760-756-7568 or 760.756.7568)"
+        );
+
+        $("#meetupForm").validate({
+          rules: {
+            full_name: {
+              minlength: 2,
+              maxlength: 50,
+            },
+            company_name: {
+              minlength: 2,
+              maxlength: 50,
+            },
+            work_email: {
+              required: true,
+              email: true,
+              excludeDomains: true,
+            },
+            contact_number: {
+              required: true,
+              phoneUS: true,
+            },
+          },
+          submitHandler: function (form) {
+            const $submitBtn = $("#submitBtn");
+            const originalText = $submitBtn.text();
+
+            $submitBtn.prop("disabled", true).text("Processing...");
+
+            $.ajax({
+              url: "/formCloudAtlassian",
+              type: "POST",
+              data: $(form).serialize(),
+              dataType: "json", // Tells jQuery to parse JSON automatically
+              success: function (response) {
+                if (response.alert === "success") {
+                  $("#msgSubmit").removeClass("hidden").css("color", "green").text(response.message);
+                  form.reset(); // Optional: clear the form after success
+                } else {
+                  $("#msgSubmit")
+                    .removeClass("hidden")
+                    .css("color", "red")
+                    .text("There was an issue submitting the form.");
+                }
+              },
+              error: function () {
+                $("#msgSubmit")
+                  .removeClass("hidden")
+                  .css("color", "red")
+                  .text("There was an error submitting the form. Please try again.");
+              },
+              complete: function () {
+                $submitBtn.prop("disabled", false).text(originalText);
+              },
+            });
+          },
+        });
+      })(jQuery);
+    </script>
+  </body>
+</html>

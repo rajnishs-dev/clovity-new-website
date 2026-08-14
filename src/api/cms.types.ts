@@ -129,6 +129,18 @@ export interface StrapiGetInTouch extends StrapiEntityBase {
   isPhoneNumberRequired: boolean;
 }
 
+/**
+ * `dynamic-page` - an editor-authored microsite page.
+ *
+ * `website` is raw HTML pasted into Strapi and rendered verbatim inside an iframe on
+ * the frontend, unlike every other `content: string` column above which is WYSIWYG
+ * body copy. Matches `website-t/src/api/cms.ts`'s `getDynamicData`.
+ */
+export interface StrapiDynamicPage extends StrapiEntityBase {
+  slug: string;
+  website: string;
+}
+
 /* ── Resource collections ───────────────────────────────────────────────── */
 
 /**
