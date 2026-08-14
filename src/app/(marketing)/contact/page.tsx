@@ -105,7 +105,7 @@ export default async function ContactPage() {
         </main>
       </PageAnimations>
 
-      <Footer overlap className="pt-[220px]" />
+      <Footer overlap />
     </>
   );
 }

@@ -138,9 +138,7 @@ export default async function AboutPage() {
         </main>
       </PageAnimations>
 
-      {/* 220px, not the Footer's default 260px; the 900px/640px steps are
-          unchanged - only the base value is overridden. */}
-      <Footer overlap className="pt-[220px]" />
+      <Footer overlap />
     </>
   );
 }

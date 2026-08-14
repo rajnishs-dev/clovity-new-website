@@ -69,6 +69,9 @@ export { default as contactHeroBanner } from '@/assets/images/discover/desktop/c
 export { default as contactHeroBannerTablet } from '@/assets/images/discover/tablet/contact-banner-tab.png';
 export { default as contactHeroBannerMobile } from '@/assets/images/discover/mobile/contact-banner-mobile.png';
 
+export { default as privacyHeroBanner } from '@/assets/images/privacy-policy-banner.png';
+export { default as termsHeroBanner } from '@/assets/images/terms-condition.jpg';
+
 /* ── About page section photos ───────────────────────────────────────────── */
 export { default as aboutWhoWeArePhoto } from '@/assets/images/about-us/Who-We-Are.png';
 export { default as aboutWorkWithUsPhoto } from '@/assets/images/about-us/lets-build-together.png';

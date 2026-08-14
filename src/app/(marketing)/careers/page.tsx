@@ -121,7 +121,7 @@ export default async function CareersPage() {
         </main>
       </PageAnimations>
 
-      <Footer overlap className="pt-[220px]" />
+      <Footer overlap />
     </>
   );
 }

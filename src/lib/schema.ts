@@ -34,7 +34,7 @@ export function organizationSchema(): JsonLdObject {
     },
     description: siteConfig.description,
     foundingDate: String(siteConfig.foundingYear),
-    sameAs: siteConfig.social.filter((s) => s.href !== '#').map((s) => s.href),
+    sameAs: siteConfig.social.map((s) => s.href),
     contactPoint: [
       {
         '@type': 'ContactPoint',

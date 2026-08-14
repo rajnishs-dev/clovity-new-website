@@ -77,6 +77,7 @@ import {
   AtlassianGlyph,
   CherwellGlyph,
   ConfluenceGlyph,
+  FacebookGlyph,
   type Glyph,
   GitHubGlyph,
   JiraGlyph,
@@ -213,6 +214,7 @@ export const ICONS = {
   linkedin: LinkedInGlyph,
   x: XGlyph,
   youtube: YouTubeGlyph,
+  facebook: FacebookGlyph,
   github: GitHubGlyph,
   cherwell: CherwellGlyph,
 } satisfies Record<IconName, Glyph>;

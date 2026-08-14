@@ -30,6 +30,11 @@ export const ROUTES = {
     careers: '/careers',
     contact: '/contact',
   },
+
+  legal: {
+    privacy: '/privacy-policy',
+    terms: '/terms-of-service',
+  },
 } as const;
 
 /** Off-site destinations the legacy markup links to. */
@@ -83,6 +88,7 @@ const APP_ROUTE_PATHS: ReadonlySet<string> = new Set<string>([
   ...Object.values(ROUTES.expertise),
   ...Object.values(ROUTES.resources),
   ...Object.values(ROUTES.discover),
+  ...Object.values(ROUTES.legal),
 ]);
 
 /** True when `path` is a route this app defines. Ignores query and hash. */
@@ -146,4 +152,6 @@ export const SITEMAP_ROUTES: ReadonlyArray<{
   { path: ROUTES.discover.about, priority: 0.7, changeFrequency: 'monthly' },
   { path: ROUTES.discover.careers, priority: 0.7, changeFrequency: 'weekly' },
   { path: ROUTES.discover.contact, priority: 0.6, changeFrequency: 'yearly' },
+  { path: ROUTES.legal.privacy, priority: 0.3, changeFrequency: 'yearly' },
+  { path: ROUTES.legal.terms, priority: 0.3, changeFrequency: 'yearly' },
 ];

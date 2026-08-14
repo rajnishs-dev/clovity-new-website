@@ -1,4 +1,5 @@
 import { env } from './env';
+import { ROUTES } from './routes';
 
 /**
  * Single source of truth for brand-level facts. Referenced by metadata,
@@ -65,6 +66,8 @@ export const siteConfig = {
      * appears in ~12 prefilled mailto links across About, Careers and Contact.
      */
     globalEmail: 'info-global@clovity.com',
+    /** The address the Privacy Policy and Terms of Service pages point questions to. */
+    supportEmail: 'support@clovity.com',
     phone: '(925) 264-6360',
     /** `tel:` form of `phone` - digits only, so the dialler cannot misparse it. */
     phoneHref: 'tel:+19252646360',
@@ -77,34 +80,34 @@ export const siteConfig = {
    */
   social: [
     {
-      id: 'linkedin',
-      label: 'LinkedIn',
-      href: '#',
-      icon: 'linkedin',
+      id: 'facebook',
+      label: 'Facebook',
+      href: 'https://www.facebook.com/clovity/',
+      icon: 'facebook',
     },
     {
       id: 'x',
       label: 'X (Twitter)',
-      href: '#',
+      href: 'https://x.com/ClovityInc',
       icon: 'x',
+    },
+    {
+      id: 'linkedin',
+      label: 'LinkedIn',
+      href: 'https://www.linkedin.com/company/clovity/',
+      icon: 'linkedin',
     },
     {
       id: 'youtube',
       label: 'YouTube',
-      href: '#',
+      href: 'https://www.youtube.com/@clovityinc',
       icon: 'youtube',
-    },
-    {
-      id: 'github',
-      label: 'GitHub',
-      href: '#',
-      icon: 'github',
     },
   ],
 
   legalLinks: [
-    { id: 'privacy', label: 'Privacy Policy', href: '#' },
-    { id: 'terms', label: 'Terms of Service', href: '#' },
+    { id: 'privacy', label: 'Privacy Policy', href: ROUTES.legal.privacy },
+    { id: 'terms', label: 'Terms of Service', href: ROUTES.legal.terms },
   ],
 } as const;
 

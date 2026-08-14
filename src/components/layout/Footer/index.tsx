@@ -11,6 +11,12 @@ import { FooterLinkColumn } from './FooterLinkColumn';
 
 
 export interface FooterProps {
+  /**
+   * Reserves room for a `FinalCta` card to pull up and overlap into the
+   * footer. Pages without a closing CTA (e.g. Privacy Policy) should leave
+   * this `false` - they get a plain `pt-16 sm:pt-20` instead, so the dark
+   * footer doesn't sit flush against the section above.
+   */
   overlap?: boolean;
   className?: string;
 }
@@ -20,7 +26,9 @@ export function Footer({ overlap = false, className }: FooterProps) {
     <footer
       className={cn(
         'bg-[#0a0f1e] pb-0',
-        overlap && 'pt-[260px] to-900:pt-[190px] to-640:pt-[150px]',
+        overlap
+          ? 'pt-[260px] to-900:pt-[250px] to-640:pt-[170px]'
+          : 'pt-16 sm:pt-20',
         className,
       )}
     >

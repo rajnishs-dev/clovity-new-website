@@ -112,5 +112,6 @@ export type IconName =
   | 'linkedin'
   | 'x'
   | 'youtube'
+  | 'facebook'
   | 'github'
   | 'cherwell';
