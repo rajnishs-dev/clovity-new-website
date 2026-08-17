@@ -29,6 +29,12 @@ export { default as dataCenterBg } from '@/assets/images/home/data-center-bg.jpg
 export { default as publicSectorBg } from '@/assets/images/home/public-sector-bg.png';
 export { default as aiPoweredSummary } from '@/assets/images/home/ai-powered-summary.jpg';
 
+/* ── Expertise pages ─────────────────────────────────────────────────────── */
+export { default as dataCenterSupportPhoto } from '@/assets/images/expertise/data-center-support.jpg';
+export { default as iconFullMigration } from '@/assets/icons/expertise/full-migration.svg';
+export { default as iconPhasedMigration } from '@/assets/icons/expertise/phased-migration.svg';
+export { default as iconHybridApproach } from '@/assets/icons/expertise/hybrid-approach.svg';
+
 /* ── Resource hero banners ───────────────────────────────────────────────── */
 export { default as blogHeroBanner } from '@/assets/images/resources/desktop/blog-banner.png';
 export { default as blogHeroBannerTablet } from '@/assets/images/resources/tablet/blog-banner-tab.png';

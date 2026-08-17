@@ -16,14 +16,14 @@ export const siteConfig = {
   shortTitle: 'Clovity',
   titleTemplate: '%s | Clovity',
   description:
-    'Clovity2 is your Atlassian and AI transformation partner. Modernize teamwork, service delivery, and enterprise operations with Atlassian, AI, automation, and cloud expertise.',
+    'Clovity is your Atlassian and AI transformation partner. Modernize teamwork, service delivery, and enterprise operations with Atlassian, AI, automation, and cloud expertise.',
   tagline: 'We Don’t Talk Transformation. We Ship It.',
   footerBlurb:
     'Your Atlassian + AI transformation partner. We modernize enterprise teams with Atlassian expertise, intelligent automation, and cloud-native delivery.',
   locale: 'en_US',
   language: 'en',
   foundingYear: 2009,
-  copyrightYear: 2025,
+  copyrightYear: 2026,
 
   keywords: [
     'Atlassian Solution Partner',

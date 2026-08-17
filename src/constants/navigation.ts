@@ -239,7 +239,6 @@ const WHATS_NEW_CARDS: NavFeatureCard[] = buildWhatsNewCards(
 
 export const PRIMARY_NAV: NavItem[] = [
   { kind: 'link', id: 'home', label: 'Home', href: ROUTES.home },
-  /* Expertise nav item temporarily hidden — see FOOTER_COLUMNS below.
   {
     kind: 'mega-full',
     id: 'expertise',
@@ -261,7 +260,6 @@ export const PRIMARY_NAV: NavItem[] = [
       },
     },
   },
-  */
   {
     kind: 'mega-full',
     id: 'resources',

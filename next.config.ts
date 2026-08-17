@@ -13,6 +13,10 @@ const REMOTE_IMAGE_HOSTS = [
   'marketplace.atlassian.com',
   // Country flags on the Contact page's office cards.
   'flagcdn.com',
+  // App icons for the two Marketplace Apps catalog entries with no bundled
+  // logo asset yet (Reports/Charts and LaTeX Formulas & Diagrams) - served
+  // from Clovity's own help center.
+  'clovity-help-center.vercel.app',
 ] as const;
 
 /**
