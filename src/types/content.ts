@@ -407,6 +407,152 @@ export interface FaqItem {
   answer: string;
 }
 
+/* ── Expertise pages: ITSM & Service Management ─────────────────────────── */
+
+/**
+ * One "What we deliver" sub-service.
+ *
+ * Carries `points` because a service-delivery page has to say what is actually
+ * inside each engagement - a title and a sentence reads as a brochure, and the
+ * three concrete deliverables underneath are what a buyer scans for. Same card
+ * shape as `PillarCard` otherwise, so the two share their chrome.
+ */
+export interface ServiceOffering {
+  id: string;
+  title: string;
+  description: string;
+  /** Three concrete deliverables, rendered as a checked list. */
+  points: string[];
+  icon: IconName;
+  iconChipClass: string;
+}
+
+/**
+ * A plain-language definition (ITSM / ITIL / ESM).
+ *
+ * `term` and `expansion` are separate fields, not one pre-joined string, because
+ * the design sets the acronym at display size and the expansion as a small caption
+ * beneath it - joining them would force the component to split them apart again.
+ */
+export interface GlossaryEntry {
+  id: string;
+  term: string;
+  expansion: string;
+  definition: string;
+  /** What this term covers, e.g. "IT Ops · Service Desk · Engineering". */
+  scope: string;
+  /**
+   * Nesting depth in the scope diagram - `0` is the innermost band.
+   *
+   * Explicit data rather than the array's index, because the reading order of the
+   * definitions (ITSM first, since it is what most visitors arrive looking for) is
+   * not the containment order of the diagram (ITIL innermost).
+   */
+  nest: number;
+  icon: IconName;
+  iconChipClass: string;
+}
+
+/** A non-IT department an ESM rollout extends service management to. */
+export interface ServiceDepartment {
+  id: string;
+  name: string;
+  /** The requests that department actually fields, e.g. "Onboarding". */
+  examples: string[];
+  icon: IconName;
+  iconChipClass: string;
+}
+
+/** A product capability explained at length (the four JSM pillars). */
+export interface CapabilityDetail {
+  id: string;
+  title: string;
+  description: string;
+  icon: IconName;
+  iconChipClass: string;
+}
+
+/**
+ * A numbered phase in a delivery methodology.
+ *
+ * Structurally identical to `HiringStep` but kept separate: the two are unrelated
+ * content that happens to render in the same numbered strip, and merging them would
+ * couple a careers change to an expertise page.
+ */
+export interface DeliveryPhase {
+  id: string;
+  /** Watermark ordinal, e.g. "01". Data, not a computed index. */
+  ordinal: string;
+  title: string;
+  description: string;
+  icon: IconName;
+  iconChipClass: string;
+}
+
+/* ── Expertise pages: DevSecOps ─────────────────────────────────────────── */
+
+/**
+ * One horizontal band of the toolchain stack.
+ *
+ * `tools` is plain strings, not `IconName`s: the registry has brand glyphs for a
+ * handful of Atlassian products and nothing for SonarQube, Snyk or Artifactory, and
+ * inventing marks for third-party products would misrepresent them. Names set as
+ * chips read honestly and never go stale against a rebrand.
+ */
+export interface ToolchainLayer {
+  id: string;
+  name: string;
+  purpose: string;
+  tools: string[];
+  icon: IconName;
+  iconChipClass: string;
+}
+
+/**
+ * A product in the Atlassian family strip.
+ *
+ * ── TWO WAYS A PRODUCT CAN RENDER ──
+ * `logo` is the official lockup (icon plus wordmark in one SVG) where we have been
+ * given one. Where we have not, `icon` plus `tintClass` compose an equivalent from
+ * the site's own icon registry - a real glyph if one exists, a functional one
+ * otherwise. That fallback exists because hand-drawing approximations of other
+ * companies' trademarks misrepresents them, and a gap in the asset set should not
+ * become a fake logo.
+ *
+ * `icon` and `tintClass` stay REQUIRED even on products that have a `logo`, so the
+ * fallback is always available - and so removing a logo file can never leave a
+ * product with nothing to render.
+ *
+ * When `logo` is present the strip must NOT also print `name` as text: the lockup
+ * already contains the wordmark, and the name travels as the image's alt instead.
+ */
+export interface ProductBadge {
+  id: string;
+  name: string;
+  /** Official lockup, icon + wordmark. Preferred over `icon` when present. */
+  logo?: ContentImage;
+  icon: IconName;
+  /** Tailwind classes for the fallback tile: background and foreground together. */
+  tintClass: string;
+}
+
+/**
+ * One cluster on the "scaling" orbit diagram - a lifecycle stage and the tools that
+ * sit in it.
+ *
+ * `tools` is plain strings for the same reason as `ToolchainLayer.tools`: the names
+ * are honest and never go stale against a rebrand, where invented marks would be
+ * neither.
+ */
+export interface OrbitStage {
+  id: string;
+  /** Uppercase stage label, e.g. "SECURE". */
+  label: string;
+  tools: string[];
+  icon: IconName;
+  tintClass: string;
+}
+
 /**
  * A career opening.
  *

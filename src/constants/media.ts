@@ -2,6 +2,37 @@
 export { default as logoBlack } from '@/assets/logos/clovity-logo-black.gif';
 export { default as logoWhite } from '@/assets/logos/clovity-logo-white.gif';
 
+/* ── Atlassian product lockups ──────────────────────────────────────────── */
+/**
+ * Official product lockups - icon plus wordmark, 32px tall, supplied as vector.
+ *
+ * Rendered through `next/image` as `<img src>` rather than inlined as JSX, and that
+ * is deliberate: each file carries Figma-exported `clipPath` ids (`clip0_714_22316`
+ * and friends) which are NOT unique across the set. Inlining two of them into one
+ * document would make the later `clipPath` win for both, and one logo would render
+ * clipped by the other's mask. As separate image documents they cannot collide.
+ *
+ * Widths differ per lockup because the wordmarks differ in length - Jira 83 up to
+ * Jira Service Management 372, totalling 1673px across the nine. All share height
+ * 32, so the strip sizes on HEIGHT and lets width follow. That total is why the
+ * strip cannot be one row: the shell's content track is 1232px at desktop, so the
+ * 5/4 split in `ProductFamilySection` is a fitting constraint, not just taste.
+ *
+ * The set is now COMPLETE - all nine products have an official lockup, so the icon
+ * fallback in `ProductBadge` no longer renders anywhere. It is kept on purpose: it
+ * is what makes a deleted or renamed file degrade to a composed badge instead of a
+ * blank gap.
+ */
+export { default as logoJira } from '@/assets/logos/atlassian/jira.svg';
+export { default as logoConfluence } from '@/assets/logos/atlassian/confluence.svg';
+export { default as logoJiraAlign } from '@/assets/logos/atlassian/jira-align.svg';
+export { default as logoJiraServiceManagement } from '@/assets/logos/atlassian/jira-service-management.svg';
+export { default as logoRovo } from '@/assets/logos/atlassian/rovo.svg';
+export { default as logoJiraProductDiscovery } from '@/assets/logos/atlassian/jira-product-discovery.svg';
+export { default as logoBitbucket } from '@/assets/logos/atlassian/bitbucket.svg';
+export { default as logoCompass } from '@/assets/logos/atlassian/compass.svg';
+export { default as logoTrello } from '@/assets/logos/atlassian/trello.svg';
+
 /* ── Hero ───────────────────────────────────────────────────────────────── */
 export { default as heroVideoPoster } from '@/assets/images/home/home-video-bg.jpg';
 
@@ -21,15 +52,28 @@ export { default as deliverExperts } from '@/assets/images/home/human-experts.pn
 
 /* ── Section background photos ──────────────────────────────────────────── */
 /**
- * UNUSED since the cloud-migration redesign (that section now paints a flat
- * gradient). Kept exported as a brand asset future pages may want; unreferenced,
- * so it tree-shakes out of the bundle.
+ * Currently unreferenced. It was the `/expertise/itsm` hero until that page moved
+ * to `itsmServiceDeskBanner`, and before that the cloud-migration section's
+ * backdrop (which now paints a flat gradient). Kept because it is the only dark
+ * server-room photograph in the repo, which is exactly what a scrimmed hero wants.
  */
 export { default as dataCenterBg } from '@/assets/images/home/data-center-bg.jpg';
 export { default as publicSectorBg } from '@/assets/images/home/public-sector-bg.png';
 export { default as aiPoweredSummary } from '@/assets/images/home/ai-powered-summary.jpg';
 
 /* ── Expertise pages ─────────────────────────────────────────────────────── */
+/**
+ * `/expertise/itsm` hero banner - a supplied service-desk photograph (two people at
+ * a workstation, one on a headset), which is what an ITSM page's hero should show
+ * rather than the server room that stood in before it.
+ *
+ * Downscaled from the supplied 6000x2589 original to 1920x828 at JPEG q82, taking
+ * it from 6.2 MB to 118 KB. It is not the 1920x600 the purpose-made resource
+ * banners use, so the hero crops it - the top-anchored default keeps both faces and
+ * loses only the desk along the bottom edge, so no `imagePosition` override is
+ * needed. Re-crop the source to 3.2:1 if that ever stops holding.
+ */
+export { default as itsmServiceDeskBanner } from '@/assets/images/expertise/itsm-service-desk.jpg';
 export { default as dataCenterSupportPhoto } from '@/assets/images/expertise/data-center-support.jpg';
 export { default as iconFullMigration } from '@/assets/icons/expertise/full-migration.svg';
 export { default as iconPhasedMigration } from '@/assets/icons/expertise/phased-migration.svg';
@@ -77,6 +121,44 @@ export { default as contactHeroBannerMobile } from '@/assets/images/discover/mob
 
 export { default as privacyHeroBanner } from '@/assets/images/privacy-policy-banner.png';
 export { default as termsHeroBanner } from '@/assets/images/terms-condition.jpg';
+
+/* ── Expertise hero banners ──────────────────────────────────────────────── */
+/**
+ * `/expertise/devsecops` hero banner - a supplied dark-navy HUD graphic, its lit
+ * ring of delivery icons sitting in the RIGHT half of the frame. That placement is
+ * why it works here: `BannerHero`'s scrim is darkest on the left, which is where the
+ * copy sits, so the artwork and the text never compete.
+ *
+ * Downscaled from the supplied 6000x2000 original to 1920x640 at JPEG q82, taking it
+ * from 2.3 MB to 57 KB. At 3:1 it is close enough to the 1920x600 the purpose-made
+ * resource banners use that the shared top-anchored crop is correct - so unlike its
+ * predecessor this needs no `imagePosition` override.
+ *
+ * It replaced the home page's portrait `secure-by-design.jpg`, which was only ever
+ * a stand-in: reused across two pages, 2220x3245, and dependent on a crop-anchor
+ * override to show anything but out-of-focus ceiling.
+ */
+export { default as devsecopsHeroBanner } from '@/assets/images/expertise/devsecops-banner.jpg';
+
+/**
+ * `/expertise/devsecops` - the DevOps lifecycle orbit, behind the "Scaling Secure
+ * Delivery" section.
+ *
+ * A supplied vector, 869x907, carrying the whole diagram: the purple lifecycle arc,
+ * Jira at the centre, and the PLAN / CODE / DEPLOY / OPERATE / COLLABORATE clusters
+ * with real product marks (GitHub, Bitbucket, Docker, Kubernetes, JFrog, Slack,
+ * Teams, Confluence, Opsgenie). Its stage labels are set in WHITE and sit on top of
+ * the arc, so it must not be placed on a light background without that arc behind
+ * them.
+ *
+ * ── ONE TILE WAS REMOVED FROM THE ORIGINAL ──
+ * The source embedded one logo as a base64 PNG rather than as vector paths. That
+ * bitmap could not be transcribed intact, and a truncated `data:` URI renders as a
+ * blank tile, so the raster, its `<pattern>` and the tile that used it were stripped
+ * rather than shipped broken. Everything else is the supplied artwork unchanged. To
+ * restore it, re-export the SVG with that logo as paths and drop it in here.
+ */
+export { default as devsecopsOrbitDiagram } from '@/assets/images/services/devops-orbit-diagram.svg';
 
 /* ── About page section photos ───────────────────────────────────────────── */
 export { default as aboutWhoWeArePhoto } from '@/assets/images/about-us/Who-We-Are.png';

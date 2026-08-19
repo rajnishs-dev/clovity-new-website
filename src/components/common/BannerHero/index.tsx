@@ -30,6 +30,13 @@ export interface BannerHeroProps {
   /** Shown below 640px. Falls back to `imageTablet`, then `image`. */
   imageMobile?: ImageSource;
   imageAlt?: string;
+  /**
+   * `object-position` for the photo. Omit for the top-anchored default, which is
+   * right for the purpose-made 1920x600 banners every resource page uses. Pass a
+   * value when the source is a different aspect ratio and the subject would
+   * otherwise be cropped out - see the note in `ParallaxImage`.
+   */
+  imagePosition?: string;
 }
 
 export function BannerHero({
@@ -40,6 +47,7 @@ export function BannerHero({
   imageTablet,
   imageMobile,
   imageAlt = '',
+  imagePosition,
 }: BannerHeroProps) {
   return (
     <section
@@ -59,6 +67,7 @@ export function BannerHero({
           tabletSrc={imageTablet}
           mobileSrc={imageMobile}
           alt={imageAlt}
+          objectPosition={imagePosition}
         />
       </div>
 

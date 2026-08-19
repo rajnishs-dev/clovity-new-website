@@ -18,6 +18,7 @@ export function ParallaxImage({
   tabletSrc,
   mobileSrc,
   alt,
+  objectPosition,
 }: {
   src: ImageSource;
   /** Shown from 640px up to (not including) 1024px. Falls back to `src`. */
@@ -25,6 +26,21 @@ export function ParallaxImage({
   /** Shown below 640px. Falls back to `tabletSrc`, then `src`. */
   mobileSrc?: ImageSource;
   alt: string;
+  /**
+   * `object-position` for the cropped photo. Defaults to the top-anchored
+   * `center 0%` below.
+   *
+   * Exists because the default only suits the purpose-made 1920x600 banners: at
+   * hero width those fill the band almost exactly, so anchoring to the top is a
+   * no-op. Give it a source with a different aspect ratio - `/expertise/devsecops`
+   * passes a 2220x3245 portrait - and `center 0%` shows the top ~20% of the image
+   * and nothing else, which for that photo is out-of-focus ceiling. A caller that
+   * knows where its subject sits can say so.
+   *
+   * An inline style rather than a class, because Tailwind cannot generate
+   * `object-[...]` from a value that only exists at runtime.
+   */
+  objectPosition?: string;
 }) {
   const wrapperRef = useRef<HTMLDivElement>(null);
   const reducedMotion = useReducedMotion();
@@ -53,6 +69,8 @@ export function ParallaxImage({
 
   const hasBreakpoints = Boolean(tabletSrc || mobileSrc);
   const imageClassName = 'object-cover object-[center_0%]';
+  // Inline style wins over the class above, so the default stays in one place.
+  const positionStyle = objectPosition ? { objectPosition } : {};
 
   if (!hasBreakpoints) {
     return (
@@ -67,6 +85,7 @@ export function ParallaxImage({
           sizes="100vw"
           priority
           className={imageClassName}
+          style={positionStyle}
         />
       </div>
     );
@@ -84,6 +103,7 @@ export function ParallaxImage({
         sizes="100vw"
         priority
         className={cn(imageClassName, 'sm:hidden')}
+        style={positionStyle}
       />
       <AppImage
         src={tabletSrc ?? src}
@@ -92,6 +112,7 @@ export function ParallaxImage({
         sizes="100vw"
         priority
         className={cn(imageClassName, 'hidden sm:block lg:hidden')}
+        style={positionStyle}
       />
       <AppImage
         src={src}
@@ -100,6 +121,7 @@ export function ParallaxImage({
         sizes="100vw"
         priority
         className={cn(imageClassName, 'hidden lg:block')}
+        style={positionStyle}
       />
     </div>
   );
