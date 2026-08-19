@@ -81,7 +81,7 @@ export function JsmSection() {
               >
                 <span
                   aria-hidden
-                  className="select-none font-display text-[34px] leading-none text-title font-500"
+                  className="select-none font-display text-[34px] font-500 leading-none text-title"
                 >
                   {String(index + 1).padStart(2, '0')}
                 </span>

@@ -1,5 +1,5 @@
 import { Section } from '@/components/ui/Section';
-import { GradientText, HEADING_CLASS, LABEL_CLASS } from '@/components/ui/Typography';
+import { GradientText, HEADING_CLASS } from '@/components/ui/Typography';
 import { AppImage } from '@/components/ui/Image';
 import { cn } from '@/lib/cn';
 import { reveal, revealAttrs } from '@/lib/reveal';
@@ -41,7 +41,13 @@ function FloatingAppTiles() {
               transform: `translate(-50%,-50%) rotate(${layout.rotate}deg)`,
             }}
           >
-            <AppImage src={app.logo.src} alt={app.logo.alt} fill sizes="80px" className="object-cover" />
+            <AppImage
+              src={app.logo.src}
+              alt={app.logo.alt}
+              fill
+              sizes="80px"
+              className="object-cover"
+            />
           </div>
         );
       })}
@@ -51,17 +57,24 @@ function FloatingAppTiles() {
 
 export function ProblemSection() {
   return (
-    <Section className="bg-[#eaf8ff]">
+    <Section className="bg-soft">
       <div className="grid items-center gap-10 lg:grid-cols-[1.05fr_1fr] lg:gap-14">
-        <div className={cn(reveal('left'), 'md:text-center lg:text-left')} {...revealAttrs()}>
-          <span className={LABEL_CLASS}>{MARKETPLACE_APPS_PROBLEM_CONTENT.label}</span>
+        <div
+          className={cn(reveal('left'), 'md:text-center lg:text-left')}
+          {...revealAttrs()}
+        >
           <h2 className={HEADING_CLASS}>
             {MARKETPLACE_APPS_PROBLEM_CONTENT.headingLead}
-            <GradientText>{MARKETPLACE_APPS_PROBLEM_CONTENT.headingHighlight}</GradientText>
+            <GradientText>
+              {MARKETPLACE_APPS_PROBLEM_CONTENT.headingHighlight}
+            </GradientText>
           </h2>
           <div className="mt-5 space-y-4">
             {MARKETPLACE_APPS_PROBLEM_CONTENT.paragraphs.map((paragraph) => (
-              <p key={paragraph} className="text-[16px] leading-[1.75] text-muted">
+              <p
+                key={paragraph}
+                className="text-[16px] leading-[1.75] text-muted"
+              >
                 {paragraph}
               </p>
             ))}

@@ -77,13 +77,13 @@ export function ScalingSection() {
           >
             {/* `-mr-` lets the artwork bleed toward the section edge the way the
                 reference does, without widening the Container's track. */}
-            <div className="hidden ml:block ml:-mr-6 lg:-mr-10">
+            <div className="hidden ml:-mr-6 ml:block lg:-mr-10">
               <AppImage
                 src={devsecopsOrbitDiagram}
                 alt=""
                 aria-hidden
                 sizes="(min-width: 1280px) 620px, 50vw"
-                className="ml-auto block h-auto h-[450px] w-full max-w-[620px]"
+                className="ml-auto block h-[450px] h-auto w-full max-w-[620px]"
               />
             </div>
 

@@ -8,14 +8,15 @@ import {
 
 export function MetricsSection() {
   return (
-    <Section className="bg-[#eaf8ff]">
+    <Section className="bg-soft">
       <SectionHeader
-        label={ATLASSIAN_METRICS_CONTENT.label}
         className="mx-auto max-w-[680px]"
         heading={
           <>
             {ATLASSIAN_METRICS_CONTENT.headingLead}
-            <GradientText>{ATLASSIAN_METRICS_CONTENT.headingHighlight}</GradientText>
+            <GradientText>
+              {ATLASSIAN_METRICS_CONTENT.headingHighlight}
+            </GradientText>
           </>
         }
       />

@@ -8,14 +8,15 @@ import { CUSTOMER_STORIES } from '@/constants/home';
 
 export function ProofSection() {
   return (
-    <Section className="bg-[#eaf8ff]">
+    <Section className="bg-soft">
       <SectionHeader
-        label={MARKETPLACE_APPS_PROOF_CONTENT.label}
         className="mx-auto max-w-[680px]"
         heading={
           <>
             {MARKETPLACE_APPS_PROOF_CONTENT.headingLead}
-            <GradientText>{MARKETPLACE_APPS_PROOF_CONTENT.headingHighlight}</GradientText>
+            <GradientText>
+              {MARKETPLACE_APPS_PROOF_CONTENT.headingHighlight}
+            </GradientText>
           </>
         }
       />

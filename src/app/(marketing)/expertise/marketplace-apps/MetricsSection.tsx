@@ -8,14 +8,15 @@ import {
 
 export function MetricsSection() {
   return (
-    <Section>
+    <Section className="bg-white">
       <SectionHeader
-        label={MARKETPLACE_APPS_METRICS_CONTENT.label}
         className="mx-auto max-w-[680px]"
         heading={
           <>
             {MARKETPLACE_APPS_METRICS_CONTENT.headingLead}
-            <GradientText>{MARKETPLACE_APPS_METRICS_CONTENT.headingHighlight}</GradientText>
+            <GradientText>
+              {MARKETPLACE_APPS_METRICS_CONTENT.headingHighlight}
+            </GradientText>
           </>
         }
       />

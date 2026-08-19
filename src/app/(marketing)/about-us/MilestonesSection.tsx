@@ -3,14 +3,10 @@ import { revealAligned, revealAttrs } from '@/lib/reveal';
 import {
   GradientText,
   HEADING_CLASS,
-  LABEL_CLASS,
   Section,
   SUBHEADING_CLASS,
 } from '@/components/ui';
-import {
-  ABOUT_MILESTONES,
-  ABOUT_MILESTONES_CONTENT,
-} from '@/constants/about';
+import { ABOUT_MILESTONES, ABOUT_MILESTONES_CONTENT } from '@/constants/about';
 import { MilestoneTimeline } from './MilestoneTimeline';
 
 /**
@@ -27,9 +23,6 @@ export function MilestonesSection() {
     <Section padding="tight" className="bg-white">
       <div className="grid gap-16 lg:grid-cols-[1fr_1.4fr]">
         <div className={revealAligned('left', 'left')} {...revealAttrs()}>
-          <p className={cn(LABEL_CLASS, 'mb-4')}>
-            {ABOUT_MILESTONES_CONTENT.label}
-          </p>
           <h2 className={cn(HEADING_CLASS, 'mb-6')}>
             {ABOUT_MILESTONES_CONTENT.headingLead}
             <GradientText>

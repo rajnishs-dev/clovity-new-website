@@ -18,12 +18,8 @@ import {
  */
 export function BenefitsSection() {
   return (
-    <Section
-      padding="tight"
-      className="border-y border-line-faint bg-[#eaf8ff]"
-    >
+    <Section padding="tight" className="border-y border-line-faint bg-soft">
       <SectionHeader
-        label={CAREERS_BENEFITS_CONTENT.label}
         labelClassName="mb-4"
         heading={
           <>

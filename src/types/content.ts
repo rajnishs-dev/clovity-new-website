@@ -57,7 +57,13 @@ export type ContentBlock =
    * are editor-pasted URLs from arbitrary hosts, which is a different problem from the
    * curated art every other `ContentImage` in the app describes.
    */
-  | { type: 'image'; src: string; alt: string; width?: number; height?: number };
+  | {
+      type: 'image';
+      src: string;
+      alt: string;
+      width?: number;
+      height?: number;
+    };
 
 /** Fields every publishable CMS record shares. */
 export interface ContentBase {
@@ -551,6 +557,125 @@ export interface OrbitStage {
   tools: string[];
   icon: IconName;
   tintClass: string;
+}
+
+/* ── Expertise pages: Managed Services ──────────────────────────────────── */
+
+/**
+ * One before/after pair on the managed-services page - the operating-model shift
+ * (`Reactive` → `Proactive`).
+ *
+ * The two halves are ONE record rather than two parallel arrays because the pairing
+ * is the entire point - each "after" answers its own "before". Two arrays could fall
+ * out of order and the section would still render, just saying the wrong thing.
+ */
+export interface ShiftPair {
+  id: string;
+  /** Row label, e.g. "Platform reviews". */
+  aspect?: string;
+  /** The state without anyone owning the platform. */
+  before: string;
+  /** What replaces it. */
+  after: string;
+}
+
+/**
+ * One discipline on the embedded pod's bench.
+ *
+ * `depth` is prose, not a seniority enum: what a buyer needs to know is what the
+ * person actually does, and a "Senior"/"Lead" label communicates payroll rather than
+ * capability.
+ */
+export interface BenchRole {
+  id: string;
+  role: string;
+  /** What this discipline covers on your instance. */
+  depth: string;
+  icon: IconName;
+  iconChipClass: string;
+}
+
+/* ── Expertise pages: AI Solutions ──────────────────────────────────────── */
+
+/**
+ * One place AI shows up inside another Clovity practice, on the AI page's
+ * "not a silo" section.
+ *
+ * `href` is REQUIRED, and that is the whole point of the type: the claim is that AI runs
+ * through the other engagements rather than being sold beside them, and a claim like that is
+ * only credible if each item is a live link to the page that actually delivers it. A version
+ * of this with no destinations would be a list of adjectives.
+ *
+ * `practice` is the other page's own name, so the two never drift into describing the same
+ * service differently; `effect` is what AI specifically changes there, which is the part this
+ * page is responsible for saying.
+ */
+export interface AiTouchpoint {
+  id: string;
+  /** The other practice's name, matching its own page. */
+  practice: string;
+  /** What AI specifically changes in that practice. */
+  effect: string;
+  href: string;
+  icon: IconName;
+  iconChipClass: string;
+}
+
+/* ── Expertise pages: Workforce Solutions ───────────────────────────────── */
+
+/**
+ * One way of closing a skill gap, on the workforce page's three-way comparison.
+ *
+ * ── WHY `tradeoff` IS A REQUIRED FIELD ──
+ * A comparison where only the recommended column has a downside is an advert, not a
+ * comparison, and a reader who has actually hired before spots that instantly. Making
+ * the cost of each route mandatory means the option this page is selling has to state
+ * its own limitation in the same breath as the other two - so the type enforces the
+ * argument's honesty rather than leaving it to whoever edits the copy.
+ *
+ * `emphasis` marks the column the page recommends. It drives the tint only; it must
+ * never suppress `tradeoff`.
+ */
+export interface SourcingOption {
+  id: string;
+  /** Route name, e.g. "Hire a full-time specialist". */
+  route: string;
+  /** What this route is good for, in one sentence. */
+  strength: string;
+  /** What it costs you - time, capability breadth, or continuity. */
+  tradeoff: string;
+  /** True for the column this page recommends. Tint only. */
+  emphasis?: boolean;
+  icon: IconName;
+  iconChipClass: string;
+}
+
+/**
+ * One side of the Workforce / Managed Services contrast panel.
+ *
+ * The two offers overlap - both put Clovity engineers inside a client's Atlassian
+ * estate - so the page that sells one has to say plainly where the other one starts.
+ * `owns` is the discriminator that actually separates them (who holds the platform),
+ * and it is a required field for that reason: a contrast panel whose two halves do not
+ * name their difference is decoration.
+ */
+export interface EngagementContrast {
+  id: string;
+  /** Offer name, e.g. "Workforce Solutions". */
+  title: string;
+  /** Who owns the platform under this model, in a few words. */
+  owns: string;
+  description: string;
+  /** What the client gets, three or four concrete items. */
+  points: string[];
+  /** The one-line test for choosing this side. */
+  chooseWhen: string;
+  /** Set on the offer that is NOT this page, so it can link out to it. */
+  href?: string;
+  icon: IconName;
+  iconChipClass: string;
+  /** True for the offer this page is about - drives the accented treatment. */
+  current?: boolean;
 }
 
 /**

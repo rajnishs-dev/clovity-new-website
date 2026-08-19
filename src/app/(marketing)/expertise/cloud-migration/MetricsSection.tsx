@@ -23,16 +23,17 @@ function TrustedPartnerGlyph() {
 
 export function MetricsSection() {
   return (
-    <Section>
+    <Section className="bg-white">
       <div className="flex flex-col items-center gap-8 rounded-[10px] border border-line-soft bg-white p-8 sm:p-10 lg:flex-row lg:justify-between">
         <div className="flex-1">
           <SectionHeader
-            label={CLOUD_MIGRATION_METRICS_CONTENT.label}
             className="max-w-[680px]"
             heading={
               <>
                 {CLOUD_MIGRATION_METRICS_CONTENT.headingLead}
-                <GradientText>{CLOUD_MIGRATION_METRICS_CONTENT.headingHighlight}</GradientText>
+                <GradientText>
+                  {CLOUD_MIGRATION_METRICS_CONTENT.headingHighlight}
+                </GradientText>
               </>
             }
             align="left"

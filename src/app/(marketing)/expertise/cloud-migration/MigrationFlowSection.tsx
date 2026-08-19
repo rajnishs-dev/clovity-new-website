@@ -31,7 +31,7 @@ const FLOW_PATH =
 
 export function MigrationFlowSection() {
   return (
-    <Section>
+    <Section className="bg-white">
       {/* `pulseGrad` def for the animated stroke below - the home page's own
           copy (`SvgGradientDefs`) lives in that page's private folder, so
           this section carries its own rather than reaching across pages. */}
@@ -46,12 +46,13 @@ export function MigrationFlowSection() {
       </svg>
 
       <SectionHeader
-        label={CLOUD_MIGRATION_FLOW_CONTENT.label}
         className="mx-auto max-w-[680px]"
         heading={
           <>
             {CLOUD_MIGRATION_FLOW_CONTENT.headingLead}
-            <GradientText>{CLOUD_MIGRATION_FLOW_CONTENT.headingHighlight}</GradientText>
+            <GradientText>
+              {CLOUD_MIGRATION_FLOW_CONTENT.headingHighlight}
+            </GradientText>
           </>
         }
       />
@@ -129,7 +130,9 @@ export function MigrationFlowSection() {
               <span className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-[50%] border border-[#dbe7ff] bg-white text-[24px] text-[#4f46e5] shadow-[0_4px_12px_rgba(37,99,235,.12)]">
                 {step.icon ? <Icon name={step.icon} /> : null}
               </span>
-              <b className="mb-1 block text-[16px] font-800 text-ink">{step.title}</b>
+              <b className="mb-1 block text-[16px] font-800 text-ink">
+                {step.title}
+              </b>
               <p className="m-0 text-[14px] leading-[1.5] text-muted">
                 {step.description}
               </p>

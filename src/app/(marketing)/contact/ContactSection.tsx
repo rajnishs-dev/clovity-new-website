@@ -2,10 +2,7 @@ import { cn } from '@/lib/cn';
 import { revealAligned, revealAttrs } from '@/lib/reveal';
 import type { ContactFormConfig } from '@/types/content';
 import { AppImage, Icon, Section, SmartLink } from '@/components/ui';
-import {
-  CONTACT_CHANNELS,
-  CONTACT_SIDE_CONTENT,
-} from '@/constants/contact';
+import { CONTACT_CHANNELS, CONTACT_SIDE_CONTENT } from '@/constants/contact';
 import { contactWorldMap } from '@/constants/media';
 import { ContactForm } from './ContactForm';
 
@@ -43,12 +40,7 @@ export function ContactSection({ config }: { config: ContactFormConfig }) {
           {/* Light bg image - the same world map `website-t`'s ScheduleDemo
               widget uses, tinted with a translucent wash so it reads as
               texture behind the content rather than competing with it. */}
-          <AppImage
-            src={contactWorldMap}
-            alt=""
-            fill
-            unoptimized
-          />
+          <AppImage src={contactWorldMap} alt="" fill unoptimized />
           <div className="absolute inset-0 bg-[#f8faff]/75" />
 
           <p className="relative z-[1] mb-[22px] text-[12px] font-800 uppercase tracking-[.1em] text-brand-600">

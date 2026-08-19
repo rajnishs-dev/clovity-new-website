@@ -92,10 +92,7 @@ export function ContactForm({
 }: {
   initialConfig: ContactFormConfig;
 }) {
-  const { data: config } = useInTouch(
-    CONTACT_FORM_SLUG,
-    initialConfig,
-  );
+  const { data: config } = useInTouch(CONTACT_FORM_SLUG, initialConfig);
   const baseId = useId();
   const [sent, setSent] = useState(false);
   const [formError, setFormError] = useState<string | null>(null);
@@ -259,11 +256,7 @@ export function ContactForm({
 
   if (sent) {
     return (
-      <div
-        role="status"
-        aria-live="polite"
-        className="px-3 py-9 text-center"
-      >
+      <div role="status" aria-live="polite" className="px-3 py-9 text-center">
         <Icon
           name="circle-check"
           className="mb-4 text-[38px] text-brand-green"

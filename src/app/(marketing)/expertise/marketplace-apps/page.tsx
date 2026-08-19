@@ -68,7 +68,7 @@ export default function MarketplaceAppsExpertisePage() {
             }
             description={MARKETPLACE_APPS_FINAL_CTA.description}
             ctas={MARKETPLACE_APPS_FINAL_CTA_LINKS}
-            className="bg-[#eaf8ff]"
+            className="bg-white"
             cardClassName="-mt-0 bg-[linear-gradient(135deg,#152a6b_0%,#2557c9_65%,#3568e0_100%)]"
             headingClassName="text-[clamp(28px,3.6vw,44px)] leading-[1.12]"
             pullUp={false}

@@ -18,7 +18,11 @@ export function FeaturedInSection() {
     <section className="bg-white pb-0 pt-14 sm:pb-0 sm:pt-16">
       <Container>
         <p
-          className={cn(LABEL_CLASS, 'mb-8 block text-center', revealAligned('center'))}
+          className={cn(
+            LABEL_CLASS,
+            'mb-8 block text-center',
+            revealAligned('center'),
+          )}
           {...revealAttrs()}
         >
           {ABOUT_PRESS_LABEL}

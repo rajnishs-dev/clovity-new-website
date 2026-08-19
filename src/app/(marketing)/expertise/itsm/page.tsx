@@ -43,7 +43,8 @@ import { TrustedBySection } from './TrustedBySection';
 import { WhySection } from './WhySection';
 
 export const metadata: Metadata = buildMetadata({
-  title: 'ITSM & Enterprise Service Management | Jira Service Management | Clovity',
+  title:
+    'ITSM & Enterprise Service Management | Jira Service Management | Clovity',
   description:
     'Jira Service Management implemented for real ticket volume, then extended to HR, Finance, Legal and Operations. ITIL 4-aligned process design, CMDB and assets, and legacy service-desk migration from an Atlassian Platinum Solution Partner.',
   path: ROUTES.expertise.itsm,

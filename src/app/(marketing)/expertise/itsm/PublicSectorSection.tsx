@@ -42,7 +42,10 @@ export function PublicSectorSection() {
     >
       <div className="relative z-10 mx-auto flex max-w-shell justify-end px-6 py-12 lg:py-16 to-900:justify-center">
         <div className="w-full max-w-[860px] to-900:max-w-[620px]">
-          <div className={cn(reveal(), 'text-left md:text-left')} {...revealAttrs()}>
+          <div
+            className={cn(reveal(), 'text-left md:text-left')}
+            {...revealAttrs()}
+          >
             <h2 className={HEADING_CLASS}>
               {ITSM_PUBLIC_SECTOR_CONTENT.headingLead}
               <GradientText>
@@ -64,11 +67,11 @@ export function PublicSectorSection() {
             {...revealAttrs()}
           >
             <p className="mb-5 text-[16px] leading-[1.7] text-black">
-              Clovity runs a <strong>U.S.-led federal practice</strong> - secure,
-              audit-ready Atlassian for the <strong>IRS</strong>,{' '}
+              Clovity runs a <strong>U.S.-led federal practice</strong> -
+              secure, audit-ready Atlassian for the <strong>IRS</strong>,{' '}
               <strong>U.S. Coast Guard</strong>, and state, county and city
-              agencies nationwide. Service management is part of that work, not a
-              commercial playbook re-pointed at government.
+              agencies nationwide. Service management is part of that work, not
+              a commercial playbook re-pointed at government.
             </p>
 
             <div className="grid grid-cols-2 gap-x-7 gap-y-[18px] to-640:grid-cols-1">
@@ -102,7 +105,11 @@ export function PublicSectorSection() {
             <div className="mt-6">
               <SmartLink
                 href={ITSM_PUBLIC_SECTOR_CONTENT.ctaHref}
-                className={buttonClass('primary', 'md', 'px-4 py-3 text-[13px]')}
+                className={buttonClass(
+                  'primary',
+                  'md',
+                  'px-4 py-3 text-[13px]',
+                )}
               >
                 {ITSM_PUBLIC_SECTOR_CONTENT.ctaLabel} <ArrowIcon />
               </SmartLink>

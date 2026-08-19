@@ -1,11 +1,6 @@
 import { cn } from '@/lib/cn';
 import { revealAligned, revealAttrs } from '@/lib/reveal';
-import {
-  GradientText,
-  Icon,
-  Section,
-  SectionHeader,
-} from '@/components/ui';
+import { GradientText, Icon, Section, SectionHeader } from '@/components/ui';
 import {
   CAREERS_HIRING_STEPS,
   CAREERS_PROCESS_CONTENT,
@@ -26,7 +21,6 @@ export function HiringProcessSection() {
   return (
     <Section padding="tight" className="bg-white">
       <SectionHeader
-        label={CAREERS_PROCESS_CONTENT.label}
         labelClassName="mb-4"
         heading={
           <>

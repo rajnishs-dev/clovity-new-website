@@ -109,7 +109,6 @@ export const CAREERS_STATS: StatBandItem[] = [
  * CMS.
  */
 export const CAREERS_CULTURE_CONTENT = {
-  label: 'Life at Clovity',
   headingLead: 'A Culture Built on ',
   headingHighlight: 'Ownership and Craft',
   intro:
@@ -150,7 +149,6 @@ export const CAREERS_CULTURE_FALLBACK: CultureHighlight = {
 /* ── Benefits & perks ───────────────────────────────────────────────────── */
 
 export const CAREERS_BENEFITS_CONTENT = {
-  label: 'Benefits & Perks',
   headingLead: 'What You Get For ',
   headingHighlight: 'Doing Great Work',
 } as const;
@@ -193,7 +191,6 @@ export const CAREERS_BENEFITS: BentoTile[] = [
 /* ── Hiring process ─────────────────────────────────────────────────────── */
 
 export const CAREERS_PROCESS_CONTENT = {
-  label: "How You'll Get Hired",
   headingLead: 'A Straightforward, Five-Step ',
   headingHighlight: 'Hiring Process',
 } as const;
@@ -248,7 +245,6 @@ export const CAREERS_HIRING_STEPS: HiringStep[] = [
 /* ── Open positions ─────────────────────────────────────────────────────── */
 
 export const CAREERS_ROLES_CONTENT = {
-  label: 'Open Positions',
   headingLead: 'Current Openings Across Our ',
   headingHighlight: 'Delivery Teams',
   subheading:
@@ -522,7 +518,6 @@ export const CAREERS_JOBS_FALLBACK: JobOpening[] = FALLBACK_ROLE_SEEDS.map(
 /* ── FAQ ────────────────────────────────────────────────────────────────── */
 
 export const CAREERS_FAQ_CONTENT = {
-  label: 'Questions',
   headingLead: 'Frequently Asked ',
   headingHighlight: 'Questions',
 } as const;

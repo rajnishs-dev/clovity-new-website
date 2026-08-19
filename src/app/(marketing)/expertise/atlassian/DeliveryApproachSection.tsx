@@ -8,14 +8,15 @@ import {
 
 export function DeliveryApproachSection() {
   return (
-    <Section>
+    <Section className="bg-white">
       <SectionHeader
-        label={ATLASSIAN_APPROACH_CONTENT.label}
         className="mx-auto max-w-[680px]"
         heading={
           <>
             {ATLASSIAN_APPROACH_CONTENT.headingLead}
-            <GradientText>{ATLASSIAN_APPROACH_CONTENT.headingHighlight}</GradientText>
+            <GradientText>
+              {ATLASSIAN_APPROACH_CONTENT.headingHighlight}
+            </GradientText>
           </>
         }
       />

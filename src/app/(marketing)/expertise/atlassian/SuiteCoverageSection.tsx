@@ -18,14 +18,15 @@ export function SuiteCoverageSection() {
   const activeTab = ATLASSIAN_SUITE_TABS.find((tab) => tab.id === activeId)!;
 
   return (
-    <Section className="bg-[#eaf8ff]">
+    <Section className="bg-soft">
       <SectionHeader
-        label={ATLASSIAN_SUITE_CONTENT.label}
         className="mx-auto max-w-[680px]"
         heading={
           <>
             {ATLASSIAN_SUITE_CONTENT.headingLead}
-            <GradientText>{ATLASSIAN_SUITE_CONTENT.headingHighlight}</GradientText>
+            <GradientText>
+              {ATLASSIAN_SUITE_CONTENT.headingHighlight}
+            </GradientText>
           </>
         }
       />
@@ -35,7 +36,10 @@ export function SuiteCoverageSection() {
           items={ATLASSIAN_SUITE_TABS.map((tab) => ({
             id: tab.id,
             label: (
-              <span className="flex items-center gap-2">
+              // `min-w-0` on the inner span as well as on the tab itself - a nested
+              // flex container has its own `min-width:auto` floor, so relaxing only
+              // the button leaves this span holding the row open. See `tabClassName`.
+              <span className="flex min-w-0 items-center gap-2">
                 <Icon name={tab.icon} size={16} />
                 {tab.label}
               </span>
@@ -47,7 +51,13 @@ export function SuiteCoverageSection() {
           orientation="horizontal"
           idPrefix={TAB_ID_PREFIX}
           className="mx-auto flex max-w-[560px] justify-center gap-2 rounded-pill border border-line-soft bg-white p-1.5"
-          tabClassName="flex-1 rounded-pill px-4 py-2.5 text-[13.5px] font-600 text-muted transition-colors"
+          // `min-w-0` is load-bearing, not tidying. `flex-1` is `flex:1 1 0%`, but a
+          // flex item also has `min-width:auto`, which refuses to shrink below its
+          // CONTENT width - so at 390px these four tabs held the strip 25px wider than
+          // the viewport and the whole PAGE scrolled sideways, not just the strip.
+          // Measured: 415px document against a 390px viewport, back to exactly 390 with
+          // this in place.
+          tabClassName="min-w-0 flex-1 rounded-pill px-4 py-2.5 text-[13.5px] font-600 text-muted transition-colors"
           activeTabClassName="bg-brand-600 text-white"
         />
 
@@ -66,8 +76,14 @@ export function SuiteCoverageSection() {
           </p>
           <ul className="space-y-3">
             {activeTab.points.map((point) => (
-              <li key={point} className="flex items-start gap-3 text-[14.5px] text-muted">
-                <Icon name="circle-check" className="mt-0.5 shrink-0 text-brand-600" />
+              <li
+                key={point}
+                className="flex items-start gap-3 text-[14.5px] text-muted"
+              >
+                <Icon
+                  name="circle-check"
+                  className="mt-0.5 shrink-0 text-brand-600"
+                />
                 {point}
               </li>
             ))}

@@ -73,19 +73,19 @@ export default async function CareersPage() {
       <PageAnimations>
         <main id="main-content">
           <BannerHero
-                      breadcrumb={[...CAREERS_HERO.crumbs]}
-                      heading={
-                        <>
-                          {CAREERS_HERO.titleLead}
-                          <br />
-                          <HeroAccent>{CAREERS_HERO.titleAccent}</HeroAccent>
-                        </>
-                      }
-                      subheading={CAREERS_HERO.lead}
-                      image={careerHeroBanner}
-                      imageTablet={careerHeroBannerTablet}
-                      imageMobile={careerHeroBannerMobile}
-                    />
+            breadcrumb={[...CAREERS_HERO.crumbs]}
+            heading={
+              <>
+                {CAREERS_HERO.titleLead}
+                <br />
+                <HeroAccent>{CAREERS_HERO.titleAccent}</HeroAccent>
+              </>
+            }
+            subheading={CAREERS_HERO.lead}
+            image={careerHeroBanner}
+            imageTablet={careerHeroBannerTablet}
+            imageMobile={careerHeroBannerMobile}
+          />
 
           <WhySection />
 
@@ -113,6 +113,7 @@ export default async function CareersPage() {
             }
             description={CAREERS_FINAL_CTA.description}
             ctas={CAREERS_FINAL_CTA_LINKS}
+            className="bg-soft"
             cardClassName="-mt-0 bg-[linear-gradient(135deg,#152a6b_0%,#2557c9_65%,#3568e0_100%)]"
             headingClassName="text-[clamp(28px,3.6vw,44px)] leading-[1.12]"
             pullUp={false}

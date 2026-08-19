@@ -15,19 +15,13 @@ import { ABOUT_VALUES, ABOUT_VALUES_CONTENT } from '@/constants/about';
  */
 export function ValuesSection() {
   return (
-    <Section
-      padding="tight"
-      className="border-y border-line-faint bg-soft"
-    >
+    <Section padding="tight" className="border-y border-line-faint bg-soft">
       <SectionHeader
-        label={ABOUT_VALUES_CONTENT.label}
         labelClassName="mb-4"
         heading={
           <>
             {ABOUT_VALUES_CONTENT.headingLead}
-            <GradientText>
-              {ABOUT_VALUES_CONTENT.headingHighlight}
-            </GradientText>
+            <GradientText>{ABOUT_VALUES_CONTENT.headingHighlight}</GradientText>
           </>
         }
         subheading={ABOUT_VALUES_CONTENT.subheading}

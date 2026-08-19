@@ -2,7 +2,14 @@ import { ExpertiseHero } from '@/components/expertise';
 import { HeroAccent } from '@/components/common';
 import { ATLASSIAN_HERO } from '@/constants/expertise/atlassian';
 
-/** Breadcrumb + heading + subheading - no eyebrow, no CTA row. */
+/**
+ * Breadcrumb + heading + subheading - no eyebrow, no CTA row.
+ *
+ * No `imageTablet`/`imageMobile`: the hero photo is now a bundled static import, so
+ * `next/image` builds the responsive srcset itself. Those props existed to pass three
+ * hand-sized Unsplash URLs - see the note on `ATLASSIAN_HERO.image`. `ParallaxImage`
+ * falls back to `image` when they are omitted, which is exactly what should happen here.
+ */
 export function HeroSection() {
   return (
     <ExpertiseHero
@@ -16,8 +23,6 @@ export function HeroSection() {
       }
       subheading={ATLASSIAN_HERO.subheading}
       image={ATLASSIAN_HERO.image.src}
-      imageTablet={ATLASSIAN_HERO.image.tabletSrc}
-      imageMobile={ATLASSIAN_HERO.image.mobileSrc}
       imageAlt={ATLASSIAN_HERO.image.alt}
     />
   );

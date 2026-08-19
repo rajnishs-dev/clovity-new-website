@@ -36,11 +36,7 @@ function isSvg(source: ContentImage['src']): boolean {
   return path.toLowerCase().includes('.svg');
 }
 
-function BadgeCard({
-  badge,
-}: {
-  badge: BadgeGroup['badges'][number];
-}) {
+function BadgeCard({ badge }: { badge: BadgeGroup['badges'][number] }) {
   return (
     <div
       className={cn(
@@ -60,7 +56,7 @@ function BadgeCard({
           // The two Atlassian specialization lockups are drawn 6px taller and pulled
           // 16px down, which is how the design gets their baselines to line up with
           // the shorter badges beside them.
-          badge.tall ? 'h-24 -mb-4' : 'h-[90px]',
+          badge.tall ? '-mb-4 h-24' : 'h-[90px]',
         )}
         {...(badge.image.width && badge.image.height
           ? { width: badge.image.width, height: badge.image.height }
@@ -93,9 +89,8 @@ export function CredentialsSection({
   ];
 
   return (
-    <Section padding="tight" className="border-y border-line-faint bg-[#eaf8ff]">
+    <Section padding="tight" className="border-y border-line-faint bg-soft">
       <SectionHeader
-        label={ABOUT_CREDENTIALS_CONTENT.label}
         labelClassName="mb-4"
         heading={
           <>

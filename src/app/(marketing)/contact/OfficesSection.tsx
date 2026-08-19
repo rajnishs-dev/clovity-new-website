@@ -1,8 +1,5 @@
 import { GradientText, Section, SectionHeader } from '@/components/ui';
-import {
-  CONTACT_OFFICES,
-  CONTACT_OFFICES_CONTENT,
-} from '@/constants/contact';
+import { CONTACT_OFFICES, CONTACT_OFFICES_CONTENT } from '@/constants/contact';
 import { OfficeCard } from './OfficeCard';
 
 /**
@@ -20,9 +17,8 @@ const STAGGER_STEP_MS = 50;
 
 export function OfficesSection() {
   return (
-    <Section className="border-y border-line-faint bg-[#eaf8ff]">
+    <Section className="border-y border-line-faint bg-soft">
       <SectionHeader
-        label={CONTACT_OFFICES_CONTENT.label}
         labelClassName="mb-4"
         heading={
           <>

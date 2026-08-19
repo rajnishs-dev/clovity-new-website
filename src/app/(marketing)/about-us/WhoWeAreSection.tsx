@@ -3,7 +3,6 @@ import { revealAligned, revealAttrs } from '@/lib/reveal';
 import {
   GradientText,
   HEADING_CLASS,
-  LABEL_CLASS,
   Section,
   SplitMedia,
   SplitMediaFrame,
@@ -20,16 +19,10 @@ export function WhoWeAreSection() {
     <Section padding="tight" className="bg-white">
       <SplitMedia
         media={
-          <SplitMediaFrame
-            image={ABOUT_WHO_CONTENT.image}
-            revealFrom="left"
-          />
+          <SplitMediaFrame image={ABOUT_WHO_CONTENT.image} revealFrom="left" />
         }
       >
         <div className={revealAligned('left', 'right')} {...revealAttrs()}>
-          <p className={cn(LABEL_CLASS, 'mb-4 text-[13px]')}>
-            {ABOUT_WHO_CONTENT.label}
-          </p>
           <h2 className={cn(HEADING_CLASS, 'mb-6')}>
             {ABOUT_WHO_CONTENT.headingLead}
             <GradientText>{ABOUT_WHO_CONTENT.headingHighlight}</GradientText>

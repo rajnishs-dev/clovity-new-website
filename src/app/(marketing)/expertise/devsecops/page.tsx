@@ -101,9 +101,9 @@ export default async function DevSecOpsPage() {
 
       <PageAnimations>
         <main id="main-content">
-          {/* No tablet/mobile variants: one 3:1 landscape banner, not the
-              three-file set the resource pages ship. No `imagePosition` either -
-              the shared top-anchored crop is right for this aspect ratio. */}
+          {/* No tablet/mobile variants: one 2:1 landscape banner, not the three-file
+              set the resource pages ship. No `imagePosition` either - the shared
+              top-anchored crop keeps the whole HUD ring; see `constants/media.ts`. */}
           <BannerHero
             breadcrumb={[...DEVSECOPS_HERO.crumbs]}
             heading={

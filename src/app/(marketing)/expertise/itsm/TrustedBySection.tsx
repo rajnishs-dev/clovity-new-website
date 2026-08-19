@@ -31,10 +31,7 @@ export function TrustedBySection({ logos }: { logos: ClientLogo[] }) {
         />
       </Container>
 
-      <ClientMarquee
-        logos={logos}
-        fadeColor={ITSM_TRUSTED_CONTENT.fadeColor}
-      />
+      <ClientMarquee logos={logos} fadeColor={ITSM_TRUSTED_CONTENT.fadeColor} />
     </section>
   );
 }

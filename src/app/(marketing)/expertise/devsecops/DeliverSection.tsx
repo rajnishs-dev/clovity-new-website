@@ -1,11 +1,6 @@
 import { cn } from '@/lib/cn';
 import { revealAligned, revealAttrs } from '@/lib/reveal';
-import {
-  GradientText,
-  Icon,
-  Section,
-  SectionHeader,
-} from '@/components/ui';
+import { GradientText, Icon, Section, SectionHeader } from '@/components/ui';
 import {
   DEVSECOPS_DELIVER_CONTENT,
   DEVSECOPS_OFFERINGS,
@@ -61,7 +56,7 @@ export function DeliverSection() {
               // three rows of two, that means indices 0 and 1 at desktop and index
               // 0 alone once the grid collapses.
               index > 1 && 'border-t border-line',
-              index === 1 && 'ml:border-t-0 border-t border-line',
+              index === 1 && 'border-t border-line ml:border-t-0',
               // The column rule. Sits on the right-hand column so it disappears
               // with the second column itself.
               index % 2 === 1 && 'ml:border-l ml:border-line ml:pl-14',

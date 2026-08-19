@@ -18,14 +18,15 @@ import {
  */
 export function SupportGridSection() {
   return (
-    <Section className="bg-[#eaf8ff]">
+    <Section className="bg-soft">
       <SectionHeader
-        label={MARKETPLACE_APPS_SUPPORT_CONTENT.label}
         className="mx-auto max-w-[680px]"
         heading={
           <>
             {MARKETPLACE_APPS_SUPPORT_CONTENT.headingLead}
-            <GradientText>{MARKETPLACE_APPS_SUPPORT_CONTENT.headingHighlight}</GradientText>
+            <GradientText>
+              {MARKETPLACE_APPS_SUPPORT_CONTENT.headingHighlight}
+            </GradientText>
           </>
         }
       />
@@ -37,10 +38,21 @@ export function SupportGridSection() {
         {...revealAttrs()}
       >
         {MARKETPLACE_APPS_SUPPORT_CARDS.map((card) => (
-          <div key={card.id} className="flex flex-col items-center px-5 py-4 text-center">
-            <Icon name={card.icon} size={30} className={cn('mb-3', card.iconChipClass)} />
-            <b className="mb-1.5 block text-[20px] font-500 text-title">{card.title}</b>
-            <p className="m-0 text-[16px] leading-[1.6] text-muted">{card.description}</p>
+          <div
+            key={card.id}
+            className="flex flex-col items-center px-5 py-4 text-center"
+          >
+            <Icon
+              name={card.icon}
+              size={30}
+              className={cn('mb-3', card.iconChipClass)}
+            />
+            <b className="mb-1.5 block text-[20px] font-500 text-title">
+              {card.title}
+            </b>
+            <p className="m-0 text-[16px] leading-[1.6] text-muted">
+              {card.description}
+            </p>
           </div>
         ))}
       </div>

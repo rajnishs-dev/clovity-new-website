@@ -11,9 +11,8 @@ import { ATLASSIAN_AI_CONTENT } from '@/constants/expertise/atlassian';
 /** Reuses the real Pulse AI content already published on the home page - not restated, imported. */
 export function AiAutomationSection() {
   return (
-    <Section id="ai-automation">
+    <Section id="ai-automation" className="bg-white">
       <SectionHeader
-        label={ATLASSIAN_AI_CONTENT.label}
         className="mx-auto max-w-[680px]"
         heading={
           <>
@@ -24,11 +23,18 @@ export function AiAutomationSection() {
         subheading={ATLASSIAN_AI_CONTENT.subheading}
       />
       <div
-        className={cn('mt-8 flex flex-wrap justify-center gap-2.5', revealAligned('center'))}
+        className={cn(
+          'mt-8 flex flex-wrap justify-center gap-2.5',
+          revealAligned('center'),
+        )}
         {...revealAttrs()}
       >
         {PULSE_AI_CAPABILITIES.map((capability) => (
-          <Chip key={capability.id} variant="a" icon={<Icon name={capability.icon} />}>
+          <Chip
+            key={capability.id}
+            variant="a"
+            icon={<Icon name={capability.icon} />}
+          >
             {capability.label}
           </Chip>
         ))}

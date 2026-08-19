@@ -24,7 +24,6 @@ export function FaqSection() {
 
       <div className="mx-auto w-full max-w-[900px] px-6">
         <SectionHeader
-          label={CAREERS_FAQ_CONTENT.label}
           labelClassName="mb-4"
           heading={
             <>

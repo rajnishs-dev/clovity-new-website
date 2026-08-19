@@ -93,7 +93,10 @@ export function ProductFamilySection() {
                     src={product.logo.src}
                     alt={product.logo.alt}
                     {...(product.logo.width && product.logo.height
-                      ? { width: product.logo.width, height: product.logo.height }
+                      ? {
+                          width: product.logo.width,
+                          height: product.logo.height,
+                        }
                       : {})}
                     className="block h-8 w-auto"
                   />

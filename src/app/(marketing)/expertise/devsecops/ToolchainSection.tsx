@@ -1,11 +1,6 @@
 import { cn } from '@/lib/cn';
 import { revealAligned, revealAttrs } from '@/lib/reveal';
-import {
-  GradientText,
-  Icon,
-  Section,
-  SectionHeader,
-} from '@/components/ui';
+import { GradientText, Icon, Section, SectionHeader } from '@/components/ui';
 import {
   DEVSECOPS_INTEGRATIONS,
   DEVSECOPS_INTEGRATIONS_CONTENT,

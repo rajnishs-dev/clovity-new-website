@@ -19,14 +19,15 @@ import {
  */
 export function ApproachComparisonSection() {
   return (
-    <Section className="bg-[#eaf8ff]">
+    <Section className="bg-soft">
       <SectionHeader
-        label={CLOUD_MIGRATION_APPROACH_CONTENT.label}
         className="mx-auto max-w-[680px]"
         heading={
           <>
             {CLOUD_MIGRATION_APPROACH_CONTENT.headingLead}
-            <GradientText>{CLOUD_MIGRATION_APPROACH_CONTENT.headingHighlight}</GradientText>
+            <GradientText>
+              {CLOUD_MIGRATION_APPROACH_CONTENT.headingHighlight}
+            </GradientText>
           </>
         }
         subheading={CLOUD_MIGRATION_APPROACH_CONTENT.subheading}
@@ -40,18 +41,37 @@ export function ApproachComparisonSection() {
         {...revealAttrs()}
       >
         {CLOUD_MIGRATION_APPROACH_OPTIONS.map((option) => (
-          <Card key={option.id} as="article" variant="default" className="relative p-7">
+          <Card
+            key={option.id}
+            as="article"
+            variant="default"
+            className="relative p-7"
+          >
             <div className="relative mb-4 h-16 w-16">
-              <AppImage src={option.iconImage} alt="" fill sizes="56px" className="object-contain" />
+              <AppImage
+                src={option.iconImage}
+                alt=""
+                fill
+                sizes="56px"
+                className="object-contain"
+              />
             </div>
             <b className="mb-2 block text-[17px] font-500 tracking-[-.01em] text-title">
               {option.name}
             </b>
-            <p className="mb-4 text-[13.5px] leading-[1.6] text-muted">{option.description}</p>
+            <p className="mb-4 text-[13.5px] leading-[1.6] text-muted">
+              {option.description}
+            </p>
             <ul className="mb-5 space-y-2">
               {option.points.map((point) => (
-                <li key={point} className="flex items-start gap-2 text-[13px] text-ink">
-                  <Icon name="check" className="mt-0.5 shrink-0 text-brand-green" />
+                <li
+                  key={point}
+                  className="flex items-start gap-2 text-[13px] text-ink"
+                >
+                  <Icon
+                    name="check"
+                    className="mt-0.5 shrink-0 text-brand-green"
+                  />
                   {point}
                 </li>
               ))}

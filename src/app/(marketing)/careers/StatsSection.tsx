@@ -10,7 +10,7 @@ import { CAREERS_STATS } from '@/constants/careers';
  */
 export function StatsSection() {
   return (
-    <Section padding="tight" className="bg-[#eaf8ff]">
+    <Section padding="tight" className="bg-soft">
       <StatBand items={CAREERS_STATS} />
     </Section>
   );

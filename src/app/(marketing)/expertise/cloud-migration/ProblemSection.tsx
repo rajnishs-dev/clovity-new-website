@@ -1,5 +1,5 @@
 import { Section } from '@/components/ui/Section';
-import { GradientText, HEADING_CLASS, LABEL_CLASS } from '@/components/ui/Typography';
+import { GradientText, HEADING_CLASS } from '@/components/ui/Typography';
 import { AppImage } from '@/components/ui/Image';
 import { cn } from '@/lib/cn';
 import { reveal, revealAttrs } from '@/lib/reveal';
@@ -23,17 +23,21 @@ function ProblemPhoto() {
 
 export function ProblemSection() {
   return (
-    <Section>
+    <Section className="bg-white">
       <div className="grid items-center gap-8 md:grid-cols-[1fr_1.05fr] lg:gap-10">
         <div className={reveal('left')} {...revealAttrs()}>
           <ProblemPhoto />
         </div>
 
-        <div className={cn(reveal('right'), 'text-center md:text-left')} {...revealAttrs()}>
-          <span className={LABEL_CLASS}>{CLOUD_MIGRATION_PROBLEM_CONTENT.label}</span>
+        <div
+          className={cn(reveal('right'), 'text-center md:text-left')}
+          {...revealAttrs()}
+        >
           <h2 className={HEADING_CLASS}>
             {CLOUD_MIGRATION_PROBLEM_CONTENT.headingLead}
-            <GradientText>{CLOUD_MIGRATION_PROBLEM_CONTENT.headingHighlight}</GradientText>
+            <GradientText>
+              {CLOUD_MIGRATION_PROBLEM_CONTENT.headingHighlight}
+            </GradientText>
             <br />
             <span className="text-[clamp(20px,2.4vw,30px)]">
               {CLOUD_MIGRATION_PROBLEM_CONTENT.headingSecondLine}
@@ -41,12 +45,14 @@ export function ProblemSection() {
           </h2>
           <div className="mt-5 space-y-4">
             {CLOUD_MIGRATION_PROBLEM_CONTENT.paragraphs.map((paragraph) => (
-              <p key={paragraph} className="text-[16px] leading-[1.75] text-muted">
+              <p
+                key={paragraph}
+                className="text-[16px] leading-[1.75] text-muted"
+              >
                 {paragraph}
               </p>
             ))}
           </div>
-
         </div>
       </div>
     </Section>

@@ -36,8 +36,7 @@ export function MilestoneTimeline({ steps }: { steps: MilestoneStep[] }) {
       setFills(
         centers.map((centerY, index) => {
           const nextCenterY = centers[index + 1];
-          const span =
-            nextCenterY === undefined ? 0 : nextCenterY - centerY;
+          const span = nextCenterY === undefined ? 0 : nextCenterY - centerY;
           if (span <= 0) return centerY <= triggerY ? 1 : 0;
           return Math.min(1, Math.max(0, (triggerY - centerY) / span));
         }),

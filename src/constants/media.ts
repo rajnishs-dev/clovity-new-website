@@ -73,7 +73,185 @@ export { default as aiPoweredSummary } from '@/assets/images/home/ai-powered-sum
  * loses only the desk along the bottom edge, so no `imagePosition` override is
  * needed. Re-crop the source to 3.2:1 if that ever stops holding.
  */
+/**
+ * `/expertise/atlassian` hero banner - a supplied photograph of three people reviewing
+ * work on screen, subject centre-right.
+ *
+ * ── THIS REPLACED THREE REMOTE UNSPLASH URLS ──
+ * `ATLASSIAN_HERO.image` used to hold three `images.unsplash.com` URLs (one per
+ * breakpoint, same photo at 1800/1000/640px). Bundling it locally removes a
+ * third-party runtime dependency from a hero - an external host that rate-limits or
+ * changes an id leaves the page's first screen blank - and lets `next/image` build the
+ * responsive srcset from one static import, so the per-breakpoint URLs are no longer
+ * needed at all.
+ *
+ * Downscaled from the supplied 6016x3372 original to 1920x1076 at JPEG q84: 8.6 MB to
+ * 162 KB. At 16:9 this is much taller than the banner slot, so `ExpertiseHero` crops it
+ * hard - the top-anchored default keeps all three faces and loses the desk along the
+ * bottom, which is why no crop-anchor override is needed.
+ *
+ * `ExpertiseHero`'s scrim is stronger than `BannerHero`'s (.88 to .2 rather than .85 to
+ * 0), which is what makes this bright, window-lit frame safe behind white copy.
+ */
+export { default as atlassianHeroBanner } from '@/assets/images/expertise/atlassian-banner.jpg';
+
+/**
+ * `/expertise/cloud-migration` hero banner - a supplied photograph, a laptop and a
+ * hand holding a phone with a cloud-transfer diagram between them, subject centre-right
+ * and the left half almost empty. That emptiness is ideal here: it is where the copy
+ * sits, so the scrim has nothing to fight.
+ *
+ * Converted from the supplied 1536x768 PNG to JPEG q84: 1.3 MB to 75 KB. NOT upscaled
+ * to 1920 - 1536 is the source width.
+ *
+ * ── THIS ALSO ENDED A SHARED PHOTO ──
+ * `CLOUD_MIGRATION_HERO.image` previously held the SAME three Unsplash URLs as
+ * `ATLASSIAN_HERO.image` - one photo doing duty as the hero of two different expertise
+ * pages, with a comment on each pointing at the other. Both now have their own bundled
+ * image, so neither depends on a third-party host and the two pages no longer open on
+ * the same picture.
+ */
+export { default as cloudMigrationHeroBanner } from '@/assets/images/expertise/cloud-migration-banner.jpg';
+
+/**
+ * `/expertise/marketplace-apps` hero banner - a supplied DIAGRAM, not a photograph: the
+ * Atlassian Platinum Solution Partner badge ringed by six app icon tiles on a near-white
+ * lavender field. The left half is empty, which is where the hero copy sits.
+ *
+ * ── THIS IS THE UNLABELLED VERSION, AND THAT IS WHY IT WORKS ──
+ * A first version carried a text caption beside each of the six tiles. It had to go: the
+ * hero crops 25% off the bottom at desktop width, which cut two captions off entirely
+ * and left the header pill covering a third, and at 390px the whole graphic renders
+ * 195px tall so every caption was far too small to read. Captions at the top and bottom
+ * extremes of a graphic cannot survive a wide letterbox crop - no crop anchor fixes
+ * that. Without them the artwork crops cleanly at any width, because what remains is
+ * centred.
+ *
+ * If a labelled version is ever wanted, it belongs in a section of its own at full size,
+ * not behind hero copy.
+ *
+ * ── JPEG, AFTER MEASURING ──
+ * The labelled version was kept as PNG (426 KB) because JPEG's chroma subsampling
+ * fringes small text. With the captions gone the only fine detail left is the badge's
+ * own wordmark, and JPEG q88 differs from the PNG by a mean of 2.35/255 (0.9%) over the
+ * badge region with the lettering clean at 6x zoom - so 412 KB became 56 KB for no
+ * visible cost. Re-run that comparison before switching format again.
+ */
+export { default as marketplaceAppsHeroBanner } from '@/assets/images/expertise/marketplace-apps-banner.jpg';
+
 export { default as itsmServiceDeskBanner } from '@/assets/images/expertise/itsm-service-desk.jpg';
+
+/**
+ * `/expertise/managed-services` hero banner - a supplied support-desk photograph (two
+ * people at a monitor on headsets, network overlay across a city skyline), its subject
+ * in the RIGHT half of the frame. That placement is why it works here: `BannerHero`'s
+ * scrim is darkest on the left where the copy sits, so subject and text never compete.
+ *
+ * Downscaled from the supplied 6457x2500 original to 1920x743 at JPEG q84: 3.2 MB to
+ * 116 KB. At 2.58:1 this is the CLOSEST of the three banners tried here to the 3.2:1
+ * the purpose-made resource banners use, so the hero crops less of it than its
+ * predecessors did - and the top-anchored default keeps both faces, which is why no
+ * `imagePosition` override is passed.
+ *
+ * ── THE SOURCE IS LIGHT, AND THE SCRIM IS DOING THE WORK ──
+ * Two earlier versions occupied this slot: a dark-navy operator-at-laptop frame, then a
+ * light variant of it. This one is light too, which matters because the hero's scrim
+ * was built for dark photography - it fades to fully transparent on the right, so the
+ * band behind the copy stays dark while the right half reads pale. The white heading's
+ * contrast therefore rests on the scrim rather than on the photo. Measured 9.7:1 at
+ * 1440. Re-measure if the scrim is ever softened.
+ */
+export { default as managedServicesHeroBanner } from '@/assets/images/expertise/managed-services-banner.jpg';
+
+/**
+ * `/expertise/workforce` hero banner - four colleagues around a laptop at a wooden table,
+ * against a pale panelled wall that runs empty across the left third of the frame.
+ *
+ * A client-supplied photograph, 7070x2070. Downscaled to 1920x562 at JPEG q84 (mozjpeg):
+ * 7.8 MB to 127 KB. Not cropped - the full frame is kept, because that empty left third is
+ * exactly where the hero sets its copy.
+ *
+ * ── IT REPLACED A CROP THAT EXISTED ONLY TO DODGE BURNT-IN TEXT ──
+ * The slot previously held a 995x500 crop of the legacy site's own workforce banner
+ * (`website-t/public/images/banner/workforce/workforce-desktop.jpg`). That file has the
+ * headline "Boost productivity through workforce optimization" baked into its pixels across
+ * the left half - where this hero renders its own `<h1>` - so the only usable part was the
+ * photograph to the right of the text, at a poor 1.99:1. Its tablet and mobile siblings
+ * carry the same burnt-in text. This supplied file has none, so the whole frame is usable.
+ *
+ * ── 3.42:1 FLIPS THE CROP AXIS, AND THAT IS WHY CENTRE IS CORRECT ──
+ * At 3.42:1 this is WIDER than the banner slot (about 2.88:1 at 1440), so `object-fit:
+ * cover` scales it by height and crops HORIZONTALLY - the opposite of the previous 1.99:1
+ * file, which was scaled by width and cropped vertically. So `objectPosition` matters here
+ * in the axis it did not before, and the default is what is wanted: `ParallaxImage` sets
+ * none, so the browser default `50% 50%` applies and trims about 135px from each side at
+ * 1440, keeping all four faces with the empty wall still under the copy.
+ *
+ * Do NOT pass `imagePosition: 'left'` to "protect" the copy column. It would hold the
+ * leftmost pixels, which are the BRIGHTEST part of the wall, and cost contrast rather than
+ * buy it. And note `ParallaxImage`'s own doc comment claims a top-anchored `center 0%`
+ * default - that is stale; nothing in the component or `AppImage` sets it, and the computed
+ * value on this page is `50% 50%`.
+ *
+ * ── THE COPY RESTS ON THE SCRIM, NOT ON THE PHOTO ──
+ * That pale wall means the white text's contrast comes almost entirely from the gradient.
+ * Measured at 1440 on the REAL composited background - the page rendered with the hero text
+ * and header hidden, so photo plus scrim only - sampling each text box's own pixel rect:
+ *
+ *     heading  46px, needs 3:1     worst 4.89:1   1.63x the requirement
+ *     lead     17px, needs 4.5:1   worst 5.02:1   1.12x the requirement
+ *
+ * Note the method: measuring the normal render is useless, because the white glyphs sample
+ * as 1.00:1 against themselves. Hide the text, then measure.
+ *
+ * Both pass WCAG AA, but the lead has only about 12% headroom - against 61% for the crop
+ * this replaced, which was a darker frame. That is the cost of the better composition, and
+ * it is thin enough to matter: widening the copy column, softening the scrim, lightening
+ * the type or adding a fourth line of lead copy could each push it under. Re-measure over
+ * the actual text boxes, not a fixed band, after any of those. If more headroom is ever
+ * needed the cheapest source is a baked left-side vignette on the asset itself - which is
+ * how the legacy banner made its own burnt-in white text legible on this same photograph.
+ */
+export { default as workforceHeroBanner } from '@/assets/images/expertise/workforce-banner.jpg';
+
+/**
+ * `/expertise/ai` hero banner - a client-supplied photograph: a bearded man in profile looking
+ * up at a wall of translucent data panels, the left third falling away into soft window bokeh.
+ *
+ * 8064x2304 downscaled to 1920x549 at JPEG q84 (mozjpeg): 1.4 MB to 92 KB. Not cropped - the
+ * full frame is kept, because that bokeh on the left is where the hero sets its copy.
+ *
+ * ── IT REPLACED A CROP OF THE LEGACY GEN-AI BANNER ──
+ * The slot previously held a 1160x500 crop of `website-t/public/images/banner/gen-ai/
+ * genaibanner.png` - a robot hand and a glowing "AI" hexagon on dark navy - cut to x=760..1920
+ * to escape the "Unleash the future of Generative AI" headline baked into its left half, the
+ * same problem `workforceHeroBanner` documents. That crop was only 1160px wide with nothing to
+ * upscale from, so this supplied file is a straight improvement on resolution as well as
+ * composition.
+ *
+ * ── 3.50:1 MEANS THE CROP IS HORIZONTAL ──
+ * Wider than the banner slot (about 2.88:1 at 1440), so `object-fit: cover` scales by height and
+ * trims about 135px from each side under the `50% 50%` default - which keeps the man, the panels
+ * and enough of the bokeh. No `imagePosition` override. Note this is the opposite axis to the
+ * 2.32:1 graphic it replaced, which was scaled by width and cropped vertically.
+ *
+ * ── CONTRAST WENT FROM COMFORTABLE TO TIGHT, AND THAT IS THE REAL COST ──
+ * The old crop was near-black navy behind the copy and measured 17.18:1 / 14.72:1. This frame is
+ * bright, so the scrim is doing all the work. Measured on the real composited background at 1440
+ * - the page rendered with the hero text and header hidden, then sampling each text box's own
+ * pixel rect:
+ *
+ *     heading  46px, needs 3:1     worst 4.58:1   1.53x the requirement
+ *     lead     17px, needs 4.5:1   worst 5.16:1   1.15x the requirement
+ *
+ * Both clear WCAG AA, but the lead now has roughly 15% headroom where it had 230%. That puts this
+ * banner in the same bracket as `workforceHeroBanner` (4.89:1 / 5.02:1): widening the copy column,
+ * softening the scrim, lightening the type or adding a fourth line of lead copy could each push it
+ * under. Re-measure over the actual text boxes after any of those - measuring the normal render is
+ * useless, because the white glyphs sample as 1.00:1 against themselves. Hide the text first.
+ */
+export { default as aiHeroBanner } from '@/assets/images/expertise/ai-banner.jpg';
+
 export { default as dataCenterSupportPhoto } from '@/assets/images/expertise/data-center-support.jpg';
 export { default as iconFullMigration } from '@/assets/icons/expertise/full-migration.svg';
 export { default as iconPhasedMigration } from '@/assets/icons/expertise/phased-migration.svg';
@@ -124,19 +302,27 @@ export { default as termsHeroBanner } from '@/assets/images/terms-condition.jpg'
 
 /* ── Expertise hero banners ──────────────────────────────────────────────── */
 /**
- * `/expertise/devsecops` hero banner - a supplied dark-navy HUD graphic, its lit
- * ring of delivery icons sitting in the RIGHT half of the frame. That placement is
- * why it works here: `BannerHero`'s scrim is darkest on the left, which is where the
- * copy sits, so the artwork and the text never compete.
+ * `/expertise/devsecops` hero banner - a supplied mid-blue HUD graphic, its lit ring of
+ * delivery icons sitting in the RIGHT half of the frame. That placement is why it works
+ * here: `BannerHero`'s scrim is darkest on the left, which is where the copy sits, so
+ * the artwork and the text never compete. The left half is a plain blue gradient, which
+ * is the easiest thing a scrim can darken cleanly.
  *
- * Downscaled from the supplied 6000x2000 original to 1920x640 at JPEG q82, taking it
- * from 2.3 MB to 57 KB. At 3:1 it is close enough to the 1920x600 the purpose-made
- * resource banners use that the shared top-anchored crop is correct - so unlike its
- * predecessor this needs no `imagePosition` override.
+ * Converted from the supplied 1536x768 PNG to JPEG q84: 1.3 MB to 83 KB. NOT upscaled
+ * to the 1920 the other banners use - 1536 is the source width, and inventing pixels
+ * would add bytes without detail.
  *
- * It replaced the home page's portrait `secure-by-design.jpg`, which was only ever
- * a stand-in: reused across two pages, 2220x3245, and dependent on a crop-anchor
- * override to show anything but out-of-focus ceiling.
+ * ── THE ASPECT CHANGED, AND THE CROP FOLLOWED ──
+ * This replaced a darker 3:1 version of the same composition. At 2:1 the hero now crops
+ * more off the bottom than it did at 3:1, so the ring sits lower in frame. The
+ * top-anchored default still keeps the whole ring and loses only empty gradient, which
+ * is why no `imagePosition` override is passed - but that is a measured outcome of this
+ * particular composition, not a general property of 2:1 sources.
+ *
+ * Two images preceded it here: the 3:1 dark version, and before that the home page's
+ * portrait `secure-by-design.jpg`, which was only ever a stand-in - reused across two
+ * pages, 2220x3245, and dependent on a crop-anchor override to show anything but
+ * out-of-focus ceiling.
  */
 export { default as devsecopsHeroBanner } from '@/assets/images/expertise/devsecops-banner.jpg';
 

@@ -51,7 +51,6 @@ export const ABOUT_HERO = {
 /* ── Why Clovity ────────────────────────────────────────────────────────── */
 
 export const ABOUT_WHY_CONTENT = {
-  label: 'Why Clovity',
   headingLead: 'Three Things That Set Us ',
   headingHighlight: 'Apart',
 } as const;
@@ -86,7 +85,6 @@ export const ABOUT_WHY_CARDS: PillarCard[] = [
 /* ── Trusted By ─────────────────────────────────────────────────────────── */
 
 export const ABOUT_TRUSTED_CONTENT = {
-  label: 'Trusted By',
   headingLead: 'Enterprise & Public-Sector Teams ',
   headingHighlight: 'Building on Clovity',
   /**
@@ -102,7 +100,6 @@ export const ABOUT_TRUSTED_CONTENT = {
 /* ── Who We Are ─────────────────────────────────────────────────────────── */
 
 export const ABOUT_WHO_CONTENT = {
-  label: 'Who We Are',
   headingLead: 'A Delivery Partner Built for ',
   headingHighlight: 'Regulated, High-Stakes Teams',
   paragraphs: [
@@ -147,7 +144,6 @@ export const ABOUT_STATS: StatBandItem[] = [
 /* ── Our values ─────────────────────────────────────────────────────────── */
 
 export const ABOUT_VALUES_CONTENT = {
-  label: 'What Drives Us',
   headingLead: 'The Principles Behind Every ',
   headingHighlight: 'Engagement',
   subheading:
@@ -192,7 +188,6 @@ export const ABOUT_VALUES: BentoTile[] = [
 /* ── Milestones ─────────────────────────────────────────────────────────── */
 
 export const ABOUT_MILESTONES_CONTENT = {
-  label: 'Our Journey',
   headingLead: 'Milestones That ',
   headingHighlight: 'Mark Our Progress',
   subheading:
@@ -240,7 +235,6 @@ export const ABOUT_MILESTONES: MilestoneStep[] = [
 /* ── Certifications & awards ────────────────────────────────────────────── */
 
 export const ABOUT_CREDENTIALS_CONTENT = {
-  label: 'Verified Credentials',
   headingLead: 'Certifications & ',
   headingHighlight: 'Awards',
   subheading:
@@ -259,6 +253,7 @@ export const ABOUT_CREDENTIALS_CONTENT = {
  */
 export const ABOUT_ATLASSIAN_BADGES: BadgeGroup = {
   id: 'atlassian-recognition',
+  /** The group's visible heading, not a section eyebrow - `BadgeGroup` requires it. */
   label: 'Atlassian Recognition',
   badges: [
     {
@@ -468,7 +463,6 @@ export const ABOUT_MISSION_QUOTE =
 /* ── Work with us ───────────────────────────────────────────────────────── */
 
 export const ABOUT_WORK_WITH_US = {
-  label: 'Work With Us',
   headingLead: "Let's Build What's Next, ",
   headingHighlight: 'Together',
   subheading:

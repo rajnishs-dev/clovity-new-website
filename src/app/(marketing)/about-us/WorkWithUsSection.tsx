@@ -5,7 +5,6 @@ import {
   ButtonLink,
   GradientText,
   HEADING_CLASS,
-  LABEL_CLASS,
   Section,
   SplitMedia,
   SplitMediaFrame,
@@ -22,7 +21,7 @@ import { ABOUT_WORK_WITH_US } from '@/constants/about';
  */
 export function WorkWithUsSection() {
   return (
-    <Section padding="tight" className="bg-[#eaf8ff]">
+    <Section padding="tight" className="bg-soft">
       <SplitMedia
         reverse
         media={
@@ -33,14 +32,9 @@ export function WorkWithUsSection() {
         }
       >
         <div className={revealAligned('left', 'left')} {...revealAttrs()}>
-          <p className={cn(LABEL_CLASS, 'mb-4')}>
-            {ABOUT_WORK_WITH_US.label}
-          </p>
           <h2 className={cn(HEADING_CLASS, 'mb-6')}>
             {ABOUT_WORK_WITH_US.headingLead}
-            <GradientText>
-              {ABOUT_WORK_WITH_US.headingHighlight}
-            </GradientText>
+            <GradientText>{ABOUT_WORK_WITH_US.headingHighlight}</GradientText>
           </h2>
           <p className={cn(SUBHEADING_CLASS, 'mb-6')}>
             {ABOUT_WORK_WITH_US.subheading}

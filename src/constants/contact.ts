@@ -148,7 +148,6 @@ export const CONTACT_CHANNELS: ContactChannel[] = [
 /* ── Global offices ─────────────────────────────────────────────────────── */
 
 export const CONTACT_OFFICES_CONTENT = {
-  label: 'Global Offices',
   headingLead: "Wherever You're Delivering, ",
   headingHighlight: "We're Close By",
   subheading:

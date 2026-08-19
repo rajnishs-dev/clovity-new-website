@@ -10,14 +10,15 @@ import {
 
 export function ProofSection() {
   return (
-    <Section className="bg-[#eaf8ff]">
+    <Section className="bg-soft">
       <SectionHeader
-        label={CLOUD_MIGRATION_PROOF_CONTENT.label}
         className="mx-auto max-w-[680px]"
         heading={
           <>
             {CLOUD_MIGRATION_PROOF_CONTENT.headingLead}
-            <GradientText>{CLOUD_MIGRATION_PROOF_CONTENT.headingHighlight}</GradientText>
+            <GradientText>
+              {CLOUD_MIGRATION_PROOF_CONTENT.headingHighlight}
+            </GradientText>
           </>
         }
       />

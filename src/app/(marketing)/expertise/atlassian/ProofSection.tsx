@@ -10,14 +10,15 @@ import {
 
 export function ProofSection() {
   return (
-    <Section>
+    <Section className="bg-white">
       <SectionHeader
-        label={ATLASSIAN_PROOF_CONTENT.label}
         className="mx-auto max-w-[680px]"
         heading={
           <>
             {ATLASSIAN_PROOF_CONTENT.headingLead}
-            <GradientText>{ATLASSIAN_PROOF_CONTENT.headingHighlight}</GradientText>
+            <GradientText>
+              {ATLASSIAN_PROOF_CONTENT.headingHighlight}
+            </GradientText>
           </>
         }
       />

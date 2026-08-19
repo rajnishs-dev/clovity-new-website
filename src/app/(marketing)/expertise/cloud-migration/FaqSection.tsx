@@ -14,23 +14,30 @@ import {
  */
 export function FaqSection() {
   return (
-    <Section width="prose" className="bg-[#eaf8ff]">
+    <Section width="prose" className="bg-soft">
       <SectionHeader
-        label={CLOUD_MIGRATION_FAQ_CONTENT.label}
         className="mx-auto max-w-[680px]"
         heading={
           <>
             {CLOUD_MIGRATION_FAQ_CONTENT.headingLead}
-            <GradientText>{CLOUD_MIGRATION_FAQ_CONTENT.headingHighlight}</GradientText>
+            <GradientText>
+              {CLOUD_MIGRATION_FAQ_CONTENT.headingHighlight}
+            </GradientText>
           </>
         }
       />
       <Accordion
         items={CLOUD_MIGRATION_FAQS.map((faq) => ({
           id: faq.id,
-          title: <span className="text-[15px] font-600 text-title">{faq.question}</span>,
+          title: (
+            <span className="text-[15px] font-600 text-title">
+              {faq.question}
+            </span>
+          ),
           content: (
-            <p className="m-0 pb-2 text-[14.5px] leading-[1.7] text-muted">{faq.answer}</p>
+            <p className="m-0 pb-2 text-[14.5px] leading-[1.7] text-muted">
+              {faq.answer}
+            </p>
           ),
         }))}
         className="mt-10 rounded-[10px] border border-line-soft bg-white px-6"

@@ -38,14 +38,15 @@ export function AgcSection() {
   };
 
   return (
-    <Section className="bg-[#eaf8ff]">
+    <Section className="bg-soft">
       <SectionHeader
-        label={CLOUD_MIGRATION_AGC_CONTENT.label}
         className="mx-auto max-w-[680px]"
         heading={
           <>
             {CLOUD_MIGRATION_AGC_CONTENT.headingLead}
-            <GradientText>{CLOUD_MIGRATION_AGC_CONTENT.headingHighlight}</GradientText>
+            <GradientText>
+              {CLOUD_MIGRATION_AGC_CONTENT.headingHighlight}
+            </GradientText>
           </>
         }
         subheading={CLOUD_MIGRATION_AGC_CONTENT.subheading}
@@ -88,8 +89,8 @@ export function AgcSection() {
           </h3>
           <p className="mb-[22px] text-[14px] leading-[1.65] text-black">
             Standard Atlassian Cloud - the right destination for most teams:
-            faster releases, no infrastructure to patch, and every new
-            Atlassian feature on day one.
+            faster releases, no infrastructure to patch, and every new Atlassian
+            feature on day one.
           </p>
           <div className="grid grid-cols-3 gap-x-5 to-560:grid-cols-1 to-560:gap-y-4">
             {MIGRATION_BENEFITS.map((benefit) => (
@@ -127,9 +128,10 @@ export function AgcSection() {
             Atlassian Government Cloud
           </h3>
           <p className="mb-[22px] text-[14px] leading-[1.65] text-black">
-            AGC is Atlassian&rsquo;s <strong>FedRAMP Moderate authorized</strong>{' '}
-            environment - Jira, Jira Service Management, and Confluence, managed
-            for CUI and federal security standards, with{' '}
+            AGC is Atlassian&rsquo;s{' '}
+            <strong>FedRAMP Moderate authorized</strong> environment - Jira,
+            Jira Service Management, and Confluence, managed for CUI and federal
+            security standards, with{' '}
             <strong>FedRAMP High and IL5 on Atlassian&rsquo;s roadmap</strong>.
           </p>
           <div className="grid grid-cols-2 gap-x-[22px] gap-y-5 to-560:grid-cols-1">

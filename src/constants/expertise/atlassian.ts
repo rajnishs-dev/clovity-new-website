@@ -1,4 +1,5 @@
 import { ROUTES } from '@/constants/routes';
+import { atlassianHeroBanner } from '@/constants/media';
 import { CUSTOMER_STORIES, CREDENTIAL_ROWS } from '@/constants/home';
 import type {
   CtaLink,
@@ -35,18 +36,17 @@ export const ATLASSIAN_HERO = {
   /** Longer version of the same claim, used only for the page's meta description. */
   lead: 'Jira, Confluence, and Jira Service Management - implemented, administered, and kept healthy by the same Platinum-tier team that runs Atlassian for federal agencies and enterprise programs alike.',
   /**
-   * Same photo already vetted for this codebase's home page
-   * (`FDE_CONTENT.photo` in `constants/home.ts`) - resized via query params
-   * rather than a newly guessed Unsplash id, since this component needs a
-   * wider crop than that section's 1200px card image.
+   * A bundled supplied photograph - see `atlassianHeroBanner` in `constants/media.ts`.
+   *
+   * There is deliberately no `tabletSrc`/`mobileSrc` any more. This used to carry three
+   * `images.unsplash.com` URLs, the same photo at 1800/1000/640px, one per breakpoint.
+   * A static import lets `next/image` generate the whole responsive srcset from one
+   * file, so the per-breakpoint entries were doing work the framework already does -
+   * and they made the page's first screen depend on a third-party host staying up.
    */
   image: {
-    src: 'https://images.unsplash.com/photo-1758873268745-dd2cf0d677b5?auto=format&fit=crop&w=1800&q=80',
-    tabletSrc:
-      'https://images.unsplash.com/photo-1758873268745-dd2cf0d677b5?auto=format&fit=crop&w=1000&q=80',
-    mobileSrc:
-      'https://images.unsplash.com/photo-1758873268745-dd2cf0d677b5?auto=format&fit=crop&w=640&q=80',
-    alt: 'Clovity engineers reviewing an Atlassian implementation on screen',
+    src: atlassianHeroBanner,
+    alt: 'Three colleagues reviewing an Atlassian implementation on screen together',
   },
 } as const;
 
@@ -64,7 +64,6 @@ export const ATLASSIAN_TRUST_BADGES = CREDENTIAL_ROWS.find(
 /* ── Problem statement ──────────────────────────────────────────────────── */
 
 export const ATLASSIAN_PROBLEM_CONTENT = {
-  label: 'The Problem We Solve',
   headingLead: 'Most Atlassian Instances ',
   headingHighlight: 'Outgrow Their Admins',
   paragraphs: [
@@ -76,7 +75,6 @@ export const ATLASSIAN_PROBLEM_CONTENT = {
 /* ── "What we deliver" grid ─────────────────────────────────────────────── */
 
 export const ATLASSIAN_DELIVER_CONTENT = {
-  label: 'What We Deliver',
   headingLead: 'Atlassian, ',
   headingHighlight: 'End to End',
   subheading:
@@ -143,7 +141,6 @@ export const ATLASSIAN_DELIVER_CARDS: PillarCard[] = [
 /* ── AI + automation ─────────────────────────────────────────────────────── */
 
 export const ATLASSIAN_AI_CONTENT = {
-  label: 'AI Inside the Practice',
   headingLead: 'AI Runs Inside Every ',
   headingHighlight: 'Atlassian Engagement',
   subheading:
@@ -153,13 +150,13 @@ export const ATLASSIAN_AI_CONTENT = {
 /* ── Suite coverage (tabs) ───────────────────────────────────────────────── */
 
 export const ATLASSIAN_SUITE_CONTENT = {
-  label: 'Suite Coverage',
   headingLead: 'Certified Across the ',
   headingHighlight: 'Atlassian Suite',
 } as const;
 
 export interface SuiteTab {
   id: string;
+  /** The tab button's text. Not a section eyebrow - this one is load-bearing UI. */
   label: string;
   icon: PillarCard['icon'];
   title: string;
@@ -222,7 +219,6 @@ export const ATLASSIAN_SUITE_TABS: SuiteTab[] = [
 /* ── Delivery approach ───────────────────────────────────────────────────── */
 
 export const ATLASSIAN_APPROACH_CONTENT = {
-  label: 'How We Work',
   headingLead: 'A Delivery Method ',
   headingHighlight: 'Built for Audits, Not Just Launches',
 } as const;
@@ -268,7 +264,6 @@ export const ATLASSIAN_APPROACH_STEPS: ProcessStep[] = [
 /* ── Metrics ─────────────────────────────────────────────────────────────── */
 
 export const ATLASSIAN_METRICS_CONTENT = {
-  label: 'Track Record',
   headingLead: 'Numbers From the ',
   headingHighlight: 'Whole Practice',
 } as const;
@@ -291,7 +286,6 @@ export const ATLASSIAN_METRICS: StatBandItem[] = [
 export const ATLASSIAN_PROOF_STORIES: CustomerStory[] = [...CUSTOMER_STORIES];
 
 export const ATLASSIAN_PROOF_CONTENT = {
-  label: 'Proof, Not Promises',
   headingLead: 'Built for Teams That Get ',
   headingHighlight: 'Audited',
 } as const;

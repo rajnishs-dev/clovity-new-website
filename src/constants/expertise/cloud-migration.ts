@@ -1,6 +1,7 @@
 import { ROUTES } from '@/constants/routes';
 import { CUSTOMER_STORIES, CREDENTIAL_ROWS } from '@/constants/home';
 import {
+  cloudMigrationHeroBanner,
   dataCenterSupportPhoto,
   iconFullMigration,
   iconHybridApproach,
@@ -40,14 +41,18 @@ export const CLOUD_MIGRATION_HERO = {
   titleAccent: 'Your Momentum Isn’t.',
   subheading:
     'We move your Atlassian stack to Cloud - or Government Cloud - in staged, validated waves, then stay behind with Pulse AI watching the result.',
-  /** Same verified photo used on the Atlassian page - see that file's note. */
+  /**
+   * A bundled supplied photograph - see `cloudMigrationHeroBanner` in
+   * `constants/media.ts`.
+   *
+   * No `tabletSrc`/`mobileSrc`: a static import lets `next/image` build the responsive
+   * srcset from one file. Those entries existed to carry three hand-sized Unsplash URLs
+   * of a photo this page SHARED with the Atlassian hero - both pages now have their own
+   * image and neither reaches a third-party host to paint its first screen.
+   */
   image: {
-    src: 'https://images.unsplash.com/photo-1758873268745-dd2cf0d677b5?auto=format&fit=crop&w=1800&q=80',
-    tabletSrc:
-      'https://images.unsplash.com/photo-1758873268745-dd2cf0d677b5?auto=format&fit=crop&w=1000&q=80',
-    mobileSrc:
-      'https://images.unsplash.com/photo-1758873268745-dd2cf0d677b5?auto=format&fit=crop&w=640&q=80',
-    alt: 'Clovity architects planning an Atlassian Cloud migration',
+    src: cloudMigrationHeroBanner,
+    alt: 'A cloud data-transfer diagram above a laptop and a phone in hand',
   },
 } as const;
 
@@ -64,7 +69,6 @@ export const CLOUD_MIGRATION_TRUST_BADGES = CREDENTIAL_ROWS.find(
 /* ── Problem statement ──────────────────────────────────────────────────── */
 
 export const CLOUD_MIGRATION_PROBLEM_CONTENT = {
-  label: 'The Problem We Solve',
   headingLead: 'Data Center Support ',
   headingHighlight: 'Has a Deadline',
   headingSecondLine: 'Your Migration Plan Shouldn’t Be an Afterthought.',
@@ -86,7 +90,6 @@ export const CLOUD_MIGRATION_PROBLEM_CONTENT = {
  * or costs we can't back up). */
 
 export const CLOUD_MIGRATION_APPROACH_CONTENT = {
-  label: 'Migration Options',
   headingLead: 'Choose What Works ',
   headingHighlight: 'Best for Your Team',
   subheading:
@@ -132,7 +135,6 @@ export const CLOUD_MIGRATION_APPROACH_OPTIONS: ApproachOption[] = [
  * deliver" grid with something more specific to the Atlassian suite. */
 
 export const CLOUD_MIGRATION_PRODUCTS_CONTENT = {
-  label: 'Product by Product',
   headingLead: 'What Actually Moves, ',
   headingHighlight: 'Product by Product',
   subheading: 'Migration isn’t one operation - it’s a different checklist per product.',
@@ -180,7 +182,6 @@ export const CLOUD_MIGRATION_PRODUCTS: ProductMigrationNote[] = [
 /* ── Migration flow (reuses the real home-page data) ────────────────────── */
 
 export const CLOUD_MIGRATION_FLOW_CONTENT = {
-  label: 'How It Works',
   headingLead: 'One Path, ',
   headingHighlight: 'Every Instance',
 } as const;
@@ -188,7 +189,6 @@ export const CLOUD_MIGRATION_FLOW_CONTENT = {
 /* ── AGC block ───────────────────────────────────────────────────────────── */
 
 export const CLOUD_MIGRATION_AGC_CONTENT = {
-  label: 'Public Sector',
   headingLead: 'Atlassian Government Cloud. ',
   headingHighlight: 'We Get You There.',
   subheading:
@@ -198,7 +198,6 @@ export const CLOUD_MIGRATION_AGC_CONTENT = {
 /* ── AI tie-in ───────────────────────────────────────────────────────────── */
 
 export const CLOUD_MIGRATION_AI_CONTENT = {
-  label: 'After the Move',
   headingLead: 'Pulse AI Picks Up ',
   headingHighlight: 'Where Migration Ends',
   subheading:
@@ -211,7 +210,6 @@ export const CLOUD_MIGRATION_AI_CONTENT = {
  * inventing new figures (timelines, pricing) we can't back up. */
 
 export const CLOUD_MIGRATION_FAQ_CONTENT = {
-  label: 'Questions We Get Asked',
   headingLead: 'Before You Talk to ',
   headingHighlight: 'a Migration Assessor',
 } as const;
@@ -252,7 +250,6 @@ export const CLOUD_MIGRATION_FAQS = [
 /* ── Metrics ─────────────────────────────────────────────────────────────── */
 
 export const CLOUD_MIGRATION_METRICS_CONTENT = {
-  label: 'Track Record',
   headingLead: 'Numbers From the ',
   headingHighlight: 'Whole Practice',
 } as const;
@@ -269,7 +266,6 @@ export const CLOUD_MIGRATION_METRICS: StatBandItem[] = [
 export const CLOUD_MIGRATION_PROOF_STORIES: CustomerStory[] = [...CUSTOMER_STORIES];
 
 export const CLOUD_MIGRATION_PROOF_CONTENT = {
-  label: 'Proof, Not Promises',
   headingLead: 'Migrations That Held Up to ',
   headingHighlight: 'Real Scrutiny',
 } as const;

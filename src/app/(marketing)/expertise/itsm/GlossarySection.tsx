@@ -1,11 +1,6 @@
 import { cn } from '@/lib/cn';
 import { reveal, revealAligned, revealAttrs } from '@/lib/reveal';
-import {
-  GradientText,
-  Icon,
-  Section,
-  SectionHeader,
-} from '@/components/ui';
+import { GradientText, Icon, Section, SectionHeader } from '@/components/ui';
 import {
   ITSM_ESM_BENEFITS,
   ITSM_ESM_BENEFITS_CONTENT,
@@ -114,7 +109,10 @@ export function GlossarySection() {
         {/* Definitions, in reading order - a description list, since that is
             literally what this is, and `<dt>`/`<dd>` is what lets a screen reader
             announce each term with its own definition. */}
-        <dl className={cn('m-0', revealAligned('left', 'right'))} {...revealAttrs()}>
+        <dl
+          className={cn('m-0', revealAligned('left', 'right'))}
+          {...revealAttrs()}
+        >
           {ITSM_GLOSSARY.map((entry, index) => (
             <div
               key={entry.id}
@@ -161,7 +159,7 @@ export function GlossarySection() {
             </p>
           </div>
 
-          <ul className="m-0 grid list-none gap-x-8 gap-y-3.5 to-680:grid-cols-1 sm:grid-cols-2">
+          <ul className="m-0 grid list-none gap-x-8 gap-y-3.5 sm:grid-cols-2 to-680:grid-cols-1">
             {ITSM_ESM_BENEFITS.map((benefit) => (
               <li
                 key={benefit}

@@ -25,7 +25,11 @@ import { ITSM_PROOF_CONTENT } from '@/constants/itsm';
  * precisely so that should not happen, but a CMS returning nothing at all would
  * otherwise leave a heading over empty space.
  */
-export function ProofSection({ caseStudies }: { caseStudies: CaseStudyItem[] }) {
+export function ProofSection({
+  caseStudies,
+}: {
+  caseStudies: CaseStudyItem[];
+}) {
   if (caseStudies.length === 0) return null;
 
   return (

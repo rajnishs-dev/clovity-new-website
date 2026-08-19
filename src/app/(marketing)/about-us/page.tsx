@@ -4,6 +4,25 @@
  *
  * Stays a Server Component - only the header, hero, `PageAnimations` and
  * `NavState` reach the browser as JavaScript.
+ *
+ * ── BACKGROUNDS: TWO TONES, AND TWO DELIBERATE REPEATS ──
+ * `bg-white` and `bg-soft` only - the third tone this page used to carry (`bg-[#eaf8ff]`)
+ * is gone. Reading down from the hero:
+ *
+ *     Why W · TrustedBy S · WhoWeAre W · Stats S · Values S · Milestones W ·
+ *     Credentials S · FeaturedIn W · Mission W · WorkWithUs S · CTA W
+ *
+ * The two repeats are not slips, and neither should be "fixed" by flipping one of them:
+ *
+ * 1. Stats + Values are both PINNED to `bg-soft` by their contents. `StatBand` paints a
+ *    white card and `BentoGrid` paints white tiles; either on a white band loses its edge
+ *    and reads as floating text. They are adjacent, so one repeat is forced.
+ * 2. FeaturedIn + Mission are one visual unit on purpose - `FeaturedInSection` ends on
+ *    `pb-0` and `MissionSection` opens on `pt-4`, so a tone change between them would put
+ *    a seam through the middle of a block designed to run continuously.
+ *
+ * Everything else alternates. Adding or removing a band flips the parity of every band
+ * below it, so re-check the whole run rather than just the gap.
  */
 import type { Metadata } from 'next';
 import { buildMetadata } from '@/lib/seo';
@@ -129,7 +148,7 @@ export default async function AboutPage() {
             // `.cta-sec` is `#f8faff` here, and the card sits a step darker than the
             // home page's. `pullUp={false}` because `.cta-card` sets `margin-top: 0`
             // on this page - it overlaps down into the footer only.
-            className="bg-[#eaf8ff]"
+            className="bg-white"
             cardClassName="-mt-0 bg-[linear-gradient(135deg,#152a6b_0%,#2557c9_65%,#3568e0_100%)]"
             headingClassName="text-[clamp(28px,3.6vw,44px)] leading-[1.12]"
             pullUp={false}

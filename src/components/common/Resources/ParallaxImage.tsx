@@ -68,7 +68,7 @@ export function ParallaxImage({
   }, [reducedMotion]);
 
   const hasBreakpoints = Boolean(tabletSrc || mobileSrc);
-  const imageClassName = 'object-cover object-[center_0%]';
+  const imageClassName = 'object-cover';
   // Inline style wins over the class above, so the default stays in one place.
   const positionStyle = objectPosition ? { objectPosition } : {};
 

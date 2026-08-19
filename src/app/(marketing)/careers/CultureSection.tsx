@@ -8,7 +8,6 @@ import {
   GradientText,
   HEADING_CLASS,
   Icon,
-  LABEL_CLASS,
   Section,
   SplitMedia,
   SplitMediaFrame,
@@ -37,14 +36,9 @@ export function CultureSection({
 
   const copy = (
     <div className={revealAligned('left', 'right')} {...revealAttrs()}>
-      <p className={cn(LABEL_CLASS, 'mb-4 text-[13px]')}>
-        {CAREERS_CULTURE_CONTENT.label}
-      </p>
       <h2 className={cn(HEADING_CLASS, 'mb-6')}>
         {CAREERS_CULTURE_CONTENT.headingLead}
-        <GradientText>
-          {CAREERS_CULTURE_CONTENT.headingHighlight}
-        </GradientText>
+        <GradientText>{CAREERS_CULTURE_CONTENT.headingHighlight}</GradientText>
       </h2>
       <p className="text-[16px] leading-[1.75] text-muted">
         {CAREERS_CULTURE_CONTENT.intro}
@@ -71,9 +65,7 @@ export function CultureSection({
     <Section id="culture" padding="tight" className="bg-white">
       {highlight.image ? (
         <SplitMedia
-          media={
-            <SplitMediaFrame image={highlight.image} revealFrom="left" />
-          }
+          media={<SplitMediaFrame image={highlight.image} revealFrom="left" />}
         >
           {copy}
         </SplitMedia>

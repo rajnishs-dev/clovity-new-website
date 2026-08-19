@@ -1,11 +1,6 @@
 import { cn } from '@/lib/cn';
 import { revealAligned, revealAttrs } from '@/lib/reveal';
-import {
-  GradientText,
-  Icon,
-  Section,
-  SectionHeader,
-} from '@/components/ui';
+import { GradientText, Icon, Section, SectionHeader } from '@/components/ui';
 import { ITSM_APPROACH_CONTENT, ITSM_PHASES } from '@/constants/itsm';
 
 /**
@@ -50,10 +45,7 @@ export function ApproachSection() {
         className="mx-auto mb-12 max-w-[720px] md:text-center"
       />
 
-      <div
-        className={cn('relative', revealAligned('left'))}
-        {...revealAttrs()}
-      >
+      <div className={cn('relative', revealAligned('left'))} {...revealAttrs()}>
         <svg
           viewBox="0 0 940 52"
           preserveAspectRatio="none"

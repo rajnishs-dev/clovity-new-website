@@ -31,9 +31,7 @@ export function DeliverSection() {
         heading={
           <>
             {ITSM_DELIVER_CONTENT.headingLead}
-            <GradientText>
-              {ITSM_DELIVER_CONTENT.headingHighlight}
-            </GradientText>
+            <GradientText>{ITSM_DELIVER_CONTENT.headingHighlight}</GradientText>
           </>
         }
         subheading={ITSM_DELIVER_CONTENT.subheading}

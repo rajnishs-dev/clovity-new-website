@@ -41,7 +41,13 @@ function AppCard({ app }: { app: MarketplaceApp }) {
     >
       <div className="mb-4 flex items-start justify-between">
         <div className="relative h-14 w-14 overflow-hidden rounded-[14px] shadow-[0_6px_16px_-4px_rgba(15,23,42,.18)]">
-          <AppImage src={app.logo.src} alt={app.logo.alt} fill sizes="56px" className="object-cover" />
+          <AppImage
+            src={app.logo.src}
+            alt={app.logo.alt}
+            fill
+            sizes="56px"
+            className="object-cover"
+          />
         </div>
         {app.free ? (
           <span className="rounded-full bg-[#f0fdf4] px-2.5 py-1 text-[10.5px] font-800 text-brand-green">
@@ -53,7 +59,9 @@ function AppCard({ app }: { app: MarketplaceApp }) {
       <b className="mb-2 block text-[16px] font-500 leading-[1.35] tracking-[-.01em] text-title">
         {app.name}
       </b>
-      <p className="mb-4 flex-1 text-[13.5px] leading-[1.65] text-muted">{app.description}</p>
+      <p className="mb-4 flex-1 text-[13.5px] leading-[1.65] text-muted">
+        {app.description}
+      </p>
 
       <div className="flex items-center justify-between border-t border-line-faint pt-4">
         <span
@@ -101,18 +109,23 @@ export function AppsTabsSection() {
   const filterTabs = [
     { id: 'all' as const, label: 'All Apps', count: counts.all },
     { id: 'jira' as const, label: 'Jira Apps', count: counts.jira },
-    { id: 'confluence' as const, label: 'Confluence Apps', count: counts.confluence },
+    {
+      id: 'confluence' as const,
+      label: 'Confluence Apps',
+      count: counts.confluence,
+    },
   ];
 
   return (
-    <Section>
+    <Section className="bg-white">
       <SectionHeader
-        label={MARKETPLACE_APPS_SHOWCASE_CONTENT.label}
         className="mx-auto max-w-[680px]"
         heading={
           <>
             {MARKETPLACE_APPS_SHOWCASE_CONTENT.headingLead}
-            <GradientText>{MARKETPLACE_APPS_SHOWCASE_CONTENT.headingHighlight}</GradientText>
+            <GradientText>
+              {MARKETPLACE_APPS_SHOWCASE_CONTENT.headingHighlight}
+            </GradientText>
           </>
         }
       />
@@ -127,7 +140,9 @@ export function AppsTabsSection() {
                 <span
                   className={cn(
                     'inline-flex h-5 min-w-5 items-center justify-center rounded-full px-1.5 text-[11px] font-700',
-                    filter === tab.id ? 'bg-blue-50 text-brand-700' : 'bg-slate-100 text-slate-500',
+                    filter === tab.id
+                      ? 'bg-blue-50 text-brand-700'
+                      : 'bg-slate-100 text-slate-500',
                   )}
                 >
                   {tab.count}

@@ -17,14 +17,15 @@ import {
  */
 export function DeliverGridSection() {
   return (
-    <Section className="bg-[#eaf8ff]">
+    <Section className="bg-soft">
       <SectionHeader
-        label={ATLASSIAN_DELIVER_CONTENT.label}
         className="mx-auto max-w-[680px]"
         heading={
           <>
             {ATLASSIAN_DELIVER_CONTENT.headingLead}
-            <GradientText>{ATLASSIAN_DELIVER_CONTENT.headingHighlight}</GradientText>
+            <GradientText>
+              {ATLASSIAN_DELIVER_CONTENT.headingHighlight}
+            </GradientText>
           </>
         }
         subheading={ATLASSIAN_DELIVER_CONTENT.subheading}

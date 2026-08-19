@@ -1,5 +1,5 @@
 import { Section } from '@/components/ui/Section';
-import { GradientText, HEADING_CLASS, LABEL_CLASS } from '@/components/ui/Typography';
+import { GradientText, HEADING_CLASS } from '@/components/ui/Typography';
 import { Icon, type IconProps } from '@/components/ui/Icon';
 import { cn } from '@/lib/cn';
 import { reveal, revealAttrs } from '@/lib/reveal';
@@ -32,7 +32,11 @@ function ConnectedSuiteDiagram() {
         aria-hidden
         className="absolute left-1/2 top-1/2 h-[270px] w-[270px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle,rgba(37,99,235,.14),transparent_70%)]"
       />
-      <svg viewBox="0 0 360 360" className="absolute inset-0 h-full w-full" aria-hidden>
+      <svg
+        viewBox="0 0 360 360"
+        className="absolute inset-0 h-full w-full"
+        aria-hidden
+      >
         <circle
           cx="180"
           cy="180"
@@ -65,7 +69,12 @@ function ConnectedSuiteDiagram() {
         <span
           key={node.id}
           className="absolute flex h-[72px] w-[72px] items-center justify-center rounded-[18px] border border-line-soft bg-white shadow-[0_16px_32px_-10px_rgba(15,23,42,.2)]"
-          style={{ left: node.x, top: node.y, transform: 'translate(-50%,-50%)', color: node.color }}
+          style={{
+            left: node.x,
+            top: node.y,
+            transform: 'translate(-50%,-50%)',
+            color: node.color,
+          }}
         >
           <Icon name={node.icon} size={30} />
         </span>
@@ -76,17 +85,24 @@ function ConnectedSuiteDiagram() {
 
 export function ProblemSection() {
   return (
-    <Section>
+    <Section className="bg-white">
       <div className="grid items-center gap-10 lg:grid-cols-[1.05fr_1fr] lg:gap-14">
-        <div className={cn(reveal('left'), 'md:text-center lg:text-left')} {...revealAttrs()}>
-          <span className={LABEL_CLASS}>{ATLASSIAN_PROBLEM_CONTENT.label}</span>
+        <div
+          className={cn(reveal('left'), 'md:text-center lg:text-left')}
+          {...revealAttrs()}
+        >
           <h2 className={HEADING_CLASS}>
             {ATLASSIAN_PROBLEM_CONTENT.headingLead}
-            <GradientText>{ATLASSIAN_PROBLEM_CONTENT.headingHighlight}</GradientText>
+            <GradientText>
+              {ATLASSIAN_PROBLEM_CONTENT.headingHighlight}
+            </GradientText>
           </h2>
           <div className="mt-5 space-y-4">
             {ATLASSIAN_PROBLEM_CONTENT.paragraphs.map((paragraph) => (
-              <p key={paragraph} className="text-[16px] leading-[1.75] text-muted">
+              <p
+                key={paragraph}
+                className="text-[16px] leading-[1.75] text-muted"
+              >
                 {paragraph}
               </p>
             ))}

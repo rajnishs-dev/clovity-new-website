@@ -1,4 +1,5 @@
 import { EXTERNAL_LINKS, ROUTES } from '@/constants/routes';
+import { marketplaceAppsHeroBanner } from '@/constants/media';
 import { MARKETPLACE_APPS } from '@/constants/home';
 import type { CtaLink, MarketplaceApp, PillarCard, StatBandItem } from '@/types/content';
 
@@ -63,21 +64,29 @@ export const MARKETPLACE_APPS_HERO = {
   titleAccent: 'Built for the Atlassian Ecosystem.',
   subheading:
     'From an AI copilot for Jira to time tracking, dashboards, and Confluence formatting - built, published, and supported by Clovity, an official Atlassian Marketplace Partner.',
-  /** Same verified photo used on the other expertise pages - see the Atlassian page's note. */
+  /**
+   * A bundled supplied diagram - see `marketplaceAppsHeroBanner` in
+   * `constants/media.ts` for why it is the unlabelled version and why it is a JPEG.
+   *
+   * No `tabletSrc`/`mobileSrc`: a static import lets `next/image` build the responsive
+   * srcset from one file. Those entries held three hand-sized Unsplash URLs of a photo
+   * this page shared with the Atlassian and Cloud Migration heroes - all three now have
+   * their own image, so no page reaches a third-party host to paint its first screen.
+   *
+   * The alt text names the badge and the arrangement but NOT the six apps. It listed
+   * them while the artwork carried captions; the captions are gone, so describing them
+   * would be describing something that is not in the picture. The apps are named in
+   * `MARKETPLACE_APPS_CATALOG` below, which is where a reader gets them.
+   */
   image: {
-    src: 'https://images.unsplash.com/photo-1758873268745-dd2cf0d677b5?auto=format&fit=crop&w=1800&q=80',
-    tabletSrc:
-      'https://images.unsplash.com/photo-1758873268745-dd2cf0d677b5?auto=format&fit=crop&w=1000&q=80',
-    mobileSrc:
-      'https://images.unsplash.com/photo-1758873268745-dd2cf0d677b5?auto=format&fit=crop&w=640&q=80',
-    alt: 'Clovity engineers building an Atlassian Marketplace app',
+    src: marketplaceAppsHeroBanner,
+    alt: 'Six Clovity app icons arranged in a ring around the Atlassian Platinum Solution Partner badge',
   },
 } as const;
 
 /* ── Problem statement ──────────────────────────────────────────────────── */
 
 export const MARKETPLACE_APPS_PROBLEM_CONTENT = {
-  label: 'Why We Build Our Own',
   headingLead: 'Generic Templates ',
   headingHighlight: 'Rarely Fit Jira Exactly',
   paragraphs: [
@@ -89,7 +98,6 @@ export const MARKETPLACE_APPS_PROBLEM_CONTENT = {
 /* ── Apps showcase (filterable grid) ─────────────────────────────────────── */
 
 export const MARKETPLACE_APPS_SHOWCASE_CONTENT = {
-  label: 'Our Published Apps',
   headingLead: 'Six Apps, ',
   headingHighlight: 'One Support Team',
 } as const;
@@ -128,7 +136,6 @@ export const PLATFORM_LABEL: Record<AppPlatform, string> = {
 /* ── Support & secondary offerings ──────────────────────────────────────── */
 
 export const MARKETPLACE_APPS_SUPPORT_CONTENT = {
-  label: 'Beyond Our Own Apps',
   headingLead: 'Support That Doesn’t ',
   headingHighlight: 'Stop at Install',
 } as const;
@@ -170,7 +177,6 @@ export const MARKETPLACE_APPS_SUPPORT_LINK: CtaLink = {
 /* ── Metrics (derived from the real app catalog) ────────────────────────── */
 
 export const MARKETPLACE_APPS_METRICS_CONTENT = {
-  label: 'Track Record',
   headingLead: 'Numbers From Our ',
   headingHighlight: 'Own Apps',
 } as const;
@@ -202,7 +208,6 @@ export const MARKETPLACE_APPS_METRICS: StatBandItem[] = [
  * directly from `CUSTOMER_STORIES` in `ProofSection.tsx`. */
 
 export const MARKETPLACE_APPS_PROOF_CONTENT = {
-  label: 'Proof, Not Promises',
   headingLead: 'The Same Team Behind ',
   headingHighlight: 'Mission-Critical Instances',
 } as const;

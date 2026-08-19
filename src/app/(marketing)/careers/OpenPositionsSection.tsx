@@ -78,10 +78,9 @@ export function OpenPositionsSection({
     <Section
       id="open-roles"
       padding="tight"
-      className="border-y border-line-faint bg-[#eaf8ff]"
+      className="border-y border-line-faint bg-soft"
     >
       <SectionHeader
-        label={CAREERS_ROLES_CONTENT.label}
         labelClassName="mb-4"
         heading={
           <>

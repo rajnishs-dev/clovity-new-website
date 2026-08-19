@@ -1,4 +1,9 @@
-import { GradientText, PillarGrid, Section, SectionHeader } from '@/components/ui';
+import {
+  GradientText,
+  PillarGrid,
+  Section,
+  SectionHeader,
+} from '@/components/ui';
 import { ABOUT_WHY_CARDS, ABOUT_WHY_CONTENT } from '@/constants/about';
 
 /**
@@ -13,7 +18,6 @@ export function WhySection() {
   return (
     <Section padding="tight" className="bg-white">
       <SectionHeader
-        label={ABOUT_WHY_CONTENT.label}
         labelClassName="mb-4"
         heading={
           <>
