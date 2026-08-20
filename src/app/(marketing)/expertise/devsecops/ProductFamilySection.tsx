@@ -1,6 +1,11 @@
 import { cn } from '@/lib/cn';
-import { reveal, revealAligned, revealAttrs } from '@/lib/reveal';
-import { Icon, Section } from '@/components/ui';
+import { revealAligned, revealAttrs } from '@/lib/reveal';
+import {
+  GradientText,
+  Icon,
+  Section,
+  SectionHeader,
+} from '@/components/ui';
 import { AppImage } from '@/components/ui/Image';
 import {
   DEVSECOPS_PRODUCTS,
@@ -60,18 +65,17 @@ export function ProductFamilySection() {
       // them needs a tile behind it.
       className="border-b border-line-faint bg-[#eaf8ff]"
     >
-      <div
-        className={cn(
-          'mx-auto mb-9 max-w-[620px] text-center',
-          reveal(),
-          'md:text-center',
-        )}
-        {...revealAttrs()}
-      >
-        <p className="m-0 text-[clamp(19px,2.1vw,25px)] font-500 leading-[1.35] tracking-[-.02em] text-title">
-          {DEVSECOPS_PRODUCTS_CONTENT.heading}
-        </p>
-      </div>
+      <SectionHeader
+        heading={
+          <>
+            {DEVSECOPS_PRODUCTS_CONTENT.headingLead}
+            <GradientText>
+              {DEVSECOPS_PRODUCTS_CONTENT.headingHighlight}
+            </GradientText>
+          </>
+        }
+        className="mx-auto mb-10 max-w-[720px] md:text-center"
+      />
 
       <div
         className={cn('flex flex-col gap-x-9 gap-y-6', revealAligned('center'))}
@@ -127,17 +131,6 @@ export function ProductFamilySection() {
           </ul>
         ))}
       </div>
-
-      <p
-        className={cn(
-          'mx-auto mt-8 max-w-[640px] text-center text-[12px] leading-[1.6] text-faint',
-          reveal('up', 100),
-          'md:text-center',
-        )}
-        {...revealAttrs()}
-      >
-        {DEVSECOPS_PRODUCTS_CONTENT.note}
-      </p>
     </Section>
   );
 }

@@ -234,9 +234,7 @@ export const WF_DELIVER_CONTENT = {
  * ── THE ORDER IS THE ARGUMENT ──
  * Augmentation and embedded engineers come first because that is what a team under
  * pressure searches for. Training, coaching and adoption follow because they are what
- * stops the first three becoming permanent. `WF_DELIVER_GROUPS` below labels the two
- * halves so the section can set them under their own subheads rather than as one
- * undifferentiated six.
+ * stops the first three becoming permanent.
  */
 export const WF_OFFERINGS: ServiceOffering[] = [
   {
@@ -318,19 +316,6 @@ export const WF_OFFERINGS: ServiceOffering[] = [
     ],
   },
 ];
-
-/** Labels for the two halves of `WF_OFFERINGS` - first two, then last four. */
-export const WF_DELIVER_GROUPS = {
-  capacity: {
-    label: 'Add capacity',
-    caption: 'People who deliver alongside your team.',
-    count: 2,
-  },
-  capability: {
-    label: 'Build capability',
-    caption: 'Programs that make the capacity unnecessary.',
-  },
-} as const;
 
 /* ── Workforce vs Managed Services ──────────────────────────────────────── */
 

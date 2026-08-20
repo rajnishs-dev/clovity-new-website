@@ -93,7 +93,7 @@ export function ApproachSection() {
               {/* The ordinal is a real text node here, not the watermark numeral a
                   card used - on a rail the reader needs the sequence stated, and
                   there is no card corner for a watermark to sit in. */}
-              <span className="mb-1 block text-[11.5px] font-800 uppercase tracking-[.12em] text-faint">
+              <span className="mb-1 block text-[11.5px] font-800 uppercase tracking-[.12em] text-black">
                 Phase {phase.ordinal}
               </span>
               <b className="mb-1.5 block text-[16px] font-500 tracking-[-.01em] text-title">

@@ -52,7 +52,7 @@ export function StatBand({
             'to-520:border-b to-520:border-r-0 to-520:last:border-b-0',
           )}
         >
-          <div className="text-[clamp(32px,4vw,48px)] font-500 leading-none tracking-[-.02em] text-title">
+          <div className="text-[clamp(30px,3.2vw,46px)] font-500 leading-none tracking-[-.02em] text-title">
             <span className={cn(item.accent && accentClassName)}>
               {item.value}
             </span>

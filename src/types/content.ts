@@ -447,16 +447,6 @@ export interface GlossaryEntry {
   definition: string;
   /** What this term covers, e.g. "IT Ops · Service Desk · Engineering". */
   scope: string;
-  /**
-   * Nesting depth in the scope diagram - `0` is the innermost band.
-   *
-   * Explicit data rather than the array's index, because the reading order of the
-   * definitions (ITSM first, since it is what most visitors arrive looking for) is
-   * not the containment order of the diagram (ITIL innermost).
-   */
-  nest: number;
-  icon: IconName;
-  iconChipClass: string;
 }
 
 /** A non-IT department an ESM rollout extends service management to. */
@@ -560,24 +550,6 @@ export interface OrbitStage {
 }
 
 /* ── Expertise pages: Managed Services ──────────────────────────────────── */
-
-/**
- * One before/after pair on the managed-services page - the operating-model shift
- * (`Reactive` → `Proactive`).
- *
- * The two halves are ONE record rather than two parallel arrays because the pairing
- * is the entire point - each "after" answers its own "before". Two arrays could fall
- * out of order and the section would still render, just saying the wrong thing.
- */
-export interface ShiftPair {
-  id: string;
-  /** Row label, e.g. "Platform reviews". */
-  aspect?: string;
-  /** The state without anyone owning the platform. */
-  before: string;
-  /** What replaces it. */
-  after: string;
-}
 
 /**
  * One discipline on the embedded pod's bench.

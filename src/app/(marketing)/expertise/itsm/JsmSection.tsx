@@ -1,8 +1,6 @@
 import { cn } from '@/lib/cn';
 import { reveal, revealAligned, revealAttrs } from '@/lib/reveal';
-import { ArrowIcon, Icon } from '@/components/ui/Icon';
-import { buttonClass } from '@/components/ui/Button';
-import { SmartLink } from '@/components/ui/Link';
+import { Icon } from '@/components/ui/Icon';
 import {
   Container,
   GradientText,
@@ -52,14 +50,6 @@ export function JsmSection() {
             <p className={cn(SUBHEADING_CLASS, 'mt-4')}>
               {ITSM_JSM_CONTENT.subheading}
             </p>
-            <div className="mt-7">
-              <SmartLink
-                href={ITSM_JSM_CONTENT.ctaHref}
-                className={buttonClass('secondary')}
-              >
-                {ITSM_JSM_CONTENT.ctaLabel} <ArrowIcon />
-              </SmartLink>
-            </div>
           </div>
 
           <ol

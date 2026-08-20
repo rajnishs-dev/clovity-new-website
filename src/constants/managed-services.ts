@@ -5,7 +5,6 @@ import type {
   PillarCard,
   ProductBadge,
   ServiceOffering,
-  ShiftPair,
   StatBandItem,
 } from '@/types/content';
 import { ROUTES } from './routes';
@@ -146,33 +145,11 @@ export const MS_BURDEN_CARDS: PillarCard[] = [
   },
 ];
 
-/** The operating-model shift, from our own published comparison strip. */
-export const MS_SHIFTS: ShiftPair[] = [
-  {
-    id: 'support-model',
-    aspect: 'Support model',
-    before: 'Reactive',
-    after: 'Proactive',
-  },
-  {
-    id: 'platform-reviews',
-    aspect: 'Platform reviews',
-    before: 'None',
-    after: 'Monthly',
-  },
-  {
-    id: 'roadmap',
-    aspect: 'Roadmap ownership',
-    before: 'Ad hoc',
-    after: 'Planned',
-  },
-];
-
 /* ── What we deliver ────────────────────────────────────────────────────── */
 
 export const MS_DELIVER_CONTENT = {
-  headingLead: 'Six Things Someone Has to ',
-  headingHighlight: 'Do Every Week',
+  headingLead: 'What It Takes to Keep ',
+  headingHighlight: 'an Atlassian Estate Running',
   subheading:
     'Not a menu of options - this is the standing work of running an Atlassian estate. An engagement can start with any subset, but the list does not get shorter on its own.',
 } as const;
@@ -322,9 +299,8 @@ export const MS_BENCH_ROLES: BenchRole[] = [
 /* ── Products we keep running ───────────────────────────────────────────── */
 
 export const MS_PRODUCTS_CONTENT = {
-  heading: 'Every product we keep running for clients',
-  footnote:
-    'Product names and marks are trademarks of Atlassian, shown to describe the platforms we support.',
+  headingLead: 'Every Product We Keep Running ',
+  headingHighlight: 'for Clients',
 } as const;
 
 /**

@@ -1,6 +1,6 @@
 import { cn } from '@/lib/cn';
-import { reveal, revealAligned, revealAttrs } from '@/lib/reveal';
-import { Icon, Section } from '@/components/ui';
+import { revealAligned, revealAttrs } from '@/lib/reveal';
+import { GradientText, Icon, Section, SectionHeader } from '@/components/ui';
 import { AppImage } from '@/components/ui/Image';
 import { MS_PRODUCTS, MS_PRODUCTS_CONTENT } from '@/constants/managed-services';
 
@@ -45,18 +45,15 @@ export function ProductsSection() {
       padding="tight"
       className="border-b border-line-faint bg-[#eaf8ff]"
     >
-      <div
-        className={cn(
-          'mx-auto mb-9 max-w-[620px] text-center',
-          reveal(),
-          'md:text-center',
-        )}
-        {...revealAttrs()}
-      >
-        <p className="m-0 text-[clamp(19px,2.1vw,25px)] font-500 leading-[1.35] tracking-[-.02em] text-title">
-          {MS_PRODUCTS_CONTENT.heading}
-        </p>
-      </div>
+      <SectionHeader
+        heading={
+          <>
+            {MS_PRODUCTS_CONTENT.headingLead}
+            <GradientText>{MS_PRODUCTS_CONTENT.headingHighlight}</GradientText>
+          </>
+        }
+        className="mx-auto mb-10 max-w-[720px] md:text-center"
+      />
 
       <div
         className={cn('flex flex-col gap-x-9 gap-y-6', revealAligned('center'))}
@@ -105,17 +102,6 @@ export function ProductsSection() {
           </ul>
         ))}
       </div>
-
-      <p
-        className={cn(
-          'm-0 mx-auto mt-8 max-w-[640px] text-center text-[12px] leading-[1.6] text-faint',
-          reveal('up', 150),
-          'md:text-center',
-        )}
-        {...revealAttrs()}
-      >
-        {MS_PRODUCTS_CONTENT.footnote}
-      </p>
     </Section>
   );
 }

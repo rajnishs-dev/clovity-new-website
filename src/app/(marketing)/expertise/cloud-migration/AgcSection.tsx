@@ -68,7 +68,7 @@ export function AgcSection() {
         onMouseEnter={pause}
         onMouseLeave={resume}
       >
-        <div className="absolute right-[26px] top-3 z-[5] flex gap-4 text-ink">
+        <div className="absolute right-[26px] top-8 z-[5] flex gap-4 text-ink">
           <button
             type="button"
             aria-label="Previous panel"

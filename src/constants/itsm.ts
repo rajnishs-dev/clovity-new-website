@@ -1,5 +1,6 @@
 import type {
   CapabilityDetail,
+  ContentImage,
   CtaLink,
   DeliveryPhase,
   FactItem,
@@ -208,9 +209,22 @@ export const ITSM_GLOSSARY_CONTENT = {
 } as const;
 
 /**
- * The three terms, in READING order (ITSM first - it is what most visitors arrive
- * looking for). `nest` carries the containment order the scope diagram draws, which
- * is the reverse: ITIL innermost, ESM outermost.
+ * The photo beside the definitions, replacing the earlier nested-band scope
+ * diagram. Sourced from Unsplash rather than a bundled asset - see
+ * `home.ts`'s `photo` field or Careers' `CAREERS_CULTURE_FALLBACK` for the
+ * same pattern (remote `src` string, explicit `width`/`height` since
+ * `next/image` cannot infer them for a non-static import).
+ */
+export const ITSM_GLOSSARY_IMAGE: ContentImage = {
+  src: 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=1200&h=800&q=80',
+  alt: 'Two people mapping out a process on paper beside their laptops',
+  width: 1200,
+  height: 800,
+};
+
+/**
+ * The three terms, in READING order: ITSM first, since it is what most visitors
+ * arrive looking for.
  */
 export const ITSM_GLOSSARY: GlossaryEntry[] = [
   {
@@ -220,9 +234,6 @@ export const ITSM_GLOSSARY: GlossaryEntry[] = [
     definition:
       'How an IT team manages the services it delivers to the rest of the business - intake, incidents, changes, assets. It is the practice, not a product you install.',
     scope: 'IT Ops · Service Desk · Engineering · Security',
-    nest: 1,
-    icon: 'headset',
-    iconChipClass: 'text-brand-600',
   },
   {
     id: 'itil',
@@ -231,9 +242,6 @@ export const ITSM_GLOSSARY: GlossaryEntry[] = [
     definition:
       'The framework of practices ITSM is usually designed against. It tells you what good incident, change and request management look like; it does not tell you which tool to run them in.',
     scope: 'The practices underneath both',
-    nest: 0,
-    icon: 'clipboard-list',
-    iconChipClass: 'text-[#7c3aed]',
   },
   {
     id: 'esm',
@@ -242,26 +250,7 @@ export const ITSM_GLOSSARY: GlossaryEntry[] = [
     definition:
       'The same discipline applied outside IT. HR onboarding, finance approvals and legal reviews are all services with requests, owners and SLAs - ESM runs them the same way.',
     scope: 'HR · Finance · Legal · Facilities · Procurement',
-    nest: 2,
-    icon: 'people-group',
-    iconChipClass: 'text-brand-700',
   },
-];
-
-/** The case for extending past IT, as a checked list under the definitions. */
-export const ITSM_ESM_BENEFITS_CONTENT = {
-  title: 'Why teams extend it past IT',
-  description:
-    'Once one department runs on structured intake, the others notice. These are the reasons the second and third rollouts get funded.',
-} as const;
-
-export const ITSM_ESM_BENEFITS: string[] = [
-  'Every request handled the same way, whoever fulfils it',
-  'One place to see what is queued across the business',
-  'Requests turn into tracked work instead of buried email threads',
-  'Reporting stops being a monthly spreadsheet exercise',
-  'A knowledge base that answers repeat questions on its own',
-  'No second platform to license, secure and administer',
 ];
 
 /* ── The JSM advantage ──────────────────────────────────────────────────── */
@@ -271,8 +260,6 @@ export const ITSM_JSM_CONTENT = {
   headingHighlight: 'Jira Service Management',
   subheading:
     'Four capabilities do most of the work. Adapted from our own JSM implementation practice - the same four we configure on every engagement.',
-  ctaLabel: 'See what a build includes',
-  ctaHref: ROUTES.discover.contact,
 } as const;
 
 export const ITSM_JSM_CAPABILITIES: CapabilityDetail[] = [
@@ -326,8 +313,7 @@ export const ITSM_PHASES: DeliveryPhase[] = [
     icon: 'search',
     iconChipClass: 'text-brand-600',
     title: 'Assess',
-    description:
-      'Discovery across your current tooling, ticket data, SLAs and audit posture. We come out with maturity, gaps and a scoped plan.',
+    description: 'Discovery across your tooling, tickets and audit posture.',
   },
   {
     id: 'design',
@@ -335,8 +321,7 @@ export const ITSM_PHASES: DeliveryPhase[] = [
     icon: 'clipboard-list',
     iconChipClass: 'text-[#7c3aed]',
     title: 'Design',
-    description:
-      'Practices designed against ITIL 4 and your security requirements - service catalog, workflows, permissions and SLA model on paper first.',
+    description: 'Catalog, workflows, permissions and SLAs, on paper first.',
   },
   {
     id: 'configure',
@@ -344,8 +329,7 @@ export const ITSM_PHASES: DeliveryPhase[] = [
     icon: 'settings',
     iconChipClass: 'text-accent-500',
     title: 'Configure',
-    description:
-      'Jira Service Management, Assets and Confluence built to the design. Tailored setups your team can administer, ready on day one.',
+    description: 'JSM, Assets and Confluence built to the design.',
   },
   {
     id: 'integrate',
@@ -353,8 +337,7 @@ export const ITSM_PHASES: DeliveryPhase[] = [
     icon: 'git-branch',
     iconChipClass: 'text-brand-green',
     title: 'Integrate',
-    description:
-      'Data flowing to ERP, HRIS, monitoring and DevSecOps pipelines, so a ticket is not the only place the truth lives.',
+    description: 'Connected to ERP, HRIS, monitoring and DevSecOps.',
   },
   {
     id: 'adopt',
@@ -362,8 +345,7 @@ export const ITSM_PHASES: DeliveryPhase[] = [
     icon: 'graduation-cap',
     iconChipClass: 'text-brand-600',
     title: 'Drive Adoption',
-    description:
-      'Role-based enablement for agents, admins and approvers, plus the runbooks and documentation that outlast the engagement.',
+    description: 'Role-based enablement, runbooks and documentation.',
   },
   {
     id: 'sustain',
@@ -371,8 +353,7 @@ export const ITSM_PHASES: DeliveryPhase[] = [
     icon: 'trending-up',
     iconChipClass: 'text-[#7c3aed]',
     title: 'Sustain',
-    description:
-      '24×7 U.S.-led support with quarterly health checks and a roadmap review, so the configuration keeps pace with the org.',
+    description: '24×7 U.S.-led support with quarterly health checks.',
   },
 ];
 

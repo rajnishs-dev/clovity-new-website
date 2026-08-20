@@ -6,8 +6,10 @@ import { cn } from '@/lib/cn';
 import { Icon } from '@/components/ui/Icon';
 
 /**
- * The six-engagement card rail: four cards visible, the rest reached with the
- * prev/next buttons.
+ * The six-service card rail: four cards visible, the rest reached with the
+ * prev/next buttons. Same treatment as the ITSM, Managed Services and
+ * DevSecOps pages' `DeliverRail` - see the ITSM file for the fuller rationale
+ * on the hover reveal and the scroll-snap.
  *
  * ── WHY THIS IS THE ONLY CLIENT COMPONENT ON THE PAGE ──
  * Everything except the two arrow buttons is static markup and CSS. The buttons
@@ -28,7 +30,7 @@ import { Icon } from '@/components/ui/Icon';
  * card at phone widths.
  *
  * ── THE HOVER REVEAL ──
- * Default face: coloured card, engagement title, a large ghosted icon. Revealed
+ * Default face: coloured card, service title, a large ghosted icon. Revealed
  * face: white card, heavy dark border, the description and the three
  * deliverables. Cross-faded on `group-hover` AND `group-focus-within` - the second
  * is not decoration, it is what makes the revealed copy reachable by keyboard and
@@ -42,19 +44,13 @@ import { Icon } from '@/components/ui/Icon';
 
 /**
  * Per-card fill, in the brand's own dot order: yellow, orange, pink, blue, green.
+ * Same palette as the ITSM, Managed Services and DevSecOps rails, already
+ * softened ~22% toward white from the logo's raw values. Six cards over five
+ * colours, so the sixth restarts the series.
  *
- * Based on the logo's colour table (`assets/logos/clovity-logo-black.gif`), each
- * blended ~15% toward white to soften the fill - the raw logo values read too
- * heavy at this card size. Six cards over five colours, so the sixth restarts
- * the series.
- *
- * ── CONTRAST, NOT RE-MEASURED SINCE THE SOFTENING ──
- * The ink is one value for all six cards (`CARD_INK`, currently white). The
- * pre-lightening ratios showed only pink and blue clearing the 3:1 large-text
- * minimum; lightening the fills pulls every ratio down further, so treat all
- * six as failing until re-measured. If that trade needs revisiting, the fix is
- * per-card ink rather than a global flip: make `CARD_INK` an array parallel to
- * this one and use dark ink on whichever fills need it.
+ * The ink is one value for all six cards (`CARD_INK`, currently white). See the
+ * contrast note in the ITSM `DeliverRail` before changing either array - the
+ * fills are shared across the rails and should stay in step.
  *
  * Raw hexes applied inline, not `bg-[#…]` classes, because each value is needed
  * twice - as the resting fill and as the revealed face's border - and one array is
@@ -185,16 +181,10 @@ export function DeliverRail({ offerings }: { offerings: ServiceOffering[] }) {
                   // ── HEIGHT IS CONTENT-DRIVEN, NOT A FIXED NUMBER ──
                   // How tall a card needs to be follows its *width*, not the
                   // viewport: a narrower card wraps the revealed description onto
-                  // more lines. Card width swings from 241px to 305px inside the
-                  // `ml` 4-up band alone, and at 241px the copy wants 438px against
-                  // the 430px a fixed height gave it - so the last bullet was cut
-                  // off at ~1024px.
-                  //
-                  // So the revealed face sits in normal flow and sets the card's
-                  // intrinsic height, the flex row stretches every card to the
-                  // tallest, and `min-h` only stops short copy from producing a
-                  // squat card. Nothing clips at any width and there is no dead
-                  // space left to tune.
+                  // more lines. The revealed face sits in normal flow and sets the
+                  // card's intrinsic height, the flex row stretches every card to
+                  // the tallest, and `min-h` only stops short copy from producing
+                  // a squat card.
                   'relative flex min-h-[400px] w-full flex-col',
                   'overflow-hidden rounded-[26px] outline-none',
                   '[transition:transform_.35s_cubic-bezier(.34,1.56,.64,1)]',
@@ -232,10 +222,8 @@ export function DeliverRail({ offerings }: { offerings: ServiceOffering[] }) {
                   edge to edge.
                   `grow`, deliberately not `flex-1`: `flex-1` is `flex:1 1 0%`, and
                   a zero flex-basis stops the copy contributing its full height to
-                  the card's intrinsic height - it measured 16px short at 1024px,
-                  which is exactly the clipping this was meant to fix. `grow`
-                  leaves `flex-basis:auto`, so content sets the base size and the
-                  item only grows from there.
+                  the card's intrinsic height. `grow` leaves `flex-basis:auto`, so
+                  content sets the base size and the item only grows from there.
 
                   The border takes the card's own colour, so a turned-over card
                   still reads as the same card - the fill it replaces is restated
@@ -246,18 +234,18 @@ export function DeliverRail({ offerings }: { offerings: ServiceOffering[] }) {
                 >
                   <span
                     aria-hidden
-                    className="block text-[13.5px] font-800 uppercase leading-[1.35] tracking-[.09em] text-brand-700"
+                    className="block text-[11.5px] font-800 uppercase leading-[1.35] tracking-[.09em] text-brand-700"
                   >
                     {offering.title}
                   </span>
-                  <p className="m-0 mt-3 text-[14.5px] leading-[1.6] text-muted">
+                  <p className="m-0 mt-3 text-[13.5px] leading-[1.6] text-muted">
                     {offering.description}
                   </p>
                   <ul className="m-0 mt-3.5 flex list-none flex-col gap-2 border-t border-line-faint pt-3">
                     {offering.points.map((point) => (
                       <li
                         key={point}
-                        className="flex items-start gap-2 text-[13.5px] font-500 leading-[1.5] text-[#334155]"
+                        className="flex items-start gap-2 text-[12.5px] font-500 leading-[1.5] text-[#334155]"
                       >
                         <span className="mt-px flex h-4 w-4 shrink-0 items-center justify-center text-brand-600">
                           <Icon name="circle-check" size={14} />

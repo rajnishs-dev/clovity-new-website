@@ -104,12 +104,8 @@ export const DEVSECOPS_STATS: StatBandItem[] = [
 /* ── The Atlassian product family strip ─────────────────────────────────── */
 
 export const DEVSECOPS_PRODUCTS_CONTENT = {
-  heading: 'Every product in the Atlassian delivery stack',
-  /**
-   * The strip is now nine official lockups, so the earlier caveat about composed
-   * badges no longer applies and has been dropped rather than left to go stale.
-   */
-  note: 'Product names and marks are trademarks of Atlassian, shown to describe the platforms we implement.',
+  headingLead: 'Every Product in the ',
+  headingHighlight: 'Atlassian Delivery Stack',
 } as const;
 
 /**
