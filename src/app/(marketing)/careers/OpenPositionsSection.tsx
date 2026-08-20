@@ -78,7 +78,7 @@ export function OpenPositionsSection({
     <Section
       id="open-roles"
       padding="tight"
-      className="border-y border-line-faint bg-soft"
+      className="border-y border-line-faint bg-[#eaf8ff]"
     >
       <SectionHeader
         labelClassName="mb-4"

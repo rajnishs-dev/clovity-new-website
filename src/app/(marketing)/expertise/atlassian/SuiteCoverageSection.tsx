@@ -18,7 +18,7 @@ export function SuiteCoverageSection() {
   const activeTab = ATLASSIAN_SUITE_TABS.find((tab) => tab.id === activeId)!;
 
   return (
-    <Section className="bg-soft">
+    <Section className="bg-[#eaf8ff]">
       <SectionHeader
         className="mx-auto max-w-[680px]"
         heading={

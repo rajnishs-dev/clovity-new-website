@@ -20,13 +20,13 @@ import { DeliverRail } from './DeliverRail';
  */
 export function DeliverSection() {
   return (
-    // `bg-soft`, with no `border-y`.
+    // `bg-[#eaf8ff]`, with no `border-y`.
     //
     // The sections either side are both white, so this is a deliberate `#f8fafc`
     // band rather than part of a strict alternation. The border is left off on
     // purpose: the tone change already marks the edges, and adding rules on top
     // gave the seams a doubled look.
-    <Section padding="tight" className="bg-soft">
+    <Section padding="tight" className="bg-[#eaf8ff]">
       <SectionHeader
         heading={
           <>

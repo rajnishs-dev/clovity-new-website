@@ -16,7 +16,10 @@ import { MS_STATS } from '@/constants/managed-services';
  */
 export function StatsSection() {
   return (
-    <Section padding="tight" className="border-b border-line-faint bg-soft">
+    <Section
+      padding="tight"
+      className="border-b border-line-faint bg-[#eaf8ff]"
+    >
       <StatBand items={MS_STATS} />
     </Section>
   );

@@ -15,7 +15,7 @@
  * needs state, so there is no client component of its own.
  *
  * ── BACKGROUNDS ──
- * White and `bg-soft` only, alternating strictly from the hero down: Stats (soft),
+ * White and `bg-[#eaf8ff]` only, alternating strictly from the hero down: Stats (soft),
  * Burden (white), Delivery (soft), Embedded (white), Products (soft), Proof (white),
  * FAQ (soft), CTA (white). Same discipline as the ITSM page, and starting on the same
  * tone.
@@ -159,7 +159,7 @@ export default async function ManagedServicesPage() {
             description={MS_FINAL_CTA.description}
             ctas={MS_FINAL_CTA_LINKS}
             // White behind the card, matching ITSM and DevSecOps: this page alternates
-            // only white and `bg-soft`, and the FAQ above ends on `bg-soft`. The card
+            // only white and `bg-[#eaf8ff]`, and the FAQ above ends on `bg-[#eaf8ff]`. The card
             // keeps the darker interior-page gradient. `pullUp={false}` because there
             // is no section above for it to tuck into - it overlaps down into the
             // footer only, which `<Footer overlap>` reserves space for.

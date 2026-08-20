@@ -8,7 +8,7 @@ import {
 
 export function MetricsSection() {
   return (
-    <Section className="bg-soft">
+    <Section className="bg-[#eaf8ff]">
       <SectionHeader
         className="mx-auto max-w-[680px]"
         heading={

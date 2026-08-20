@@ -21,7 +21,7 @@ import { ABOUT_WORK_WITH_US } from '@/constants/about';
  */
 export function WorkWithUsSection() {
   return (
-    <Section padding="tight" className="bg-soft">
+    <Section padding="tight" className="bg-[#eaf8ff]">
       <SplitMedia
         reverse
         media={

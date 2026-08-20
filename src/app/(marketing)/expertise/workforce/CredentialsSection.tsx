@@ -43,7 +43,10 @@ import {
  */
 export function CredentialsSection() {
   return (
-    <Section padding="tight" className="border-b border-line-faint bg-soft">
+    <Section
+      padding="tight"
+      className="border-b border-line-faint bg-[#eaf8ff]"
+    >
       <div className="grid items-start gap-x-16 gap-y-10 ml:grid-cols-[minmax(0,440px)_1fr]">
         <div className="h-full content-center">
           <SectionHeader

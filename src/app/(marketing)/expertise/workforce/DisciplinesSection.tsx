@@ -37,7 +37,10 @@ import {
  */
 export function DisciplinesSection() {
   return (
-    <Section padding="tight" className="border-b border-line-faint bg-soft">
+    <Section
+      padding="tight"
+      className="border-b border-line-faint bg-[#eaf8ff]"
+    >
       <SectionHeader
         heading={
           <>

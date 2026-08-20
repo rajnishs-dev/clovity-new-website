@@ -23,7 +23,10 @@ import { AI_DELIVER_CONTENT, AI_OFFERINGS } from '@/constants/ai';
  */
 export function DeliverSection() {
   return (
-    <Section padding="tight" className="border-y border-line-faint bg-soft">
+    <Section
+      padding="tight"
+      className="border-y border-line-faint bg-[#eaf8ff]"
+    >
       <SectionHeader
         heading={
           <>

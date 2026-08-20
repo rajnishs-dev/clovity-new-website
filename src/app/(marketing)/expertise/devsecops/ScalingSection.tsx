@@ -41,11 +41,11 @@ import { devsecopsOrbitDiagram } from '@/constants/media';
  */
 export function ScalingSection() {
   return (
-    // `bg-soft`, the site's own mid-tone section background. This was a
+    // `#eaf8ff`, the site's tinted section band. This was a
     // blue-to-lilac wash ending in `#f5f0ff`, and lilac appears nowhere else on
     // the site - the diagram's own purple arc already supplies that hue, so the
     // background was competing with the artwork rather than seating it.
-    <section className="overflow-hidden border-y border-line-faint bg-soft py-12 lg:py-16">
+    <section className="overflow-hidden border-y border-line-faint bg-[#eaf8ff] py-12 lg:py-16">
       <Container>
         <div className="grid items-center gap-10 lg:grid-cols-[0.92fr_1.08fr] lg:gap-12">
           {/* ── Copy ── */}

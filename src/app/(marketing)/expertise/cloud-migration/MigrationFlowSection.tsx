@@ -31,7 +31,12 @@ const FLOW_PATH =
 
 export function MigrationFlowSection() {
   return (
-    <Section className="bg-white">
+    // `#eaf8ff`. This band and `AgcSection` below were briefly both tinted - the AGC
+    // panels were frosted glass, which only reads over a tint, so that band could not be
+    // flipped and the page carried one repeated tone here. Those panels have since been
+    // made solid, AGC went white, and the whole page now alternates cleanly with no
+    // repeats. Flipping this band would break that in both directions.
+    <Section className="bg-[#eaf8ff]">
       {/* `pulseGrad` def for the animated stroke below - the home page's own
           copy (`SvgGradientDefs`) lives in that page's private folder, so
           this section carries its own rather than reaching across pages. */}

@@ -16,10 +16,10 @@
  * client component of its own.
  *
  * ── BACKGROUNDS: EIGHT BANDS, SO ONE TONE HAS TO REPEAT ──
- * White and `bg-soft` only: Stats (soft), Pulse (white), Deliver (soft), Touchpoints (white),
+ * White and `bg-[#eaf8ff]` only: Stats (soft), Pulse (white), Deliver (soft), Touchpoints (white),
  * Products (soft), Approach (white), Proof (soft), FAQ (soft), CTA (white).
  *
- * That is not a slip. Two bands are pinned to `bg-soft` by their own contents - the stat band
+ * That is not a slip. Two bands are pinned to `bg-[#eaf8ff]` by their own contents - the stat band
  * and the FAQ both paint WHITE cards, which vanish on a white background - and in a strict
  * alternation the first and eighth positions have opposite parity, so with eight content bands
  * they cannot both be soft. Exactly one repeat is unavoidable. It is placed at Proof → FAQ
@@ -171,11 +171,11 @@ export default async function AiPage() {
             description={AI_FINAL_CTA.description}
             ctas={AI_FINAL_CTA_LINKS}
             // White behind the card, matching every other interior page: this page
-            // alternates only white and `bg-soft`, and the FAQ above ends on `bg-soft`.
+            // alternates only white and `bg-[#eaf8ff]`, and the FAQ above ends on `bg-[#eaf8ff]`.
             // The card keeps the darker interior-page gradient. `pullUp={false}` because
             // there is no section above for it to tuck into - it overlaps down into the
             // footer only, which `<Footer overlap>` reserves space for.
-            className="bg-soft"
+            className="bg-[#eaf8ff]"
             cardClassName="-mt-0 bg-[linear-gradient(135deg,#152a6b_0%,#2557c9_65%,#3568e0_100%)]"
             headingClassName="text-[clamp(28px,3.6vw,44px)] leading-[1.12]"
             pullUp={false}

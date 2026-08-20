@@ -15,17 +15,15 @@ import {
  * replacing the earlier generic 6-card "what we deliver" grid with
  * something specific to the Atlassian suite instead.
  *
- * ── IT SHARES ITS TONE WITH `MigrationFlowSection`, DELIBERATELY ──
- * This band used to carry no background at all, so it inherited white from `<body>` and
- * happened to merge with the white section below it. That was invisible but accidental -
- * the alternation could not be read from the code, and this file is the only band on the
- * page whose name does not end in `Section`, so it is easy to miss when auditing the run.
+ * ── ITS BACKGROUND IS EXPLICIT FOR A REASON ──
+ * This band used to carry no background class at all, so it inherited white from `<body>`.
+ * That rendered correctly but made the page's alternation unreadable from the code - and
+ * this file is the only band on the page whose name does not end in `Section`, so it is the
+ * one that gets missed when auditing the run. Keep the class even though `<body>` would
+ * supply the same colour.
  *
- * The tone is now explicit, and the pairing is the intent: the products grid and the
- * migration flow are one continuous white run, the same way About's "Featured In" and
- * "Mission" bands are. It is the page's one repeated seam. Flipping it instead would
- * cascade a parity change through all six bands below, and several of those (the AGC panel,
- * the FAQ) paint white cards that need `bg-soft` behind them to read.
+ * It sits between two tinted bands (`ApproachComparisonSection` above,
+ * `MigrationFlowSection` below), so white is also what the alternation wants here.
  */
 export function ProductMigrationGrid() {
   return (

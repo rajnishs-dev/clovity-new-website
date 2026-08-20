@@ -18,7 +18,10 @@ import { MS_DELIVER_CONTENT, MS_OFFERINGS } from '@/constants/managed-services';
  */
 export function DeliverSection() {
   return (
-    <Section padding="tight" className="border-y border-line-faint bg-soft">
+    <Section
+      padding="tight"
+      className="border-y border-line-faint bg-[#eaf8ff]"
+    >
       <SectionHeader
         heading={
           <>

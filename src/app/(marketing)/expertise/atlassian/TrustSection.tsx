@@ -10,7 +10,10 @@ import {
 /** Compact strip of the four real Atlassian partner badges - not the full About-page collage. */
 export function TrustSection() {
   return (
-    <Section padding="tight" className="border-y border-line-faint bg-soft">
+    <Section
+      padding="tight"
+      className="border-y border-line-faint bg-[#eaf8ff]"
+    >
       <p
         className={cn(
           'mb-10 text-center text-[14px] font-500 uppercase tracking-[.14em] text-brand-600',

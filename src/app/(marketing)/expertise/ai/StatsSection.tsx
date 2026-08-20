@@ -13,7 +13,10 @@ import { AI_STATS } from '@/constants/ai';
  */
 export function StatsSection() {
   return (
-    <Section padding="tight" className="border-b border-line-faint bg-soft">
+    <Section
+      padding="tight"
+      className="border-b border-line-faint bg-[#eaf8ff]"
+    >
       <StatBand items={AI_STATS} />
     </Section>
   );

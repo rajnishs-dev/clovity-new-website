@@ -432,8 +432,12 @@ export const ITSM_PROOF_CONTENT = {
 export const ITSM_TRUSTED_CONTENT = {
   headingLead: 'Enterprise & Public-Sector Teams ',
   headingHighlight: 'Running Service Management',
-  /** Must match this section's background, or the fade shows as a pale band. */
-  fadeColor: '#ffffff',
+  /**
+   * Must match `TrustedBySection`'s own background, or the marquee's edge fades show as
+   * a pale band at each end instead of hiding the loop seam. Currently the `#eaf8ff`
+   * section tint. Change both together.
+   */
+  fadeColor: '#eaf8ff',
 } as const;
 
 /* ── FAQ ────────────────────────────────────────────────────────────────── */

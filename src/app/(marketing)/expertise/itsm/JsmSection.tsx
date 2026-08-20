@@ -29,9 +29,12 @@ import { ITSM_JSM_CAPABILITIES, ITSM_JSM_CONTENT } from '@/constants/itsm';
  */
 export function JsmSection() {
   return (
-    // `bg-soft`. This section was `#eaf8ff`; the page now alternates only white and
-    // `bg-soft`, so the tinted band is gone from every section here.
-    <section className="bg-soft py-12 lg:py-16">
+    // `#eaf8ff`, the site's tinted section band. This has flipped twice: it was
+    // `#eaf8ff`, briefly `bg-soft` while the expertise pages ran on a near-white
+    // second tone, and is now back to the tint. Anything reasoning about how close
+    // this background is to white - see the divider note further down - has to be
+    // re-read whenever that flips.
+    <section className="bg-[#eaf8ff] py-12 lg:py-16">
       <Container>
         <div className="grid items-start gap-10 lg:grid-cols-[minmax(0,400px)_1fr] lg:gap-16">
           <div

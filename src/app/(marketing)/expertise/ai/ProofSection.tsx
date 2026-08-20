@@ -33,13 +33,13 @@ export function ProofSection({
   if (caseStudies.length === 0) return null;
 
   return (
-    // `bg-soft`, unlike the Managed Services and Workforce proof rails which sit on
+    // `bg-[#eaf8ff]`, unlike the Managed Services and Workforce proof rails which sit on
     // white. See the background note in `page.tsx`: removing the responsible-AI band
     // left this page with an even number of sections, which makes one repeated tone
     // unavoidable. Putting it here is the cheapest option - the `FaqSection` below
     // already ships a `border-t` hairline to mark the seam, and white `ResourceCard`s
     // read better on soft than on white anyway.
-    <Section padding="tight" className="bg-soft">
+    <Section padding="tight" className="bg-[#eaf8ff]">
       <SectionHeader
         heading={
           <>

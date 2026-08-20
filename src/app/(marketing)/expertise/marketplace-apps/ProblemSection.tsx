@@ -57,7 +57,7 @@ function FloatingAppTiles() {
 
 export function ProblemSection() {
   return (
-    <Section className="bg-soft">
+    <Section className="bg-[#eaf8ff]">
       <div className="grid items-center gap-10 lg:grid-cols-[1.05fr_1fr] lg:gap-14">
         <div
           className={cn(reveal('left'), 'md:text-center lg:text-left')}

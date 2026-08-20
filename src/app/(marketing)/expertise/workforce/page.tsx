@@ -28,7 +28,7 @@
  * documented there and both clear WCAG AA.
  *
  * ── BACKGROUNDS ──
- * White and `bg-soft` only, alternating strictly from the hero down: Stats (soft), Sourcing
+ * White and `bg-[#eaf8ff]` only, alternating strictly from the hero down: Stats (soft), Sourcing
  * (white), Deliver (soft), Contrast (white), Disciplines (soft), Approach (white),
  * Credentials (soft), Proof (white), FAQ (soft), CTA (white). Same discipline as the ITSM and
  * Managed Services pages, and starting on the same tone.
@@ -188,8 +188,8 @@ export default async function WorkforcePage() {
             description={WF_FINAL_CTA.description}
             ctas={WF_FINAL_CTA_LINKS}
             // White behind the card, matching ITSM, DevSecOps and Managed Services:
-            // this page alternates only white and `bg-soft`, and the FAQ above ends on
-            // `bg-soft`. The card keeps the darker interior-page gradient.
+            // this page alternates only white and `bg-[#eaf8ff]`, and the FAQ above ends on
+            // `bg-[#eaf8ff]`. The card keeps the darker interior-page gradient.
             // `pullUp={false}` because there is no section above for it to tuck into -
             // it overlaps down into the footer only, which `<Footer overlap>` reserves
             // space for.

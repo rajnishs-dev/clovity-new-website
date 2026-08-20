@@ -41,7 +41,10 @@ const PRODUCT_ROWS = [
 
 export function ProductsSection() {
   return (
-    <Section padding="tight" className="border-b border-line-faint bg-soft">
+    <Section
+      padding="tight"
+      className="border-b border-line-faint bg-[#eaf8ff]"
+    >
       <div
         className={cn(
           'mx-auto mb-9 max-w-[620px] text-center',

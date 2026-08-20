@@ -15,7 +15,7 @@ import { DEVSECOPS_STATS } from '@/constants/devsecops';
  */
 export function StatsSection() {
   return (
-    // White: this page's white/`bg-soft` run starts here - see the note in
+    // White: this page's white/`bg-[#eaf8ff]` run starts here - see the note in
     // `page.tsx` for why the phase is what it is.
     <Section padding="tight" className="border-b border-line-faint bg-white">
       <StatBand items={DEVSECOPS_STATS} />

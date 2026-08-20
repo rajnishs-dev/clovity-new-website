@@ -16,7 +16,10 @@ import { WF_STATS } from '@/constants/workforce';
  */
 export function StatsSection() {
   return (
-    <Section padding="tight" className="border-b border-line-faint bg-soft">
+    <Section
+      padding="tight"
+      className="border-b border-line-faint bg-[#eaf8ff]"
+    >
       <StatBand items={WF_STATS} />
     </Section>
   );

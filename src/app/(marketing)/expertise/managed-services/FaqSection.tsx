@@ -24,7 +24,7 @@ import { MS_FAQ, MS_FAQ_CONTENT } from '@/constants/managed-services';
  */
 export function FaqSection() {
   return (
-    <section className="border-t border-line-faint bg-soft py-12 sm:py-16">
+    <section className="border-t border-line-faint bg-[#eaf8ff] py-12 sm:py-16">
       <JsonLd schema={faqSchema(MS_FAQ)} />
 
       <div className="mx-auto w-full max-w-[900px] px-6">

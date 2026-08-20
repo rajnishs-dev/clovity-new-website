@@ -15,7 +15,10 @@ import { ABOUT_VALUES, ABOUT_VALUES_CONTENT } from '@/constants/about';
  */
 export function ValuesSection() {
   return (
-    <Section padding="tight" className="border-y border-line-faint bg-soft">
+    <Section
+      padding="tight"
+      className="border-y border-line-faint bg-[#eaf8ff]"
+    >
       <SectionHeader
         labelClassName="mb-4"
         heading={

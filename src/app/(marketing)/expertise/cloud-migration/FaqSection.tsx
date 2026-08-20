@@ -14,7 +14,7 @@ import {
  */
 export function FaqSection() {
   return (
-    <Section width="prose" className="bg-soft">
+    <Section width="prose" className="bg-white">
       <SectionHeader
         className="mx-auto max-w-[680px]"
         heading={

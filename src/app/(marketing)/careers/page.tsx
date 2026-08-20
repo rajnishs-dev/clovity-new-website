@@ -113,7 +113,7 @@ export default async function CareersPage() {
             }
             description={CAREERS_FINAL_CTA.description}
             ctas={CAREERS_FINAL_CTA_LINKS}
-            className="bg-soft"
+            className="bg-[#eaf8ff]"
             cardClassName="-mt-0 bg-[linear-gradient(135deg,#152a6b_0%,#2557c9_65%,#3568e0_100%)]"
             headingClassName="text-[clamp(28px,3.6vw,44px)] leading-[1.12]"
             pullUp={false}

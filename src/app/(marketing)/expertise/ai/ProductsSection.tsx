@@ -25,7 +25,10 @@ import { AI_PRODUCTS, AI_PRODUCTS_CONTENT } from '@/constants/ai';
  */
 export function ProductsSection() {
   return (
-    <Section padding="tight" className="border-b border-line-faint bg-soft">
+    <Section
+      padding="tight"
+      className="border-b border-line-faint bg-[#eaf8ff]"
+    >
       <SectionHeader
         heading={
           <>

@@ -12,11 +12,15 @@ import { ROUTES } from '@/constants/routes';
 import { CLOUD_MIGRATION_AGC_CONTENT } from '@/constants/expertise/cloud-migration';
 
 /**
- * A two-panel auto-rotating stack - same interaction as the home page's
- * `PublicSectorSection` (glass-morphism card, autoplay, hover-pause, arrow
- * nav) - contrasting the commercial-cloud path with the AGC path, rather
- * than a flat "AGC-only" block. Reuses the real `MIGRATION_BENEFITS` and
- * `AGC_STEPS` data; no new claims.
+ * A two-panel auto-rotating stack - the same INTERACTION as the home page's
+ * `PublicSectorSection` (autoplay, hover-pause, arrow nav) - contrasting the
+ * commercial-cloud path with the AGC path, rather than a flat "AGC-only" block.
+ * Reuses the real `MIGRATION_BENEFITS` and `AGC_STEPS` data; no new claims.
+ *
+ * It no longer shares that section's glass-morphism LOOK. This band is white, and glass
+ * needs a tinted or photographic ground to read against, so both panels are solid white
+ * on a `#e8edf7` border instead. If this band is ever tinted again, the glass treatment
+ * is the thing worth restoring.
  */
 const PANEL_COUNT = 2;
 const PANEL_BASE =
@@ -38,7 +42,14 @@ export function AgcSection() {
   };
 
   return (
-    <Section className="bg-soft">
+    // White, and that required un-frosting the panels below - see `PANEL_BASE`. This band
+    // was tinted precisely because panel 1 was `bg-white/[.82]` over a
+    // `border-white/[.65]` with a backdrop blur, which only reads against a tinted ground.
+    // Both panels are now solid white on a visible `#e8edf7` border, so they read here.
+    //
+    // No `border-t`: the band above (`MigrationFlowSection`) is tinted, so the tone change
+    // separates them on its own. The hairline was only there while both were tinted.
+    <Section className="bg-white">
       <SectionHeader
         className="mx-auto max-w-[680px]"
         heading={
@@ -80,7 +91,14 @@ export function AgcSection() {
         <div
           className={cn(
             PANEL_BASE,
-            'border border-white/[.65] bg-white/[.82] shadow-panel backdrop-blur-[18px] backdrop-saturate-[160%]',
+            // Solid white on a real border, NOT the glass treatment this used to
+            // carry (`bg-white/[.82]`, `border-white/[.65]`, `backdrop-blur-[18px]`,
+            // `backdrop-saturate-[160%]`). Glass needs something behind it to blur
+            // and tint; this section is now white, so a translucent white panel with
+            // a white border had nothing to read against. Same border as panel 2
+            // below, and it keeps the stronger `shadow-panel` because it is the
+            // active card in the stack.
+            'border border-[#e8edf7] bg-white shadow-panel',
             stackClass(0),
           )}
         >

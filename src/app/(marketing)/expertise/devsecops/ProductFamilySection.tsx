@@ -52,13 +52,13 @@ export function ProductFamilySection() {
   return (
     <Section
       padding="tight"
-      // Flat `bg-soft`. An earlier version washed this band cream-to-blue
+      // Flat `bg-[#eaf8ff]`. An earlier version washed this band cream-to-blue
       // (`#fffaf0` → `#f5f9ff`), which was the only warm section background
       // anywhere on the site. A flat tone is what lets nine saturated product
       // marks supply all the colour, which is the point of the strip - and at
       // `#f8fafc` the lockups still sit on what is effectively white, so none of
       // them needs a tile behind it.
-      className="border-b border-line-faint bg-soft"
+      className="border-b border-line-faint bg-[#eaf8ff]"
     >
       <div
         className={cn(

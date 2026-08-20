@@ -4,7 +4,7 @@ import { ABOUT_STATS } from '@/constants/about';
 /** The four-metric stat band, on a light section. */
 export function StatsSection() {
   return (
-    <Section padding="tight" className="bg-soft">
+    <Section padding="tight" className="bg-[#eaf8ff]">
       <StatBand items={ABOUT_STATS} />
     </Section>
   );

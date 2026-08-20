@@ -138,12 +138,12 @@ export default async function ItsmPage() {
             description={ITSM_FINAL_CTA.description}
             ctas={ITSM_FINAL_CTA_LINKS}
             // White behind the card rather than About's `#eaf8ff`: this page now
-            // alternates only white and `bg-soft`, and the FAQ above ends on
-            // `bg-soft`. The card itself keeps the darker interior-page gradient.
+            // alternates only white and `bg-[#eaf8ff]`, and the FAQ above ends on
+            // `bg-[#eaf8ff]`. The card itself keeps the darker interior-page gradient.
             // `pullUp={false}` because there is no section above for it to tuck
             // into - it overlaps down into the footer only, which
             // `<Footer overlap>` reserves space for.
-            className="bg-white"
+            className="bg-[#eaf8ff]"
             cardClassName="-mt-0 bg-[linear-gradient(135deg,#152a6b_0%,#2557c9_65%,#3568e0_100%)]"
             headingClassName="text-[clamp(28px,3.6vw,44px)] leading-[1.12]"
             pullUp={false}

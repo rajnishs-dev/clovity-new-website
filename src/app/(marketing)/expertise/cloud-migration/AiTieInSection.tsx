@@ -19,7 +19,7 @@ export function AiTieInSection() {
   );
 
   return (
-    <Section className="bg-white">
+    <Section className="bg-[#eaf8ff]">
       <SectionHeader
         className="mx-auto max-w-[680px]"
         heading={

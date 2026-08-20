@@ -14,7 +14,7 @@ import { ABOUT_TRUSTED_CONTENT } from '@/constants/about';
  */
 export function TrustedBySection({ logos }: { logos: ClientLogo[] }) {
   return (
-    <section className="bg-soft py-8 sm:py-12">
+    <section className="bg-[#eaf8ff] py-8 sm:py-12">
       <Container className="mb-8 max-w-[767px]">
         <SectionHeader
           labelClassName="mb-3"

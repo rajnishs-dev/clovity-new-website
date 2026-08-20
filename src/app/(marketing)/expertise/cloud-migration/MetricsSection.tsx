@@ -23,7 +23,7 @@ function TrustedPartnerGlyph() {
 
 export function MetricsSection() {
   return (
-    <Section className="bg-white">
+    <Section className="bg-[#eaf8ff]">
       <div className="flex flex-col items-center gap-8 rounded-[10px] border border-line-soft bg-white p-8 sm:p-10 lg:flex-row lg:justify-between">
         <div className="flex-1">
           <SectionHeader

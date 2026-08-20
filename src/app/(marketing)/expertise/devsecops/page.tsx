@@ -6,12 +6,12 @@
  * `constants/devsecops.ts`.
  *
  * ── BACKGROUNDS ──
- * White and `bg-soft` only, alternating strictly from the hero down: Stats (white),
+ * White and `bg-[#eaf8ff]` only, alternating strictly from the hero down: Stats (white),
  * Products (soft), Delivery (white), Scaling (soft), Toolchain (white), Security
  * (soft), Proof (white), FAQ (soft), CTA (white). The `#eaf8ff` tint used elsewhere
  * on the site is deliberately absent here.
  *
- * The run starts on WHITE rather than `bg-soft` (which is where the ITSM page
+ * The run starts on WHITE rather than `bg-[#eaf8ff]` (which is where the ITSM page
  * starts) purely so the parity lands correctly: with nine bands, starting on soft
  * would put Scaling, Proof and the FAQ on the opposite tone to the one their inner
  * cards were built for. Adding or removing a section flips the whole run, so
@@ -151,7 +151,7 @@ export default async function DevSecOpsPage() {
             description={DEVSECOPS_FINAL_CTA.description}
             ctas={DEVSECOPS_FINAL_CTA_LINKS}
             // White behind the card, matching ITSM: this page alternates only white
-            // and `bg-soft`, and the FAQ above it ends on `bg-soft`. The card keeps
+            // and `bg-[#eaf8ff]`, and the FAQ above it ends on `bg-[#eaf8ff]`. The card keeps
             // the darker interior-page gradient. `pullUp={false}` because there is
             // no section above for it to tuck into - it overlaps down into the
             // footer only, which `<Footer overlap>` reserves space for.

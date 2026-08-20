@@ -17,7 +17,11 @@ const STAGGER_STEP_MS = 50;
 
 export function OfficesSection() {
   return (
-    <Section className="border-y border-line-faint bg-soft">
+    // White, like the form section above it, so this short page runs all-white rather
+    // than alternating. `border-y` is doing the separating work on its own here - with
+    // no tone change between the two bands it is the ONLY thing marking the seam, so it
+    // must not be dropped as decoration.
+    <Section className="border-y border-line-faint bg-white">
       <SectionHeader
         labelClassName="mb-4"
         heading={

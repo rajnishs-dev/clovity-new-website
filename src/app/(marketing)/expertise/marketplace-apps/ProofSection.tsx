@@ -8,7 +8,7 @@ import { CUSTOMER_STORIES } from '@/constants/home';
 
 export function ProofSection() {
   return (
-    <Section className="bg-soft">
+    <Section className="bg-[#eaf8ff]">
       <SectionHeader
         className="mx-auto max-w-[680px]"
         heading={

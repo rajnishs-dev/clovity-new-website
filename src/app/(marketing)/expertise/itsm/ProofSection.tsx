@@ -33,7 +33,10 @@ export function ProofSection({
   if (caseStudies.length === 0) return null;
 
   return (
-    <Section padding="tight" className="border-y border-line-faint bg-soft">
+    // `border-y` is kept even though this band is now white. The band ABOVE is the
+    // public-sector photograph, which has no flat tone for a colour change to work
+    // against, so the top hairline is the only thing separating them.
+    <Section padding="tight" className="border-y border-line-faint bg-white">
       <SectionHeader
         heading={
           <>

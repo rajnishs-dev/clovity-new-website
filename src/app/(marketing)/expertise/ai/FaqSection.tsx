@@ -30,8 +30,8 @@ import { AI_FAQ, AI_FAQ_CONTENT } from '@/constants/ai';
  * to be wrong on.
  */
 /*
- * ── `bg-white`, WHERE THE OTHER FAQs ARE `bg-soft` ──
- * The ITSM, Managed Services and Workforce FAQs sit on `bg-soft`. This one is white so the
+ * ── `bg-white`, WHERE THE OTHER FAQs ARE `bg-[#eaf8ff]` ──
+ * The ITSM, Managed Services and Workforce FAQs sit on `bg-[#eaf8ff]`. This one is white so the
  * page's run alternates - see the background note in `page.tsx`. The cost is that the
  * accordion items are white cards on a white band, so they read from their border and their
  * open shadow rather than from a tone change.

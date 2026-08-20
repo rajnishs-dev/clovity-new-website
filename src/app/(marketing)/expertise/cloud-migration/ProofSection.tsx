@@ -10,7 +10,7 @@ import {
 
 export function ProofSection() {
   return (
-    <Section className="bg-soft">
+    <Section className="bg-white">
       <SectionHeader
         className="mx-auto max-w-[680px]"
         heading={

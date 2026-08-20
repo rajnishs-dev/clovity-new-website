@@ -89,7 +89,10 @@ export function CredentialsSection({
   ];
 
   return (
-    <Section padding="tight" className="border-y border-line-faint bg-soft">
+    <Section
+      padding="tight"
+      className="border-y border-line-faint bg-[#eaf8ff]"
+    >
       <SectionHeader
         labelClassName="mb-4"
         heading={

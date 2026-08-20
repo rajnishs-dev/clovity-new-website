@@ -151,7 +151,10 @@ const CAPABILITY_OFFERINGS = WF_OFFERINGS.slice(CAPACITY_COUNT);
 
 export function DeliverSection() {
   return (
-    <Section padding="tight" className="border-y border-line-faint bg-soft">
+    <Section
+      padding="tight"
+      className="border-y border-line-faint bg-[#eaf8ff]"
+    >
       <SectionHeader
         heading={
           <>

@@ -35,11 +35,12 @@ import {
  */
 export function SecuritySection() {
   return (
-    // `bg-soft`. Before that it was `#eaf8ff`, and before that a blue-to-peach wash
-    // ending in `#fff4ec` - the only warm background on the site, which read as a
-    // different site spliced in. The tint went when this page narrowed to white and
-    // `bg-soft` only; the orbs below still supply the colour the flat tone gives up.
-    <section className="relative isolate overflow-hidden bg-soft py-14 lg:py-20">
+    // `#eaf8ff`, the site's tinted section band. Before this it was a blue-to-peach
+    // wash ending in `#fff4ec` - the only warm background on the site, which read as a
+    // different site spliced in. That wash is what went; the tint itself has since
+    // been swapped out for `bg-soft` and back again. The orbs below carry the colour
+    // either way.
+    <section className="relative isolate overflow-hidden bg-[#eaf8ff] py-14 lg:py-20">
       {/* The same orb device the hero and the final CTA use. The warm orb is the
           brand orange `#f2642a` at low opacity - exactly how the hero and
           `FinalCta` spend that colour - rather than a flat peach that exists

@@ -15,7 +15,7 @@ import { DEVSECOPS_FAQ, DEVSECOPS_FAQ_CONTENT } from '@/constants/devsecops';
  * The marker is suppressed twice on purpose - `list-none` for browsers that honour
  * `::marker`, the webkit selector for Safari, which does not.
  *
- * Sits on `bg-soft` rather than white so it separates from the white section above
+ * Sits on `bg-[#eaf8ff]` rather than white so it separates from the white section above
  * it; the ITSM FAQ is white because the section above THAT one is tinted. Same
  * component, opposite tone, for the same reason.
  *
@@ -24,7 +24,7 @@ import { DEVSECOPS_FAQ, DEVSECOPS_FAQ_CONTENT } from '@/constants/devsecops';
  */
 export function FaqSection() {
   return (
-    <section className="border-y border-line-faint bg-soft py-12 sm:py-16">
+    <section className="border-y border-line-faint bg-[#eaf8ff] py-12 sm:py-16">
       <JsonLd schema={faqSchema(DEVSECOPS_FAQ)} />
 
       <div className="mx-auto w-full max-w-[900px] px-6">

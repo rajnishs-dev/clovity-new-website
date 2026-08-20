@@ -22,10 +22,10 @@ import { ITSM_FAQ, ITSM_FAQ_CONTENT } from '@/constants/itsm';
  */
 export function FaqSection() {
   return (
-    // `bg-soft`, so the run out of the page alternates: Trusted By (white) → FAQ
+    // `bg-[#eaf8ff]`, so the run out of the page alternates: Trusted By (white) → FAQ
     // (soft) → final CTA (white). It was white, which collided with Trusted By
     // once that section lost its `#eaf8ff` tint.
-    <section className="border-t border-line-faint bg-soft py-12 sm:py-16">
+    <section className="border-t border-line-faint bg-white py-12 sm:py-16">
       <JsonLd schema={faqSchema(ITSM_FAQ)} />
 
       <div className="mx-auto w-full max-w-[900px] px-6">

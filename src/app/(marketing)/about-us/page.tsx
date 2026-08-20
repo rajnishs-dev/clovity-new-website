@@ -6,15 +6,15 @@
  * `NavState` reach the browser as JavaScript.
  *
  * ── BACKGROUNDS: TWO TONES, AND TWO DELIBERATE REPEATS ──
- * `bg-white` and `bg-soft` only - the third tone this page used to carry (`bg-[#eaf8ff]`)
- * is gone. Reading down from the hero:
+ * `bg-white` and `bg-[#eaf8ff]` only - two tones, no third. (T below is the tint.)
+ * Reading down from the hero:
  *
- *     Why W · TrustedBy S · WhoWeAre W · Stats S · Values S · Milestones W ·
- *     Credentials S · FeaturedIn W · Mission W · WorkWithUs S · CTA W
+ *     Why W · TrustedBy T · WhoWeAre W · Stats T · Values T · Milestones W ·
+ *     Credentials T · FeaturedIn W · Mission W · WorkWithUs T · CTA W
  *
  * The two repeats are not slips, and neither should be "fixed" by flipping one of them:
  *
- * 1. Stats + Values are both PINNED to `bg-soft` by their contents. `StatBand` paints a
+ * 1. Stats + Values are both PINNED to the tint by their contents. `StatBand` paints a
  *    white card and `BentoGrid` paints white tiles; either on a white band loses its edge
  *    and reads as floating text. They are adjacent, so one repeat is forced.
  * 2. FeaturedIn + Mission are one visual unit on purpose - `FeaturedInSection` ends on
