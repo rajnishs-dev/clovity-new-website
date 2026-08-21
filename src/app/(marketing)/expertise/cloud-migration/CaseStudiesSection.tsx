@@ -11,21 +11,29 @@ import {
   ResourceCard,
 } from '@/components/common/Resources';
 import { resolveCategoryMeta } from '../../case-study/categoryMeta';
-import { WF_PROOF_CONTENT } from '@/constants/workforce';
+import { CLOUD_MIGRATION_CASE_STUDIES_CONTENT } from '@/constants/expertise/cloud-migration';
 
 /**
- * "Teams We Have Staffed and Trained" - three case-study cards from Strapi.
+ * "Migrations We Already Delivered" - the live case-study rail, ported from the ITSM page's
+ * "Service Management Already Running" band.
  *
  * Uses the shared `ResourceCard` and `CategoryPill`, so a card here is identical to the same
  * case study on `/case-study` - including its category pill tint, resolved through
  * `resolveCategoryMeta` rather than hard-coded, so a new category picks up its styling in
  * one place.
  *
- * Returns `null` on an empty list. `getWorkforceCaseStudies` tops up from adjacent work
- * precisely so that should not happen, but a CMS returning nothing at all would otherwise
- * leave a heading over empty space.
+ * ── THIS IS THE PAGE'S SECOND PROOF BAND ──
+ * `ProofSection` is the static `CUSTOMER_STORIES` quote block; this is the CMS-driven grid.
+ * They were kept as two distinct bands on request rather than one replacing the other.
+ *
+ * Of the three rails added at once this is the one most likely to show genuinely on-topic
+ * rows, because the live collection actually contains migration stories - see
+ * `data/cloud-migration.ts`.
+ *
+ * Returns `null` on an empty list, so a CMS returning nothing cannot leave a heading over
+ * empty space.
  */
-export function ProofSection({
+export function CaseStudiesSection({
   caseStudies,
 }: {
   caseStudies: CaseStudyItem[];
@@ -37,11 +45,13 @@ export function ProofSection({
       <SectionHeader
         heading={
           <>
-            {WF_PROOF_CONTENT.headingLead}
-            <GradientText>{WF_PROOF_CONTENT.headingHighlight}</GradientText>
+            {CLOUD_MIGRATION_CASE_STUDIES_CONTENT.headingLead}
+            <GradientText>
+              {CLOUD_MIGRATION_CASE_STUDIES_CONTENT.headingHighlight}
+            </GradientText>
           </>
         }
-        subheading={WF_PROOF_CONTENT.subheading}
+        subheading={CLOUD_MIGRATION_CASE_STUDIES_CONTENT.subheading}
         subheadingClassName="mt-3"
         className="mx-auto mb-10 max-w-[720px] md:text-center"
       />
@@ -93,10 +103,10 @@ export function ProofSection({
         {...revealAttrs()}
       >
         <SmartLink
-          href={WF_PROOF_CONTENT.moreHref}
+          href={CLOUD_MIGRATION_CASE_STUDIES_CONTENT.moreHref}
           className={buttonClass('secondary')}
         >
-          {WF_PROOF_CONTENT.moreLabel} <ArrowIcon />
+          {CLOUD_MIGRATION_CASE_STUDIES_CONTENT.moreLabel} <ArrowIcon />
         </SmartLink>
       </div>
     </Section>

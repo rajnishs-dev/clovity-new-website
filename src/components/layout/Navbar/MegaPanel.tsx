@@ -63,7 +63,7 @@ export function MegaPanel({
     >
       <div
         className={cn(
-          'mx-auto grid max-w-shell gap-x-8 gap-y-2 px-8 pb-12 pt-11',
+          'mx-auto grid max-w-shell gap-x-6 gap-y-2 px-8 pb-12 pt-11',
           variant === 'resources'
             ? 'grid-cols-[1fr_1fr_420px]'
             : 'grid-cols-[repeat(3,1fr)_280px]',

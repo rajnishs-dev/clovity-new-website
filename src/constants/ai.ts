@@ -7,110 +7,9 @@ import type {
   ProcessStep,
   StatBandItem,
 } from '@/types/content';
-import { EXTERNAL_LINKS, ROUTES } from './routes';
+import { ROUTES } from './routes';
 
-/**
- * `/expertise/ai` - AI Solutions.
- *
- * ── WHERE THE STRUCTURE COMES FROM ──
- * The section order follows this page's own comp in `clovity-website-updated/expertise/ai/
- * index.html`: overview, capability grid, use cases, AI for Atlassian workflows, delivery
- * approach, responsible AI, outcomes, CTA. Two departures are recorded at the bottom.
- *
- * ── WHERE THE COPY COMES FROM ──
- * This page has more genuine Clovity material behind it than any other expertise page,
- * because Pulse AI is a shipped product rather than a service description. Almost nothing
- * here is written from scratch:
- *   • the hero is our HOME PAGE's own line, not a rewrite of it. `AI_DELIVERY_CONTENT` in
- *     `constants/home.ts` reads "AI Is Not a Feature We Add." / "How We Deliver", and this
- *     page opens on exactly that. The brief asked for "AI Is How We Deliver, Not a Feature
- *     We Bolt On"; the published line says the same thing in fewer words, so the published
- *     line wins.
- *   • `AI_PULSE_*` restates nothing - it IMPORTS. The spotlight section renders
- *     `PULSE_AI_CONTENT`, `PULSE_AI_CAPABILITIES` and `PULSE_AI_CTAS` straight from
- *     `constants/home.ts`, the same way `expertise/atlassian`'s `AiAutomationSection`
- *     already does. Pulse AI's description exists in one place and this page is not a
- *     second copy of it that can go stale.
- *   • `AI_TOUCHPOINTS`' cloud-migration entry is our home page's own public-sector fact
- *     "AI-accelerated migration" (`PUBLIC_SECTOR_FACTS` in `constants/home.ts`).
- *   • the closing CTA is the home page's "Ready for the AI-fication of Your Jira?".
- *   • the delivery steps and the use-case list are the comp's own, reworded.
- * The FAQ answers and the Rovo copy are written for this page.
- *
- * NOT used, despite being an obvious candidate: the home page's six-tile operating-model grid
- * (`AI_DELIVERY_CAPABILITIES` - AI-Powered Insights, Tailored for You, Secure by Design,
- * Real-Time Visibility, Workflow Automation, Expert & Human Support). It describes how Clovity
- * delivers everything, not what this practice sells, and `AI_OFFERINGS` below needed to be the
- * six concrete sub-services instead. The hero already carries that grid's argument in its
- * heading, which is where it belongs on this page.
- *
- * ── WHERE THE NUMBERS COME FROM ──
- *   • "6"        - `MARKETPLACE_APPS_SHOWCASE_CONTENT` in `constants/expertise/
- *                  marketplace-apps.ts` publishes "Six Apps, One Support Team", and
- *                  `MARKETPLACE_APPS_CATALOG` lists exactly six.
- *   • "Free"     - `free: true` on the Pulse AI record in `MARKETPLACE_APPS`
- *                  (`constants/home.ts`), matching its Atlassian Marketplace listing.
- *   • "Platinum" - the Atlassian Platinum Solution Partner badge in
- *                  `assets/badges/platinum-solution-partner.png`.
- *   • "100+"     - our own published stat bands on `expertise/atlassian` and
- *                  `expertise/cloud-migration`, and `HOME_STATS`.
- * No third-party market statistics are used. If a new figure is added here it needs a source
- * in this comment or it does not belong on the page.
- *
- * ── FOUR NUMBERS FROM THE COMP ARE DELIBERATELY ABSENT ──
- * The comp's outcomes band states "55% faster decision-making", "30% reduced manual effort",
- * "4x faster knowledge discovery" and "92% better reporting visibility". None has a source
- * anywhere in Clovity's published material, and AI efficiency percentages are the single
- * easiest claim for a buyer to test and disprove after go-live. `AI_STATS` therefore carries
- * four sourced values in that band's place. Same decision, same reasoning, as the comp
- * numbers dropped on `/expertise/workforce` and `/expertise/managed-services`.
- *
- * Pulse AI's install count is also NOT used here. It is real and published (62 installs), but
- * it is a live counter: correct on the Marketplace, stale the moment this file is built. It
- * belongs on the marketplace-apps page, which frames it as "New · 62 installs", not in a stat
- * band that reads as a durable credential.
- *
- * ── ONE THING DELIBERATELY NOT CLAIMED ──
- * NO MODEL NAMES, NO HOSTING CLAIMS. Nothing here says which foundation model anything runs
- * on, or that data never leaves your tenancy. Those are architecture commitments that vary by
- * engagement and by what Atlassian's own platform does underneath Rovo, and getting one wrong
- * in front of a security reviewer costs the deal. The FAQ sends the data-residency question to
- * a written answer instead of guessing at one here.
- *
- * ── THE RESPONSIBLE-AI SECTION WAS REMOVED, AND THE FAQ IS NOW CARRYING IT ──
- * A "The Risk Is Not the Model. It's the Access." section used to sit between the delivery
- * approach and the proof rail, pairing four ungoverned-adoption risks against four controls.
- * It was cut on request. Its `AI_GOVERNANCE_CONTENT` and `AI_GOVERNANCE_SHIFTS` exports went
- * with it rather than being left orphaned.
- *
- * What that means for this page: governance now appears in exactly two places - the
- * "AI Readiness & Governance" tile in `AI_OFFERINGS`, and the FAQ. The FAQ answers on data
- * handling, model choice and what happens when the AI is wrong are therefore load-bearing
- * rather than supplementary, and should not be trimmed without putting the argument back
- * somewhere visible. A security reviewer arriving on this page has nowhere else to look.
- */
 
-/* ── Hero ───────────────────────────────────────────────────────────────── */
-
-/**
- * Breadcrumb, heading and supporting paragraph - rendered through the shared `BannerHero`,
- * like ITSM, DevSecOps, Managed Services and Workforce.
- *
- * ── THE HOME PAGE'S LINE, SHORTENED TO FIT THE COLUMN ──
- * `AI_DELIVERY_CONTENT` in `constants/home.ts` reads "AI Is Not a Feature We Add." / "How We
- * Deliver", and the home page has room for it. This 480px column at 46px does not: measured
- * against the real font, "AI Is Not a Feature We Add." needs 551px and would wrap, orphaning
- * its tail - the failure `/expertise/workforce` documents at length. Measured:
- *
- *     "AI Is Not a Feature We Add."   551px   wraps
- *     "AI Is Not a Feature."         *382px*  fits
- *     "It's How We Deliver."         *395px*  fits
- *
- * So "We Add" goes, which costs nothing - "Not a Feature" already carries it - and the pair
- * below sets as two balanced lines. "AI" stays first in the H1 deliberately: this is
- * `/expertise/ai`, and dropping the term from the heading to save width would be a poor trade.
- * Re-measure before editing either clause; do not assume character count predicts this.
- */
 export const AI_HERO = {
   crumbs: [
     { name: 'Home', href: ROUTES.home },
@@ -148,16 +47,7 @@ export const AI_STATS: StatBandItem[] = [
   },
 ];
 
-/* ── Pulse AI spotlight ─────────────────────────────────────────────────── */
 
-/**
- * The flagship section's own framing only.
- *
- * The product's NAME, DESCRIPTION, CAPABILITY CHIPS and CTAs are not here - the section
- * imports `PULSE_AI_CONTENT`, `PULSE_AI_CAPABILITIES` and `PULSE_AI_CTAS` from
- * `constants/home.ts` so there is exactly one description of Pulse AI in the codebase. This
- * object holds only what is specific to arguing for it on an expertise page.
- */
 export const AI_PULSE_CONTENT = {
   headingLead: 'Most AI Consultancies Have Not ',
   headingHighlight: 'Shipped One',
@@ -182,18 +72,7 @@ export const AI_DELIVER_CONTENT = {
     'Not a model selection exercise. Each of these attaches to work your teams already do every day, which is why they can be measured.',
 } as const;
 
-/**
- * The six sub-services, as bento tiles.
- *
- * `BentoTile` rather than `ServiceOffering` on purpose: the comp specifies its `.bento-grid`
- * here, and the ported `BentoGrid` renders title-plus-sentence tiles. Adding `points` to each
- * would turn a scannable grid into six stacked lists and duplicate the detail that the Pulse
- * spotlight and the Atlassian panel below already carry.
- *
- * Pulse AI leads the grid but stays one tile among six, because it has its own section
- * directly above - repeating its full capability list here would be the third time on one
- * page.
- */
+
 export const AI_OFFERINGS: BentoTile[] = [
   {
     id: 'pulse-ai',
@@ -468,44 +347,22 @@ export const AI_FAQ: FaqItem[] = [
 /* ── Final CTA ──────────────────────────────────────────────────────────── */
 
 /**
- * The home page's own closing line, reused verbatim - `HOME_FINAL_CTA` sets "Ready for the
- * AI-fication of Your Jira?" with `AI-fication` held on one line by a nowrap span. The same
- * split is kept here so the two pages close on the same sentence.
+ * Same closing content and single button as every other `/expertise/*` page - see
+ * `ATLASSIAN_FINAL_CTA_LINKS` for the shared rationale.
  */
 export const AI_FINAL_CTA = {
-  headingLead: 'Ready for the AI-fication',
-  headingTail: 'of your Jira?',
+  headingLead: 'Ready to talk to',
+  headingTail: 'an expert?',
   description:
-    'Install Pulse AI free and see what it finds, or book a readiness assessment and we will tell you which use cases your estate can actually support today.',
+    'Tell us what you’re working on and a Clovity specialist will get back to you with next steps.',
 } as const;
 
-/**
- * Two buttons, `white-pill` then `ghost-dark`.
- *
- * That pairing is already the convention on half the expertise pages - `atlassian`,
- * `cloud-migration` and `marketplace-apps` all carry it, as does the home page; ITSM,
- * DevSecOps, Managed Services and Workforce carry a single `white-pill`. So this is the
- * established two-CTA form, not an exception being made for this page.
- *
- * What is specific here is WHICH two. The primary route is a free Marketplace install that
- * needs no contact with us at all, and burying that behind "book a consultation" would waste
- * the one thing this page has that a competitor's page cannot copy. So the low-friction option
- * takes the primary slot and the high-intent one takes the secondary - the reverse of the usual
- * ordering, where the contact form is primary.
- */
 export const AI_FINAL_CTA_LINKS: CtaLink[] = [
   {
-    id: 'install',
-    label: 'Install Pulse AI free',
-    href: EXTERNAL_LINKS.pulseAiListing,
-    external: true,
+    id: 'talk-to-an-expert',
+    label: 'Talk to an expert',
+    href: ROUTES.discover.contact,
     variant: 'white-pill',
     icon: 'arrow-up-right',
-  },
-  {
-    id: 'assessment',
-    label: 'Book an AI readiness assessment',
-    href: ROUTES.discover.contact,
-    variant: 'ghost-dark',
   },
 ];

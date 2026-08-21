@@ -24,7 +24,7 @@ import { DEVSECOPS_FAQ, DEVSECOPS_FAQ_CONTENT } from '@/constants/devsecops';
  */
 export function FaqSection() {
   return (
-    <section className="border-y border-line-faint bg-[#eaf8ff] py-12 sm:py-16">
+    <section className="border-y border-line-faint bg-white py-12 sm:py-16">
       <JsonLd schema={faqSchema(DEVSECOPS_FAQ)} />
 
       <div className="mx-auto w-full max-w-[900px] px-6">

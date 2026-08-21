@@ -13,11 +13,11 @@ import { ITSM_TRUSTED_CONTENT } from '@/constants/itsm';
  */
 export function TrustedBySection({ logos }: { logos: ClientLogo[] }) {
   return (
-    // Tinted, so the page keeps alternating white / `bg-[#eaf8ff]`. The marquee's edge
-    // fades read `ITSM_TRUSTED_CONTENT.fadeColor`, which MUST match this background or
-    // the loop seam shows as a pale band across each edge - it was changed to `#eaf8ff`
-    // in the same edit. These two values are coupled; never flip one alone.
-    <section className="bg-[#eaf8ff] py-8 sm:py-12">
+    // White. The marquee's edge fades read `ITSM_TRUSTED_CONTENT.fadeColor`, which MUST
+    // match this background or the loop seam shows as a pale band across each edge.
+    // These two values are coupled; never flip one alone - it has already happened once,
+    // leaving a blue wash down both edges of this white band.
+    <section className="bg-white py-8 sm:py-12">
       <Container className="mb-8 max-w-[767px]">
         <SectionHeader
           heading={

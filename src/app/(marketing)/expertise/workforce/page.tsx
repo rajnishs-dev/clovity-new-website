@@ -173,9 +173,9 @@ export default async function WorkforcePage() {
 
           {/* Server-rendered from the build-time/ISR snapshot. No browser refetch: a
               case study is not time-critical, and ISR at five minutes covers an edit. */}
+          <FaqSection />
           <ProofSection caseStudies={caseStudies} />
 
-          <FaqSection />
 
           <FinalCta
             heading={
@@ -193,7 +193,7 @@ export default async function WorkforcePage() {
             // `pullUp={false}` because there is no section above for it to tuck into -
             // it overlaps down into the footer only, which `<Footer overlap>` reserves
             // space for.
-            className="bg-white"
+            className="bg-[#eaf8ff]"
             cardClassName="-mt-0 bg-[linear-gradient(135deg,#152a6b_0%,#2557c9_65%,#3568e0_100%)]"
             headingClassName="text-[clamp(28px,3.6vw,44px)] leading-[1.12]"
             pullUp={false}

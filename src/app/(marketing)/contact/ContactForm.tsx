@@ -10,6 +10,8 @@ import { isCmsConfigured, postEnquiry } from '@/api/cms';
 import { useInTouch } from '@/api/cms.hooks';
 import { Icon } from '@/components/ui/Icon';
 import { buttonClass } from '@/components/ui/Button';
+import { TextLink } from '@/components/ui/Link';
+import { ROUTES } from '@/constants/routes';
 import {
   CONTACT_FORM_CONTENT,
   CONTACT_FORM_SLUG,
@@ -37,7 +39,7 @@ import {
 /* ── Shared field styling, from `.ct-field` ─────────────────────────────── */
 
 const LABEL_CLASS =
-  'mb-2 block text-[12.5px] font-800 tracking-[.01em] text-[#334155]';
+  'mb-2 block text-[13.5px] font-800 tracking-[.01em] text-black';
 
 const CONTROL_CLASS = cn(
   'w-full rounded-xl border border-line bg-white px-4 py-[13px] text-[14.5px] text-ink outline-none',
@@ -110,6 +112,7 @@ export function ContactForm({
       phone: '',
       topic: '',
       message: '',
+      consent: false,
     },
     mode: 'onSubmit',
   });
@@ -273,7 +276,7 @@ export function ContactForm({
 
   return (
     <div>
-      <h2 className="mb-2 text-[clamp(20px,2vw,26px)] font-500 tracking-[-.01em] text-title">
+      <h2 className="mb-2 text-[clamp(20px,2vw,26px)] font-500 tracking-[-.01em] text-black">
         {CONTACT_FORM_CONTENT.heading}
       </h2>
       <p className="mb-7 text-[15px] text-muted">
@@ -333,6 +336,53 @@ export function ContactForm({
             {...register('message')}
           />
         </Field>
+
+        <div className="mb-5">
+          <label
+            htmlFor={id('consent')}
+            className="flex items-start gap-2.5 text-[13.5px] leading-[1.5] text-black"
+          >
+            <input
+              id={id('consent')}
+              type="checkbox"
+              className="mt-0.5 h-4 w-4 shrink-0 rounded border-line text-brand-600 focus:ring-2 focus:ring-brand-600/30"
+              aria-invalid={errors.consent ? true : undefined}
+              aria-describedby={
+                errors.consent ? `${id('consent')}-error` : undefined
+              }
+              {...register('consent')}
+            />
+            <span>
+              {CONTACT_FORM_CONTENT.fields.consent.text}{' '}
+              {CONTACT_FORM_CONTENT.fields.consent.dataNote}{' '}
+              <TextLink
+                href={ROUTES.legal.privacy}
+                className="no-underline hover:underline"
+              >
+                {CONTACT_FORM_CONTENT.fields.consent.privacyLinkLabel}
+              </TextLink>
+            </span>
+          </label>
+          {errors.consent ? (
+            <p
+              id={`${id('consent')}-error`}
+              role="alert"
+              className="mt-1.5 text-[12.5px] text-red-600"
+            >
+              {errors.consent.message}
+            </p>
+          ) : null}
+          <p className="mt-2.5 text-[13px] text-gray-800">
+            {CONTACT_FORM_CONTENT.fields.consent.withdrawNote}{' '}
+            <a
+              href={`mailto:${CONTACT_FORM_CONTENT.fields.consent.withdrawEmail}`}
+              className="text-brand-600 no-underline hover:underline"
+            >
+              {CONTACT_FORM_CONTENT.fields.consent.withdrawEmail}
+            </a>
+            .
+          </p>
+        </div>
 
         <button
           type="submit"

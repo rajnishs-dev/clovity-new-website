@@ -11,21 +11,35 @@ import {
   ResourceCard,
 } from '@/components/common/Resources';
 import { resolveCategoryMeta } from '../../case-study/categoryMeta';
-import { WF_PROOF_CONTENT } from '@/constants/workforce';
+import { MARKETPLACE_APPS_CASE_STUDIES_CONTENT } from '@/constants/expertise/marketplace-apps';
 
 /**
- * "Teams We Have Staffed and Trained" - three case-study cards from Strapi.
+ * "The Delivery Work Behind the Apps" - the live case-study rail, ported from the ITSM
+ * page's "Service Management Already Running" band.
  *
  * Uses the shared `ResourceCard` and `CategoryPill`, so a card here is identical to the same
  * case study on `/case-study` - including its category pill tint, resolved through
  * `resolveCategoryMeta` rather than hard-coded, so a new category picks up its styling in
  * one place.
  *
- * Returns `null` on an empty list. `getWorkforceCaseStudies` tops up from adjacent work
- * precisely so that should not happen, but a CMS returning nothing at all would otherwise
- * leave a heading over empty space.
+ * ── THE HEADING HAD TO BE BROADER THAN THE PAGE ──
+ * Clovity's published case studies are about delivery engagements, not about its own apps,
+ * so this rail will often be showing adjacent work rather than app-specific stories - see
+ * `data/marketplace-apps.ts`. "The delivery work behind the apps" stays true of whatever
+ * the CMS returns; "case studies about our apps" would not.
+ *
+ * ── THIS IS THE PAGE'S ONLY PROOF BAND ──
+ * A static `CUSTOMER_STORIES` quote block ("The Same Team Behind Mission-Critical
+ * Instances") sat directly above this one and was removed on request, along with the
+ * matching blocks on the Atlassian and Cloud Migration pages. Nothing on the site renders
+ * `ProofQuote` any more.
+ *
+ * Returns `null` on an empty list, so a CMS returning nothing cannot leave a heading over
+ * empty space. That matters more here than on the sibling pages: this rail is the page's
+ * whole proof now, and its terms are the least likely to match - see
+ * `data/marketplace-apps.ts`.
  */
-export function ProofSection({
+export function CaseStudiesSection({
   caseStudies,
 }: {
   caseStudies: CaseStudyItem[];
@@ -33,15 +47,17 @@ export function ProofSection({
   if (caseStudies.length === 0) return null;
 
   return (
-    <Section padding="tight" className="bg-[#eaf8ff]">
+    <Section padding="tight">
       <SectionHeader
         heading={
           <>
-            {WF_PROOF_CONTENT.headingLead}
-            <GradientText>{WF_PROOF_CONTENT.headingHighlight}</GradientText>
+            {MARKETPLACE_APPS_CASE_STUDIES_CONTENT.headingLead}
+            <GradientText>
+              {MARKETPLACE_APPS_CASE_STUDIES_CONTENT.headingHighlight}
+            </GradientText>
           </>
         }
-        subheading={WF_PROOF_CONTENT.subheading}
+        subheading={MARKETPLACE_APPS_CASE_STUDIES_CONTENT.subheading}
         subheadingClassName="mt-3"
         className="mx-auto mb-10 max-w-[720px] md:text-center"
       />
@@ -93,10 +109,10 @@ export function ProofSection({
         {...revealAttrs()}
       >
         <SmartLink
-          href={WF_PROOF_CONTENT.moreHref}
+          href={MARKETPLACE_APPS_CASE_STUDIES_CONTENT.moreHref}
           className={buttonClass('secondary')}
         >
-          {WF_PROOF_CONTENT.moreLabel} <ArrowIcon />
+          {MARKETPLACE_APPS_CASE_STUDIES_CONTENT.moreLabel} <ArrowIcon />
         </SmartLink>
       </div>
     </Section>

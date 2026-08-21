@@ -11,21 +11,27 @@ import {
   ResourceCard,
 } from '@/components/common/Resources';
 import { resolveCategoryMeta } from '../../case-study/categoryMeta';
-import { WF_PROOF_CONTENT } from '@/constants/workforce';
+import { ATLASSIAN_CASE_STUDIES_CONTENT } from '@/constants/expertise/atlassian';
 
 /**
- * "Teams We Have Staffed and Trained" - three case-study cards from Strapi.
+ * "Atlassian Estates We Already Run" - the live case-study rail, ported from the ITSM
+ * page's "Service Management Already Running" band.
  *
  * Uses the shared `ResourceCard` and `CategoryPill`, so a card here is identical to the same
  * case study on `/case-study` - including its category pill tint, resolved through
  * `resolveCategoryMeta` rather than hard-coded, so a new category picks up its styling in
  * one place.
  *
- * Returns `null` on an empty list. `getWorkforceCaseStudies` tops up from adjacent work
+ * ── THIS IS THE PAGE'S SECOND PROOF BAND ──
+ * `ProofSection` is the static `CUSTOMER_STORIES` quote block; this is the CMS-driven grid.
+ * They were kept as two distinct bands on request rather than one replacing the other. If
+ * the page is ever shortened, these two are the first pair to reconsider.
+ *
+ * Returns `null` on an empty list. `data/atlassian.ts` tops the rail up from adjacent work
  * precisely so that should not happen, but a CMS returning nothing at all would otherwise
  * leave a heading over empty space.
  */
-export function ProofSection({
+export function CaseStudiesSection({
   caseStudies,
 }: {
   caseStudies: CaseStudyItem[];
@@ -37,11 +43,13 @@ export function ProofSection({
       <SectionHeader
         heading={
           <>
-            {WF_PROOF_CONTENT.headingLead}
-            <GradientText>{WF_PROOF_CONTENT.headingHighlight}</GradientText>
+            {ATLASSIAN_CASE_STUDIES_CONTENT.headingLead}
+            <GradientText>
+              {ATLASSIAN_CASE_STUDIES_CONTENT.headingHighlight}
+            </GradientText>
           </>
         }
-        subheading={WF_PROOF_CONTENT.subheading}
+        subheading={ATLASSIAN_CASE_STUDIES_CONTENT.subheading}
         subheadingClassName="mt-3"
         className="mx-auto mb-10 max-w-[720px] md:text-center"
       />
@@ -93,10 +101,10 @@ export function ProofSection({
         {...revealAttrs()}
       >
         <SmartLink
-          href={WF_PROOF_CONTENT.moreHref}
+          href={ATLASSIAN_CASE_STUDIES_CONTENT.moreHref}
           className={buttonClass('secondary')}
         >
-          {WF_PROOF_CONTENT.moreLabel} <ArrowIcon />
+          {ATLASSIAN_CASE_STUDIES_CONTENT.moreLabel} <ArrowIcon />
         </SmartLink>
       </div>
     </Section>

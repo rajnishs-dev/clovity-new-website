@@ -10,13 +10,15 @@ import { ROUTES } from '@/constants/routes';
 import { Footer } from '@/components/layout/Footer';
 import { Header } from '@/components/layout/Header';
 import { FinalCta, JsonLd, PageAnimations } from '@/components/common';
+import { getMarketplaceAppsPageData } from '@/data/marketplace-apps';
 import { NavState } from './NavState';
+import { CaseStudiesSection } from './CaseStudiesSection';
+import { FaqSection } from './FaqSection';
 import { HeroSection } from './HeroSection';
 import { ProblemSection } from './ProblemSection';
 import { AppsTabsSection } from './AppsTabsSection';
 import { SupportGridSection } from './SupportGridSection';
 import { MetricsSection } from './MetricsSection';
-import { ProofSection } from './ProofSection';
 import {
   MARKETPLACE_APPS_FINAL_CTA,
   MARKETPLACE_APPS_FINAL_CTA_LINKS,
@@ -36,7 +38,16 @@ export const metadata: Metadata = buildMetadata({
   ],
 });
 
-export default function MarketplaceAppsExpertisePage() {
+/**
+ * Regenerated every five minutes. The case-study rail reads Strapi over Axios, which does
+ * not participate in Next's fetch cache, so page-level ISR is what lets a newly published
+ * case study appear here without a deploy. This page was fully static until that rail was
+ * added.
+ */
+export const revalidate = 300;
+export default async function MarketplaceAppsExpertisePage() {
+  const { caseStudies } = await getMarketplaceAppsPageData();
+
   return (
     <>
       <NavState />
@@ -56,7 +67,8 @@ export default function MarketplaceAppsExpertisePage() {
 
           <MetricsSection />
 
-          <ProofSection />
+          <FaqSection />
+              <CaseStudiesSection caseStudies={caseStudies} />
 
           <FinalCta
             heading={
@@ -68,7 +80,6 @@ export default function MarketplaceAppsExpertisePage() {
             }
             description={MARKETPLACE_APPS_FINAL_CTA.description}
             ctas={MARKETPLACE_APPS_FINAL_CTA_LINKS}
-            className="bg-white"
             cardClassName="-mt-0 bg-[linear-gradient(135deg,#152a6b_0%,#2557c9_65%,#3568e0_100%)]"
             headingClassName="text-[clamp(28px,3.6vw,44px)] leading-[1.12]"
             pullUp={false}

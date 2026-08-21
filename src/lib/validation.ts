@@ -156,6 +156,9 @@ export function buildEnquirySchema(rules: EnquiryFieldRules) {
       .trim()
       .min(10, 'Please tell us a little about what you need.')
       .max(4000, 'Please keep the message under 4000 characters.'),
+      consent: z.boolean().refine((value) => value === true, {
+      message: 'Please consent to the collection and processing of your information.',
+    }),
   });
 }
 

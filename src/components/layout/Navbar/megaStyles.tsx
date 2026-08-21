@@ -25,7 +25,7 @@ export function megaItemClass(options?: {
     // (chevron rotation), and bare `group` on both put every chip/arrow into
     // hover state at once when the trigger was hovered.
     'group/mega flex items-start gap-3 rounded-xl no-underline transition-[background] duration-150',
-    options?.inColumn ? 'px-1 py-[11px]' : 'px-3.5 py-3',
+    options?.inColumn ? 'px-3 py-[11px]' : 'px-3.5 py-3',
     'hover:bg-[#f0f6ff]',
     options?.active && 'bg-[#f0f6ff]',
     options?.highlight && 'border border-dashed border-[#cbd5e1] bg-soft',
@@ -68,7 +68,7 @@ export const MEGA_DESC_CLASS =
 
 /** `.mega-col-title` */
 export const MEGA_COL_TITLE_CLASS =
-  'mb-[18px] px-1 text-[21px] font-600 tracking-[-0.01em] text-ink';
+  'mb-[18px] px-3 text-[21px] font-600 tracking-[-0.01em] text-ink';
 
 /** `.mega-col` - a titled column with a divider on its left edge, applied by index rather than an nth-child selector. */
 export function megaColumnClass(index: number): string {

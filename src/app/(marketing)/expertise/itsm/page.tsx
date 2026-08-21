@@ -121,12 +121,12 @@ export default async function ItsmPage() {
               credentials row there is no browser refetch here: a case study is not
               time-critical the way a newly published award is, and ISR at five
               minutes already covers it. */}
-          <ProofSection caseStudies={caseStudies} />
 
           <TrustedBySection logos={logos} />
 
           <FaqSection />
 
+          <ProofSection caseStudies={caseStudies} />
           <FinalCta
             heading={
               <>
@@ -143,7 +143,6 @@ export default async function ItsmPage() {
             // `pullUp={false}` because there is no section above for it to tuck
             // into - it overlaps down into the footer only, which
             // `<Footer overlap>` reserves space for.
-            className="bg-[#eaf8ff]"
             cardClassName="-mt-0 bg-[linear-gradient(135deg,#152a6b_0%,#2557c9_65%,#3568e0_100%)]"
             headingClassName="text-[clamp(28px,3.6vw,44px)] leading-[1.12]"
             pullUp={false}

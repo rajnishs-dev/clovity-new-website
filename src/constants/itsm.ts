@@ -414,11 +414,15 @@ export const ITSM_TRUSTED_CONTENT = {
   headingLead: 'Enterprise & Public-Sector Teams ',
   headingHighlight: 'Running Service Management',
   /**
-   * Must match `TrustedBySection`'s own background, or the marquee's edge fades show as
-   * a pale band at each end instead of hiding the loop seam. Currently the `#eaf8ff`
-   * section tint. Change both together.
+   * Must match `TrustedBySection`'s own background, or the marquee's edge fades show as a
+   * pale band at each end instead of hiding the loop seam. That section is `bg-white`, so
+   * this is `#ffffff`.
+   *
+   * This has now broken once: the section was flipped to white while this value stayed on
+   * the `#eaf8ff` tint, which painted a pale blue wash down both edges of a white band.
+   * The two are coupled - never change one without the other.
    */
-  fadeColor: '#eaf8ff',
+  fadeColor: '#ffffff',
 } as const;
 
 /* ── FAQ ────────────────────────────────────────────────────────────────── */
@@ -476,10 +480,10 @@ export const ITSM_FAQ: FaqItem[] = [
 /* ── Final CTA ──────────────────────────────────────────────────────────── */
 
 export const ITSM_FINAL_CTA = {
-  headingLead: 'Ready to fix',
-  headingTail: 'your service desk?',
+  headingLead: 'Ready to talk to',
+  headingTail: 'an expert?',
   description:
-    'Bring us your current service model and what is not working in it. We come back with a phased plan and a scoped price.',
+    'Tell us what you’re working on and a Clovity specialist will get back to you with next steps.',
 } as const;
 
 export const ITSM_FINAL_CTA_LINKS: CtaLink[] = [

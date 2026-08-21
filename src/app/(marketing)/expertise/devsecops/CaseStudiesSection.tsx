@@ -11,21 +11,27 @@ import {
   ResourceCard,
 } from '@/components/common/Resources';
 import { resolveCategoryMeta } from '../../case-study/categoryMeta';
-import { WF_PROOF_CONTENT } from '@/constants/workforce';
+import { DEVSECOPS_CASE_STUDIES_CONTENT } from '@/constants/devsecops';
 
 /**
- * "Teams We Have Staffed and Trained" - three case-study cards from Strapi.
+ * "Pipelines We Already Work In" - the live case-study rail, the same band the ITSM,
+ * Atlassian, Cloud Migration and Marketplace Apps pages carry.
  *
  * Uses the shared `ResourceCard` and `CategoryPill`, so a card here is identical to the same
  * case study on `/case-study` - including its category pill tint, resolved through
  * `resolveCategoryMeta` rather than hard-coded, so a new category picks up its styling in
  * one place.
  *
- * Returns `null` on an empty list. `getWorkforceCaseStudies` tops up from adjacent work
- * precisely so that should not happen, but a CMS returning nothing at all would otherwise
- * leave a heading over empty space.
+ * ── THE PAGE'S ONLY PROOF BAND ──
+ * A second one sat directly below this for a short while: `ProofSection`, a single featured
+ * long-form article ("Our Own Thinking, Written Down") in a `FeaturedResourceCard`. It was
+ * removed on request, along with the blog lookup that fed it - see `data/devsecops.ts`.
+ *
+ * Returns `null` on an empty list, so a CMS returning nothing cannot leave a heading over
+ * empty space. That matters more now than it did with two bands: this rail is the page's
+ * whole proof, so an empty CMS would leave the page with none at all.
  */
-export function ProofSection({
+export function CaseStudiesSection({
   caseStudies,
 }: {
   caseStudies: CaseStudyItem[];
@@ -37,11 +43,13 @@ export function ProofSection({
       <SectionHeader
         heading={
           <>
-            {WF_PROOF_CONTENT.headingLead}
-            <GradientText>{WF_PROOF_CONTENT.headingHighlight}</GradientText>
+            {DEVSECOPS_CASE_STUDIES_CONTENT.headingLead}
+            <GradientText>
+              {DEVSECOPS_CASE_STUDIES_CONTENT.headingHighlight}
+            </GradientText>
           </>
         }
-        subheading={WF_PROOF_CONTENT.subheading}
+        subheading={DEVSECOPS_CASE_STUDIES_CONTENT.subheading}
         subheadingClassName="mt-3"
         className="mx-auto mb-10 max-w-[720px] md:text-center"
       />
@@ -93,10 +101,10 @@ export function ProofSection({
         {...revealAttrs()}
       >
         <SmartLink
-          href={WF_PROOF_CONTENT.moreHref}
+          href={DEVSECOPS_CASE_STUDIES_CONTENT.moreHref}
           className={buttonClass('secondary')}
         >
-          {WF_PROOF_CONTENT.moreLabel} <ArrowIcon />
+          {DEVSECOPS_CASE_STUDIES_CONTENT.moreLabel} <ArrowIcon />
         </SmartLink>
       </div>
     </Section>

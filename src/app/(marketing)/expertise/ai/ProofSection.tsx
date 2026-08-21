@@ -39,7 +39,7 @@ export function ProofSection({
     // unavoidable. Putting it here is the cheapest option - the `FaqSection` below
     // already ships a `border-t` hairline to mark the seam, and white `ResourceCard`s
     // read better on soft than on white anyway.
-    <Section padding="tight" className="bg-[#eaf8ff]">
+    <Section padding="tight" >
       <SectionHeader
         heading={
           <>

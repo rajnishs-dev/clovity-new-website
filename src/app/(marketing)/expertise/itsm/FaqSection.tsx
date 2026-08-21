@@ -25,7 +25,7 @@ export function FaqSection() {
     // `bg-[#eaf8ff]`, so the run out of the page alternates: Trusted By (white) → FAQ
     // (soft) → final CTA (white). It was white, which collided with Trusted By
     // once that section lost its `#eaf8ff` tint.
-    <section className="border-t border-line-faint bg-white py-12 sm:py-16">
+    <section className="border-t border-line-faint bg-[#eaf8ff] py-12 sm:py-16">
       <JsonLd schema={faqSchema(ITSM_FAQ)} />
 
       <div className="mx-auto w-full max-w-[900px] px-6">
@@ -44,7 +44,7 @@ export function FaqSection() {
             <details
               key={entry.id}
               className={cn(
-                'group mb-3.5 rounded-[10px] border border-line-soft px-4 py-1',
+                'group mb-3.5 rounded-[10px] border border-line-soft px-4 py-1 bg-white',
                 '[transition:border-color_.2s,box-shadow_.2s]',
                 'open:border-brand-200 open:shadow-[0_12px_30px_rgba(15,23,42,.06)]',
               )}

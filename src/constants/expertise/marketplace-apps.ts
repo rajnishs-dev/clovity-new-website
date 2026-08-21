@@ -1,7 +1,13 @@
 import { EXTERNAL_LINKS, ROUTES } from '@/constants/routes';
 import { marketplaceAppsHeroBanner } from '@/constants/media';
 import { MARKETPLACE_APPS } from '@/constants/home';
-import type { CtaLink, MarketplaceApp, PillarCard, StatBandItem } from '@/types/content';
+import type {
+  CtaLink,
+  FaqItem,
+  MarketplaceApp,
+  PillarCard,
+  StatBandItem,
+} from '@/types/content';
 
 /**
  * Clovity's help center (`clovity-help-center.vercel.app`) lists two more
@@ -58,6 +64,7 @@ const LATEX_DIAGRAMS_APP: MarketplaceApp = {
 export const MARKETPLACE_APPS_HERO = {
   crumbs: [
     { name: 'Home', href: ROUTES.home },
+    { name: 'Expertise', href: ROUTES.expertise.atlassian },
     { name: 'Marketplace Apps', href: ROUTES.expertise.marketplaceApps },
   ],
   titleLead: 'AI-Powered Apps,',
@@ -146,7 +153,8 @@ export const MARKETPLACE_APPS_SUPPORT_CARDS: PillarCard[] = [
     icon: 'life-ring',
     iconChipClass: 'text-brand-600',
     title: 'App Support & SLAs',
-    description: 'Direct support for every app we publish, through our help center.',
+    description:
+      'Direct support for every app we publish, through our help center.',
   },
   {
     id: 'forge-development',
@@ -200,39 +208,114 @@ export const MARKETPLACE_APPS_METRICS: StatBandItem[] = [
     label: 'Installs Across Our Apps',
   },
   { id: 'rating', value: '5.0', label: 'Average Rating (Rated Apps)' },
-  { id: 'apps', value: String(MARKETPLACE_APPS_CATALOG.length), label: 'Published Apps' },
+  {
+    id: 'apps',
+    value: String(MARKETPLACE_APPS_CATALOG.length),
+    label: 'Published Apps',
+  },
 ];
-
-/* ── Proof ───────────────────────────────────────────────────────────────── */
-/* One featured story, not the 3-card grid the other pages use - selected
- * directly from `CUSTOMER_STORIES` in `ProofSection.tsx`. */
-
-export const MARKETPLACE_APPS_PROOF_CONTENT = {
-  headingLead: 'The Same Team Behind ',
-  headingHighlight: 'Mission-Critical Instances',
-} as const;
 
 /* ── Closing CTA ─────────────────────────────────────────────────────────── */
 
 export const MARKETPLACE_APPS_FINAL_CTA = {
-  headingLead: 'Ready to put Pulse AI',
-  headingTail: 'on your own Jira instance?',
+  headingLead: 'Ready to talk to',
+  headingTail: 'an expert?',
   description:
-    'Install Pulse AI free from the Atlassian Marketplace, or talk to us about a Forge app custom to your workflow.',
+    'Tell us what you’re working on and a Clovity specialist will get back to you with next steps.',
 } as const;
 
 export const MARKETPLACE_APPS_FINAL_CTA_LINKS: CtaLink[] = [
   {
-    id: 'try-pulse',
-    label: 'Try Pulse AI Free',
-    href: EXTERNAL_LINKS.pulseAiListing,
-    external: true,
+    id: 'talk-to-an-expert',
+    label: 'Talk to an expert',
+    href: ROUTES.discover.contact,
     variant: 'white-pill',
+    icon: 'arrow-up-right',
+  },
+];
+
+/* ── Case-study rail ────────────────────────────────────────────────────── */
+
+/**
+ * The Strapi-backed case-study rail, ported from the ITSM page's
+ * "Service Management Already Running" band.
+ *
+ * This page now carries TWO proof bands of different kinds: `MARKETPLACE_APPS_PROOF_CONTENT`
+ * above is the static `CUSTOMER_STORIES` quote block, and this one is the live case-study
+ * grid. The quotes were kept rather than replaced, on request.
+ *
+ * ── THE HEADING IS DELIBERATELY BROADER THAN THIS PAGE ──
+ * "Work behind the apps" rather than "case studies about our apps", because Clovity's
+ * published case studies are about delivery engagements and there may be no row that is
+ * genuinely about an app build. The rail tops up from adjacent work when that happens - see
+ * `data/marketplace-apps.ts` - so the heading has to stay true of whatever it shows.
+ */
+export const MARKETPLACE_APPS_CASE_STUDIES_CONTENT = {
+  headingLead: 'The Delivery Work ',
+  headingHighlight: 'Behind the Apps',
+  subheading:
+    'The same team builds these apps and runs the engagements below - in the clients’ own words.',
+  moreLabel: 'See all case studies',
+  moreHref: ROUTES.resources.caseStudy,
+} as const;
+
+/* ── FAQ ────────────────────────────────────────────────────────────────── */
+
+export const MARKETPLACE_APPS_FAQ_CONTENT = {
+  headingLead: 'Before You ',
+  headingHighlight: 'Install Anything',
+} as const;
+
+/**
+ * Six disclosures.
+ *
+ * ── WHAT IS NOT STATED HERE ──
+ * NO PRICES. Pulse AI is described as free because `MARKETPLACE_APPS` in `constants/home.ts`
+ * carries `free: true` on that record, matching its listing. Nothing is said about what the
+ * other five cost: the Marketplace listing is the only authoritative price, it changes
+ * without touching this repo, and a stale number on a web page is worse than none.
+ *
+ * NO INSTALL COUNTS either, for the same reason the AI page omits them - they are live
+ * counters. The apps showcase above prints them where they belong, next to each listing.
+ *
+ * Cloud-only is safe to state: `PLATFORM_LABEL` resolves to "Jira Cloud" and "Confluence
+ * Cloud", which is the full set of platforms our own catalog declares.
+ */
+export const MARKETPLACE_APPS_FAQ: FaqItem[] = [
+  {
+    id: 'pricing',
+    question: 'What do these apps cost?',
+    answer:
+      'Pulse AI is free to install. For the rest, the price is on the Atlassian Marketplace listing and that is the only place worth trusting - it changes with tiering and user count, and any figure we printed here would eventually be wrong. Every listing has a free trial, so evaluating one costs nothing but the install.',
   },
   {
-    id: 'explore-managed-services',
-    label: 'Explore Managed Services',
-    href: ROUTES.expertise.managedServices,
-    variant: 'ghost-dark',
+    id: 'platforms',
+    question: 'Do they work on Data Center, or Cloud only?',
+    answer:
+      'Cloud. Our published apps target Jira Cloud and Confluence Cloud - that is the full set of platforms in our catalog. If you are on Data Center and the capability is what you need, talk to us: a custom build is a different conversation from installing a listed app, and the answer may be to solve it in configuration instead.',
+  },
+  {
+    id: 'support',
+    question: 'Who supports the app after we install it?',
+    answer:
+      'We do - the same team that builds them and runs Atlassian instances for a living, not a separate vendor desk. There is a public help center for all of our apps, and a support request goes to people who can change the code rather than to people who can only file it.',
+  },
+  {
+    id: 'custom',
+    question: 'Can you build something specific to our workflow?',
+    answer:
+      'Yes, and that is a Forge app rather than a fork of a listed one - built on Atlassian’s own platform so it inherits your instance’s permission model instead of working around it. The first question we will ask is whether configuration or automation gets you there without a build, because it often does and it is cheaper to own.',
+  },
+  {
+    id: 'data',
+    question: 'What do the apps do with our data?',
+    answer:
+      'Each listing carries its own data-handling and privacy declaration, which is the version Atlassian reviews and the version to send to your security team. For anything beyond what a listing states - a custom build, or a specific residency requirement - we will put the data flow in the architecture document rather than answer it generally here.',
+  },
+  {
+    id: 'uninstall',
+    question: 'What happens if we uninstall?',
+    answer:
+      'Your Jira and Confluence data is yours and stays where it is - these apps read and add to your instance rather than holding your content somewhere else. What goes is the app’s own configuration. If you are trialling and want the exit path in writing before you install, ask and we will send it.',
   },
 ];

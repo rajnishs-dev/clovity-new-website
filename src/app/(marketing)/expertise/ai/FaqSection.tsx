@@ -43,7 +43,7 @@ import { AI_FAQ, AI_FAQ_CONTENT } from '@/constants/ai';
  */
 export function FaqSection() {
   return (
-    <section className="border-t border-line-faint bg-white py-12 sm:py-16">
+    <section className="border-t border-line-faint bg-[#eaf8ff] py-12 sm:py-16">
       <JsonLd schema={faqSchema(AI_FAQ)} />
 
       <div className="mx-auto w-full max-w-[900px] px-6">

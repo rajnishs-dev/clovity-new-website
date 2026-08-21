@@ -11,7 +11,9 @@ import { ROUTES } from '@/constants/routes';
 import { Footer } from '@/components/layout/Footer';
 import { Header } from '@/components/layout/Header';
 import { FinalCta, JsonLd, PageAnimations } from '@/components/common';
+import { getCloudMigrationPageData } from '@/data/cloud-migration';
 import { NavState } from './NavState';
+import { CaseStudiesSection } from './CaseStudiesSection';
 import { HeroSection } from './HeroSection';
 import { TrustSection } from './TrustSection';
 import { ProblemSection } from './ProblemSection';
@@ -19,10 +21,8 @@ import { ApproachComparisonSection } from './ApproachComparisonSection';
 import { ProductMigrationGrid } from './ProductMigrationGrid';
 import { MigrationFlowSection } from './MigrationFlowSection';
 import { AgcSection } from './AgcSection';
-import { AiTieInSection } from './AiTieInSection';
 import { FaqSection } from './FaqSection';
 import { MetricsSection } from './MetricsSection';
-import { ProofSection } from './ProofSection';
 import {
   CLOUD_MIGRATION_FINAL_CTA,
   CLOUD_MIGRATION_FINAL_CTA_LINKS,
@@ -42,7 +42,16 @@ export const metadata: Metadata = buildMetadata({
   ],
 });
 
-export default function CloudMigrationExpertisePage() {
+/**
+ * Regenerated every five minutes. The case-study rail reads Strapi over Axios, which does
+ * not participate in Next's fetch cache, so page-level ISR is what lets a newly published
+ * case study appear here without a deploy. This page was fully static until that rail was
+ * added.
+ */
+export const revalidate = 300;
+export default async function CloudMigrationExpertisePage() {
+  const { caseStudies } = await getCloudMigrationPageData();
+
   return (
     <>
       <NavState />
@@ -66,13 +75,15 @@ export default function CloudMigrationExpertisePage() {
 
           <AgcSection />
 
-          <AiTieInSection />
-
-          <FaqSection />
 
           <MetricsSection />
 
-          <ProofSection />
+          <FaqSection />
+
+          {/* The page's only proof band. A static `CUSTOMER_STORIES` quote block
+              ("Migrations That Held Up to Real Scrutiny") sat directly above this one
+              and was removed on request, so this rail now carries the proof alone. */}
+          <CaseStudiesSection caseStudies={caseStudies} />
 
           <FinalCta
             heading={

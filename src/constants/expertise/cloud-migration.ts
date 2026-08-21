@@ -1,5 +1,5 @@
 import { ROUTES } from '@/constants/routes';
-import { CUSTOMER_STORIES, CREDENTIAL_ROWS } from '@/constants/home';
+import { CREDENTIAL_ROWS } from '@/constants/home';
 import {
   cloudMigrationHeroBanner,
   dataCenterSupportPhoto,
@@ -9,7 +9,7 @@ import {
 } from '@/constants/media';
 import type {
   CtaLink,
-  CustomerStory,
+  FaqItem,
   ImageSource,
   PillarCard,
   StatBandItem,
@@ -35,6 +35,7 @@ import type {
 export const CLOUD_MIGRATION_HERO = {
   crumbs: [
     { name: 'Home', href: ROUTES.home },
+    { name: 'Expertise', href: ROUTES.expertise.atlassian },
     { name: 'Cloud Migration', href: ROUTES.expertise.cloudMigration },
   ],
   titleLead: 'Data Center Is Ending.',
@@ -111,20 +112,26 @@ export const CLOUD_MIGRATION_APPROACH_OPTIONS: ApproachOption[] = [
     name: 'Full Migration',
     iconImage: iconFullMigration,
     description: 'Move everything to the cloud in one coordinated window.',
-    points: ['End-to-end support', 'Data integrity assurance', 'Post-migration optimization'],
+    points: [
+      'End-to-end support',
+      'Data integrity assurance',
+      'Post-migration optimization',
+    ],
   },
   {
     id: 'phased-waves',
     name: 'Phased Migration',
     iconImage: iconPhasedMigration,
-    description: 'Move in stages, validating each wave before the next, for maximum control.',
+    description:
+      'Move in stages, validating each wave before the next, for maximum control.',
     points: ['Business continuity', 'Risk mitigation', 'Flexible timelines'],
   },
   {
     id: 'hybrid',
     name: 'Hybrid Approach',
     iconImage: iconHybridApproach,
-    description: 'Run cloud and Data Center in parallel for a gradual, lower-risk transition.',
+    description:
+      'Run cloud and Data Center in parallel for a gradual, lower-risk transition.',
     points: ['Gradual adoption', 'Custom roadmap', 'Reduced cutover risk'],
   },
 ];
@@ -137,7 +144,8 @@ export const CLOUD_MIGRATION_APPROACH_OPTIONS: ApproachOption[] = [
 export const CLOUD_MIGRATION_PRODUCTS_CONTENT = {
   headingLead: 'What Actually Moves, ',
   headingHighlight: 'Product by Product',
-  subheading: 'Migration isn’t one operation - it’s a different checklist per product.',
+  subheading:
+    'Migration isn’t one operation - it’s a different checklist per product.',
 } as const;
 
 export interface ProductMigrationNote {
@@ -210,14 +218,35 @@ export const CLOUD_MIGRATION_AI_CONTENT = {
  * inventing new figures (timelines, pricing) we can't back up. */
 
 export const CLOUD_MIGRATION_FAQ_CONTENT = {
-  headingLead: 'Before You Talk to ',
-  headingHighlight: 'a Migration Assessor',
+  headingLead: 'Before You ',
+  headingHighlight: 'Move Anything',
 } as const;
 
-export const CLOUD_MIGRATION_FAQS = [
+/**
+ * Six disclosures, rendered by `FaqSection` as native `<details>` with FAQPage JSON-LD -
+ * the same treatment as the Atlassian, ITSM, Managed Services, Workforce, AI and
+ * Marketplace Apps FAQs.
+ *
+ * ── IT USED TO BE AN `<Accordion>`, AND THAT COST IT ITS SCHEMA ──
+ * This was the one FAQ on the site built on the shared `<Accordion>` component, which
+ * meant it emitted no `FAQPage` structured data - so search engines could not read it as
+ * an FAQ at all, unlike every sibling page. Rebuilding it on `<details>` fixed that and
+ * dropped a client component from the page at the same time.
+ *
+ * The five original answers are kept as they were: each one is grounded in something this
+ * page already states above (the migration sources, the phased waves, app compatibility,
+ * the AGC path, Pulse AI after go-live) rather than introducing a timeline or a price. The
+ * sixth is new and follows the same rule - it states what the assessment produces, not how
+ * long it takes.
+ *
+ * Typed as `FaqItem[]` rather than left `as const`, because `faqSchema()` takes the array
+ * directly and a readonly tuple does not satisfy it.
+ */
+export const CLOUD_MIGRATION_FAQS: FaqItem[] = [
   {
     id: 'sources',
-    question: 'Do you only migrate from Atlassian Data Center, or other tools too?',
+    question:
+      'Do you only migrate from Atlassian Data Center, or other tools too?',
     answer:
       'Data Center is the most common starting point, but we’ve also moved teams off Cherwell, BMC Remedy, ServiceNow, and YouTrack onto the Atlassian suite - see the migration sources above.',
   },
@@ -235,7 +264,8 @@ export const CLOUD_MIGRATION_FAQS = [
   },
   {
     id: 'agc',
-    question: 'Can you migrate us to Atlassian Government Cloud instead of standard Cloud?',
+    question:
+      'Can you migrate us to Atlassian Government Cloud instead of standard Cloud?',
     answer:
       'Yes - the AGC path above runs the same migration program to the FedRAMP-aligned baseline federal and state agencies require.',
   },
@@ -245,7 +275,13 @@ export const CLOUD_MIGRATION_FAQS = [
     answer:
       'You can take it from there, or hand ongoing administration to our Managed Services team, with Pulse AI watching instance health from day one after go-live.',
   },
-] as const;
+  {
+    id: 'assessment',
+    question: 'What do we actually get from the assessment before we commit?',
+    answer:
+      'A written picture of what you are moving: an inventory of projects, spaces and users, every installed app checked against its Cloud availability, the configuration that will not survive the move as-is, and the wave plan that falls out of all three. That document is what a date and a cost come from - which is why we would rather give you it than quote a timeline before anyone has looked inside the instance.',
+  },
+];
 
 /* ── Metrics ─────────────────────────────────────────────────────────────── */
 
@@ -256,41 +292,59 @@ export const CLOUD_MIGRATION_METRICS_CONTENT = {
 
 /** Same real, company-wide subset of `RESULT_STATS` used on the Atlassian page. */
 export const CLOUD_MIGRATION_METRICS: StatBandItem[] = [
-  { id: 'engagements', value: '300+', accent: true, label: 'Enterprise Engagements' },
-  { id: 'certified-experts', value: '100+', label: 'Atlassian-Certified Experts' },
+  {
+    id: 'engagements',
+    value: '300+',
+    accent: true,
+    label: 'Enterprise Engagements',
+  },
+  {
+    id: 'certified-experts',
+    value: '100+',
+    label: 'Atlassian-Certified Experts',
+  },
   { id: 'accreditations', value: '235+', label: 'Delivery Accreditations' },
 ];
-
-/* ── Proof ───────────────────────────────────────────────────────────────── */
-
-export const CLOUD_MIGRATION_PROOF_STORIES: CustomerStory[] = [...CUSTOMER_STORIES];
-
-export const CLOUD_MIGRATION_PROOF_CONTENT = {
-  headingLead: 'Migrations That Held Up to ',
-  headingHighlight: 'Real Scrutiny',
-} as const;
 
 /* ── Closing CTA ─────────────────────────────────────────────────────────── */
 
 export const CLOUD_MIGRATION_FINAL_CTA = {
-  headingLead: 'Ready to move before',
-  headingTail: 'the deadline moves for you?',
+  headingLead: 'Ready to talk to',
+  headingTail: 'an expert?',
   description:
-    'Start with a migration assessment - we’ll map your current instance to a staged, validated path to Cloud or Government Cloud.',
+    'Tell us what you’re working on and a Clovity specialist will get back to you with next steps.',
 } as const;
 
 export const CLOUD_MIGRATION_FINAL_CTA_LINKS: CtaLink[] = [
   {
-    id: 'start-assessment',
-    label: 'Start a Migration Assessment',
+    id: 'talk-to-an-expert',
+    label: 'Talk to an expert',
     href: ROUTES.discover.contact,
     variant: 'white-pill',
     icon: 'arrow-up-right',
   },
-  {
-    id: 'explore-marketplace',
-    label: 'Explore Marketplace Apps',
-    href: ROUTES.expertise.marketplaceApps,
-    variant: 'ghost-dark',
-  },
+
 ];
+
+/* ── Case-study rail ────────────────────────────────────────────────────── */
+
+/**
+ * The Strapi-backed case-study rail, ported from the ITSM page's
+ * "Service Management Already Running" band.
+ *
+ * This page now carries TWO proof bands of different kinds: `CLOUD_MIGRATION_PROOF_CONTENT`
+ * above is the static `CUSTOMER_STORIES` quote block, and this one is the live case-study
+ * grid. The quotes were kept rather than replaced, on request.
+ *
+ * Of the three rails added at the same time, this one is the most likely to find genuine
+ * matches - the live `jsm-resource` collection contains real migration stories, Forcepoint's
+ * Data Center to Cloud move among them. See `data/cloud-migration.ts`.
+ */
+export const CLOUD_MIGRATION_CASE_STUDIES_CONTENT = {
+  headingLead: 'Migrations We ',
+  headingHighlight: 'Already Delivered',
+  subheading:
+    'Data Center and server estates moved to Cloud and Government Cloud, in the clients’ own words.',
+  moreLabel: 'See all case studies',
+  moreHref: ROUTES.resources.caseStudy,
+} as const;

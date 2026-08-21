@@ -63,7 +63,7 @@ export function ExpertiseHero({
       </div>
 
       <div
-        className="absolute inset-0 z-[1] bg-[linear-gradient(90deg,rgba(10,12,20,.88)_0%,rgba(10,12,20,.6)_55%,rgba(10,12,20,.2)_100%)]"
+        className="absolute inset-0 z-[1] bg-[linear-gradient(90deg,rgba(10,12,20,.75)_0%,rgba(10,12,20,.35)_45%,rgba(10,12,20,0)_100%)]"
         aria-hidden
       />
 

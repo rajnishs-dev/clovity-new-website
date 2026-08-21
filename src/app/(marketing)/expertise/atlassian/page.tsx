@@ -14,8 +14,11 @@ import { ROUTES } from '@/constants/routes';
 import { Footer } from '@/components/layout/Footer';
 import { Header } from '@/components/layout/Header';
 import { FinalCta, JsonLd, PageAnimations } from '@/components/common';
+import { getAtlassianPageData } from '@/data/atlassian';
 import { NavState } from './NavState';
 import { HeroSection } from './HeroSection';
+import { CaseStudiesSection } from './CaseStudiesSection';
+import { FaqSection } from './FaqSection';
 import { TrustSection } from './TrustSection';
 import { ProblemSection } from './ProblemSection';
 import { DeliverGridSection } from './DeliverGridSection';
@@ -23,7 +26,6 @@ import { AiAutomationSection } from './AiAutomationSection';
 import { SuiteCoverageSection } from './SuiteCoverageSection';
 import { DeliveryApproachSection } from './DeliveryApproachSection';
 import { MetricsSection } from './MetricsSection';
-import { ProofSection } from './ProofSection';
 import {
   ATLASSIAN_FINAL_CTA,
   ATLASSIAN_FINAL_CTA_LINKS,
@@ -42,7 +44,17 @@ export const metadata: Metadata = buildMetadata({
   ],
 });
 
-export default function AtlassianExpertisePage() {
+/**
+ * Regenerated every five minutes. The case-study rail reads Strapi over Axios, which does
+ * not participate in Next's fetch cache, so page-level ISR is what lets a newly published
+ * case study appear here without a deploy. This page was fully static until that rail was
+ * added.
+ */
+export const revalidate = 300;
+
+export default async function AtlassianExpertisePage() {
+  const { caseStudies } = await getAtlassianPageData();
+
   return (
     <>
       <NavState />
@@ -68,7 +80,13 @@ export default function AtlassianExpertisePage() {
 
           <MetricsSection />
 
-          <ProofSection />
+          {/* The page's only proof band. A static `CUSTOMER_STORIES` quote block
+              ("Built for Teams That Get Audited") sat directly above this one and was
+              removed on request, so this rail now carries the proof alone. Removing it
+              flipped the tone of every band from here down - see the note above. */}
+          <FaqSection />
+          <CaseStudiesSection caseStudies={caseStudies} />
+
 
           <FinalCta
             heading={

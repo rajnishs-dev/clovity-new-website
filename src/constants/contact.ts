@@ -76,6 +76,13 @@ export const CONTACT_FORM_CONTENT = {
       label: 'Message',
       placeholder: "Tell us a bit about what you're trying to solve…",
     },
+    consent: {
+      text: 'I consent to the collection and processing of my information.',
+      dataNote: 'Your data stays in the U.S. and will never be shared.',
+      privacyLinkLabel: 'View our Privacy Policy.',
+      withdrawNote: 'You can withdraw your consent at any time by writing to',
+      withdrawEmail: 'ciso@clovity.com',
+    },
   },
 } as const;
 

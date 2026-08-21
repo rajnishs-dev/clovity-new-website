@@ -200,7 +200,6 @@ export const DEVSECOPS_PRODUCTS: ProductBadge[] = [
   },
 ];
 
-
 /* ── Scaling secure delivery: the orbit diagram ──────────────────────────── */
 
 export const DEVSECOPS_ORBIT_CONTENT = {
@@ -468,18 +467,16 @@ export const DEVSECOPS_SECURITY_FACTS: FactItem[] = [
   },
 ];
 
-/* ── Proof ──────────────────────────────────────────────────────────────── */
+/* ── Case-study rail ────────────────────────────────────────────────────── */
 
-export const DEVSECOPS_PROOF_CONTENT = {
-  headingLead: 'Our Own Thinking, ',
-  headingHighlight: 'Written Down',
+
+export const DEVSECOPS_CASE_STUDIES_CONTENT = {
+  headingLead: 'Pipelines We ',
+  headingHighlight: 'Already Work In',
   subheading:
-    'The long-form version of this page - how the Atlassian ecosystem embeds security into each stage of delivery, and what that looks like in practice.',
-  /** Slug of the bundled DevSecOps blog post this section features. */
-  featuredSlug:
-    'devsecops-with-atlassian-building-secure-software-delivery-at-scale',
-  ribbon: 'Playbook',
-  ctaLabel: 'Read the playbook',
+    'Delivery engagements where the toolchain, the permissions and the release path were ours to get right - in the clients’ own words.',
+  moreLabel: 'See all case studies',
+  moreHref: ROUTES.resources.caseStudy,
 } as const;
 
 /* ── FAQ ────────────────────────────────────────────────────────────────── */
@@ -537,10 +534,10 @@ export const DEVSECOPS_FAQ: FaqItem[] = [
 /* ── Final CTA ──────────────────────────────────────────────────────────── */
 
 export const DEVSECOPS_FINAL_CTA = {
-  headingLead: 'Show us your',
-  headingTail: 'pipeline as it is.',
+  headingLead: 'Ready to talk to',
+  headingTail: 'an expert?',
   description:
-    'Not the diagram - the real one, with the manual step everyone works around. We come back with where the controls should go and what it takes to get there.',
+    'Tell us what you’re working on and a Clovity specialist will get back to you with next steps.',
 } as const;
 
 export const DEVSECOPS_FINAL_CTA_LINKS: CtaLink[] = [

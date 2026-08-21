@@ -33,7 +33,7 @@ export function ProofSection({
   if (caseStudies.length === 0) return null;
 
   return (
-    <Section padding="tight" className="bg-white">
+    <Section padding="tight" className="bg-[#eaf8ff]">
       <SectionHeader
         heading={
           <>

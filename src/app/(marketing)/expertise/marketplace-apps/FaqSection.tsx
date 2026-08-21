@@ -3,44 +3,55 @@ import { revealAligned, revealAttrs } from '@/lib/reveal';
 import { faqSchema } from '@/lib/schema';
 import { GradientText, Icon, SectionHeader } from '@/components/ui';
 import { JsonLd } from '@/components/common/JsonLd';
-import { WF_FAQ, WF_FAQ_CONTENT } from '@/constants/workforce';
+import {
+  MARKETPLACE_APPS_FAQ,
+  MARKETPLACE_APPS_FAQ_CONTENT,
+} from '@/constants/expertise/marketplace-apps';
 
 /**
- * "Before You Add Someone to Your Standup" - seven disclosures.
+ * "Before You Install Anything" - six disclosures, ported from the ITSM page's
+ * "Before You Book a Call" band.
  *
  * Native `<details>`/`<summary>` rather than the shared `<Accordion>`, matching the ITSM,
- * Managed Services and Careers FAQs: several answers may be open at once, `<details>` needs
- * no JS so the section stays a Server Component, and the plus-to-cross rotation does not map
- * onto `Accordion`'s chevron.
+ * Managed Services, Workforce, AI and Careers FAQs: several answers may be open at once,
+ * `<details>` needs no JS so the section stays a Server Component, and the plus-to-cross
+ * rotation does not map onto `Accordion`'s chevron.
  *
  * The marker is suppressed twice on purpose - `list-none` for browsers that honour
  * `::marker`, the webkit selector for Safari, which does not. Dropping either leaves a stray
  * triangle in one engine.
  *
+ * ── THESE ANSWERS DELIBERATELY REFUSE TO QUOTE A PRICE ──
+ * Pulse AI is stated as free because our own catalog records it as free; nothing is said
+ * about what the other five cost, because the Marketplace listing is the only authoritative
+ * price and it changes without touching this repo. Same reasoning as the omitted install
+ * counts. See the note on `MARKETPLACE_APPS_FAQ` in the constants file before adding a
+ * figure here.
+ *
  * FAQPage JSON-LD is emitted from the same array that renders, so the structured data cannot
- * drift from the visible answers. That matters more than usual here: three of these answers
- * are the page's position on what it will NOT promise - turnaround times, diversity-program
- * eligibility and contract vehicles - and a stale copy of any of them in a search result
- * would be worse than none.
+ * drift from the visible answers - which matters most for the pricing and data-handling
+ * answers, where a stale copy surfacing in a search result would be a claim we did not make.
  */
 export function FaqSection() {
   return (
-    <section className="border-t border-line-faint py-12 sm:py-16">
-      <JsonLd schema={faqSchema(WF_FAQ)} />
+    <section className="border-t border-line-faint bg-[#eaf8ff] py-12 sm:py-16">
+      <JsonLd schema={faqSchema(MARKETPLACE_APPS_FAQ)} />
 
       <div className="mx-auto w-full max-w-[900px] px-6">
         <SectionHeader
           heading={
             <>
-              {WF_FAQ_CONTENT.headingLead}
-              <GradientText>{WF_FAQ_CONTENT.headingHighlight}</GradientText>
+              {MARKETPLACE_APPS_FAQ_CONTENT.headingLead}
+              <GradientText>
+                {MARKETPLACE_APPS_FAQ_CONTENT.headingHighlight}
+              </GradientText>
             </>
           }
           className="mx-auto mb-10 max-w-[640px] md:text-center"
         />
 
         <div className={revealAligned('left')} {...revealAttrs()}>
-          {WF_FAQ.map((entry) => (
+          {MARKETPLACE_APPS_FAQ.map((entry) => (
             <details
               key={entry.id}
               className={cn(

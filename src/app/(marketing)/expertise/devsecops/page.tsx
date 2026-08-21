@@ -1,21 +1,20 @@
 /**
  * `/expertise/devsecops` - DevSecOps.
  *
- * Eight sections. The featured playbook card reads Strapi's `blog` collection
- * through `getDevSecOpsPageData`; every other section's copy is bundled in
+ * Eight sections. The case-study rail reads Strapi's case-study collection through
+ * `getDevSecOpsPageData`; every other section's copy is bundled in
  * `constants/devsecops.ts`.
  *
  * ── BACKGROUNDS ──
  * White and `bg-[#eaf8ff]` only, alternating strictly from the hero down: Stats (white),
- * Products (soft), Delivery (white), Scaling (soft), Toolchain (white), Security
- * (soft), Proof (white), FAQ (soft), CTA (white). The `#eaf8ff` tint used elsewhere
- * on the site is deliberately absent here.
+ * Products (tint), Delivery (white), Scaling (tint), Toolchain (white), Security (tint),
+ * FAQ (white), Case studies (tint), CTA (white).
  *
- * The run starts on WHITE rather than `bg-[#eaf8ff]` (which is where the ITSM page
- * starts) purely so the parity lands correctly: with nine bands, starting on soft
- * would put Scaling, Proof and the FAQ on the opposite tone to the one their inner
- * cards were built for. Adding or removing a section flips the whole run, so
- * re-check every band rather than just the new one.
+ * The run starts on WHITE rather than the tint (which is where the ITSM page starts)
+ * purely so the parity lands correctly - it puts each band on the tone its inner cards
+ * were built for. Adding or removing a section flips the whole run, so re-check every
+ * band rather than just the new one. That has now happened twice in a row: adding the
+ * case-study rail, then removing the featured-article band below it.
  *
  * Stays a Server Component - only the header, `BannerHero`'s parallax photo,
  * `PageAnimations` and `NavState` reach the browser as JavaScript.
@@ -50,7 +49,7 @@ import { DeliverSection } from './DeliverSection';
 import { FaqSection } from './FaqSection';
 import { NavState } from './NavState';
 import { ProductFamilySection } from './ProductFamilySection';
-import { ProofSection } from './ProofSection';
+import { CaseStudiesSection } from './CaseStudiesSection';
 import { ScalingSection } from './ScalingSection';
 import { SecuritySection } from './SecuritySection';
 import { StatsSection } from './StatsSection';
@@ -72,14 +71,14 @@ export const metadata: Metadata = buildMetadata({
 });
 
 /**
- * Regenerated every five minutes: the featured playbook comes from Strapi over
- * Axios, which doesn't participate in Next's fetch cache, so page-level ISR is what
- * lets an edited post's title and excerpt appear here without a deploy.
+ * Regenerated every five minutes: the case-study rail comes from Strapi over Axios, which
+ * doesn't participate in Next's fetch cache, so page-level ISR is what lets a newly
+ * published case study appear here without a deploy.
  */
 export const revalidate = 300;
 
 export default async function DevSecOpsPage() {
-  const { playbook } = await getDevSecOpsPageData();
+  const { caseStudies } = await getDevSecOpsPageData();
 
   return (
     <>
@@ -133,12 +132,14 @@ export default async function DevSecOpsPage() {
 
           <SecuritySection />
 
-          {/* Server-rendered from the build-time/ISR snapshot. No browser refetch:
-              a blog post's title is not time-critical, and ISR at five minutes
-              already covers an edit. */}
-          <ProofSection playbook={playbook} />
-
           <FaqSection />
+
+          {/* The page's only proof band. A featured long-form article ("Our Own
+              Thinking, Written Down") sat directly below this one and was removed on
+              request, along with the blog lookup that fed it. Server-rendered from the
+              build-time/ISR snapshot - a case study is not time-critical, and ISR at
+              five minutes covers an edit. */}
+          <CaseStudiesSection caseStudies={caseStudies} />
 
           <FinalCta
             heading={
@@ -150,12 +151,14 @@ export default async function DevSecOpsPage() {
             }
             description={DEVSECOPS_FINAL_CTA.description}
             ctas={DEVSECOPS_FINAL_CTA_LINKS}
-            // White behind the card, matching ITSM: this page alternates only white
-            // and `bg-[#eaf8ff]`, and the FAQ above it ends on `bg-[#eaf8ff]`. The card keeps
-            // the darker interior-page gradient. `pullUp={false}` because there is
-            // no section above for it to tuck into - it overlaps down into the
-            // footer only, which `<Footer overlap>` reserves space for.
-            className="bg-white"
+            // White behind the card: this page alternates only white and `bg-[#eaf8ff]`,
+            // and the band directly above is now the case-study rail, which is tinted.
+            // (It used to be the FAQ; the featured-article band that sat between them
+            // is gone.) The card keeps the darker interior-page gradient.
+            // `pullUp={false}` because there is no section above for it to tuck into -
+            // it overlaps down into the footer only, which `<Footer overlap>` reserves
+            // space for.
+            className="bg-[#eaf8ff]"
             cardClassName="-mt-0 bg-[linear-gradient(135deg,#152a6b_0%,#2557c9_65%,#3568e0_100%)]"
             headingClassName="text-[clamp(28px,3.6vw,44px)] leading-[1.12]"
             pullUp={false}

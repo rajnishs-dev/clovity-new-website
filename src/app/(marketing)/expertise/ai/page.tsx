@@ -1,51 +1,4 @@
-/**
- * `/expertise/ai` - AI Solutions.
- *
- * Nine sections. The proof rail reads Strapi's case-study collection through `getAiPageData`;
- * every other section's copy is bundled in `constants/ai.ts` - except Pulse AI's, which is
- * imported from `constants/home.ts` rather than restated. See `PulseSection`.
- *
- * This route already existed everywhere except here: `ROUTES.expertise.ai`, the `ai` entry in
- * `EXPERTISE_PEOPLE` (which the mega menu, the mobile drawer and the footer all render) and a
- * `SITEMAP_ROUTES` row at priority 0.9 - the joint-highest on the site, alongside Atlassian
- * Solutions and Cloud Migration - all pointed at it. So until this page landed, the route the
- * sitemap ranked most important was a 404.
- *
- * Stays a Server Component - only the header, `BannerHero`'s parallax artwork, `PageAnimations`
- * and `NavState` reach the browser as JavaScript. Nothing here needs state, so there is no
- * client component of its own.
- *
- * ── BACKGROUNDS: EIGHT BANDS, SO ONE TONE HAS TO REPEAT ──
- * White and `bg-[#eaf8ff]` only: Stats (soft), Pulse (white), Deliver (soft), Touchpoints (white),
- * Products (soft), Approach (white), Proof (soft), FAQ (soft), CTA (white).
- *
- * That is not a slip. Two bands are pinned to `bg-[#eaf8ff]` by their own contents - the stat band
- * and the FAQ both paint WHITE cards, which vanish on a white background - and in a strict
- * alternation the first and eighth positions have opposite parity, so with eight content bands
- * they cannot both be soft. Exactly one repeat is unavoidable. It is placed at Proof → FAQ
- * because `FaqSection` already ships a `border-t` hairline to mark that seam, and because white
- * `ResourceCard`s read better on soft than on white.
- *
- * This page had nine bands and perfect alternation until the responsible-AI section
- * ("The Risk Is Not the Model. It's the Access.") was removed on request. Its band was soft, so
- * every tone below it flipped: the proof rail moved from white to soft, which is the one edit
- * that change actually required. Re-check the whole run after adding or removing a section, not
- * just the gap - and note that going back to an odd number of bands would restore strict
- * alternation and let the proof rail return to white.
- *
- * ── EVERY SECTION IS A DIFFERENT SHAPE, ON PURPOSE ──
- * A metric band, a copy-beside-product-card split, a bento grid, a linked practice list, a
- * four-up product grid, a horizontal numbered timeline, a paired dark compare panel, a card
- * grid, and an accordion. No two adjacent sections share a layout.
- *
- * ── WHAT THIS PAGE HAS THAT THE OTHERS DO NOT ──
- * A product. `PulseSection` is the reason this page exists in the shape it does: Pulse AI is
- * shipped, listed and free on the Atlassian Marketplace, which means this is the only expertise
- * page where a reader can evaluate the claim without contacting us. That is why the section sits
- * second - above the service grid, not inside it - and why the closing CTA leads with a free
- * install rather than a contact form. The two-button CTA itself is not special: it is already
- * the form used by `atlassian`, `cloud-migration`, `marketplace-apps` and the home page.
- */
+
 import type { Metadata } from 'next';
 import { buildMetadata } from '@/lib/seo';
 import { serviceSchema } from '@/lib/schema';
@@ -88,11 +41,7 @@ export const metadata: Metadata = buildMetadata({
   ],
 });
 
-/**
- * Regenerated every five minutes: the proof rail's case studies come from Strapi over Axios,
- * which doesn't participate in Next's fetch cache, so page-level ISR is what lets a newly
- * published case study appear here without a deploy.
- */
+
 export const revalidate = 300;
 
 export default async function AiPage() {
@@ -101,9 +50,6 @@ export default async function AiPage() {
   return (
     <>
       <NavState />
-
-      {/* Breadcrumb JSON-LD is emitted by `BannerHero` from the same crumbs it renders,
-          so only the Service graph is declared here. */}
       <JsonLd
         schema={serviceSchema({
           name: 'Atlassian AI Solutions',
@@ -114,9 +60,6 @@ export default async function AiPage() {
         })}
       />
 
-      {/* Solid white from first paint rather than transparent-then-solid: the hero below
-          is full-bleed artwork, so a transparent header would have nothing stable to
-          sit on. */}
       <Header variant="pill" priorityLogo />
 
       <PageAnimations>
@@ -156,9 +99,9 @@ export default async function AiPage() {
 
           {/* Server-rendered from the build-time/ISR snapshot. No browser refetch: a
               case study is not time-critical, and ISR at five minutes covers an edit. */}
-          <ProofSection caseStudies={caseStudies} />
 
           <FaqSection />
+          <ProofSection caseStudies={caseStudies} />
 
           <FinalCta
             heading={
@@ -175,7 +118,6 @@ export default async function AiPage() {
             // The card keeps the darker interior-page gradient. `pullUp={false}` because
             // there is no section above for it to tuck into - it overlaps down into the
             // footer only, which `<Footer overlap>` reserves space for.
-            className="bg-[#eaf8ff]"
             cardClassName="-mt-0 bg-[linear-gradient(135deg,#152a6b_0%,#2557c9_65%,#3568e0_100%)]"
             headingClassName="text-[clamp(28px,3.6vw,44px)] leading-[1.12]"
             pullUp={false}

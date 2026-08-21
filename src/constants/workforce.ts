@@ -13,126 +13,7 @@ import type {
 import { ROUTES } from './routes';
 import { CDN } from './media';
 
-/**
- * `/expertise/workforce` - Workforce Solutions.
- *
- * ── WHERE THE STRUCTURE COMES FROM ──
- * The section order follows this page's own comp in `clovity-website-updated/expertise/
- * workforce/index.html`: overview, what we deliver, matching, delivery models, approach,
- * outcomes, industries, CTA. Two deliberate departures from that comp are recorded at
- * the bottom of this comment.
- *
- * ── WHERE THE COPY COMES FROM ──
- * Grounded in Clovity's own published material, not a competitor's:
- *   • the embedded framing is our HOME PAGE's own line. `FDE_CONTENT` in
- *     `constants/home.ts` reads "Forward-Deployed Engineers. Embedded, Not On-Call.",
- *     and `WF_CONTRAST` below applies it to CAPACITY work - people who join a team the
- *     client still leads. `/expertise/managed-services` applies the same promise to
- *     RUN-STATE work, where we hold the platform. Both pages therefore say the same
- *     thing in the same words, and `WF_CONTRAST` exists so a reader can tell which one
- *     they need instead of guessing.
- *   • the six talent disciplines in `WF_DISCIPLINES` are the comp's own list
- *     (Atlassian experts, AI & automation, cloud & DevOps, ITSM, project & program
- *     management, QA & testing).
- *   • the six engagement models in `WF_MODELS` are the comp's own tag list, and the six
- *     industries in `WF_INDUSTRIES` likewise.
- *   • the five approach steps are the comp's `tl-process` steps, reworded.
- *   • the supplier-diversity and partner credentials are the ones the About page already
- *     publishes - see `ABOUT_AWARD_BADGES_FALLBACK` in `constants/about.ts`, which serves
- *     the same three badge files from the same host.
- * The FAQ answers, the three-way sourcing comparison and the enablement copy are written
- * for this page.
- *
- * ── WHERE THE NUMBERS COME FROM ──
- *   • "100+"     - our own published stat bands, twice: `expertise/atlassian` and
- *                  `expertise/cloud-migration` both state "100+ Atlassian-Certified
- *                  Experts", and `HOME_STATS` in `constants/home.ts` animates the same
- *                  figure to the same label.
- *   • "235+"     - the same three sources, "235+ Delivery Accreditations".
- *   • "Platinum" - the Atlassian Platinum Solution Partner badge in
- *                  `assets/badges/platinum-solution-partner.png`, and the About page's
- *                  own "highest partner tier with Atlassian" claim.
- *   • "MBE · NMSDC · USPAACC" - the three certifications clovity.com/about-us publishes,
- *                  with the badge artwork already wired up in `constants/about.ts`.
- * No third-party market statistics are used. If a new figure is added here it needs a
- * source in this comment or it does not belong on the page.
- *
- * ── FOUR NUMBERS FROM THE COMP ARE DELIBERATELY ABSENT ──
- * The comp's outcomes band states "4x faster than traditional hiring", "96% placement
- * satisfaction", "150+ specialized technology experts" and "2wk average time to
- * shortlist"; its overview panel states "Traditional hiring 8-12 weeks" against "Clovity
- * Workforce Solutions 2-3 weeks". None of the five has a source anywhere in Clovity's
- * published material, and all five are the kind of number a staffing client holds you to
- * in a contract - a satisfaction percentage and a time-to-shortlist commitment most of
- * all. `WF_STATS` therefore carries four SOURCED values in that band's place, and
- * `WF_SOURCING` makes the speed argument qualitatively, by comparing what each route
- * actually gets you rather than by inventing a week count.
- *
- * Note that "150+ specialized technology experts" and our published "100+
- * Atlassian-Certified Experts" are not the same claim at different precision - they
- * count different populations. The published figure is the one used.
- *
- * Restore any of the five only with a real source, and put it in this comment.
- *
- * ── ONE MORE THING NOT SAID ──
- * NO CONTRACT VEHICLES. `WF_CREDENTIALS` is framed for public-sector and enterprise
- * staffing bids, which is exactly the context where a reader will look for SEWP, 2GIT
- * or a Carahsoft listing. Clovity's own About page names none of them, so neither does
- * this page. Certifications we hold are safe to state; procurement routes we have not
- * verified are not, and a staffing RFP is the worst possible place to be wrong about it.
- * The FAQ answers the question directly rather than leaving the gap unexplained.
- */
 
-/* ── Hero ───────────────────────────────────────────────────────────────── */
-
-/**
- * Breadcrumb, heading and supporting paragraph - nothing else.
- *
- * Rendered through the shared `BannerHero`, the same component ITSM, DevSecOps and
- * Managed Services call directly from their own `page.tsx`. That component ships no
- * eyebrow, no CTA row and no proof strip by design, which is why none are declared here:
- * the expertise banners across the site are breadcrumb + heading + subheading, and this
- * one matches them rather than carrying extras only it would have.
- *
- * The two published people numbers (100+, 235+) therefore appear once, in `WF_STATS`
- * immediately below the banner, instead of twice.
- *
- * ── BOTH STRINGS ARE CUT TO THE COLUMN THEY RENDER IN ──
- * `BannerHero`'s copy column is 480px at desktop with the heading set at 46px, and each
- * clause sits on its own line because the two are separated by an explicit `<br />`. So a
- * clause either fits in 480px or it wraps and orphans its tail - there is no reflow across
- * the break that could rescue it. Measured against the real font, not estimated from
- * character counts, which are a poor proxy at this size:
- *
- *     "Atlassian-Certified Talent,"   538px   wrapped, orphaning "Talent,"
- *     "Embedded in Your Team."        507px   wrapped, orphaning "Team."
- *     "Atlassian Talent,"            *337px*  fits
- *     "Inside Your Team."            *356px*  fits
- *
- * Hence the pair below: two balanced lines, breaking at the clause boundary, matching the
- * two-line heroes on DevSecOps and Managed Services. (ITSM's "Service Management That"
- * needs 548px and orphans in exactly the way this used to - it is the odd one out, not the
- * standard to copy.)
- *
- * TWO WORDS CHANGED, AND NEITHER CLAIM WENT WITH THEM:
- *   • "Atlassian-Certified" -> "Atlassian". The stat band immediately below reads
- *     "Atlassian-Certified Experts" and the first service is "Atlassian-Certified Staff
- *     Augmentation", so the certification claim is made twice within a screen of here.
- *   • "Embedded in" -> "Inside". Same meaning, 151px cheaper. "Embedded" still carries the
- *     positioning in four other places on this page - `WF_OFFERINGS`' "Embedded Admins &
- *     Forward-Deployed Engineers", `WF_CONTRAST_CONTENT`'s "Embedded Either Way" heading,
- *     and two FAQ answers.
- *
- * The lead is cut from 233 characters to 164 for the same reason - it ran to five lines in
- * that column, which is a wall. What went was the abstract opener ("Add proven Atlassian,
- * cloud and service-management capability to"); what stayed is the three load-bearing
- * claims: you still lead the team, they work your actual process, and the capability
- * outlives them. It now renders in three lines against Managed Services' five.
- *
- * Re-measure against the rendered line count if either string is edited again. A clause
- * that looks short can still overflow - "Embedded in Your Team" without its full stop is
- * still 496px.
- */
 export const WF_HERO = {
   crumbs: [
     { name: 'Home', href: ROUTES.home },
@@ -650,22 +531,17 @@ export const WF_FAQ: FaqItem[] = [
 /* ── Final CTA ──────────────────────────────────────────────────────────── */
 
 export const WF_FINAL_CTA = {
-  headingLead: 'Ready to build the team',
-  headingTail: 'you actually need?',
+  headingLead: 'Ready to talk to',
+  headingTail: 'an expert?',
   description:
-    'Tell us the work that is not getting done. We will come back with the roles it needs, the certifications to look for, and a shortlist date - before anyone talks about a contract.',
+    'Tell us what you’re working on and a Clovity specialist will get back to you with next steps.',
 } as const;
 
-/**
- * One button, `white-pill` - the same single CTA the ITSM, DevSecOps and Managed
- * Services cards carry. The comp offered "Explore All Expertise" alongside it; that is
- * already reachable from the mega menu and the footer on every page, and a second
- * button on this dark card competes with the primary rather than adding a route.
- */
+
 export const WF_FINAL_CTA_LINKS: CtaLink[] = [
   {
-    id: 'consultation',
-    label: 'Schedule a workforce consultation',
+    id: 'talk-to-an-expert',
+    label: 'Talk to an expert',
     href: ROUTES.discover.contact,
     variant: 'white-pill',
     icon: 'arrow-up-right',

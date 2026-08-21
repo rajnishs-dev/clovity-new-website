@@ -452,23 +452,17 @@ export const MS_FAQ: FaqItem[] = [
 /* ── Final CTA ──────────────────────────────────────────────────────────── */
 
 export const MS_FINAL_CTA = {
-  headingLead: 'Ready to stop administering',
-  headingTail: 'and start improving?',
+  headingLead: 'Ready to talk to',
+  headingTail: 'an expert?',
   description:
-    'A platform health assessment is the starting point. It tells you what state your Atlassian estate is actually in, and which plan the first ninety days should sit on.',
+    'Tell us what you’re working on and a Clovity specialist will get back to you with next steps.',
 } as const;
 
-/**
- * One button, `white-pill` - the same single CTA the ITSM and DevSecOps cards carry.
- * Our published page offered two ("Schedule a Managed Services Consultation" plus
- * "Explore All Expertise"), but the second is already reachable from the footer and
- * the mega menu on every page, and a secondary button on this dark card competes with
- * the primary rather than adding a route.
- */
+
 export const MS_FINAL_CTA_LINKS: CtaLink[] = [
   {
-    id: 'assessment',
-    label: 'Book a platform health assessment',
+    id: 'talk-to-an-expert',
+    label: 'Talk to an expert',
     href: ROUTES.discover.contact,
     variant: 'white-pill',
     icon: 'arrow-up-right',
